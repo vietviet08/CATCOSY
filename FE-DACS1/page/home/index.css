@@ -499,6 +499,20 @@ footer p {
     display: none;
 }
 
+@media only screen and (max-width: 375px){
+    .logo {
+        margin-left: -40px;
+    }
+
+    .group-feature{
+        margin: 0 -8px   ;
+    }
+
+    .group-feature i:nth-child(1),.group-feature i:nth-child(2){
+        margin-right: 7px;
+    }
+}
+
 @media only screen and (max-width: 768px){
     .container-product{
         flex-direction: column;
