@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="~{fragments :: header}">
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="~{fragments :: sideBar}">
+    </ul>
+    <!-- End of Sidebar -->
+
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Top bar -->
+            <nav th:replace="~{fragments :: topBar}"></nav>
+            <!-- End of Top bar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <div th:if="${size == 0}" class="text-center">
+                    <span class="alert alert-danger">Don't have categories in repository</span>
+                </div>
+
+                <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@mdo">Add Category
+                </button>
+
+                <div th:if="${success}" class="text-center">
+                    <span th:text="${success} " class="alert alert-success"></span>
+                </div>
+
+                <div th:if="${failed}" class="text-center">
+                    <span th:text="${failed} " class="alert alert-warning"></span>
+                </div>
+
+                <div th:if="${error}" class="text-center">
+                    <span th:text="${error} " class="alert alert-danger"></span>
+                </div>
+
+
+                <table class=" table table-striped" th:if="${size > 0}">
+                    <thead>
+                    <tr>
+                        <th scope="col">Category index</th>
+                        <th scope="col">Name</th>
+                        <th scope="col" class="text-center">Update Category</th>
+                        <th scope="col" class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="category :  ${categories}">
+                        <td  th:text="${category.id}"></td>
+                        <td th:text="${category.name}"></td>
+                        <td class="text-center">
+                            <a id="updateBtn" th:href="@{/findById(id = ${category.id})}"
+                               class="btn btn-success">Update</a>
+                        </td>
+                        <td class="text-center">
+                            <a th:if="${category.is_deleted()}" class="btn btn-success"  th:href="@{/enable-category(id = ${category.id})}">Activate</a>
+                            <a th:if="${category.is_activated()}" class="btn btn-warning" th:href="@{/delete-category(id = ${category.id})}">Delete</a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- End Page Content -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:replace="~{fragments :: footer}">
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a th:replace="~{fragments :: scroll}">
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="~{fragments :: logout}">
+</div>
+
+
+<!--Modal add category-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <form th:action="@{/add-category}" th:object="${newCategory}" method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Name Category</label>
+                        <input th:field="*{name}" type="text" class="form-control" id="recipient-name">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--End of Modal add category-->
+
+
+<!--Modal update category-->
+<div class="modal fade" id="updateCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <form th:action="@{/update-category}" method="put">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateCategoryLabel">Update category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">ID Category</label>
+                        <input type="text" class="form-control" id="updateId" name="id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Name Category</label>
+                        <input type="text" class="form-control" id="updateName" name="name">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--End of Modal update category-->
+
+
+<!-- Bootstrap core JavaScript-->
+<div th:replace="~{fragments :: script}"></div>
+
+<script th:src="@{/js/categories.js}"></script>
+
+</body>
+
+</html>

@@ -8,7 +8,7 @@
         <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.admin</groupId>
+    <groupId>com.vietquoc</groupId>
     <artifactId>Admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Admin</name>
@@ -78,11 +78,10 @@
         </dependency>
 
         <dependency>
-            <groupId>com.library</groupId>
+            <groupId>com.vietquoc</groupId>
             <artifactId>Library</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 
     <build>
