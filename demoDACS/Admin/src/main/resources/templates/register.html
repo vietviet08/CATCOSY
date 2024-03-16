@@ -1,98 +1,156 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
-<head th:replace="fragments :: header">
+<head th:replace="~{fragments :: head}">
+
 </head>
 
-<body class="bg-gradient-primary">
+<body style="
+    background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    height: 100vh;">
 
-<div class="container">
 
-    <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                <div class="col-lg-7">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                        </div>
 
-                        <div th:if="${error}">
-                            <p class="alert alert-warning" th:text="${error}"></p>
-                        </div>
+<div class="container-xxl position-relative  d-flex p-0 ">
 
-                        <div th:if="${errorPassword}">
-                            <p class="alert alert-warning" th:text="${errorPassword}"></p>
-                        </div>
+    <div   class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+        <div th:if="${error_email}"  class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div style="color: #ffcc00; padding-right:8px; font-size: 20px "><i
+                        class="fas fa-exclamation-triangle"></i></div>
+                <strong class="me-auto">Warning</strong>
+                <small>Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div th:text="${error_email}" class="toast-body">
 
-                        <div th:if="${errorEmail}">
-                            <p class="alert alert-warning" th:text="${errorEmail}"></p>
-                        </div>
+            </div>
+        </div>
 
-                        <div th:if="${success}">
-                            <p class="alert alert-success" th:text="${success}"></p>
-                        </div>
+        <div th:if="${error_password}" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div style="color: #339900; padding-right:8px; font-size: 20px "><i
+                        class="fas fa-exclamation-triangle"></i></div>
+                <strong class="me-auto">Warning</strong>
+                <small>Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div th:text="${error_password}" class="toast-body">
 
-                        <form th:action="@{/register-new}" th:object="${adminDto}" method="post" class="user">
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input th:field="*{firstName}"  type="text" class="form-control form-control-user"
-                                           id="exampleFirstName"
-                                           placeholder="First Name">
-<!--                                    <div class="alert alert-danger" th:if="${#fields.hasErrors('firstname')}"-->
-<!--                                         th:errors="*{firstName}"-->
-<!--                                    ></div>-->
-                                </div>
-                                <div class="col-sm-6">
-                                    <input th:field="*{lastName}" type="text" class="form-control form-control-user"
-                                           id="exampleLastName"
-                                           placeholder="Last Name">
-<!--                                    <div th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastName}"-->
-<!--                                         class="alert alert-danger"></div>-->
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input th:field="*{username}" type="email" class="form-control form-control-user"
-                                       id="exampleInputEmail"
-                                       placeholder="Email Username">
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input th:field="*{password}" type="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Password">
-<!--                                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"-->
-<!--                                         class="alert alert-danger"></div>-->
-                                </div>
-                                <div class="col-sm-6">
-                                    <input th:field="*{repeatPassword}" type="password"
-                                           class="form-control form-control-user"
-                                           id="exampleRepeatPassword" placeholder="Repeat Password">
-                                </div>
-                            </div>
-                            <button type="submit" href="login.html" class="btn btn-primary btn-user btn-block">
-                                Register Account
-                            </button>
+            </div>
+        </div>
 
-                        </form>
-                        <hr>
-                        <div class="text-center">
-                            <a class="small" th:href="@{/forgot-password}" href="forgot-password.html">Forgot
-                                Password?</a>
-                        </div>
-                        <div class="text-center">
-                            <a class="small" th:href="@{/login}" href="login.html">Already have an account? Login!</a>
-                        </div>
+        <div th:if="${success}" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div style="color: #339900; padding-right:8px; font-size: 20px "><i class="fas fa-check"></i></div>
+                <strong class="me-auto">Warning</strong>
+                <small>Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div th:text="${success}" class="toast-body">
+
+            </div>
+        </div>
+
+
+        <div th:if="${error}" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div style="color: 	#cc3300; padding-right:8px; font-size: 20px "><i class="fas fa-exclamation"></i>
+                </div>
+                <strong class="me-auto">Warning</strong>
+                <small>Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div th:text="${error}" class="toast-body">
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- Spinner Start -->
+    <div th:replace="~{fragments :: spinner}"></div>
+    <!-- Spinner End -->
+
+
+    <!-- Sign In Start -->
+    <div class="container-fluid ">
+        <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                <div class=" rounded p-4 p-sm-5 my-4 mx-3" style="backdrop-filter: blur(8px); ">
+                    <div class="d-flex align-items-center justify-content-between flex-column mb-3">
+                        <a href="index.html" class="">
+                            <h3 class="text-primary">CATCOSY - ADMIN</h3>
+                        </a>
+                        <h3  style="color: white">Register</h3>
                     </div>
+                    <form th:action="@{/register-new}" method="post" th:object="${adminDto}">
+
+                        <div class="form-floating mb-3">
+                            <input th:field="*{firstName}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">First name</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input th:field="*{lastName}" type="text" class="form-control" id="floatingInput1" placeholder="name@example.com">
+                            <label for="floatingInput">Last name</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input th:field="*{username}" type="text" class="form-control" id="floatingText" placeholder="jhondoe">
+                            <label for="floatingText">Username</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input th:field="*{password}" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input th:field="*{repeatPassword}" type="password" class="form-control" id="floatingPasswordRepeat" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+
+                            <a href="">Forgot Password</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Register</button>
+                    </form>
+                    <p style="color: white" class="text-center mb-0">Don't have an Account? <a
+                            th:href="@{/login}">Login</a>
+                    </p>
                 </div>
             </div>
         </div>
+
     </div>
+    <!-- Sign In End -->
+
 
 </div>
 
-<div th:replace="fragments :: script "></div>
+<div th:replace="~{fragments :: script}"></div>
+<script>
+    const btn_close_toasts = document.querySelectorAll(".btn-close");
+
+    const toasts = document.querySelectorAll(".toast");
+
+    btn_close_toasts.forEach((btn_close, index) => {
+        btn_close.addEventListener("click", () => {
+            toasts[index].classList.remove("show");
+            toasts[index].classList.add("hide");
+        });
+    });
+
+
+</script>
 </body>
 
 </html>

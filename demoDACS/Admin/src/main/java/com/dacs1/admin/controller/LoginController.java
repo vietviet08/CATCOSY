@@ -1,5 +1,7 @@
 package com.dacs1.admin.controller;
 
+import com.dacs1.library.dto.AdminDto;
+import com.dacs1.library.model.Admin;
 import com.dacs1.library.service.AdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,6 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
 
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/login")
     public String loginForm(Model model)
@@ -43,6 +51,50 @@ public class LoginController {
         }
         return "index";
     }
+
+    @GetMapping("/register")
+    public String registerForm(Model model){
+        model.addAttribute("title", "Register");
+        model.addAttribute("adminDto", new AdminDto());
+        return "register";
+    }
+
+    @PostMapping("/register-new")
+    public String addNewAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
+                              BindingResult result,
+                              Model model) {
+        try {
+            if (result.hasErrors()) {
+                model.addAttribute("adminDto", adminDto);
+                return "register";
+            }
+
+            Admin admin = adminService.findByUsername(adminDto.getUsername());
+            if (admin != null) {
+                model.addAttribute("adminDto", adminDto);
+                model.addAttribute("error_email", "Your email has been register!");
+                return "register";
+            }
+
+            if (!adminDto.getPassword().equals(adminDto.getRepeatPassword())) {
+                model.addAttribute("adminDto", adminDto);
+                model.addAttribute("error_password", "Password not correct!");
+                return "register";
+            }
+
+            adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+            adminService.save(adminDto);
+            model.addAttribute("adminDto", adminDto);
+            model.addAttribute("success", "Register successfully!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Error register from server!");
+        }
+        return "register";
+    }
+
+
 
 
 }
