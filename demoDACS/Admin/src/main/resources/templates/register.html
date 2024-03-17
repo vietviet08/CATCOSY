@@ -13,11 +13,10 @@
     height: 100vh;">
 
 
-
 <div class="container-xxl position-relative  d-flex p-0 ">
 
-    <div   class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-        <div th:if="${error_email}"  class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+        <div th:if="${error_email}" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <div style="color: #ffcc00; padding-right:8px; font-size: 20px "><i
                         class="fas fa-exclamation-triangle"></i></div>
@@ -68,8 +67,6 @@
 
             </div>
         </div>
-
-
     </div>
 
 
@@ -87,32 +84,37 @@
                         <a href="index.html" class="">
                             <h3 class="text-primary">CATCOSY - ADMIN</h3>
                         </a>
-                        <h3  style="color: white">Register</h3>
+                        <h3 style="color: white">Register</h3>
                     </div>
                     <form th:action="@{/register-new}" method="post" th:object="${adminDto}">
 
                         <div class="form-floating mb-3">
-                            <input th:field="*{firstName}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input th:field="*{firstName}" type="text" class="form-control" id="floatingInput"
+                                   placeholder="name@example.com">
                             <label for="floatingInput">First name</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input th:field="*{lastName}" type="text" class="form-control" id="floatingInput1" placeholder="name@example.com">
+                            <input th:field="*{lastName}" type="text" class="form-control" id="floatingInput1"
+                                   placeholder="name@example.com">
                             <label for="floatingInput">Last name</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input th:field="*{username}" type="text" class="form-control" id="floatingText" placeholder="jhondoe">
+                            <input th:field="*{username}" type="text" class="form-control" id="floatingText"
+                                   placeholder="jhondoe">
                             <label for="floatingText">Username</label>
                         </div>
 
                         <div class="form-floating mb-4">
-                            <input th:field="*{password}" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input th:field="*{password}" type="password" class="form-control" id="floatingPassword"
+                                   placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
 
                         <div class="form-floating mb-4">
-                            <input th:field="*{repeatPassword}" type="password" class="form-control" id="floatingPasswordRepeat" placeholder="Password">
+                            <input th:field="*{repeatPassword}" type="password" class="form-control"
+                                   id="floatingPasswordRepeat" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
 

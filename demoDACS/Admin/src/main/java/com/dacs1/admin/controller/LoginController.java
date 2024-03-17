@@ -1,5 +1,6 @@
 package com.dacs1.admin.controller;
 
+import com.dacs1.admin.helper.SetNameAndRoleToPage;
 import com.dacs1.library.dto.AdminDto;
 import com.dacs1.library.model.Admin;
 import com.dacs1.library.service.AdminService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Controller
 public class LoginController {
@@ -30,8 +35,7 @@ public class LoginController {
     private AdminService adminService;
 
     @GetMapping("/login")
-    public String loginForm(Model model)
-    {
+    public String loginForm(Model model) {
         model.addAttribute("title", "Login");
         return "login";
     }
@@ -42,18 +46,9 @@ public class LoginController {
         return "forgot-password";
     }
 
-    @RequestMapping("/index")
-    public String home(Model model) {
-        model.addAttribute("title", "Home Page");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "redirect:/login";
-        }
-        return "index";
-    }
 
     @GetMapping("/register")
-    public String registerForm(Model model){
+    public String registerForm(Model model) {
         model.addAttribute("title", "Register");
         model.addAttribute("adminDto", new AdminDto());
         return "register";
@@ -95,6 +90,13 @@ public class LoginController {
     }
 
 
+
+
+    @RequestMapping("/index")
+    public void home(Model model) {
+        model.addAttribute("title", "Home Page");
+       SetNameAndRoleToPage.setNameAndRoleToPage(model, "index", adminService);
+    }
 
 
 }
