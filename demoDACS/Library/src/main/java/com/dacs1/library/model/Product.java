@@ -16,7 +16,7 @@ import java.util.Collection;
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long id;
     private String name;
@@ -28,19 +28,19 @@ public class Product {
     private Double costPrice;
     private Double salePrice;
     private Integer quantity;
-    @Column(length = 512)
+    @Column(columnDefinition = "TEXT")
     private String description;
     @Lob
-    @GeneratedColumn("LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private String img1;
     @Lob
-    @GeneratedColumn("LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private String img2;
     @Lob
-    @GeneratedColumn("LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private String img3;
     @Lob
-    @GeneratedColumn("LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private String img4;
     private Boolean isDeleted;
     private Boolean isActivated;

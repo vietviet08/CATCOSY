@@ -11,10 +11,10 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "size_product", uniqueConstraints = @UniqueConstraint(columnNames = "size"))
+@Table(name = "sizes", uniqueConstraints = @UniqueConstraint(columnNames = "size"))
 public class Size {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String size;
     @ManyToMany(mappedBy = "sizes")

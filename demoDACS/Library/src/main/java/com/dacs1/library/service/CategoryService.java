@@ -9,7 +9,10 @@ import java.util.Optional;
 
 public interface CategoryService {
 
+
     List<Category> findAllCategory();
+
+    List<Category> findAllCategoryIsActivate();
 
     Optional<Category> findById(Long id);
 
