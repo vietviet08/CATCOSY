@@ -44,7 +44,7 @@
 <!-- Sidebar Start -->
 <div th:fragment="sidebar" class="sidebar pe-4 pb-3">
     <nav class="navbar bg-light navbar-light">
-        <a href="index.html" class="navbar-brand mx-4 mb-3">
+        <a th:href="@{/index}" class="navbar-brand mx-4 mb-3">
             <h3 class="text-primary">CATCOSY</h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
@@ -193,6 +193,64 @@
     </div>
 </div>
 <!-- Footer End -->
+
+
+<!--Toast Start-->
+<div th:fragment="toast" class="position-fixed top-0 end-0 p-3" style="z-index: 9999999">
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${success}">
+        <div class="toast-header bg-success ">
+            <strong class="me-auto" style="color: white">Success</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${success}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${warning}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${warning}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${error}">
+        <div class="toast-header bg-danger ">
+            <strong class="me-auto" style="color: white">Error</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${error}">
+        </div>
+    </div>
+</div>
+<!--Toast End-->
+
+
+<script th:fragment="toastScript" th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastEl = document.querySelectorAll('.myToast');
+        toastEl.forEach((toastEl, index) => {
+
+            if (toastEl) {
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+                setTimeout(function () {
+                    toast.hide();
+                }, 3000);
+            }
+
+        })
+    });
+</script>
+
+
+
+
+
 
 <div th:fragment="script">
     <!-- JavaScript Libraries -->

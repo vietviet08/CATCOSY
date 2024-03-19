@@ -15,15 +15,67 @@
     <div th:replace="~{fragments :: navbar}"></div>
     <!-- Navbar End-->
 
-    <h1>OK~~ Product</h1>
+    <div class="container">
+        <a type="button" class="btn btn-primary my-2" th:href="@{/add-product}" >Add product
+        </a>
+
+        <div class="d-flex justify-content-center">
+            <div th:if="${size == 0}" class="alert alert-danger text-center w-25 my-2" role="alert">
+                Don't have products in repository
+            </div>
+        </div>
+    </div>
+
+    <table th:if="${size > 0}" class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Update</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, obj : ${products}">
+            <td th:text="${obj.index}"></td>
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.costPrice}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td class="text-center">
+                <img th:src="'data:image/jpeg;base64,'+ ${product.img1}" class="  border rounded"
+                     style="width: 40px; height: 40px" alt="" />
+            </td>
+            <td>
+                <a id="btnUpdate" th:href="@{/findById(id = ${product.id})}" class="btn btn-success"
+                   style="width: 100px">Update</a>
+            </td>
+            <td>
+                <a th:if="${product.getActivated()}" th:href="@{/delete-pruduct(id = ${product.id})}"
+                   class="btn btn-danger" style="width: 100px">Delete</a>
+                <a th:if="${product.getDeleted()}" th:href="@{/activate-product(id = ${product.id})}"
+                   class="btn btn-primary" style="width: 100px">Activate</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
 
 </div>
 
+
 <div th:replace="~{fragments ::  footer}"></div>
+
+<div th:replace="~{fragments :: toast}"></div>
 
 
 <div th:replace="~{fragments :: script}">
 </div>
+
+
+<script th:replace="~{fragments :: toastScript}"></script>
 
 </body>
 </html>

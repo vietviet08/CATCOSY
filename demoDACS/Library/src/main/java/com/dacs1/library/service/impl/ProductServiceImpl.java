@@ -83,26 +83,42 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(MultipartFile img1, MultipartFile img2, MultipartFile img3, MultipartFile img4, ProductDto productDto) throws IOException {
-        Product product = convertToEntity(productDto);
-        if (img1 == null) {
-            product.setImg1(null);
-        } else {
-            product.setImg1(Base64.getEncoder().encodeToString(img1.getBytes()));
-        }
-        if (img2 == null) {
-            product.setImg2(null);
-        } else {
-            product.setImg2(Base64.getEncoder().encodeToString(img2.getBytes()));
-        }
-        if (img3 == null) {
-            product.setImg3(null);
-        } else {
-            product.setImg3(Base64.getEncoder().encodeToString(img3.getBytes()));
-        }
-        if (img4 == null) {
-            product.setImg4(null);
-        } else {
-            product.setImg4(Base64.getEncoder().encodeToString(img4.getBytes()));
+        Product product = new Product();
+        try {
+            product.setId(productDto.getId());
+            product.setName(productDto.getName());
+            product.setDescription(productDto.getDescription());
+            product.setSizes(productDto.getSizes().stream().toList());
+            product.setCostPrice(productDto.getCostPrice());
+            product.setSalePrice(productDto.getSalePrice());
+            product.setQuantity(productDto.getQuantity());
+            product.setCategory(productDto.getCategory());
+            product.setIsActivated(true);
+            product.setIsDeleted(false);
+
+            if (img1 == null) {
+                product.setImg1(null);
+            } else {
+                product.setImg1(Base64.getEncoder().encodeToString(img1.getBytes()));
+            }
+            if (img2 == null) {
+                product.setImg2(null);
+            } else {
+                product.setImg2(Base64.getEncoder().encodeToString(img2.getBytes()));
+            }
+            if (img3 == null) {
+                product.setImg3(null);
+            } else {
+                product.setImg3(Base64.getEncoder().encodeToString(img3.getBytes()));
+            }
+            if (img4 == null) {
+                product.setImg4(null);
+            } else {
+                product.setImg4(Base64.getEncoder().encodeToString(img4.getBytes()));
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
         return productRepository.save(product);
     }
