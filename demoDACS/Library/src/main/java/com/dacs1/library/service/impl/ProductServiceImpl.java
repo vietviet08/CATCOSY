@@ -2,6 +2,8 @@ package com.dacs1.library.service.impl;
 
 import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Product;
+import com.dacs1.library.model.ProductImage;
+import com.dacs1.library.repository.ProductImageRepository;
 import com.dacs1.library.repository.ProductRepository;
 import com.dacs1.library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductImageRepository productImageRepository;
+
     private List<ProductDto> convertToDtoList(List<Product> products) {
         List<ProductDto> dtoList = new ArrayList<>();
         for (Product product : products) {
@@ -30,10 +35,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setCostPrice(product.getCostPrice());
             productDto.setSalePrice(product.getSalePrice());
             productDto.setQuantity(product.getQuantity());
-            productDto.setImg1(product.getImg1());
-            productDto.setImg2(product.getImg2());
-            productDto.setImg3(product.getImg3());
-            productDto.setImg4(product.getImg4());
+            productDto.setImages(product.getImages());
             productDto.setCategory(product.getCategory());
             productDto.setActivated(product.getIsActivated());
             productDto.setDeleted(product.getIsDeleted());
@@ -66,10 +68,7 @@ public class ProductServiceImpl implements ProductService {
         productDto.setCostPrice(product.getCostPrice());
         productDto.setSalePrice(product.getSalePrice());
         productDto.setQuantity(product.getQuantity());
-        productDto.setImg1(product.getImg1());
-        productDto.setImg2(product.getImg2());
-        productDto.setImg3(product.getImg3());
-        productDto.setImg4(product.getImg4());
+        productDto.setImages(product.getImages());
         productDto.setCategory(product.getCategory());
         productDto.setActivated(product.getIsActivated());
         productDto.setDeleted(product.getIsDeleted());
@@ -82,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product save(MultipartFile img1, MultipartFile img2, MultipartFile img3, MultipartFile img4, ProductDto productDto) throws IOException {
+    public Product save(List<MultipartFile> images, ProductDto productDto) throws IOException {
         Product product = new Product();
         try {
             product.setId(productDto.getId());
@@ -96,49 +95,38 @@ public class ProductServiceImpl implements ProductService {
             product.setIsActivated(true);
             product.setIsDeleted(false);
 
-            if (img1 == null) {
-                product.setImg1(null);
-            } else {
-                product.setImg1(Base64.getEncoder().encodeToString(img1.getBytes()));
+            List<ProductImage> imageList = new ArrayList<>();
+
+            for (MultipartFile image : images) {
+                ProductImage productImage = new ProductImage();
+                String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
+                productImage.setImage(fileImg);
+                imageList.add(productImage);
             }
-            if (img2 == null) {
-                product.setImg2(null);
-            } else {
-                product.setImg2(Base64.getEncoder().encodeToString(img2.getBytes()));
-            }
-            if (img3 == null) {
-                product.setImg3(null);
-            } else {
-                product.setImg3(Base64.getEncoder().encodeToString(img3.getBytes()));
-            }
-            if (img4 == null) {
-                product.setImg4(null);
-            } else {
-                product.setImg4(Base64.getEncoder().encodeToString(img4.getBytes()));
-            }
-        }catch (Exception e)
-        {
+            product.setImages(imageList);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return productRepository.save(product);
     }
 
     @Override
-    public Product update(MultipartFile img1, MultipartFile img2, MultipartFile img3, MultipartFile img4, ProductDto productDto) throws IOException {
+    public Product update(List<MultipartFile> images, ProductDto productDto) throws IOException {
 
         Product product = productRepository.getReferenceById(productDto.getId());
-        if(img1 != null){
-            product.setImg1(Base64.getEncoder().encodeToString(img1.getBytes()));
+
+        List<ProductImage> productImagesOld = productImageRepository.findByIdProduct(productDto.getId());
+
+        int i = 0;
+        for (MultipartFile newImage : images) {
+            if (newImage != null) {
+                ProductImage productImage = productImagesOld.get(i);
+                productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
+                productImagesOld.add(i, productImage);
+            }
+            i++;
         }
-        if(img2 != null){
-            product.setImg1(Base64.getEncoder().encodeToString(img2.getBytes()));
-        }
-        if(img3 != null){
-            product.setImg1(Base64.getEncoder().encodeToString(img3.getBytes()));
-        }
-        if(img4 != null){
-            product.setImg1(Base64.getEncoder().encodeToString(img4.getBytes()));
-        }
+
         product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());

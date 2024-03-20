@@ -4,11 +4,9 @@ import com.dacs1.admin.helper.SetNameAndRoleToPage;
 import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Category;
 import com.dacs1.library.model.Product;
+import com.dacs1.library.model.ProductImage;
 import com.dacs1.library.repository.SizeRepository;
-import com.dacs1.library.service.AdminService;
-import com.dacs1.library.service.CategoryService;
-import com.dacs1.library.service.ProductService;
-import com.dacs1.library.service.SizeService;
+import com.dacs1.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProductController {
@@ -34,13 +34,26 @@ public class ProductController {
     @Autowired
     private SizeService sizeService;
 
+    @Autowired
+    private ProductImageService productImageService;
+
 
     @GetMapping("/products")
     public String productPage(Model model) {
         List<ProductDto> products = productService.findAllProduct();
+        List<ProductImage> productImages = productImageService.findByIdProductUnique();
+
+        Map<Long, String> images = new HashMap<>();
+        if(!productImages.isEmpty()) {
+            for (ProductImage productImage : productImages) {
+                images.put(productImage.getProduct().getId(), productImage.getImage());
+            }
+        }
+
         model.addAttribute("title", "Products");
         model.addAttribute("products", products);
         model.addAttribute("size", products.size());
+        model.addAttribute("imagesMap", images);
         SetNameAndRoleToPage.setNameAndRoleToPage(model, "products", adminService);
         return "products";
     }
@@ -56,16 +69,13 @@ public class ProductController {
     }
 
 
-    @PostMapping("/add-product")
+    @PostMapping("/save-product")
     public String addProduct(@ModelAttribute("newProduct") ProductDto productDto,
-                             @RequestParam("img1") MultipartFile img1,
-                             @RequestParam("img2") MultipartFile img2,
-                             @RequestParam("img3") MultipartFile img3,
-                             @RequestParam("img4") MultipartFile img4,
+                             @RequestParam("listImage") List<MultipartFile> ListFiles,
                              RedirectAttributes attributes) {
 
         try {
-            productService.save(img1, img2, img3, img4, productDto);
+            productService.save(ListFiles, productDto);
             attributes.addFlashAttribute("success", "Add product successfully!");
         } catch (DataIntegrityViolationException e) {
             attributes.addFlashAttribute("warning", "Name product already exist!");
@@ -76,7 +86,7 @@ public class ProductController {
         }
 
 
-        return "redirect:/products/0";
+        return "redirect:/products";
     }
 
     @GetMapping("/update-product/{id}")
@@ -92,17 +102,14 @@ public class ProductController {
 
 
     @RequestMapping("/update-product/{id}")
-    public String updateProduct(@RequestParam("img1") MultipartFile img1,
-                                @RequestParam("img2") MultipartFile img2,
-                                @RequestParam("img3") MultipartFile img3,
-                                @RequestParam("img4") MultipartFile img4,
+    public String updateProduct(@RequestParam("img1") List<MultipartFile> img1,
                                 @ModelAttribute("productUpdate") ProductDto product) {
         try {
-            productService.update(img1, img2, img3, img4, product);
+            productService.update(img1, product);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/products/0";
+        return "redirect:/products";
     }
 
     @RequestMapping(value = "/delete-product", method = {RequestMethod.GET, RequestMethod.PUT})

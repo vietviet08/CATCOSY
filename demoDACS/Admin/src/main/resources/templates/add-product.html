@@ -21,7 +21,7 @@
     <div th:replace="~{fragments :: navbar}"></div>
     <!-- Navbar End-->
     <div class="container ">
-        <form style="width: 100%" class="form-horizontal" th:action="@{/add-product}" method="post"
+        <form style="width: 100%" class="form-horizontal" th:action="@{/save-product}" method="post"
               enctype="multipart/form-data"
               th:object="${newProduct}">
             <fieldset>
@@ -71,7 +71,7 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="quantity"> QUANTITY</label>
+                    <label class="col-md-4 control-label" for="quantity"> Quantity</label>
                     <div class="col-md-4">
                         <input th:field="*{quantity}" id="quantity" name="quantity"
                                class="form-control input-md" required="required"
@@ -83,7 +83,7 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="price">PRICE</label>
+                    <label class="col-md-4 control-label" for="price">Price</label>
                     <div class="col-md-4">
                         <input th:field="*{costPrice}" id="price" name="price" class="form-control input-md"
                                required="required" type="text">
@@ -104,11 +104,11 @@
                 <!-- Text input-->
 
 
-                <!-- File Button -->
+<!--                 File Button -->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="img1">Image</label>
+                    <label class="col-md-4 control-label" for="img">Image</label>
                     <div class="col-md-4">
-                        <input id="img1" name="img1" class="input-file" type="file">
+                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple" >
                     </div>
                 </div>
 

@@ -32,19 +32,22 @@
             <th scope="col">No</th>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
+            <th scope="col">Cost price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Image</th>
             <th scope="col">Update</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product, obj : ${products}">
+        <tr th:each="product, obj : ${products}" >
             <td th:text="${obj.index}"></td>
             <td th:text="${product.id}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="${product.costPrice}"></td>
             <td th:text="${product.quantity}"></td>
             <td class="text-center">
-                <img th:src="'data:image/jpeg;base64,'+ ${product.img1}" class="  border rounded"
+                <img th:src="'data:image/jpeg;base64,'+ ${imagesMap.get(product.id)}" class="  border rounded"
                      style="width: 40px; height: 40px" alt="" />
             </td>
             <td>
