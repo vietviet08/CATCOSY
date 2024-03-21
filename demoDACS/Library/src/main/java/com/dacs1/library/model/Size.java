@@ -17,6 +17,7 @@ public class Size {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String size;
+
     @ManyToMany(mappedBy = "sizes")
     private Collection<Product> products;
 }

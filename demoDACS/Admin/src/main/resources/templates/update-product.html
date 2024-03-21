@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+
+    <style>
+        form .form-group{
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+
+<div th:replace="~{fragments ::  spinner}"></div>
+
+
+<div th:replace="~{fragments ::  sidebar}"></div>
+
+<div class="content">
+    <!-- Navbar Start -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <!-- Navbar End-->
+    <div class="container ">
+        <form style="width: 100%" class="form-horizontal" th:action="@{/update-product/{id}(id = ${productUpdate.id})}" method="post"
+              enctype="multipart/form-data"
+              th:object="${productUpdate}">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>UPDATE PRODUCTS</legend>
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="name">Product name</label>
+                    <div class="col-md-4">
+                        <input th:field="*{name}" id="name" name="name"
+                               class="form-control input-md" required="required" type="text">
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        Sizes
+                        <div th:each="size : ${sizes}" class="d-inline-block mx-2">
+
+                            <label class="col-md-4 d-inline form-check-label"
+                                   th:for="'sizes' + ${size.size}"></label>
+                            <input th:value="${size.id}" th:text="${size.size}" th:id="'sizes' + ${size.size}" th:checked="${#lists.contains(sizesExisting, size)}"
+                                   name="sizes"
+                                   class="d-inline form-check-input "  type="checkbox" >
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="category">Category</label>
+                    <div class="col-md-4">
+                        <select th:field="*{category}" id="category" name="product_category"
+                                class="form-control">
+                            <option th:each="category : ${categories}" th:value="${category.id}"
+                                    th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="quantity"> Quantity</label>
+                    <div class="col-md-4">
+                        <input th:field="*{quantity}" id="quantity" name="quantity"
+                               class="form-control input-md" required="required"
+                               type="text">
+
+                    </div>
+                </div>
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="price">Price</label>
+                    <div class="col-md-4">
+                        <input th:field="*{costPrice}" id="price" name="price" class="form-control input-md"
+                               required="required" type="text">
+
+                    </div>
+                </div>
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="description">Product description </label>
+                    <div class="col-md-4">
+                    <textarea style="height: 200px" th:field="*{description}" id="description" name="description"
+                              class="form-control input-md" required="" type="text"></textarea>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+
+
+<!--                 File Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="img">Image</label>
+                    <div class="col-md-4">
+                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple" >
+                    </div>
+                </div>
+
+
+            </fieldset>
+            <button type="submit" class="btn btn-success w-25">
+                Update
+            </button>
+        </form>
+    </div>
+
+</div>
+
+
+<div th:replace="~{fragments ::  footer}"></div>
+
+<div th:replace="~{fragments :: toast}"></div>
+
+
+<div th:replace="~{fragments :: script}">
+</div>
+
+
+<script th:replace="~{fragments :: toastScript}"></script>
+
+</body>
+</html>

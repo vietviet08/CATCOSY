@@ -18,4 +18,9 @@ public class SizeServiceImpl implements SizeService {
     public List<Size> findAllSize() {
         return sizeRepository.findAll();
     }
+
+    @Override
+    public List<Size> findAllSizeById() {
+        return null;
+    }
 }

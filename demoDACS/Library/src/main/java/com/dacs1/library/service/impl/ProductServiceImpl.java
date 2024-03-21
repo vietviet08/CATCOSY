@@ -3,17 +3,26 @@ package com.dacs1.library.service.impl;
 import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
+import com.dacs1.library.model.Size;
 import com.dacs1.library.repository.ProductImageRepository;
 import com.dacs1.library.repository.ProductRepository;
+import com.dacs1.library.repository.SizeRepository;
 import com.dacs1.library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -23,6 +32,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductImageRepository productImageRepository;
+
+    @Autowired
+    private SizeRepository sizeRepository;
 
     private List<ProductDto> convertToDtoList(List<Product> products) {
         List<ProductDto> dtoList = new ArrayList<>();
@@ -100,6 +112,7 @@ public class ProductServiceImpl implements ProductService {
             for (MultipartFile image : images) {
                 ProductImage productImage = new ProductImage();
                 String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
+                productImage.setProduct(product);
                 productImage.setImage(fileImg);
                 imageList.add(productImage);
             }
@@ -115,17 +128,29 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = productRepository.getReferenceById(productDto.getId());
 
-        List<ProductImage> productImagesOld = productImageRepository.findByIdProduct(productDto.getId());
+        List<ProductImage> productImagesOlds = productImageRepository.findByIdProduct(productDto.getId());
+        List<ProductImage> productImages = new ArrayList<>();
 
         int i = 0;
         for (MultipartFile newImage : images) {
-            if (newImage != null) {
-                ProductImage productImage = productImagesOld.get(i);
-                productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
-                productImagesOld.add(i, productImage);
+            if (newImage != null && !newImage.isEmpty()) {
+                ProductImage productImage = null;
+                if (i < productImagesOlds.size()) {
+                    productImage = productImagesOlds.get(i);
+                    productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
+
+                } else {
+                    productImage = new ProductImage();
+                    productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
+                    productImage.setProduct(product);
+                }
+
+                productImages.add(productImage);
             }
             i++;
         }
+
+        product.setImages(productImages);
 
         product.setId(productDto.getId());
         product.setName(productDto.getName());
@@ -142,8 +167,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
+    public void updateProductSize(Long idProduct, List<Size> sizes) {
+
+        Product product = productRepository.getReferenceById(idProduct);
+
+        List<Long> newSizes = sizes.stream().map(Size::getId).toList();
+        List<Long> oldSizes = product.getSizes().stream().map(Size::getId).toList();
+
+        for (Long sizeId : oldSizes) {
+            if (!newSizes.contains(sizeId)) {
+                product.removeSize(sizeId);
+            }
+        }
+
+    }
+
+
+    @Override
     public ProductDto findById(Long id) {
-        return convertToDto(productRepository.getReferenceById(id));
+        return convertToDto(productRepository.getById(id));
+    }
+
+    @Override
+    public Optional<Product> getById(Long id) {
+        return productRepository.findById(id);
     }
 
     @Override
@@ -160,5 +208,30 @@ public class ProductServiceImpl implements ProductService {
         product.setIsDeleted(false);
         product.setIsActivated(true);
         productRepository.save(product);
+    }
+
+    @Override
+    public void removeUnusedSizesFromProducts() {
+
+    }
+
+    @Override
+    public Page<ProductDto> pageProduct(int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 8);
+        List<ProductDto> dtoList = convertToDtoList(productRepository.findAll());
+        return toPage(pageable, dtoList);
+    }
+
+    @Override
+    public Page<ProductDto> pageProductSearch(String keyword, int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo, 8);
+        List<ProductDto> dtoList = convertToDtoList(productRepository.findByKeyword(keyword));
+        return toPage(pageable, dtoList);
+    }
+
+    private Page<ProductDto> toPage(Pageable pageable, List<ProductDto> list) {
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), list.size());
+        return new PageImpl<ProductDto>(list.subList(start, end), pageable, list.size());
     }
 }

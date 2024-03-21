@@ -9,4 +9,6 @@ public interface SizeService {
 
     List<Size> findAllSize();
 
+    List<Size> findAllSizeById();
+
 }

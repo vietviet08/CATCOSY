@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class SetNameAndRoleToPage {
 
     public static String setNameAndRoleToPage(Model model, String page, AdminService adminService) {
-        model.addAttribute("title", "Home Page");
+//        model.addAttribute("title", "Home Page");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "redirect:/login";

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GeneratedColumn;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,8 +37,17 @@ public class Product {
     private String description;
 
     @OneToMany(mappedBy = "product", cascade =  CascadeType.ALL, orphanRemoval = true)
-    private List<ProductImage> images;
+    private List<ProductImage> images = new ArrayList<>();
 
     private Boolean isDeleted;
     private Boolean isActivated;
+
+    public void removeSize(Long id){
+        for(Size size : sizes){
+            if(size.getId().equals(id)){
+                sizes.remove(size);
+                return;
+            }
+        }
+    }
 }
