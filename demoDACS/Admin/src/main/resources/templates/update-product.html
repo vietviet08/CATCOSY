@@ -21,9 +21,9 @@
     <div th:replace="~{fragments :: navbar}"></div>
     <!-- Navbar End-->
     <div class="container ">
-        <form style="width: 100%" class="form-horizontal" th:action="@{/update-product/{id}(id = ${productUpdate.id})}" method="post"
+        <form style="width: 100%" class="form-horizontal" th:action="@{/update-product/{id}(id = ${productDto.id})}" method="post"
               enctype="multipart/form-data"
-              th:object="${productUpdate}">
+              th:object="${productDto}">
             <fieldset>
 
                 <!-- Form Name -->
@@ -86,6 +86,16 @@
                     <label class="col-md-4 control-label" for="price">Price</label>
                     <div class="col-md-4">
                         <input th:field="*{costPrice}" id="price" name="price" class="form-control input-md"
+                               required="required" type="text">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="price">Price</label>
+                    <div class="col-md-4">
+                        <input th:field="*{salePrice}" id="salePrice" name="salePrice" class="form-control input-md"
                                required="required" type="text">
 
                     </div>

@@ -14,15 +14,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -42,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
             ProductDto productDto = new ProductDto();
             productDto.setId(product.getId());
             productDto.setName(product.getName());
-            productDto.setSizes(product.getSizes().stream().toList());
+            productDto.setSizes(product.getSizes());
             productDto.setDescription(product.getDescription());
             productDto.setCostPrice(product.getCostPrice());
             productDto.setSalePrice(product.getSalePrice());
@@ -61,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
         product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
-        product.setSizes(productDto.getSizes().stream().toList());
+        product.setSizes(productDto.getSizes());
         product.setCostPrice(productDto.getCostPrice());
         product.setSalePrice(productDto.getSalePrice());
         product.setQuantity(productDto.getQuantity());
@@ -75,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setName(product.getName());
-        productDto.setSizes(product.getSizes().stream().toList());
+        productDto.setSizes(product.getSizes());
         productDto.setDescription(product.getDescription());
         productDto.setCostPrice(product.getCostPrice());
         productDto.setSalePrice(product.getSalePrice());
@@ -99,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
             product.setId(productDto.getId());
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
-            product.setSizes(productDto.getSizes().stream().toList());
+            product.setSizes(productDto.getSizes());
             product.setCostPrice(productDto.getCostPrice());
             product.setSalePrice(productDto.getSalePrice());
             product.setQuantity(productDto.getQuantity());
@@ -128,6 +123,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = productRepository.getReferenceById(productDto.getId());
 
+
         List<ProductImage> productImagesOlds = productImageRepository.findByIdProduct(productDto.getId());
         List<ProductImage> productImages = new ArrayList<>();
 
@@ -142,33 +138,30 @@ public class ProductServiceImpl implements ProductService {
                 } else {
                     productImage = new ProductImage();
                     productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
-                    productImage.setProduct(product);
+                    productImage.setProduct(null);
                 }
 
                 productImages.add(productImage);
             }
             i++;
         }
-
-        product.setImages(productImages);
+        if (!productImages.isEmpty()) product.setImages(productImages);
+        else product.setImages(productDto.getImages());
 
         product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
-        product.setSizes(productDto.getSizes().stream().toList());
+        product.setSizes(productDto.getSizes());
         product.setCostPrice(productDto.getCostPrice());
         product.setSalePrice(productDto.getSalePrice());
         product.setQuantity(productDto.getQuantity());
         product.setCategory(productDto.getCategory());
-        product.setIsActivated(productDto.getActivated());
-        product.setIsDeleted(productDto.getDeleted());
 
         return productRepository.save(product);
     }
 
     @Override
-    @Transactional
-    public void updateProductSize(Long idProduct, List<Size> sizes) {
+    public void updateProductSize(Long idProduct, Set<Size> sizes) {
 
         Product product = productRepository.getReferenceById(idProduct);
 
@@ -177,21 +170,32 @@ public class ProductServiceImpl implements ProductService {
 
         for (Long sizeId : oldSizes) {
             if (!newSizes.contains(sizeId)) {
-                product.removeSize(sizeId);
+                removeSize(sizeId, product);
             }
         }
 
     }
 
+    public void removeSize(Long id, Product product) {
+        Set<Size> sizes = product.getSizes();
+        for (Size size : sizes) {
+            if (size.getId().equals(id)) {
+                sizes.remove(size);
+                return;
+            }
+        }
+    }
+
 
     @Override
-    public ProductDto findById(Long id) {
-        return convertToDto(productRepository.getById(id));
+    public Optional<Product> findById(Long id) {
+
+        return productRepository.findById(id);
     }
 
     @Override
-    public Optional<Product> getById(Long id) {
-        return productRepository.findById(id);
+    public ProductDto getById(Long id) {
+        return convertToDto(productRepository.getByIdProduct(id));
     }
 
     @Override
@@ -213,6 +217,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void removeUnusedSizesFromProducts() {
 
+    }
+
+    @Override
+    public List<ProductDto> sortDesc() {
+
+        return convertToDtoList(productRepository.findAllByPriceDesc());
+    }
+
+    @Override
+    public List<ProductDto> sortAsc() {
+        return convertToDtoList(productRepository.findAllByPriceAsc());
+    }
+
+    @Override
+    public List<ProductDto> byCategory(String nameCategory) {
+        return convertToDtoList(productRepository.findAllByCategory(nameCategory));
     }
 
     @Override

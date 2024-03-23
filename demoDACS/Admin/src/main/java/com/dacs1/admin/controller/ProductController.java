@@ -5,6 +5,7 @@ import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Category;
 import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
+import com.dacs1.library.model.Size;
 import com.dacs1.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -92,16 +93,16 @@ public class ProductController {
 
     @RequestMapping(value = "/findByIdProduct", method = {RequestMethod.GET, RequestMethod.PUT})
     @ResponseBody
-    public Optional<Product> getById(Long id) {
+    public ProductDto getById(Long id) {
         return productService.getById(id);
     }
 
     @GetMapping("/update-product/{id}")
     public String updateProduct(@PathVariable("id") Long id, Model model) {
-        ProductDto productDto = productService.findById(id);
+        ProductDto productDto = productService.getById(id);
         List<Category> categoryList = categoryService.findAllCategoryIsActivate();
         model.addAttribute("title", "Update product");
-        model.addAttribute("productUpdate", productDto);
+        model.addAttribute("productDto", productDto);
         model.addAttribute("sizes", sizeService.findAllSize());
         model.addAttribute("sizesExisting", productDto.getSizes());
         model.addAttribute("categories", categoryList);
@@ -109,12 +110,11 @@ public class ProductController {
     }
 
 
-    @PostMapping(value = "/update-product/{id}")
+    @PostMapping("/update-product/{id}")
     public String updateProduct(@ModelAttribute("productUpdate") ProductDto productDto,
                                 @RequestParam("listImage") List<MultipartFile> images,
                                 RedirectAttributes attributes) {
         try {
-//            System.out.println(productDto.toString());
             productService.update(images, productDto);
             productService.updateProductSize(productDto.getId(), productDto.getSizes());
             attributes.addFlashAttribute("success", "Update product successfully!");
@@ -129,14 +129,14 @@ public class ProductController {
     @RequestMapping(value = "/delete-product", method = {RequestMethod.GET, RequestMethod.PUT})
     public String deleteProduct(ProductDto product) {
         productService.deleteById(product.getId());
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
 
     @RequestMapping(value = "/activate-product", method = {RequestMethod.GET, RequestMethod.PUT})
     public String activateProduct(ProductDto product) {
         productService.activateById(product.getId());
-        return "redirect:/products";
+        return "redirect:/products/0";
     }
 
 
@@ -186,5 +186,19 @@ public class ProductController {
         return "products";
     }
 
+
+    @GetMapping("/sort-prices")
+    public List<ProductDto> sortPrice(@RequestParam("nameOption") String nameOption) {
+        return switch (nameOption) {
+            case "1" -> productService.sortDesc();
+            case "2" -> productService.sortAsc();
+            default -> null;
+        };
+    }
+
+    @GetMapping("/sort-category")
+    public List<ProductDto> sortCategory(@RequestParam("nameOption") String nameOption){
+        return productService.byCategory(nameOption);
+    }
 
 }

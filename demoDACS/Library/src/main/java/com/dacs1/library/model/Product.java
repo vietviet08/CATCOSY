@@ -1,15 +1,18 @@
 package com.dacs1.library.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GeneratedColumn;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -28,7 +31,11 @@ public class Product {
     private Category category;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Size> sizes;
+    @JoinTable(name = "products_sizes",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "size_id"))
+    private Set<Size> sizes;
+
     private Double costPrice;
     private Double salePrice;
     private Integer quantity;
@@ -36,18 +43,10 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "product", cascade =  CascadeType.ALL, orphanRemoval = true)
-    private List<ProductImage> images = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductImage> images;
 
     private Boolean isDeleted;
     private Boolean isActivated;
 
-    public void removeSize(Long id){
-        for(Size size : sizes){
-            if(size.getId().equals(id)){
-                sizes.remove(size);
-                return;
-            }
-        }
-    }
 }
