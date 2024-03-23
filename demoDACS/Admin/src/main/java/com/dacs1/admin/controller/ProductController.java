@@ -10,6 +10,9 @@ import com.dacs1.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,9 +75,7 @@ public class ProductController {
 
 
     @PostMapping("/save-product")
-    public String addProduct(@ModelAttribute("newProduct") ProductDto productDto,
-                             @RequestParam("listImage") List<MultipartFile> ListFiles,
-                             RedirectAttributes attributes) {
+    public String addProduct(@ModelAttribute("newProduct") ProductDto productDto, @RequestParam("listImage") List<MultipartFile> ListFiles, RedirectAttributes attributes) {
 
         try {
             productService.save(ListFiles, productDto);
@@ -111,9 +112,7 @@ public class ProductController {
 
 
     @PostMapping("/update-product/{id}")
-    public String updateProduct(@ModelAttribute("productUpdate") ProductDto productDto,
-                                @RequestParam("listImage") List<MultipartFile> images,
-                                RedirectAttributes attributes) {
+    public String updateProduct(@ModelAttribute("productUpdate") ProductDto productDto, @RequestParam("listImage") List<MultipartFile> images, RedirectAttributes attributes) {
         try {
             productService.update(images, productDto);
             productService.updateProductSize(productDto.getId(), productDto.getSizes());
@@ -188,17 +187,26 @@ public class ProductController {
 
 
     @GetMapping("/sort-prices")
-    public List<ProductDto> sortPrice(@RequestParam("nameOption") String nameOption) {
-        return switch (nameOption) {
-            case "1" -> productService.sortDesc();
-            case "2" -> productService.sortAsc();
-            default -> null;
-        };
+    public String sortPrice(@RequestParam("nameOption") int nameOption, Model model) {
+        switch (nameOption) {
+            case 1: {
+                model.addAttribute("productSortedDesc", productService.sortDesc());
+            }
+            case 2:
+                model.addAttribute("productSortedAsc", productService.sortAsc());
+        }
+        return "products";
     }
 
     @GetMapping("/sort-category")
-    public List<ProductDto> sortCategory(@RequestParam("nameOption") String nameOption){
+    public List<ProductDto> sortCategory(@RequestParam("nameOption") String nameOption) {
         return productService.byCategory(nameOption);
     }
+
+    @GetMapping("/test-sort-price")
+    public ResponseEntity<List<ProductDto>> getAll(){
+        return new ResponseEntity<>(productService.sortAsc(), HttpStatus.OK);
+    }
+
 
 }

@@ -16,6 +16,9 @@
         <module>
             Admin
         </module>
+        <module>
+            Customer
+        </module>
     </modules>
 
     <properties>
