@@ -83,7 +83,7 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="price">Price</label>
+                    <label class="col-md-4 control-label" for="price">Cost price</label>
                     <div class="col-md-4">
                         <input th:field="*{costPrice}" id="price" name="price" class="form-control input-md"
                                required="required" type="text">
@@ -93,10 +93,10 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="price">Price</label>
+                    <label class="col-md-4 control-label" for="price">Sale price</label>
                     <div class="col-md-4">
                         <input th:field="*{salePrice}" id="salePrice" name="salePrice" class="form-control input-md"
-                               required="required" type="text">
+                                type="text">
 
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     <label class="col-md-4 control-label" for="description">Product description </label>
                     <div class="col-md-4">
                     <textarea style="height: 200px" th:field="*{description}" id="description" name="description"
-                              class="form-control input-md" required="" type="text"></textarea>
+                              class="form-control input-md" type="text"></textarea>
                     </div>
                 </div>
 

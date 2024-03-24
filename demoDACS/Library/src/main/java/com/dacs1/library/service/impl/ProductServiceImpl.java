@@ -220,14 +220,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> sortDesc() {
-
-        return convertToDtoList(productRepository.findAllByPriceDesc());
+    public Page<ProductDto> sortDesc(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize );
+        return toPage(pageable, convertToDtoList(productRepository.findAllByPriceDesc()));
     }
 
     @Override
-    public List<ProductDto> sortAsc() {
-        return convertToDtoList(productRepository.findAllByPriceAsc());
+    public Page<ProductDto> sortAsc(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        return toPage(pageable, convertToDtoList(productRepository.findAllByPriceAsc()));
     }
 
     @Override
@@ -236,15 +238,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDto> pageProduct(int pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 8);
+    public Page<ProductDto> pageProduct(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
         List<ProductDto> dtoList = convertToDtoList(productRepository.findAll());
         return toPage(pageable, dtoList);
     }
 
     @Override
-    public Page<ProductDto> pageProductSearch(String keyword, int pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 8);
+    public Page<ProductDto> pageProductSearch(String keyword, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
         List<ProductDto> dtoList = convertToDtoList(productRepository.findByKeyword(keyword));
         return toPage(pageable, dtoList);
     }

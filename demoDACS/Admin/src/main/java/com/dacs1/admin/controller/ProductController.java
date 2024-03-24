@@ -142,7 +142,7 @@ public class ProductController {
     @GetMapping("/products/{pageNo}")
     public String pageProduct(@PathVariable("pageNo") int pageNo, Model model) {
 
-        Page<ProductDto> products = productService.pageProduct(pageNo);
+        Page<ProductDto> products = productService.pageProduct(pageNo, 10);
         List<ProductImage> productImages = productImageService.findByIdProductUnique();
 
         Map<Long, String> images = new HashMap<>();
@@ -165,7 +165,7 @@ public class ProductController {
     @GetMapping("/search-products/{pageNo}")
     public String pageProductSearch(@PathVariable("pageNo") int pageNo, @RequestParam("keyword") String key, Model model) {
 
-        Page<ProductDto> products = productService.pageProductSearch(key, pageNo);
+        Page<ProductDto> products = productService.pageProductSearch(key, pageNo, 10);
         List<ProductImage> productImages = productImageService.findByIdProductUnique();
 
         Map<Long, String> images = new HashMap<>();
@@ -188,13 +188,13 @@ public class ProductController {
 
     @GetMapping("/sort-prices")
     public String sortPrice(@RequestParam("nameOption") int nameOption, Model model) {
-        switch (nameOption) {
-            case 1: {
-                model.addAttribute("productSortedDesc", productService.sortDesc());
-            }
-            case 2:
-                model.addAttribute("productSortedAsc", productService.sortAsc());
-        }
+//        switch (nameOption) {
+//            case 1: {
+//                model.addAttribute("productSortedDesc", productService.sortDesc());
+//            }
+//            case 2:
+//                model.addAttribute("productSortedAsc", productService.sortAsc());
+//        }
         return "products";
     }
 
@@ -203,10 +203,6 @@ public class ProductController {
         return productService.byCategory(nameOption);
     }
 
-    @GetMapping("/test-sort-price")
-    public ResponseEntity<List<ProductDto>> getAll(){
-        return new ResponseEntity<>(productService.sortAsc(), HttpStatus.OK);
-    }
 
 
 }

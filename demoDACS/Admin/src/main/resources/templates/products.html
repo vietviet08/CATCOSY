@@ -64,10 +64,10 @@
         </div>
     </div>
 
-    <div class="alert alert-success" th:if ="${productSortedDesc}">ok</div>
+    <div class="alert alert-success" th:if="${productSortedDesc}">ok</div>
 
 
-    <div class="alert alert-success" th:if ="${productSortedAsc}">ok</div>
+    <div class="alert alert-success" th:if="${productSortedAsc}">ok</div>
 
 
     <table th:if="${size > 0}" class="table table-striped">
@@ -90,7 +90,7 @@
             <td th:text="${product.id}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="${product.category.name}"></td>
-            <td th:text="${product.costPrice}"></td>
+            <td class="price-col" th:text="${product.costPrice}"></td>
             <td th:text="${product.quantity}"></td>
             <td class="text-center">
                 <img th:src="'data:image/jpeg;base64,'+ ${imagesMap.get(product.id)}" class="  border rounded"
@@ -120,10 +120,11 @@
                         <span class="sr-only">Previous</span>
                     </a>
                 </li>
-                <li class="page-item" th:each="i : ${totalPage}"><a class="page-link"
-                                                                    th:href="@{'/products/' +${i - 1}}"
-                                                                    th:text="${i }"></a></li>
-
+                <li th:each="i : ${#numbers.sequence(1, totalPage)}"
+                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                    class="page-item">
+                    <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>
+                </li>
                 <li class="page-item" th:if="${currentPage + 1 != totalPage}">
                     <a class="page-link" th:href="@{'/products/'+${currentPage+ 1}}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
@@ -151,38 +152,50 @@
 
 <!--select-->
 <script th:inline="javascript">
-    $(document).ready(function () {
+    // $(document).ready(function () {
+    //
+    //     $('.select-price').change(function () {
+    //         var selectedOption = $(this).children("option:selected").val();
+    //         $.ajax({
+    //             type: 'GET',
+    //             url: '/sort-prices?nameOption=' + selectedOption,
+    //             // dataType: 'json',
+    //             success: function (data) {
+    //                 // var tableBody = $('#table-body');
+    //                 // tableBody.empty();
+    //                 // $.each(data, function (index, product) {
+    //                 //     tableBody.append(
+    //                 //         '<tr>' +
+    //                 //         '<td>' + index + '</td>' +
+    //                 //         '<td>' + product.id + '</td>' +
+    //                 //         '<td>' + product.name + '</td>' +
+    //                 //         '<td>' + product.category.name + '</td>' +
+    //                 //         '<td>' + product.costPrice + '</td>' +
+    //                 //         '<td>' + product.quantity + '</td>' +
+    //                 //         '</tr>'
+    //                 //     );
+    //                 // });
+    //                 console.log(data);
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 console.error("Error:", error);
+    //             }
+    //         });
+    //     });
+    // });
 
-        $('.select-price').change(function () {
-            var selectedOption = $(this).children("option:selected").val();
-            $.ajax({
-                type: 'GET',
-                url: '/sort-prices?nameOption=' + selectedOption,
-                // dataType: 'json',
-                success: function (data) {
-                    // var tableBody = $('#table-body');
-                    // tableBody.empty();
-                    // $.each(data, function (index, product) {
-                    //     tableBody.append(
-                    //         '<tr>' +
-                    //         '<td>' + index + '</td>' +
-                    //         '<td>' + product.id + '</td>' +
-                    //         '<td>' + product.name + '</td>' +
-                    //         '<td>' + product.category.name + '</td>' +
-                    //         '<td>' + product.costPrice + '</td>' +
-                    //         '<td>' + product.quantity + '</td>' +
-                    //         '</tr>'
-                    //     );
-                    // });
-                    console.log(data);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error:", error);
-                }
-            });
-        });
+
+    const VND = new Intl.NumberFormat('vi-VN', {
+        style: 'currency', currency: 'VND',
     });
+    const nodePriceProduct = document.querySelectorAll(".price-col");
+    nodePriceProduct.forEach((nodePrice, index) => {
+        nodePrice.textContent = VND.format(nodePrice.textContent);
+    })
+
+
 </script>
+
 
 </body>
 </html>

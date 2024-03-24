@@ -30,14 +30,14 @@ public interface ProductService {
 
     void removeUnusedSizesFromProducts();
 
-    List<ProductDto> sortDesc();
+    Page<ProductDto> sortDesc(int pageNo, int pageSize);
 
-    List<ProductDto> sortAsc();
+    Page<ProductDto> sortAsc(int pageNo, int pageSize);
 
     List<ProductDto> byCategory(String nameCategory);
 
-    Page<ProductDto> pageProduct(int pageNo);
+    Page<ProductDto> pageProduct(int pageNo, int pageSize);
 
-    Page<ProductDto> pageProductSearch(String keyword, int pageNo);
+    Page<ProductDto> pageProductSearch(String keyword, int pageNo, int pageSize);
 
 }
