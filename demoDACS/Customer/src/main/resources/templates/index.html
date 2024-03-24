@@ -41,11 +41,11 @@
 
         <a class="women" href="#">
 
-            <img src="../../img/pexels-ahmed-ツ-20447512.jpg" alt="shop women">
+            <img th:src="@{/img/pexels-ahmed-ツ-20447512.jpg}" alt="shop women">
         </a>
         <a class="men" href="#">
 
-            <img src="../../img/pexels-yaritza-16215951.jpg" alt="shop men">
+            <img th:src="@{/img/pexels-yaritza-16215951.jpg}" alt="shop men">
         </a>
 
 
@@ -60,7 +60,7 @@
 
         <div class="  h-50 ">
 
-            <img src="../../img/logoINF.png" style="width: 280px; float: left">
+            <img th:src="@{/img/logoINF.png}" style="width: 280px; float: left">
             <p style="font-size: 18px; line-height: 1.8 ; color: #858E96" class="">
                 At CATCOSY, we bring together the perfect blend of the latest trends and diversity in styles. From
                 everyday
@@ -93,7 +93,7 @@
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             src="../../img/pexels-sadi-gökpınar-20466271.jpg  "
+                             th:src="@{/img/pexels-sadi-gökpınar-20466271.jpg}"
                              alt="">
                         <img class="back-img"
                              src=" https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__color"></div>
+                <!--                <div class="card__color"></div>-->
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -121,7 +121,35 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             src="../../img/prince-akachi-iuqcmC4NVNo-unsplash.jpg"
+                             th:src="@{/img/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
+                             alt="">
+                        <img class="back-img"
+                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
+                             alt="">
+                        <div class="card__main--choose-options">
+                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
+                            </div>
+                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
+                                GIỎ
+                                HÀNG</a></div>
+                        </div>
+                    </div>
+                </div>
+                <!--                <div class="card__color"></div>-->
+                <div class="card__name-price">
+                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
+                    <div class="price-product">620000</div>
+                </div>
+            </a>
+        </div>
+
+
+        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
+            <a href="#">
+                <div class="card__main">
+                    <div class="img__product">
+                        <img class="front-img"
+                             th:src="@{/img/pexels-charles-isaac-20455894.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -149,35 +177,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             src="../../img/pexels-charles-isaac-20455894.jpg"
-                             alt="">
-                        <img class="back-img"
-                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
-                             alt="">
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
-                            </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__color"></div>
-                <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
-                </div>
-            </a>
-        </div>
-
-
-        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
-                <div class="card__main">
-                    <div class="img__product">
-                        <img class="front-img"
-                             src="../../img/pexels-shalom-osezua-20466808.jpg"
+                             th:src="@{/img/pexels-shalom-osezua-20466808.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -214,7 +214,7 @@
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             src="../../img/pexels-sadi-gökpınar-20466271.jpg  "
+                             th:src="@{/img/pexels-sadi-gökpınar-20466271.jpg}"
                              alt="">
                         <img class="back-img"
                              src=" https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -242,7 +242,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             src="../../img/prince-akachi-iuqcmC4NVNo-unsplash.jpg"
+                             th:src="@{/img/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -270,7 +270,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             src="../../img/pexels-charles-isaac-20455894.jpg"
+                             th:src="@{/img/pexels-charles-isaac-20455894.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -298,7 +298,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             src="../../img/pexels-shalom-osezua-20466808.jpg"
+                             th:src="@{/img/pexels-shalom-osezua-20466808.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -389,9 +389,7 @@
 <!--footer-->
 <footer th:replace="~{fragments :: footer}"></footer>
 
-<div class="scroll-to-top">
-    <i class="fa-solid fa-angle-up"></i>
-</div>
+<div th:replace="~{fragments :: scroll}"></div>
 
 <script th:replace="~{fragments :: script}"></script>
 
