@@ -3,7 +3,7 @@
 <head th:replace="~{fragments :: head}">
 
     <style>
-        form .form-group{
+        form .form-group {
             margin: 20px 0;
         }
     </style>
@@ -45,12 +45,11 @@
                     <div class="col-md-4">
                         Sizes
                         <div th:each="size : ${sizes}" class="d-inline-block mx-2">
-
                             <label class="col-md-4 d-inline form-check-label"
                                    th:for="'sizes' + ${size.size}"></label>
                             <input th:value="${size.id}" th:text="${size.size}" th:id="'sizes' + ${size.size}"
-                                   name="sizes"
-                                   class="d-inline form-check-input "  type="checkbox">
+                                   name="sizesChoose"
+                                   class="d-inline form-check-input" type="checkbox">
                         </div>
 
                     </div>
@@ -71,18 +70,6 @@
 
                 <!-- Text input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="quantity"> Quantity</label>
-                    <div class="col-md-4">
-                        <input th:field="*{quantity}" id="quantity" name="quantity"
-                               class="form-control input-md" required="required"
-                               type="text">
-
-                    </div>
-                </div>
-
-
-                <!-- Text input-->
-                <div class="form-group">
                     <label class="col-md-4 control-label" for="price">Price</label>
                     <div class="col-md-4">
                         <input th:field="*{costPrice}" id="price" name="price" class="form-control input-md"
@@ -97,18 +84,18 @@
                     <label class="col-md-4 control-label" for="description">Product description </label>
                     <div class="col-md-4">
                     <textarea style="height: 200px" th:field="*{description}" id="description" name="description"
-                              class="form-control input-md"  type="text"></textarea>
+                              class="form-control input-md" type="text"></textarea>
                     </div>
                 </div>
 
                 <!-- Text input-->
 
 
-<!--                 File Button -->
+                <!--                 File Button -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="img">Image</label>
                     <div class="col-md-4">
-                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple" >
+                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple">
                     </div>
                 </div>
 
@@ -133,6 +120,8 @@
 
 
 <script th:replace="~{fragments :: toastScript}"></script>
+
+
 
 </body>
 </html>

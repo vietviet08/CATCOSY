@@ -2,6 +2,7 @@ package com.dacs1.library.dto;
 
 import com.dacs1.library.model.Category;
 import com.dacs1.library.model.ProductImage;
+import com.dacs1.library.model.ProductSize;
 import com.dacs1.library.model.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class ProductDto {
     private Long id;
     private String name;
     private Category category;
-    private Set<Size> sizes;
+    private List<ProductSize> sizes;
     private Double costPrice;
     private Double salePrice;
     private List<ProductImage> images;

@@ -10,4 +10,9 @@ public class AdminController {
     public String toIndex(){
         return "redirect:/index";
     }
+
+    @GetMapping("/error-500")
+    public String error500(){
+        return "500";
+    }
 }

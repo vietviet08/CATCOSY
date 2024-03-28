@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Long> {
 
-
 }

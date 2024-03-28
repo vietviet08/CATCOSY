@@ -2,6 +2,7 @@ package com.dacs1.library.service;
 
 import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Product;
+import com.dacs1.library.model.ProductSize;
 import com.dacs1.library.model.Size;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,11 +15,11 @@ import java.util.Set;
 public interface ProductService {
     List<ProductDto> findAllProduct();
 
-    Product save(List<MultipartFile> images, ProductDto productDto) throws IOException;
+    Product save(List<MultipartFile> images, List<Long> sizes, ProductDto productDto) throws IOException;
 
     Product update(List<MultipartFile> images, ProductDto productDto) throws IOException;
 
-    void updateProductSize(Long idProduct, Set<Size> sizes);
+    void updateProductSize(Long idProduct, List<ProductSize> sizes);
 
     Optional<Product> findById(Long id);
 

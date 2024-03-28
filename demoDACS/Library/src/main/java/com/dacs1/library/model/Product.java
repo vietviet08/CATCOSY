@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "products")
 public class Product {
@@ -30,15 +30,19 @@ public class Product {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "products_sizes",
-            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "size_id"))
-    private Set<Size> sizes;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "products_sizes",
+//            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "size_id"))
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductSize> sizes;
 
     private Double costPrice;
     private Double salePrice;
-    private Integer quantity;
+
+    @Column(name = "total_quantity")
+    private Integer quantity = 0;
 
     @Column(columnDefinition = "TEXT")
     private String description;

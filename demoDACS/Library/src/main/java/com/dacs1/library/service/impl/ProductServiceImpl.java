@@ -3,6 +3,7 @@ package com.dacs1.library.service.impl;
 import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
+import com.dacs1.library.model.ProductSize;
 import com.dacs1.library.model.Size;
 import com.dacs1.library.repository.ProductImageRepository;
 import com.dacs1.library.repository.ProductRepository;
@@ -88,35 +89,56 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product save(List<MultipartFile> images, ProductDto productDto) throws IOException {
+    public Product save(List<MultipartFile> images, List<Long> sizes, ProductDto productDto) throws IOException {
         Product product = new Product();
+
+
         try {
             product.setId(productDto.getId());
             product.setName(productDto.getName());
             product.setDescription(productDto.getDescription());
-            product.setSizes(productDto.getSizes());
             product.setCostPrice(productDto.getCostPrice());
-            product.setSalePrice(productDto.getSalePrice());
-            product.setQuantity(productDto.getQuantity());
+            product.setSalePrice((double) 0);
+            product.setQuantity(0);
             product.setCategory(productDto.getCategory());
             product.setIsActivated(true);
             product.setIsDeleted(false);
 
             List<ProductImage> imageList = new ArrayList<>();
-
             for (MultipartFile image : images) {
                 ProductImage productImage = new ProductImage();
                 String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
                 productImage.setProduct(product);
+                System.out.println(product.toString());
                 productImage.setImage(fileImg);
                 imageList.add(productImage);
             }
+
+            List<ProductSize> productSizes = new ArrayList<>();
+            for (Long id : sizes) {
+                ProductSize productSize = new ProductSize();
+                Size size = sizeRepository.getReferenceById(id);
+                productSize.setSize(size);
+                productSize.setQuantity(0);
+                System.out.println(product);
+                productSize.setProduct(product);
+                productSizes.add(productSize);
+            }
+
             product.setImages(imageList);
+            product.setSizes(productSizes);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return productRepository.save(product);
     }
+
+    private void setIdForProduct(){
+
+    }
+
 
     @Override
     public Product update(List<MultipartFile> images, ProductDto productDto) throws IOException {
@@ -161,12 +183,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProductSize(Long idProduct, Set<Size> sizes) {
+    public void updateProductSize(Long idProduct, List<ProductSize> sizes) {
 
         Product product = productRepository.getReferenceById(idProduct);
 
-        List<Long> newSizes = sizes.stream().map(Size::getId).toList();
-        List<Long> oldSizes = product.getSizes().stream().map(Size::getId).toList();
+
+        List<Long> newSizes = sizes.stream().map(size -> size.getSize().getId()).toList();
+        List<Long> oldSizes = product.getSizes().stream().map(size -> size.getSize().getId()).toList();
 
         for (Long sizeId : oldSizes) {
             if (!newSizes.contains(sizeId)) {
@@ -177,9 +200,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void removeSize(Long id, Product product) {
-        Set<Size> sizes = product.getSizes();
-        for (Size size : sizes) {
-            if (size.getId().equals(id)) {
+        List<ProductSize> sizes = product.getSizes();
+        for (ProductSize size : sizes) {
+            if (size.getSize().getId().equals(id)) {
                 sizes.remove(size);
                 return;
             }
@@ -221,7 +244,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductDto> sortDesc(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo, pageSize );
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
         return toPage(pageable, convertToDtoList(productRepository.findAllByPriceDesc()));
     }
 

@@ -51,10 +51,21 @@
             </div>
 
 
-            <form th:action="@{/search-products/0}" class="my-2">
+<!--            <form th:action="@{/search-products/0}" class="my-2">-->
+<!--                <div class="input-group">-->
+<!--                    <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"-->
+<!--                           type="text" class="border-1" name="keyword" placeholder="Search product"-->
+<!--                           aria-label="Recipient's username" aria-describedby="basic-addon2">-->
+<!--                    <div class="input-group-append">-->
+<!--                        <button class="btn btn-primary " style="color: white" type="submit">Search</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+
+            <form id="searchForm" class="my-2">
                 <div class="input-group">
                     <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"
-                           type="text" class="border-1" name="keyword" placeholder="Search product"
+                           type="text" class="border-1" name="search" placeholder="Search product"
                            aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-primary " style="color: white" type="submit">Search</button>
@@ -93,7 +104,7 @@
             <td class="price-col" th:text="${product.costPrice}"></td>
             <td th:text="${product.quantity}"></td>
             <td class="text-center">
-                <img th:src="'data:image/jpeg;base64,'+ ${imagesMap.get(product.id)}" class="  border rounded"
+                <img th:src="'data:image/jpeg;base64,'+ ${imagesMap.get(product.id)}" class="border rounded"
                      style="width: 40px; height: 40px" alt=""/>
             </td>
             <td>
@@ -113,9 +124,29 @@
 
     <div class="position-absolute bottom-0 end-50">
         <nav aria-label="Page navigation example">
+<!--            <ul class="pagination">-->
+<!--                <li class="page-item" th:if="${currentPage > 0}">-->
+<!--                    <a class="page-link" th:href="@{'/products/' + ${currentPage - 1}}" aria-label="Previous">-->
+<!--                        <span aria-hidden="true">&laquo;</span>-->
+<!--                        <span class="sr-only">Previous</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li th:each="i : ${#numbers.sequence(1, totalPage)}"-->
+<!--                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"-->
+<!--                    class="page-item">-->
+<!--                    <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>-->
+<!--                </li>-->
+<!--                <li class="page-item" th:if="${currentPage + 1 != totalPage}">-->
+<!--                    <a class="page-link" th:href="@{'/products/'+${currentPage+ 1}}" aria-label="Next">-->
+<!--                        <span aria-hidden="true">&raquo;</span>-->
+<!--                        <span class="sr-only">Next</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+
             <ul class="pagination">
                 <li class="page-item" th:if="${currentPage > 0}">
-                    <a class="page-link" th:href="@{'/products/' + ${currentPage - 1}}" aria-label="Previous">
+                    <a class="page-link" th:href="@{'/products?page=' + ${currentPage - 1}}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </a>
@@ -123,15 +154,16 @@
                 <li th:each="i : ${#numbers.sequence(1, totalPage)}"
                     th:classappend="${currentPage == i - 1 ? 'active' : ''}"
                     class="page-item">
-                    <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>
+                    <a th:href="@{'/products?page=' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>
                 </li>
                 <li class="page-item" th:if="${currentPage + 1 != totalPage}">
-                    <a class="page-link" th:href="@{'/products/'+${currentPage+ 1}}" aria-label="Next">
+                    <a class="page-link" th:href="@{'/products?page='+${currentPage+ 1}}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>
                 </li>
             </ul>
+
         </nav>
     </div>
 
@@ -193,6 +225,18 @@
         nodePrice.textContent = VND.format(nodePrice.textContent);
     })
 
+
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+
+        // Get the value of the search input
+        var searchTerm = document.querySelector('input[name="search"]').value;
+
+        // Construct the search URL with the current page and search term
+        // Redirect to the constructed search URL
+        window.location.href = window.location.href + '&search=' + encodeURIComponent(searchTerm);
+    })
 
 </script>
 
