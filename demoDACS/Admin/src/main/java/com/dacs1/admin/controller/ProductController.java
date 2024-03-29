@@ -63,8 +63,6 @@ public class ProductController {
                 images.put(productImage.getProduct().getId(), productImage.getImage());
             }
         }
-        System.out.println(productImages.size());
-        System.out.println(images.size());
 
         model.addAttribute("title", "Products");
         model.addAttribute("products", products);
@@ -94,9 +92,8 @@ public class ProductController {
                              RedirectAttributes attributes) {
         List<Long> selectedSizeIds = new ArrayList<>();
 
-        for (String n : sizesSelected){
+        for (String n : sizesSelected) {
             selectedSizeIds.add(Long.parseLong(n));
-            System.out.println(n);
         }
 
         try {
@@ -122,20 +119,38 @@ public class ProductController {
     public String updateProduct(@PathVariable("id") Long id, Model model) {
         ProductDto productDto = productService.getById(id);
         List<Category> categoryList = categoryService.findAllCategoryIsActivate();
+
+        List<Size> sizesExisting = new ArrayList<>();
+
+        productDto.getSizes().forEach(productSize -> sizesExisting.add(productSize.getSize()));
+
+        System.out.println("size existing: " + sizesExisting.size());
+
         model.addAttribute("title", "Update product");
         model.addAttribute("productDto", productDto);
         model.addAttribute("sizes", sizeService.findAllSize());
-        model.addAttribute("sizesExisting", productDto.getSizes());
+        model.addAttribute("sizesExisting", sizesExisting);
         model.addAttribute("categories", categoryList);
         return "update-product";
     }
 
-
     @PostMapping("/update-product/{id}")
-    public String updateProduct(@ModelAttribute("productDto") ProductDto productDto, @RequestParam("listImage") List<MultipartFile> images, RedirectAttributes attributes) {
+    public String updateProduct(@ModelAttribute("productDto") ProductDto productDto,
+                                @RequestParam("listImage") List<MultipartFile> images,
+                                @RequestParam("sizesChoose") String[] sizesSelected,
+                                RedirectAttributes attributes) {
         try {
-            productService.update(images, productDto);
-            productService.updateProductSize(productDto.getId(), productDto.getSizes());
+
+            List<Long> selectedSizeIds = new ArrayList<>();
+
+            for (String n : sizesSelected) {
+                selectedSizeIds.add(Long.parseLong(n));
+            }
+
+
+
+            productService.update(images, selectedSizeIds, productDto);
+//            productService.updateProductSize(productDto, selectedSizeIds);
             attributes.addFlashAttribute("success", "Update product successfully!");
 
         } catch (Exception e) {

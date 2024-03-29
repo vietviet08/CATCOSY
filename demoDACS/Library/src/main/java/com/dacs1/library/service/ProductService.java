@@ -17,9 +17,9 @@ public interface ProductService {
 
     Product save(List<MultipartFile> images, List<Long> sizes, ProductDto productDto) throws IOException;
 
-    Product update(List<MultipartFile> images, ProductDto productDto) throws IOException;
+    Product update(List<MultipartFile> images,List<Long> sizes,  ProductDto productDto) throws IOException;
 
-    void updateProductSize(Long idProduct, List<ProductSize> sizes);
+    void updateProductSize(Product product, List<Long> newSizes);
 
     Optional<Product> findById(Long id);
 

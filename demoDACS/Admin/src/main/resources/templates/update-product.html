@@ -49,7 +49,7 @@
                             <label class="col-md-4 d-inline form-check-label"
                                    th:for="'sizes' + ${size.size}"></label>
                             <input th:value="${size.id}" th:text="${size.size}" th:id="'sizes' + ${size.size}" th:checked="${#lists.contains(sizesExisting, size)}"
-                                   name="sizes"
+                                   name="sizesChoose"
                                    class="d-inline form-check-input "  type="checkbox" >
                         </div>
 

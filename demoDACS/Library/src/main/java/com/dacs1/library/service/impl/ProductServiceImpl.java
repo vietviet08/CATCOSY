@@ -7,6 +7,7 @@ import com.dacs1.library.model.ProductSize;
 import com.dacs1.library.model.Size;
 import com.dacs1.library.repository.ProductImageRepository;
 import com.dacs1.library.repository.ProductRepository;
+import com.dacs1.library.repository.ProductSizeRepository;
 import com.dacs1.library.repository.SizeRepository;
 import com.dacs1.library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductImageRepository productImageRepository;
+
+    @Autowired
+    private ProductSizeRepository productSizeRepository;
 
     @Autowired
     private SizeRepository sizeRepository;
@@ -109,7 +113,6 @@ public class ProductServiceImpl implements ProductService {
                 ProductImage productImage = new ProductImage();
                 String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
                 productImage.setProduct(product);
-                System.out.println(product.toString());
                 productImage.setImage(fileImg);
                 imageList.add(productImage);
             }
@@ -120,7 +123,6 @@ public class ProductServiceImpl implements ProductService {
                 Size size = sizeRepository.getReferenceById(id);
                 productSize.setSize(size);
                 productSize.setQuantity(0);
-                System.out.println(product);
                 productSize.setProduct(product);
                 productSizes.add(productSize);
             }
@@ -135,13 +137,8 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    private void setIdForProduct(){
-
-    }
-
-
     @Override
-    public Product update(List<MultipartFile> images, ProductDto productDto) throws IOException {
+    public Product update(List<MultipartFile> images, List<Long> newSizesId, ProductDto productDto) throws IOException {
 
         Product product = productRepository.getReferenceById(productDto.getId());
 
@@ -170,40 +167,108 @@ public class ProductServiceImpl implements ProductService {
         if (!productImages.isEmpty()) product.setImages(productImages);
         else product.setImages(productDto.getImages());
 
+//        List<Long> oldSizes = product.getSizes().stream().map(size -> size.getSize().getId()).toList();
+//        for (Long sizeId : oldSizes) {
+//            if (!newSizes.contains(sizeId)) {
+//
+//
+//                removeSize(sizeId, product);
+//            }
+//        }
+//
+//        List<ProductSize> productSizes = new ArrayList<>();
+//        for (Long id : newSizes) {
+//
+//
+//            ProductSize productSize = new ProductSize();
+//            Size size = sizeRepository.getReferenceById(id);
+//            productSize.setSize(size);
+//            productSize.setQuantity(0);
+//            productSize.setProduct(product);
+//            productSizes.add(productSize);
+//        }
+
+//        List<ProductSize> oldSizes = product.getSizes();
+//
+//        Set<Long> oldSizesId = new HashSet<>();
+//        product.getSizes().forEach(size -> oldSizesId.add(size.getSize().getId()));
+//        System.out.println(oldSizesId);
+//
+////        for (Long oldSizeId : oldSizesId) {
+////            if (!newSizesId.contains(oldSizeId)) {
+////                for (ProductSize productSize : oldSizes) {
+////                    if (productSize.getSize().getId().equals(oldSizeId)) {
+////                        System.out.println("ok");
+////                        oldSizes.remove(productSize);
+////                        break;
+////                    }
+////                }
+////            }
+////        }
+//
+//        Iterator<ProductSize> iterator = oldSizes.iterator();
+//        while (iterator.hasNext()) {
+//            ProductSize productSize = iterator.next();
+//            if (!newSizesId.contains(productSize.getSize().getId())) {
+//                System.out.println("ok");
+//                iterator.remove(); // Loại bỏ phần tử hiện tại từ iterator và từ collection cơ bản
+//            }
+//        }
+//
+//        for (Long newSizeId : newSizesId) {
+//            if (!oldSizesId.contains(newSizeId)) {
+//                ProductSize productSize = new ProductSize();
+//                Size size = sizeRepository.getReferenceById(newSizeId);
+//                productSize.setSize(size);
+//                productSize.setQuantity(0);
+//                productSize.setProduct(product);
+//                oldSizes.add(productSize);
+//            }
+//        }
+//
+//        System.out.println("size after: " + oldSizes.size());
+//
+//        if (!oldSizes.isEmpty()) product.setSizes(oldSizes);
+//        else product.setIsDeleted(true);
+
         product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
-        product.setSizes(productDto.getSizes());
         product.setCostPrice(productDto.getCostPrice());
         product.setSalePrice(productDto.getSalePrice());
         product.setQuantity(productDto.getQuantity());
         product.setCategory(productDto.getCategory());
 
+        updateProductSize(product, newSizesId);
+
         return productRepository.save(product);
     }
 
     @Override
-    public void updateProductSize(Long idProduct, List<ProductSize> sizes) {
+    public void updateProductSize(Product product, List<Long> newSizesId) {
+        List<ProductSize> productSizes = product.getSizes();
+        productSizes.removeIf(productSize -> !newSizesId.contains(productSize.getSize().getId()));
 
-        Product product = productRepository.getReferenceById(idProduct);
-
-
-        List<Long> newSizes = sizes.stream().map(size -> size.getSize().getId()).toList();
-        List<Long> oldSizes = product.getSizes().stream().map(size -> size.getSize().getId()).toList();
-
-        for (Long sizeId : oldSizes) {
-            if (!newSizes.contains(sizeId)) {
-                removeSize(sizeId, product);
+        for (Long newSizeId : newSizesId) {
+            if (!productSizes.stream().anyMatch(ps -> ps.getSize().getId().equals(newSizeId))) {
+                ProductSize productSize = new ProductSize();
+                Size size = sizeRepository.findById(newSizeId).orElseThrow(() -> new RuntimeException("_"));
+                productSize.setSize(size);
+                productSize.setQuantity(0);
+                productSize.setProduct(product);
+                productSizes.add(productSize);
             }
         }
 
     }
 
+
     public void removeSize(Long id, Product product) {
-        List<ProductSize> sizes = product.getSizes();
-        for (ProductSize size : sizes) {
+        List<ProductSize> oldSizes = product.getSizes();
+        for (ProductSize size : oldSizes) {
             if (size.getSize().getId().equals(id)) {
-                sizes.remove(size);
+                System.out.println("ok");
+                oldSizes.remove(size);
                 return;
             }
         }
