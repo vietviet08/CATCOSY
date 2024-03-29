@@ -142,35 +142,35 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = productRepository.getReferenceById(productDto.getId());
 
-
         List<ProductImage> productImagesOlds = product.getImages();
 
-        productImagesOlds.removeIf(productImg -> !images.contains(productImg));
+        System.out.println(images.size());
 
-        int i = 0;
-        for (MultipartFile newImage : images) {
-            if (newImage != null && !newImage.isEmpty()) {
-                ProductImage productImage = null;
+        if (!images.isEmpty() && images.size() != 1) {
+
+            productImagesOlds.clear();
+            int i = 0;
+            for (MultipartFile newImage : images) {
+                if (newImage != null && !newImage.isEmpty()) {
+//                    ProductImage productImage = null;
 //                if (i < productImagesOlds.size()) {
 //                    productImage = productImagesOlds.get(i);
 //                    productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
 //
 //                } else {
-                    productImage = new ProductImage();
+                    ProductImage productImage = new ProductImage();
                     productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
                     productImage.setProduct(product);
 //                }
 
-                productImagesOlds.add(productImage);
+                    productImagesOlds.add(productImage);
+                }
+                i++;
             }
-            i++;
         }
 
-        product.setImages(null);
-        if (!images.isEmpty()){
-            product.setImages(productImagesOlds);
-        }
-//        else product.setImages(productDto.getImages());
+        product.setImages(productImagesOlds);
+        System.out.println(productImagesOlds.size());
 
 //        List<Long> oldSizes = product.getSizes().stream().map(size -> size.getSize().getId()).toList();
 //        for (Long sizeId : oldSizes) {
