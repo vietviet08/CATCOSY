@@ -35,7 +35,7 @@ public class Product {
 //            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
 //            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "size_id"))
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductSize> sizes;
 
     private Double costPrice;

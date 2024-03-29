@@ -236,10 +236,12 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(productDto.getDescription());
         product.setCostPrice(productDto.getCostPrice());
         product.setSalePrice(productDto.getSalePrice());
-        product.setQuantity(productDto.getQuantity());
         product.setCategory(productDto.getCategory());
 
         updateProductSize(product, newSizesId);
+
+        System.out.println(product.getSizes().size());
+//        product.setSizes(null);
 
         return productRepository.save(product);
     }
@@ -259,6 +261,7 @@ public class ProductServiceImpl implements ProductService {
                 productSizes.add(productSize);
             }
         }
+
 
     }
 
