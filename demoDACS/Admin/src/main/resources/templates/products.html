@@ -51,16 +51,16 @@
             </div>
 
 
-<!--            <form th:action="@{/search-products/0}" class="my-2">-->
-<!--                <div class="input-group">-->
-<!--                    <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"-->
-<!--                           type="text" class="border-1" name="keyword" placeholder="Search product"-->
-<!--                           aria-label="Recipient's username" aria-describedby="basic-addon2">-->
-<!--                    <div class="input-group-append">-->
-<!--                        <button class="btn btn-primary " style="color: white" type="submit">Search</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </form>-->
+            <!--            <form th:action="@{/search-products/0}" class="my-2">-->
+            <!--                <div class="input-group">-->
+            <!--                    <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"-->
+            <!--                           type="text" class="border-1" name="keyword" placeholder="Search product"-->
+            <!--                           aria-label="Recipient's username" aria-describedby="basic-addon2">-->
+            <!--                    <div class="input-group-append">-->
+            <!--                        <button class="btn btn-primary " style="color: white" type="submit">Search</button>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </form>-->
 
             <form id="searchForm" class="my-2">
                 <div class="input-group">
@@ -124,29 +124,33 @@
 
     <div class="position-absolute bottom-0 end-50">
         <nav aria-label="Page navigation example">
-<!--            <ul class="pagination">-->
-<!--                <li class="page-item" th:if="${currentPage > 0}">-->
-<!--                    <a class="page-link" th:href="@{'/products/' + ${currentPage - 1}}" aria-label="Previous">-->
-<!--                        <span aria-hidden="true">&laquo;</span>-->
-<!--                        <span class="sr-only">Previous</span>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li th:each="i : ${#numbers.sequence(1, totalPage)}"-->
-<!--                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"-->
-<!--                    class="page-item">-->
-<!--                    <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>-->
-<!--                </li>-->
-<!--                <li class="page-item" th:if="${currentPage + 1 != totalPage}">-->
-<!--                    <a class="page-link" th:href="@{'/products/'+${currentPage+ 1}}" aria-label="Next">-->
-<!--                        <span aria-hidden="true">&raquo;</span>-->
-<!--                        <span class="sr-only">Next</span>-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--            </ul>-->
+            <!--            <ul class="pagination">-->
+            <!--                <li class="page-item" th:if="${currentPage > 0}">-->
+            <!--                    <a class="page-link" th:href="@{'/products/' + ${currentPage - 1}}" aria-label="Previous">-->
+            <!--                        <span aria-hidden="true">&laquo;</span>-->
+            <!--                        <span class="sr-only">Previous</span>-->
+            <!--                    </a>-->
+            <!--                </li>-->
+            <!--                <li th:each="i : ${#numbers.sequence(1, totalPage)}"-->
+            <!--                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"-->
+            <!--                    class="page-item">-->
+            <!--                    <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>-->
+            <!--                </li>-->
+            <!--                <li class="page-item" th:if="${currentPage + 1 != totalPage}">-->
+            <!--                    <a class="page-link" th:href="@{'/products/'+${currentPage+ 1}}" aria-label="Next">-->
+            <!--                        <span aria-hidden="true">&raquo;</span>-->
+            <!--                        <span class="sr-only">Next</span>-->
+            <!--                    </a>-->
+            <!--                </li>-->
+            <!--            </ul>-->
 
-            <ul class="pagination">
+            <!--            th:href="@{'/products?page=' + ${currentPage - 1}}"-->
+            <!--            th:href="@{'/products?page='+${currentPage+ 1}}"-->
+
+            <ul class="pagination" th:attr="data-current-page=${currentPage}, data-total-page=${totalPage}">
                 <li class="page-item" th:if="${currentPage > 0}">
-                    <a class="page-link" th:href="@{'/products?page=' + ${currentPage - 1}}" aria-label="Previous">
+                    <a class="page-link page-previous"
+                       aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </a>
@@ -154,10 +158,12 @@
                 <li th:each="i : ${#numbers.sequence(1, totalPage)}"
                     th:classappend="${currentPage == i - 1 ? 'active' : ''}"
                     class="page-item">
-                    <a th:href="@{'/products?page=' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>
+                    <a class="page-link page-number">
+                        <span th:text="${i}"></span>
+                    </a>
                 </li>
                 <li class="page-item" th:if="${currentPage + 1 != totalPage}">
-                    <a class="page-link" th:href="@{'/products?page='+${currentPage+ 1}}" aria-label="Next">
+                    <a class="page-link page-next" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -171,7 +177,7 @@
 </div>
 
 
-<div th:replace="~{fragments ::  footer}"></div>
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
 
 <div th:replace="~{fragments :: toast}"></div>
 
@@ -225,18 +231,94 @@
         nodePrice.textContent = VND.format(nodePrice.textContent);
     })
 
+    var globalLink = window.location.href;
 
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+    document.getElementById('searchForm').addEventListener('submit',
+        function (event) {
+            event.preventDefault();
 
 
-        // Get the value of the search input
-        var searchTerm = document.querySelector('input[name="search"]').value;
+            // Get the value of the search input
+            var searchTerm = document.querySelector('input[name="search"]').value;
 
-        // Construct the search URL with the current page and search term
-        // Redirect to the constructed search URL
-        window.location.href = window.location.href + '&search=' + encodeURIComponent(searchTerm);
-    })
+            // Construct the search URL with the current page and search term
+            // Redirect to the constructed search URL
+
+
+            if (globalLink.includes('?')) {
+                if (globalLink.includes("search=")) {
+                    const regexSearch = /search=[^&]*/;
+                    window.location.href = globalLink.replace(regexSearch, "search=" + encodeURIComponent(searchTerm));
+                    globalLink = window.location.href;
+                } else {
+                    window.location.href = globalLink + '&search=' + encodeURIComponent(searchTerm);
+                    globalLink = window.location.href;
+                }
+            } else {
+                window.location.href = globalLink + '?search=' + encodeURIComponent(searchTerm);
+                globalLink = window.location.href;
+            }
+
+        }
+    );
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentPage = parseInt(document.querySelector('.pagination').getAttribute('data-current-page'));
+        const totalPage = parseInt(document.querySelector('.pagination').getAttribute('data-total-page'));
+
+
+        const pagePrevious = document.querySelector(".page-previous")
+        const pageNext = document.querySelector(".page-next")
+
+
+        const pageNumbers = document.querySelectorAll(".page-number")
+
+        console.log(pageNumbers)
+
+
+        //icon pre & next
+        if (pagePrevious) {
+            if (globalLink.includes("search")) {
+                const regex = /page=\d+/;
+                pagePrevious.href = globalLink.replace(regex, "page=" + `${currentPage - 1}`);
+                if (!globalLink.includes("page=")) {
+                    pagePrevious.href = globalLink + "&page=" + currentPage - 1;
+                }
+            } else {
+                pagePrevious.href = '/admin/products?page=' + currentPage - 1;
+
+            }
+        }
+
+        if (pageNext) {
+            if (globalLink.includes("search")) {
+                const regex = /page=\d+/;
+                pageNext.href = globalLink.replace(regex, "page=" + `${currentPage + 1}`);
+                if (!globalLink.includes("page=")) {
+                    pageNext.href = globalLink + "&page=" + currentPage - 1;
+                }
+            } else {
+                pageNext.href = '/admin/products?page=' + currentPage + 1;
+            }
+        }
+
+
+        console.log("ok")
+        //number page
+        pageNumbers.forEach((pageEl, index) => {
+            console.log("ok")
+            globalLink = window.location.href
+            if (globalLink.includes("search")) {
+                const regex = /page=\d+/;
+                pageEl.href = globalLink.replace(regex, "page=" + index);
+                if (!globalLink.includes("page=")) {
+                    pageEl.href = globalLink + "&page=" + index;
+                }
+            } else pageEl.href = '/admin/products?page=' + index;
+        });
+    });
+
 
 </script>
 

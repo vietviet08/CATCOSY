@@ -106,7 +106,7 @@ public class ProductController {
             attributes.addFlashAttribute("error", "Add product failed, may be error from server!");
             e.printStackTrace();
         }
-        return "redirect:/products/0";
+        return "redirect:/products";
     }
 
     @RequestMapping(value = "/findByIdProduct", method = {RequestMethod.GET, RequestMethod.PUT})
@@ -157,20 +157,20 @@ public class ProductController {
             attributes.addFlashAttribute("error", "Update product failed!");
             e.printStackTrace();
         }
-        return "redirect:/products/0";
+        return "redirect:/products";
     }
 
     @RequestMapping(value = "/delete-product", method = {RequestMethod.GET, RequestMethod.PUT})
     public String deleteProduct(ProductDto product) {
         productService.deleteById(product.getId());
-        return "redirect:/products/0";
+        return "redirect:/products";
     }
 
 
     @RequestMapping(value = "/activate-product", method = {RequestMethod.GET, RequestMethod.PUT})
     public String activateProduct(ProductDto product) {
         productService.activateById(product.getId());
-        return "redirect:/products/0";
+        return "redirect:/products";
     }
 
 
