@@ -260,6 +260,7 @@ img {
     overflow: hidden;
     position: relative;
     height: 450px;
+    width: 270px;
 }
 
 
@@ -618,6 +619,10 @@ footer p {
 
 
 
+    .btn-send-mail{
+        right: unset;
+        left: 42%;
+    }
 
 
 }

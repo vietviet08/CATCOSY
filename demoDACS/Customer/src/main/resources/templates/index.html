@@ -12,13 +12,13 @@
 <div id="carouselExampleAutoplaying" class="carousel slide d-inline-block" data-bs-ride="carousel" data-interval="1000">
     <div class="carousel-inner" data-interval="1000">
         <div class="carousel-item active">
-            <img src="/img/force-majeure-SmIlY2uAHo8-unsplash.jpg" class="d-block w-100" alt="bg1">
+            <img th:src="@{/images/force-majeure-SmIlY2uAHo8-unsplash.jpg}" class="d-block w-100" alt="bg1">
         </div>
         <div class="carousel-item">
-            <img src="/img/force-majeure-00tlC0Clfrs-unsplash.jpg" class="d-block w-100" alt="bg2">
+            <img th:src="@{/images/force-majeure-00tlC0Clfrs-unsplash.jpg}" class="d-block w-100" alt="bg2">
         </div>
         <div class="carousel-item">
-            <img src="/img/pexels-tembela-bohle-1884584.jpg" class="d-block w-100" alt="bg3">
+            <img th:src="@{/images/pexels-tembela-bohle-1884584.jpg}" class="d-block w-100" alt="bg3">
         </div>
     </div>
     <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleAutoplaying"
@@ -34,18 +34,18 @@
 </div>
 
 
-<div class="text-center"><h2 style="font-weight: 600; margin-top: 40px">PICK & WEAR COLLECTION</h2></div>
 <div class="container">
+    <div class="text-center" data-aos="zoom-in" data-aos-duration="1000"><h2 style="font-weight: 600; margin-top: 40px">PICK & WEAR COLLECTION</h2></div>
 
     <div class="men-women d-flex justify-content-between">
 
-        <a class="women" href="#">
+        <a class="women" href="#" data-aos="fade-right" data-aos-duration="1000">
 
-            <img th:src="@{/img/pexels-ahmed-ツ-20447512.jpg}" alt="shop women">
+            <img th:src="@{/images/pexels-ahmed-ツ-20447512.jpg}" alt="shop women">
         </a>
-        <a class="men" href="#">
+        <a class="men" href="#" data-aos="fade-left" data-aos-duration="1000">
 
-            <img th:src="@{/img/pexels-yaritza-16215951.jpg}" alt="shop men">
+            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="shop men">
         </a>
 
 
@@ -54,14 +54,14 @@
 </div>
 
 <div class="container my-5">
-    <hr>
-    <h4 style="font-weight: 600; margin: 20px 0">The Premier Destination for Fashion Enthusiasts</h4>
+    <hr data-aos="fade-right" data-aos-duration="1000">
+    <h4 style="font-weight: 600; margin: 20px 0" data-aos="fade-down" data-aos-duration="1000">The Premier Destination for Fashion Enthusiasts</h4>
     <div class="intro-shop row">
 
         <div class="  h-50 ">
 
-            <img th:src="@{/img/logoINF.png}" style="width: 280px; float: left">
-            <p style="font-size: 18px; line-height: 1.8 ; color: #858E96" class="">
+            <img th:src="@{/images/logoINF.png}" style="width: 280px; float: left" data-aos="fade-left" data-aos-duration="1000">
+            <p style="font-size: 18px; line-height: 1.8 ; color: #858E96" class="" data-aos="fade-right" data-aos-duration="1000">
                 At CATCOSY, we bring together the perfect blend of the latest trends and diversity in styles. From
                 everyday
                 outfits to special occasion ensembles, we have everything to cater to your fashion needs.
@@ -79,13 +79,13 @@
             </p>
         </div>
     </div>
-    <hr>
+    <hr data-aos="fade-left" data-aos-duration="1000">
 </div>
 
-<div class="text-center"><h2 style="font-weight: 600; margin: 0">NEW ARRIVALS</h2></div>
+<div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">NEW ARRIVALS</h2></div>
 
 <div class="container d-flex justify-content-center align-items-center "
-     style="padding: 30px 0; overflow: hidden">
+     style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
 
     <div class="container-product row w-100 d-flex justify-content-between align-items-center">
         <div class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
@@ -93,7 +93,7 @@
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             th:src="@{/img/pexels-sadi-gökpınar-20466271.jpg}"
+                             th:src="@{/images/pexels-sadi-gökpınar-20466271.jpg}"
                              alt="">
                         <img class="back-img"
                              src=" https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -108,7 +108,6 @@
                         </div>
                     </div>
                 </div>
-                <!--                <div class="card__color"></div>-->
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -121,7 +120,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             th:src="@{/img/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
+                             th:src="@{/images/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -135,7 +134,6 @@
                         </div>
                     </div>
                 </div>
-                <!--                <div class="card__color"></div>-->
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -149,7 +147,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             th:src="@{/img/pexels-charles-isaac-20455894.jpg}"
+                             th:src="@{/images/pexels-charles-isaac-20455894.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -163,7 +161,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__color"></div>
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -177,7 +174,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             th:src="@{/img/pexels-shalom-osezua-20466808.jpg}"
+                             th:src="@{/images/pexels-shalom-osezua-20466808.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -191,7 +188,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__color"></div>
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -203,10 +199,10 @@
 </div>
 
 
-<div class="text-center"><h2 style="font-weight: 600; margin: 0">FLASH SALE</h2></div>
+<div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">FLASH SALE</h2></div>
 
 <div class="container d-flex justify-content-center align-items-center "
-     style="padding: 30px 0; overflow: hidden">
+     style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
 
     <div class="container-product row w-100 d-flex justify-content-between align-content-center">
         <div class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
@@ -214,7 +210,7 @@
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             th:src="@{/img/pexels-sadi-gökpınar-20466271.jpg}"
+                             th:src="@{/images/pexels-sadi-gökpınar-20466271.jpg}"
                              alt="">
                         <img class="back-img"
                              src=" https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -229,7 +225,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__color"></div>
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -242,7 +237,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             th:src="@{/img/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
+                             th:src="@{/images/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -256,7 +251,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__color"></div>
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -270,7 +264,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             th:src="@{/img/pexels-charles-isaac-20455894.jpg}"
+                             th:src="@{/images/pexels-charles-isaac-20455894.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -284,7 +278,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__color"></div>
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -298,7 +291,7 @@
                 <div class="card__main">
                     <div class="img__product">
                         <img class="front-img"
-                             th:src="@{/img/pexels-shalom-osezua-20466808.jpg}"
+                             th:src="@{/images/pexels-shalom-osezua-20466808.jpg}"
                              alt="">
                         <img class="back-img"
                              src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
@@ -312,7 +305,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__color"></div>
                 <div class="card__name-price">
                     <div class="name-product">HADES KHAKI CARGO JORTS</div>
                     <div class="price-product">620000</div>
@@ -326,12 +318,12 @@
 
 <div class="container my-5">
     <hr>
-    <h4 style="font-weight: 600; margin: 20px 0">Embark on a Fashion Adventure </h4>
+    <h4 style="font-weight: 600; margin: 20px 0" data-aos="fade-left" data-aos-duration="1000">Embark on a Fashion Adventure </h4>
     <div class="intro-shop row">
 
-        <div class="  h-50 ">
+        <div class="  h-50 " data-aos="fade-right" data-aos-duration="1000">
 
-            <!--            <img src="../../img/logoINF1.png"  style="width: 280px; float: right">-->
+            <!--            <img src="../../images/logoINF1.png"  style="width: 280px; float: right">-->
             <p style="font-size: 18px; line-height: 1.8; color: #858E96" class="">
                 Picture yourself strolling through racks adorned with the latest styles, each garment whispering tales
                 of elegance and sophistication. From the vibrant hues of summer dresses to the timeless allure of
@@ -351,34 +343,34 @@
     <hr>
 </div>
 
-<video width="100%" autoplay muted loop>
+<video width="100%" autoplay muted loop data-aos="fade-up" data-aos-duration="1000">
     <source src=”http://techslides.com/demos/sample-videos/small.ogv” type=video/ogg>
-    <source th:src="@{/video/production.mp4}" type="video/mp4">
+    <source th:src="@{/images/production.mp4}" type="video/mp4">
 </video>
 
 
-<div class="container d-flex justify-content-center align-items-center" style="padding: 50px 0">
+<div class="container d-flex justify-content-center align-items-center" style="padding: 50px 0" >
     <div class="row w-100 d-flex justify-content-between align-items-center ">
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" >
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-4.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-6.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-1.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-3.svg" alt="" srcset="">
         </div>
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-2.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-5.svg" alt="" srcset="">
         </div>
     </div>

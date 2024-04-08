@@ -237,13 +237,7 @@
         function (event) {
             event.preventDefault();
 
-
-            // Get the value of the search input
             var searchTerm = document.querySelector('input[name="search"]').value;
-
-            // Construct the search URL with the current page and search term
-            // Redirect to the constructed search URL
-
 
             if (globalLink.includes('?')) {
                 if (globalLink.includes("search=")) {
@@ -274,40 +268,38 @@
 
         const pageNumbers = document.querySelectorAll(".page-number")
 
-        console.log(pageNumbers)
-
 
         //icon pre & next
-        if (pagePrevious) {
-            if (globalLink.includes("search")) {
-                const regex = /page=\d+/;
-                pagePrevious.href = globalLink.replace(regex, "page=" + `${currentPage - 1}`);
-                if (!globalLink.includes("page=")) {
-                    pagePrevious.href = globalLink + "&page=" + currentPage - 1;
-                }
-            } else {
-                pagePrevious.href = '/admin/products?page=' + currentPage - 1;
 
-            }
-        }
 
         if (pageNext) {
             if (globalLink.includes("search")) {
                 const regex = /page=\d+/;
                 pageNext.href = globalLink.replace(regex, "page=" + `${currentPage + 1}`);
                 if (!globalLink.includes("page=")) {
-                    pageNext.href = globalLink + "&page=" + currentPage - 1;
+                    pageNext.href = globalLink + "&page=" + `${currentPage + 1}`;
                 }
             } else {
-                pageNext.href = '/admin/products?page=' + currentPage + 1;
+                pageNext.href = '/admin/products?page=' + `${currentPage + 1}`;
+            }
+        }
+
+        if (pagePrevious) {
+            if (globalLink.includes("search")) {
+                const regex = /page=\d+/;
+                pagePrevious.href = globalLink.replace(regex, "page=" + `${currentPage - 1}`);
+                if (!globalLink.includes("page=")) {
+                    pagePrevious.href = globalLink + "&page=" + `${currentPage - 1}`;
+                }
+            }  else {
+                pagePrevious.href = '/admin/products?page=' + `${currentPage - 1}`;
+                console.log(typeof currentPage)
             }
         }
 
 
-        console.log("ok")
         //number page
         pageNumbers.forEach((pageEl, index) => {
-            console.log("ok")
             globalLink = window.location.href
             if (globalLink.includes("search")) {
                 const regex = /page=\d+/;
@@ -318,6 +310,10 @@
             } else pageEl.href = '/admin/products?page=' + index;
         });
     });
+
+
+
+
 
 
 </script>

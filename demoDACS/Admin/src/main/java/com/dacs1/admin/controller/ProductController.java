@@ -47,13 +47,13 @@ public class ProductController {
                               Model model) {
         Page<ProductDto> products = null;
         if (search != null && !search.isEmpty())
-            products = productService.pageProductSearch(search, page, 10);
+            products = productService.pageProductSearch(search, page, 4);
         else if (page == null) {
-            products = productService.pageProduct(0, 10);
+            products = productService.pageProduct(0, 4);
             page = 0;
 
         } else {
-            products = productService.pageProduct(page, 10);
+            products = productService.pageProduct(page, 4);
         }
         List<ProductImage> productImages = productImageService.findByIdProductUnique();
 

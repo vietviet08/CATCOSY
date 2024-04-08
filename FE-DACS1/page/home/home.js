@@ -22,9 +22,8 @@ window.addEventListener("scroll", function (e) {
 btnScroll.addEventListener("click", function (e) {
     window.scrollTo({
         top: 0, behavior: "smooth"
-    })
-
-})
+    });
+});
 
 
 const VND = new Intl.NumberFormat('vi-VN', {
