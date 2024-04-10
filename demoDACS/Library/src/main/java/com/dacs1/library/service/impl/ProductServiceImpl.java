@@ -342,6 +342,18 @@ public class ProductServiceImpl implements ProductService {
         return toPage(pageable, dtoList);
     }
 
+    @Override
+    public List<MultipartFile> getImagesById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Page<ProductDto> pageProductIsActivated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivated());
+        return toPage(pageable, dtoList);
+    }
+
     private Page<ProductDto> toPage(Pageable pageable, List<ProductDto> list) {
         int start = (int) pageable.getOffset();
         int end = Math.min(start + pageable.getPageSize(), list.size());

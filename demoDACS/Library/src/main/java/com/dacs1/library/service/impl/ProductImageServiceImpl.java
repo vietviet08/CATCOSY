@@ -5,6 +5,7 @@ import com.dacs1.library.repository.ProductImageRepository;
 import com.dacs1.library.repository.ProductRepository;
 import com.dacs1.library.service.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +26,12 @@ public class ProductImageServiceImpl implements ProductImageService {
         return productImageRepository.findByIdProduct(id);
     }
 
+
     @Override
     public ProductImage save(ProductImage productImage) {
         return productImageRepository.save(productImage);
     }
+
+
+
 }

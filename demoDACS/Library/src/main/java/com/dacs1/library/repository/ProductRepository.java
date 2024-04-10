@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,5 +27,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p from Product p where p.category.name = :name")
     List<Product> findAllByCategory(@Param("name") String name);
+
+    /*Customer*/
+
+    @Query("select p from Product p where p.isDeleted = false and p.isActivated = true")
+    List<Product> findAllIsActivated();
+
 
 }

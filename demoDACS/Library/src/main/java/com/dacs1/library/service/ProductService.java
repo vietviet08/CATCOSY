@@ -41,4 +41,11 @@ public interface ProductService {
 
     Page<ProductDto> pageProductSearch(String keyword, int pageNo, int pageSize);
 
+//    Customer
+
+    List<MultipartFile> getImagesById(Long id);
+
+
+    Page<ProductDto> pageProductIsActivated(int pageNo, int pageSize);
+
 }

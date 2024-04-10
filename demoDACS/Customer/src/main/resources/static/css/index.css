@@ -137,14 +137,20 @@ img {
     font-size: 16px;
 }
 
-.group-feature > i {
+.group-feature a{
+    text-decoration: none;
+    color: #333333;
+}
+
+.group-feature a i {
     margin: 0 20px;
     font-size: 19px;
     font-weight: bold;
 }
 
-.group-feature > i:hover {
+.group-feature a > i:hover {
     cursor: pointer;
+    filter: drop-shadow(0 0 0.85rem #333333);
 }
 
 
@@ -250,7 +256,7 @@ img {
     height: 550px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     overflow: hidden;
 }

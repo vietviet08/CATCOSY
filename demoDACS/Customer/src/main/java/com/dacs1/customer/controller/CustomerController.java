@@ -24,16 +24,6 @@ public class CustomerController {
         return "404";
     }
 
-    @GetMapping("/products/{pageNo}")
-    public String allProduct(@PathVariable("pageNo") int pageNo, Model model){
-        Page<ProductDto> products = productService.pageProduct(pageNo, 24);
-        model.addAttribute("title", "All products");
-        model.addAttribute("products", products);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("size", products.getSize());
-        model.addAttribute("totalPage", products.getTotalPages());
-        return "page-product";
-    }
 
 
 

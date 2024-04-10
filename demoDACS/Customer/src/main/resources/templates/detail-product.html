@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head th:replace="~{fragments :: head}">
-
-    <link rel="stylesheet" th:href="@{/css/detail-product.css}">
 </head>
+<link rel="stylesheet" th:href="@{/css/detail-product.css}">
 <body>
 
 <header th:replace="~{fragments :: header}"></header>
@@ -22,7 +21,7 @@
 
 
                 <div class="img-main-detail col-12 col-lg-9 order-first   order-sm-1 d-inline-block  py-4 ">
-                    <img th:src="@{/img/pexels-goebbels-erasme-20445958.jpg}" class="">
+                    <img th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" class="">
                 </div>
 
             </div>
@@ -30,9 +29,9 @@
         </div>
         <div class="col-12 col-lg-5 py-4">
             <div class="product-information">
-                <h2 style="font-weight: 600">NAME PRODUCT</h2>
-                <p style="font-size: 14px">ID product</p>
-                <span style="font-weight: bold; font-size: 18px">999.000 VND</span>
+                <h2 style="font-weight: 600" th:text="${product.name}"></h2>
+                <p style="font-size: 14px" th:text="${product.id}" ></p>
+                <span style="font-weight: bold; font-size: 18px" th:text="${product.costPrice}" ></span>
             </div>
             <hr/>
             <div class="product-selection">
