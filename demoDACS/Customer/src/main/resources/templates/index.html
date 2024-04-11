@@ -88,15 +88,15 @@
      style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
 
     <div class="container-product row w-100 d-flex justify-content-between align-items-center">
-        <div class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
+        <div th:each="product : ${productsNewArrival}" class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
+            <a th:href="@{/product-detail/{id} (id = ${product.id})}">
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             th:src="@{/images/pexels-sadi-gökpınar-20466271.jpg}"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
                              alt="">
                         <img class="back-img"
-                             src=" https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
                              alt="">
 
                         <div class="card__main--choose-options">
@@ -109,88 +109,8 @@
                     </div>
                 </div>
                 <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
-                </div>
-            </a>
-        </div>
-
-        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
-                <div class="card__main">
-                    <div class="img__product">
-                        <img class="front-img"
-                             th:src="@{/images/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
-                             alt="">
-                        <img class="back-img"
-                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
-                             alt="">
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
-                            </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
-                </div>
-            </a>
-        </div>
-
-
-        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
-                <div class="card__main">
-                    <div class="img__product">
-                        <img class="front-img"
-                             th:src="@{/images/pexels-charles-isaac-20455894.jpg}"
-                             alt="">
-                        <img class="back-img"
-                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
-                             alt="">
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
-                            </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
-                </div>
-            </a>
-        </div>
-
-
-        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
-                <div class="card__main">
-                    <div class="img__product">
-                        <img class="front-img"
-                             th:src="@{/images/pexels-shalom-osezua-20466808.jpg}"
-                             alt="">
-                        <img class="back-img"
-                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
-                             alt="">
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
-                            </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
+                    <div th:text="${product.name}" class="name-product"></div>
+                    <div th:text="${product.costPrice}" class="price-product"></div>
                 </div>
             </a>
         </div>
@@ -205,15 +125,15 @@
      style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
 
     <div class="container-product row w-100 d-flex justify-content-between align-content-center">
-        <div class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
+        <div th:each="product : ${productsSale}" class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
+            <a th:href="@{/product-detail/{id} (id = ${product.id})}">
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             th:src="@{/images/pexels-sadi-gökpınar-20466271.jpg}"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
                              alt="">
                         <img class="back-img"
-                             src=" https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
                              alt="">
 
                         <div class="card__main--choose-options">
@@ -226,88 +146,8 @@
                     </div>
                 </div>
                 <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
-                </div>
-            </a>
-        </div>
-
-        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
-                <div class="card__main">
-                    <div class="img__product">
-                        <img class="front-img"
-                             th:src="@{/images/prince-akachi-iuqcmC4NVNo-unsplash.jpg}"
-                             alt="">
-                        <img class="back-img"
-                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
-                             alt="">
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
-                            </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
-                </div>
-            </a>
-        </div>
-
-
-        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
-                <div class="card__main">
-                    <div class="img__product">
-                        <img class="front-img"
-                             th:src="@{/images/pexels-charles-isaac-20455894.jpg}"
-                             alt="">
-                        <img class="back-img"
-                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
-                             alt="">
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
-                            </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
-                </div>
-            </a>
-        </div>
-
-
-        <div class="card border-0 col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a href="#">
-                <div class="card__main">
-                    <div class="img__product">
-                        <img class="front-img"
-                             th:src="@{/images/pexels-shalom-osezua-20466808.jpg}"
-                             alt="">
-                        <img class="back-img"
-                             src="https://product.hstatic.net/1000306633/product/untitled_catalog2410_6c0a3697bb984c9aa6feeb9824cab164.jpg"
-                             alt="">
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
-                            </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__name-price">
-                    <div class="name-product">HADES KHAKI CARGO JORTS</div>
-                    <div class="price-product">620000</div>
+                    <div th:text="${product.name}" class="name-product"></div>
+                    <div th:text="${product.costPrice}" class="price-product"></div>
                 </div>
             </a>
         </div>

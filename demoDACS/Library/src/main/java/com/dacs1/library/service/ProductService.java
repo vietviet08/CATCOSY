@@ -45,7 +45,10 @@ public interface ProductService {
 
     List<MultipartFile> getImagesById(Long id);
 
-
     Page<ProductDto> pageProductIsActivated(int pageNo, int pageSize);
+
+    List<ProductDto> productRandomLimit(int limit);
+
+    List<ProductDto> productRandomSameCategoryLimit( Long idCategory, Long idProduct);
 
 }

@@ -1,6 +1,7 @@
 package com.dacs1.customer.controller;
 
 import com.dacs1.library.dto.ProductDto;
+import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
 import com.dacs1.library.service.ProductImageService;
 import com.dacs1.library.service.ProductService;
@@ -40,9 +41,11 @@ public class PageProductController {
     public String allProduct(@PathVariable("id") long id, Model model){
 
         ProductDto productDto = productService.getById(id);
+        List<ProductDto> productsSameCategory = productService.productRandomSameCategoryLimit(productDto.getCategory().getId(), id);
 
         model.addAttribute("title", productDto.getName());
         model.addAttribute("product", productDto);
+        model.addAttribute("productsSameCategory", productsSameCategory);
 
 
         return "detail-product";

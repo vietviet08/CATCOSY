@@ -1,3 +1,7 @@
+.detail-product-left .detail-product-left-main{
+    height: 100%;
+}
+
 .container-img-product img {
     width: 90px;
     margin: 17px 0;
@@ -6,7 +10,7 @@
 
 
 .img-main-detail img {
-    height: 75%;
+    height: 100%;
 }
 
 

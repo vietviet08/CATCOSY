@@ -34,4 +34,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllIsActivated();
 
 
+    @Query(value = "select * from  products p order by rand() limit :limitProduct", nativeQuery = true)
+    List<Product> findAllRandomProduct(@Param("limitProduct") int limitProduct);
+
+    @Query(value = "select * from products p where p.category_id = :idCategory and p.product_id <> :idProduct ", nativeQuery = true)
+    List<Product> findAllProductSameCategory(@Param("idCategory") Long idCategory,
+                                             @Param("idProduct") Long idProduct);
+
+
 }

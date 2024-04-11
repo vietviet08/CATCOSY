@@ -354,6 +354,21 @@ public class ProductServiceImpl implements ProductService {
         return toPage(pageable, dtoList);
     }
 
+    @Override
+    public List<ProductDto> productRandomLimit(int limit) {
+        return convertToDtoList(productRepository.findAllRandomProduct(limit));
+    }
+
+    @Override
+    public List<ProductDto> productRandomSameCategoryLimit(Long idCategory, Long idProduct) {
+        return convertToDtoList(productRepository.findAllProductSameCategory(idCategory, idProduct));
+    }
+
+
+//    public List<ProductDto> productRandomSameCategoryLimit(Long idCategory) {
+//        return convertToDtoList(productRepository.findAllProductSameCategory(idCategory));
+//    }
+
     private Page<ProductDto> toPage(Pageable pageable, List<ProductDto> list) {
         int start = (int) pageable.getOffset();
         int end = Math.min(start + pageable.getPageSize(), list.size());
