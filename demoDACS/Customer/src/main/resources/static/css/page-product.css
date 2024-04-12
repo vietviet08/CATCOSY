@@ -3,6 +3,37 @@
     background-color: #F7F7F7;
 }
 
+.head-detail-category{
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+#sort-by{
+   /*width: 120px;*/
+    height: 25px;
+    border: 1px solid  #333333 ;
+}
+
+.btn-search-product{
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 10px;
+    top: 16%;
+}
+
+.form-search-product{
+    position: relative;
+}
+
+.form-control:focus{
+    border: 1px solid #333333;
+    box-shadow: none;
+}
+
+
 .detail-category ul {
     list-style-type: none;
     padding: 0;
@@ -20,6 +51,8 @@
 
 .left-page-product {
     width: 20%;
+    position: sticky;
+    top: 50px;
 }
 
 .filter-by ul {
@@ -62,6 +95,19 @@
 
 
 @media only screen and (max-width: 992px) {
+
+    .head-detail-category{
+        flex-direction: column;
+    }
+
+    .form-search-product{
+        width: 30%;
+        /*right: 0;*/
+        position: absolute;
+        right: 0;
+        top: 30px;
+    }
+
     .row-products {
         width: 100%;
     }
@@ -86,7 +132,56 @@
         margin-right: unset;
         max-width: unset;
     }
+
+    .detail-category{
+        height: 100px;
+        position: relative;
+    }
+
+    .list-category{
+        flex-wrap: wrap;
+    }
+
+    /*#sort-by{*/
+    /*    position: absolute;*/
+    /*    bottom: 0;*/
+    /*    right: 0;*/
+    /*}*/
+
+    .form-search-product{
+        /*right: 0;*/
+        /*width: calc(40% + 15px);*/
+    }
 }
+
+@media only screen and (max-width: 720px) {
+    #sort-by{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 43%;
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 100% 50%;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .form-search-product{
+        right: 0;
+        width: calc(40% + 15px);
+
+    }
+
+    .parent-input-search-product{
+        width: 100%;
+    }
+
+    .form-control{
+        width: 100%;
+    }
+}
+
+
 
 @media only screen and (max-width: 650px) {
     .card {

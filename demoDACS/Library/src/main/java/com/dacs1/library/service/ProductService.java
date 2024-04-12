@@ -47,6 +47,8 @@ public interface ProductService {
 
     Page<ProductDto> pageProductIsActivated(int pageNo, int pageSize);
 
+    Page<ProductDto> pageProductIsActivatedFilter(int pageNo, int pageSize, String keyword, String sortPrice, Long idCategory);
+
     List<ProductDto> productRandomLimit(int limit);
 
     List<ProductDto> productRandomSameCategoryLimit( Long idCategory, Long idProduct);

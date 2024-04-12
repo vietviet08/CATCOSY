@@ -30,8 +30,22 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     /*Customer*/
 
-    @Query("select p from Product p where p.isDeleted = false and p.isActivated = true")
+    @Query("select p from Product p inner join Category c on c.id = p.category.id where  p.isActivated = true and c.isActivated = true")
     List<Product> findAllIsActivated();
+
+    @Query("SELECT p FROM Product p INNER JOIN Category c ON c.id = p.category.id WHERE p.isActivated = true AND c.isActivated = true " +
+            "AND (:idCategory IS NULL OR :idCategory = 0 OR p.category.id = :idCategory) " +
+            "AND (:keyword IS NULL OR p.name LIKE %:keyword%) ORDER BY " +
+            "CASE WHEN :sortPrice = 'true' THEN p.costPrice END ASC, " +
+            "CASE WHEN :sortPrice = 'false' THEN p.costPrice END DESC," +
+            "CASE WHEN :sortPrice = 'news' THEN p.id END DESC")
+    List<Product> findAllIsActivatedFilter(@Param("keyword") String keyword, @Param("sortPrice") String sortPrice, @Param("idCategory") Long idCategory);
+
+    @Query("select p from Product p inner join Category c on c.id = p.category.id where  p.isActivated = true and c.isActivated = true and p.name like %?1%")
+    List<Product> findAllIsActivatedFilterSearch(String keyword);
+
+    @Query("select p from Product p inner join Category c on c.id = p.category.id where  p.isActivated = true and c.isActivated = true and p.name like %?1% order by p.costPrice")
+    List<Product> findAllIsActivatedFilterSortPrice(String keyword);
 
 
     @Query(value = "select * from  products p order by rand() limit :limitProduct", nativeQuery = true)

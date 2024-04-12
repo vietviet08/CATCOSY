@@ -32,6 +32,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category getById(Long id) {
+        return categoryRepository.getReferenceById(id);
+    }
+
+    @Override
     public Category save(Category category){
         Category c = new Category(category.getName());
         return categoryRepository.save(c);

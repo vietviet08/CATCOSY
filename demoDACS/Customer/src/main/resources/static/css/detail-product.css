@@ -11,6 +11,8 @@
 
 .img-main-detail img {
     height: 100%;
+    opacity: 1;
+    transition: all 0.3s ease;
 }
 
 
@@ -63,6 +65,10 @@
 .nav {
     /*position: unset;*/
     background-color: #f7f7f7;
+}
+
+.container-product-same{
+    padding-bottom: 60px;
 }
 
 

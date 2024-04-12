@@ -16,6 +16,7 @@ public interface CategoryService {
 
     Optional<Category> findById(Long id);
 
+    Category getById(Long id);
 
     Category save(Category category);
 

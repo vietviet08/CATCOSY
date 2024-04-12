@@ -355,6 +355,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<ProductDto> pageProductIsActivatedFilter(int pageNo, int pageSize, String keyword, String sortPrice, Long idCategory) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+//        if (!sortPrice && (keyword.isEmpty() || keyword == null || keyword.equals(""))) {
+//            List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter());
+//            return toPage(pageable, dtoList);
+//        } else if (!sortPrice) {
+//            if(keyword != null) keyword = keyword.trim();
+//            else keyword = "";
+//            List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilterSearch(keyword));
+//            return toPage(pageable, dtoList);
+//        } else {
+//            if(keyword != null) keyword = keyword.trim();
+//            else keyword = "";
+//            List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilterSortPrice(keyword));
+//            return toPage(pageable, dtoList);
+//        }
+
+        List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter(keyword, sortPrice, idCategory));
+        return toPage(pageable, dtoList);
+    }
+
+    @Override
     public List<ProductDto> productRandomLimit(int limit) {
         return convertToDtoList(productRepository.findAllRandomProduct(limit));
     }
