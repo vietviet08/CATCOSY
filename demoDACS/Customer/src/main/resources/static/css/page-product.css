@@ -59,8 +59,9 @@
     list-style-type: none;
 }
 
-.filter-by ul li {
-
+.filter-by ul li a {
+    text-decoration: none;
+    color: #333333;
 
 }
 

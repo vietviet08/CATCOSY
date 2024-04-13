@@ -9,6 +9,10 @@
     box-sizing: border-box;
 }
 
+:root{
+    --primary-1: #e91e63;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -109,6 +113,7 @@ img {
 .menu ul li a {
     text-decoration: none;
     margin: 0px 12px;
+    transition: all 0.3s ease;
 }
 
 .menu ul li a:after {
@@ -116,10 +121,14 @@ img {
     position: absolute;
     width: 0;
     height: 3px;
-    background-color: #333;
+    background-color: var(--primary-1);
     transition: ease-in-out 0.2s;
     left: 10%;
     bottom: -10px;
+}
+
+.menu ul li a:hover{
+    color: var(--primary-1);
 }
 
 .menu ul li a:hover:after {
@@ -150,7 +159,8 @@ img {
 
 .group-feature a > i:hover {
     cursor: pointer;
-    filter: drop-shadow(0 0 0.85rem #333333);
+    filter: drop-shadow(0 0 0.85rem #f7f7f7);
+    color: var(--primary-1);
 }
 
 
@@ -373,6 +383,7 @@ img {
 
 footer > a {
     font-size: 14px;
+
 }
 
 footer {
@@ -438,6 +449,13 @@ footer {
 .footer-item a {
     font-size: 14px;
     margin: 4px 0;
+    text-decoration: none;
+    color: #333333;
+    transition: all 0.3s ease;
+}
+
+.footer-item a:hover{
+    color: var(--primary-1);
 }
 
 .connect-social-media {
@@ -447,6 +465,12 @@ footer {
 .group-social-media i {
     margin: 0 5px;
     font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.group-social-media i:hover{
+    color: var(--primary-1);
 }
 
 footer p {

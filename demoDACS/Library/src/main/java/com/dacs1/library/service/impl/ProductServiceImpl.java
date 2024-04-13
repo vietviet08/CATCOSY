@@ -355,7 +355,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDto> pageProductIsActivatedFilter(int pageNo, int pageSize, String keyword, String sortPrice, Long idCategory) {
+    public Page<ProductDto> pageProductIsActivatedFilter(int pageNo, int pageSize,
+                                                         String keyword,
+                                                         String sortPrice,
+                                                         Long idCategory,
+                                                         Integer minPrice,
+                                                         Integer maxPrice,
+                                                         List<Long> size) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
 //        if (!sortPrice && (keyword.isEmpty() || keyword == null || keyword.equals(""))) {
 //            List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter());
@@ -372,7 +378,7 @@ public class ProductServiceImpl implements ProductService {
 //            return toPage(pageable, dtoList);
 //        }
 
-        List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter(keyword, sortPrice, idCategory));
+        List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter(keyword, sortPrice, idCategory, minPrice, maxPrice, size));
         return toPage(pageable, dtoList);
     }
 

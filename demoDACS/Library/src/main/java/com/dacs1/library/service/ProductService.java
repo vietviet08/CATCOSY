@@ -17,7 +17,7 @@ public interface ProductService {
 
     Product save(List<MultipartFile> images, List<Long> sizes, ProductDto productDto) throws IOException;
 
-    Product update(List<MultipartFile> images,List<Long> sizes,  ProductDto productDto) throws IOException;
+    Product update(List<MultipartFile> images, List<Long> sizes, ProductDto productDto) throws IOException;
 
     void updateProductSize(Product product, List<Long> newSizes);
 
@@ -47,10 +47,16 @@ public interface ProductService {
 
     Page<ProductDto> pageProductIsActivated(int pageNo, int pageSize);
 
-    Page<ProductDto> pageProductIsActivatedFilter(int pageNo, int pageSize, String keyword, String sortPrice, Long idCategory);
+    Page<ProductDto> pageProductIsActivatedFilter(int pageNo, int pageSize,
+                                                  String keyword,
+                                                  String sortPrice,
+                                                  Long idCategory,
+                                                  Integer minPrice,
+                                                  Integer maxPrice,
+                                                  List<Long> size);
 
     List<ProductDto> productRandomLimit(int limit);
 
-    List<ProductDto> productRandomSameCategoryLimit( Long idCategory, Long idProduct);
+    List<ProductDto> productRandomSameCategoryLimit(Long idCategory, Long idProduct);
 
 }

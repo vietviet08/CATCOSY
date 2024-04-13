@@ -33,13 +33,21 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p inner join Category c on c.id = p.category.id where  p.isActivated = true and c.isActivated = true")
     List<Product> findAllIsActivated();
 
-    @Query("SELECT p FROM Product p INNER JOIN Category c ON c.id = p.category.id WHERE p.isActivated = true AND c.isActivated = true " +
+    @Query("SELECT p FROM Product p " +
+            "INNER JOIN Category c ON c.id = p.category.id WHERE p.isActivated = true AND c.isActivated = true " +
+            "AND (:size IS NULL OR 0 in :size OR p.id IN (select s.product.id from ProductSize s where s.size.id in :size)) " +
             "AND (:idCategory IS NULL OR :idCategory = 0 OR p.category.id = :idCategory) " +
-            "AND (:keyword IS NULL OR p.name LIKE %:keyword%) ORDER BY " +
+            "AND (:keyword IS NULL OR p.name LIKE %:keyword%)" +
+            "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.costPrice BETWEEN :minPrice AND :maxPrice)) ORDER BY " +
             "CASE WHEN :sortPrice = 'true' THEN p.costPrice END ASC, " +
             "CASE WHEN :sortPrice = 'false' THEN p.costPrice END DESC," +
             "CASE WHEN :sortPrice = 'news' THEN p.id END DESC")
-    List<Product> findAllIsActivatedFilter(@Param("keyword") String keyword, @Param("sortPrice") String sortPrice, @Param("idCategory") Long idCategory);
+    List<Product> findAllIsActivatedFilter(@Param("keyword") String keyword,
+                                           @Param("sortPrice") String sortPrice,
+                                           @Param("idCategory") Long idCategory,
+                                           @Param("minPrice") Integer minPrice,
+                                           @Param("maxPrice") Integer maxPrice,
+                                           @Param("size") List<Long> size);
 
     @Query("select p from Product p inner join Category c on c.id = p.category.id where  p.isActivated = true and c.isActivated = true and p.name like %?1%")
     List<Product> findAllIsActivatedFilterSearch(String keyword);

@@ -18,44 +18,41 @@
 
             <div class="head-detail-category  ">
                 <ul class="list-category d-flex align-items-center">
-                    <li th:each="category : ${categories}" ><a
-                            th:href="@{'products?' +
-                             'page=' + ${currentPage} +
-                              '&idCategory=' + ${category.id} +
-                             ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
-                             ${sort != null && sort != '' ? '&sortPrice=' + sort : ''}}"
-                            th:text="${category.name}"></a></li>
+                    <li th:each="category : ${categories}">
+                        <a th:href="@{'products?' +
+                           'page=' + ${currentPage} +
+                           '&idCategory=' + ${category.id} +
+                           ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
+                           ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
+                           ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
+                           ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
+                           th:text="${category.name}"></a></li>
                 </ul>
 
                 <form class="form-search-product " th:action="'products?' +
-                             'page=' + ${currentPage} +
-                              '&idCategory=' + ${idCategory} +
-                             ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
-                             ${sort != null && sort != '' ? '&sortPrice=' + sort : ''}" >
-                    <div style="display: inline-block" class="parent-input-search-product md-form active-purple active-purple-2 mb-3">
+                    'page=' + ${currentPage} +
+                    '&idCategory=' + ${idCategory} +
+                    ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
+                    ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' }+
+                    ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''} +
+                    ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} ">
+                    <div style="display: inline-block"
+                         class="parent-input-search-product md-form active-purple active-purple-2 mb-3">
                         <input class="form-control" aria-label="Search Product" name="keyword"
                                placeholder="Search Product" type="text">
                     </div>
-                    <button type="submit" class="btn-search-product"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button type="submit" class="btn-search-product"><i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
                 </form>
             </div>
             <select id="sort-by" onchange="window.location=this.options[this.selectedIndex].value">
-                <option class="option-sort option-sort-news" th:value="'products?' +  'page=' + ${currentPage}  +
-                              '&idCategory=' + ${idCategory} +
-                     ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
-                     '&sortPrice=news'">Latest
-                </option>
+                <option th:replace="~{fragments :: sort('news', 'Latest')}"></option>
+
                 <option class="option-sort option-sort-most " th:value="''">Buy the most</option>
-                <option class="option-sort option-sort-true" th:value="'products?' +  'page=' + ${currentPage} +
-                              '&idCategory=' + ${idCategory} +
-                     ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
-                     '&sortPrice=true'">Prices gradually increase
-                </option>
-                <option class="option-sort option-sort-false" th:value="'products?' +  'page=' + ${currentPage} +
-                              '&idCategory=' + ${idCategory} +
-                     ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
-                     '&sortPrice=false'">Prices gradually decrease
-                </option>
+
+                <option th:replace="~{fragments :: sort('true', 'Prices gradually increase')}"></option>
+                <option th:replace="~{fragments :: sort('false', 'Prices gradually decrease')}"></option>
+
             </select>
 
         </div>
@@ -69,33 +66,22 @@
                 <ul>
                     <li>By Price</li>
                     <li>
-                    <span>
-                        <label for="filter-by-price-1"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-price-1">
-                        Under 300.000 VND
-                    </span>
+                        <a th:replace="~{fragments :: filterPrice(0, 300000, 'Under 300.000đ')}"></a>
+
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-price-2"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-price-2">
-                        300.000đ - 500.000đ
-                    </span>
+                        <a th:replace="~{fragments :: filterPrice(300000, 500000, '300.000đ - 500.000đ')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-price-3"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-price-3">
-                        500.000đ - 100.000.000đ
-                    </span>
+                        <a th:replace="~{fragments :: filterPrice(500000, 1000000, '500.000đ - 1.000.000đ')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-price-4"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-price-4">
-                        On 100.000.000đ
-                    </span>
+                        <a th:replace="~{fragments :: filterPrice(1000000, 3000000, '1.000.000đ - 3.000.000đ')}"></a>
                     </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterPrice(3000000, 999999999, 'On 3.000.000đ')}"></a>
+                    </li>
+
 
                 </ul>
             </div>
@@ -104,32 +90,16 @@
                 <ul>
                     <li>By Size</li>
                     <li>
-                    <span>
-                        <label for="filter-by-size-1"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-size-1">
-                        S
-                    </span>
+                        <a th:replace="~{fragments :: filterSizes(1, 0, 'S')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-size-2"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-size-2">
-                        M
-                    </span>
+                        <a th:replace="~{fragments :: filterSizes(2, 0, 'M')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-size-3"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-size-3">
-                       L
-                    </span>
+                        <a th:replace="~{fragments :: filterSizes(3, 0, 'L')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-size-4"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-size-4">
-                       XL
-                    </span>
+                        <a th:replace="~{fragments :: filterSizes(4, 0, 'XL')}"></a>
                     </li>
 
                 </ul>
@@ -179,6 +149,10 @@
 
         <div class="right-page-product my-5 ">
             <div class="current-row-products row d-flex justify-content-around">
+                <div th:if="${products.isEmpty()}">
+                    <div class="alert alert-warning">No suitable products were found</div>
+                </div>
+
                 <div class="card border-0  col-6 col-sm-6 col-lg-4 " style="cursor: pointer; padding-bottom: 40px"
                      th:each="product, obj : ${products}">
                     <a th:href="@{/product-detail/{id}(id = ${product.id})}">
@@ -210,6 +184,7 @@
                 </div>
             </div>
 
+
             <nav class="pagination-parent" aria-label="Page navigation example">
                 <ul class="pagination justify-content-center   ">
                     <li class="page-item"><a th:replace="~{fragments :: paging(0, 'First page')}"></a></li>
@@ -226,11 +201,6 @@
                     <li th:each="i : ${#numbers.sequence(1, totalPage)}"
                         th:classappend="${currentPage == i - 1 ? 'active' : ''}"
                         class="page-item">
-                        <!--                        <a class="page-link" style="color: #858E96" th:text="${i}"-->
-                        <!--                           th:href="@{'products-test?' +  'page=' + ${i - 1} +-->
-                        <!--                         ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +-->
-                        <!--                         ${sort != null && sort != '' ? '&sortPrice=' + sort : ''}}"-->
-                        <!--                        ></a>-->
                         <a th:replace="~{fragments :: paging(${i - 1}, ${i})}"></a>
                     </li>
                     <!--                    <li th:if="${currentPage + 2 > totalPage}" class="page-item"><a class="page-link"-->
@@ -238,9 +208,8 @@
                     <!--                    </li>-->
 
                     <li class="page-item" th:if="${currentPage + 1 != totalPage}">
-                        <a
-                                th:replace="~{fragments :: paging(${currentPage + 1}, '&raquo;')}"
-                                class="page-link" aria-label="Next">
+                        <a th:replace="~{fragments :: paging(${currentPage + 1}, '&raquo;')}"
+                           class="page-link" aria-label="Next">
                             <span aria-hidden="true" style="color: #858E96">&raquo;</span>
                             <span class="sr-only">Next</span>
                         </a>

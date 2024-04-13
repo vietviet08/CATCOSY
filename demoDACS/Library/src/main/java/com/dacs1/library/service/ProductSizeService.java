@@ -8,6 +8,8 @@ import java.util.List;
 
 
 public interface ProductSizeService {
-
     List<ProductSize> findAllByIdProduct(Long id);
+
+
+
 }

@@ -30,3 +30,5 @@ for (let option of selectElement.options) {
 // option_sorts.forEach((option) => {
 //     if (option.classList.contains(sortPriceParam)) option.select = true;
 // })
+
+

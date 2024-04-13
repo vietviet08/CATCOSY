@@ -4,9 +4,7 @@ import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Category;
 import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
-import com.dacs1.library.service.CategoryService;
-import com.dacs1.library.service.ProductImageService;
-import com.dacs1.library.service.ProductService;
+import com.dacs1.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,8 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class PageProductController {
@@ -29,6 +30,9 @@ public class PageProductController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private SizeService sizeService;
 
 //    @GetMapping({"/all-product", "/products"})
 //    public String getAllProduct(@RequestParam(required = false, defaultValue = "0") int page, Model model) {
@@ -48,64 +52,58 @@ public class PageProductController {
                                     @RequestParam(required = false, defaultValue = "0") int page,
                                     @RequestParam(required = false) String keyword,
                                     @RequestParam(required = false) String sortPrice,
-                                    @RequestParam(required = false, defaultValue = "0") Long idCategory) {
-
-        model.addAttribute("title", " All Product");
+                                    @RequestParam(required = false, defaultValue = "0") Long idCategory,
+                                    @RequestParam(required = false) String priceCdt,
+                                    @RequestParam(required = false) String bySize) {
 
         List<Category> categoryList = categoryService.findAllCategoryIsActivate();
         model.addAttribute("categories", categoryList);
 
-        if(idCategory != 0){
+        if (idCategory != 0) {
             String nameCategory = categoryService.getById(idCategory).getName();
             model.addAttribute("nameCategory", nameCategory);
-        }else {
+            model.addAttribute("title", nameCategory);
+        } else {
+            model.addAttribute("title", "All Product");
             model.addAttribute("nameCategory", "Products");
         }
 
-        int pageSize = 3;
+        int pageSize = 6;
 
         Page<ProductDto> products = null;
-        if(sortPrice == null) sortPrice = "";
-        if(keyword == null) keyword = "";
+        if (sortPrice == null) sortPrice = "";
+        if (keyword == null) keyword = "";
 
-
-        if (sortPrice.equals("true")) {
-            products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, "true", idCategory);
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("sort", "true");
-            model.addAttribute("idCategory", idCategory);
-        } else if (sortPrice.equals("false")) {
-            products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, "false", idCategory);
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("sort", "false");
-            model.addAttribute("idCategory", idCategory);
-        } else if (sortPrice.equals("news")){
-            products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, "news", idCategory);
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("sort", "news");
-            model.addAttribute("idCategory", idCategory);
-        }else if(sortPrice.isEmpty() && !keyword.isEmpty()){
-            products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, "", idCategory);
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("sort", "");
-            model.addAttribute("idCategory", idCategory);
-        }else if(sortPrice.isEmpty() && keyword.isEmpty()){
-            products = productService.pageProductIsActivatedFilter(page, pageSize, "", "", idCategory);
-            model.addAttribute("keyword", "");
-            model.addAttribute("sort", "");
-            model.addAttribute("idCategory", idCategory);
+        Integer minPrice = null;
+        Integer maxPrice = null;
+        if (priceCdt != null && !priceCdt.isEmpty()) {
+            String[] slicePrice = priceCdt.split(":");
+            if (slicePrice.length == 2) {
+                minPrice = Integer.parseInt(slicePrice[0]);
+                maxPrice = Integer.parseInt(slicePrice[1]);
+            }
         }
 
+        List<Long> listSizeId = sizeService.getAllSizeId();
+        model.addAttribute("sizesId", listSizeId);
+        List<Long> listSize = new ArrayList<>();
 
+        if (bySize != null && !bySize.isEmpty()) {
+            String[] sizesArray = bySize.split(",");
+            for (String size : sizesArray) {
+                listSize.add(Long.parseLong(size.trim()));
+            }
+        } else listSize.add(0L);
 
+        products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, sortPrice, idCategory, minPrice, maxPrice, listSize);
 
-//        if ((keyword == null || keyword.isEmpty()) && (sortPrice == null || sortPrice.isEmpty())) {
-//            products = productService.pageProductIsActivated(page, 3);
-//        }else if(sortPrice == null || sortPrice.isEmpty()){
-//            products = productService.pageProductIsActivatedFilter(page, 3, keyword, false);
-//        }else{
-//            products = productService.pageProductIsActivatedFilter(page, 3, keyword, true);
-//        }
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("sort", sortPrice);
+        model.addAttribute("idCategory", idCategory);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("sizeChoose", listSize);
+        model.addAttribute("sizeChooseString", bySize);
 
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
@@ -124,7 +122,6 @@ public class PageProductController {
         model.addAttribute("title", productDto.getName());
         model.addAttribute("product", productDto);
         model.addAttribute("productsSameCategory", productsSameCategory);
-
 
         return "detail-product";
     }

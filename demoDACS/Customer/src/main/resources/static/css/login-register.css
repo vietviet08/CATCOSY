@@ -1,4 +1,5 @@
 
+
 form ul li {
     display: flex;
     justify-content: center;
@@ -17,6 +18,11 @@ input:not(.input-email){
     padding: 5px;
 }
 
+.form-control:focus{
+    box-shadow: 0 0 0 2px rgba(233, 30, 99  ,0.25);
+    border: solid 1px var(--primary-1);
+}
+
 #register, #login{
     width: 45%;
     height: 35px;
@@ -33,6 +39,16 @@ input:not(.input-email){
 .birthdate-sex select{
     margin-left: 15px;
     border-radius: unset;
+}
+
+button{
+    background-color: black;
+    color: #f7f7f7;
+    transition: all 0.3s ease;
+}
+
+button:hover{
+    background-color: var(--primary-1);
 }
 
 @media only screen and (max-width: 1400px){
