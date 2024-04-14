@@ -247,7 +247,7 @@
                 ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
                 ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
                 ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
-                ${ sizeChooseString == '' ? '' :  (#lists.contains(sizeChoose, sizeProduct.longValue()) ? ('&bySize=' + #strings.replace(sizeChooseString, sizeProduct  + ',', '')) : (sizeChoose != null && sizeChooseString != null ? ('&bySize=' + sizeChooseString  + sizeProduct + ',') : ('&bySize=' + sizeProduct + ',')))}
+                ${ sizeChooseString == sizeProduct + ',' ? '' :  (#lists.contains(sizeChoose, sizeProduct.longValue()) ? ('&bySize=' + #strings.replace(sizeChooseString, sizeProduct  + ',', '')) : (sizeChoose != null && sizeChooseString != null ? ('&bySize=' + sizeChooseString  + sizeProduct + ',') : ('&bySize=' + sizeProduct + ',')))}
        }"
    onclick="window.location.href=this.getAttribute('href'); return false;">
     <span>

@@ -50,7 +50,7 @@ public class CustomerConfiguration {
                 .formLogin(login ->
                         login.loginPage("/login")
                                 .loginProcessingUrl("/do-login")
-                                .defaultSuccessUrl("/index", true)
+                                .defaultSuccessUrl("/shop", true)
                                 .permitAll()
                 )
                 .logout(logout ->

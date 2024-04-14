@@ -530,7 +530,7 @@ footer p {
     display: none;
 }
 
-@media only screen and (max-width: 375px){
+@media only screen and (max-width: 380px){
     .logo {
         margin-left: -40px;
     }
@@ -540,13 +540,19 @@ footer p {
     }
 
     .group-feature i:nth-child(1),.group-feature i:nth-child(2){
-        margin-right: 7px;
+        margin-right: 24px;
     }
+
+
 }
 
 @media only screen and (max-width: 768px){
     .container-product{
         flex-direction: column;
+    }
+
+    .group-feature a i{
+        margin: 0 14px 0 0;
     }
 }
 
@@ -556,6 +562,7 @@ footer p {
 
     header .nav {
         height: 44px;
+        /*width: 80%;*/
     }
 
     .menu {

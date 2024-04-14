@@ -7,20 +7,100 @@
 
 <header th:replace="~{fragments :: header}"></header>
 
-<div class="container my-5">
+
+<!--Toast Start-->
+<div class="position-fixed top-0 right-0 p-3" style="z-index: 9999999">
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${success}">
+        <div class="toast-header bg-success ">
+            <strong class="me-auto" style="color: white">Success</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${success}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${message}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${message}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${error}">
+        <div class="toast-header bg-danger ">
+            <strong class="me-auto" style="color: white">Error</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${error}">
+        </div>
+    </div>
+</div>
+<!--Toast End-->
+
+
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+    <div th:if="${param.error}" class="toast show toast-login" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <div style="color: #ffcc00; padding-right:8px; font-size: 20px "><i
+                    class="fas fa-exclamation-triangle"></i></div>
+            <strong class="me-auto">Warning</strong>
+            <small>Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Username or password not correct
+        </div>
+    </div>
+
+    <div th:if="${param.logout}" class="toast show toast-login" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <div style="color: #339900; padding-right:8px; font-size: 20px ">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <strong class="me-auto">Success</strong>
+            <small>Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Logout success
+        </div>
+    </div>
+
+    <div th:if="${param.success}" class="toast show toast-login" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <div style="color: #339900; padding-right:8px; font-size: 20px ">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <strong class="me-auto">Success</strong>
+            <small>Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Login success
+        </div>
+    </div>
+
+</div>
+
+<div class="container" style="padding-top: 80px">
     <div class="row ">
         <div class="container-login col-md-6 p-lg-5 my-3 ">
             <div class="login">
                 <h2 class="text-center" style="font-weight: 900">Login</h2>
-                <form>
+                <form th:action="@{/do-login}" method="post">
                     <ul>
                         <li>
                             <input class="form-control" placeholder="Username" type="text" name="username"
-                                   id="username">
+                                   id="username" required>
                         </li>
                         <li>
                             <input class="form-control" placeholder="Password" type="password" name="password"
-                                   id="password">
+                                   id="password" required>
                         </li>
                         <li>
                             <button type="submit" class="" id="login">
@@ -36,38 +116,59 @@
         <div class="container-register col-md-6 p-lg-5 my-3">
             <div class="login">
                 <h2 class="text-center" style="font-weight: 900">Register</h2>
-                <form id="f">
+                <div class="alert alert-warning" th:if="${message}" th:text="${message}"></div>
+                <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+
+                <form id="f" th:action="@{/do-register}" th:object="${customerDto}" method="post">
                     <ul class="">
                         <li>
-                            <input class="form-control" placeholder="Full name" type="text" name="fullname"
-                                   id="fullname">
+                            <input th:field="*{firstName}" class="form-control" placeholder="First name" type="text"
+                                   name="fisrtname"
+                                   id="fullname" required>
                         </li>
                         <li>
-                            <input class="form-control" placeholder="Password" type="password" name="password"
-                                   id="password-register">
+                            <input th:field="*{lastName}" class="form-control" placeholder="Last name" type="text"
+                                   name="lasttname"
+                                   id="lastname" required>
+                        </li>
+
+                        <li>
+                            <input th:field="*{username}" class="form-control" placeholder="Username" type="text"
+                                   name="username-register"
+                                   id="username-register" required>
+                        </li>
+
+                        <li>
+                            <input th:field="*{password}" class="form-control" placeholder="Password" type="password"
+                                   name="password"
+                                   id="password-register" required>
                         </li>
                         <li>
-                            <input class="form-control" placeholder="Repeat password" type="password" name="password"
-                                   id="repeat-password-register">
+                            <input th:field="*{passwordRepeat}" class="form-control" placeholder="Repeat password"
+                                   type="password" name="passwordRepeat"
+                                   id="repeat-password-register" required>
                         </li>
 
                         <li id="input-email">
-                            <input class="form-control" placeholder="Email" type="email" name="email" id="email">
+                            <input th:field="*{email}" class="form-control" placeholder="Email" type="email"
+                                   name="email" id="email">
                         </li>
 
                         <li id="input-phone">
-                            <input class="form-control" placeholder="Your phone" type="text" name="phone" id="phone">
+                            <input th:field="*{phone}" class="form-control" placeholder="Your phone" type="text"
+                                   name="phone" id="phone">
                         </li>
 
                         <li class="birthdate-sex">
-                            <input class="form-control" placeholder="Birth date" type="date" name="phone"
+                            <input th:field="*{birthDay}" class="form-control" placeholder="Birth day" type="date"
+                                   name="birthDay"
                                    id="birthdate">
 
-                            <select name="sex" id="sex">
-                                <option value="male">
+                            <select th:field="*{sex}" name="sex" id="sex">
+                                <option value="Male">
                                     Male
                                 </option>
-                                <option value="female">
+                                <option value="Female">
                                     Female
                                 </option>
                             </select>

@@ -64,3 +64,18 @@ nodeCard.forEach((card, index) => {
 
     })
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+    var toasts = document.querySelectorAll('.toast-login');
+    toasts.forEach(function(toast) {
+        setTimeout(function() {
+            toast.classList.add('hide');
+
+        }, 2000);
+
+        setTimeout(function (){
+            document.querySelector('.toast-container').style.display = 'none';
+        }, 3000)
+
+    });
+});
