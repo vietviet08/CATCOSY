@@ -343,6 +343,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getProductById(Long id) {
+        return productRepository.getByIdProduct(id);
+    }
+
+    @Override
     public List<MultipartFile> getImagesById(Long id) {
         return null;
     }

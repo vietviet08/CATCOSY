@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,4 +28,7 @@ public class Cart {
 
     @Column(name = "total_price")
     private Double totalPrice;
+
+    @OneToMany(cascade =  CascadeType.ALL, mappedBy = "cart")
+    private Set<CartItem> items;
 }

@@ -55,12 +55,29 @@
             </div>
             <div class="group-feature d-flex justify-content-end align-items-center w-25 ">
                 <a th:href="@{/login}"> <i class="fa-solid fa-magnifying-glass"></i></a>
-                <a th:href="@{/login}">
+                <a th:href="@{/login}" class="user-detail-need">
                     <i class="fa-regular fa-user"></i>
                 </a>
-                <a th:href="@{/login}">
+                <div class="user-detail-header">
+                    <ul>
+                        <li>
+                            <a href="#">ACCOUNT</a>
+                        </li>
+                        <li th:if="${session.nameForCustomer == null}">
+                            <a th:href="@{/login}">LOGIN</a>
+                        </li>
+                        <li th:if="${session.nameForCustomer != null}">
+                            <a th:href="@{/logout}">LOGOUT</a>
+                        </li>
+                        <li th:if="session.nameForCustomer" th:text="${session.nameForCustomer}" style="color: #e91e63; font-weight: 600">
+                        </li>
+                    </ul>
+                </div>
+                <a th:href="@{/login}" class="cart-total-item">
                     <i class="fa-solid fa-bag-shopping"></i>
+                <div class="cart-item">0</div>
                 </a>
+
             </div>
         </div>
     </div>
