@@ -34,17 +34,28 @@ public class CartController {
 
 
     @GetMapping("/cart")
-    public String getToCart(Model model, Principal principal){
+    public String getToCart(Model model, Principal principal, HttpServletRequest request){
+        model.addAttribute("title", "Cart");
 
         if(principal == null){
         //process with cookie
+            Cookie cookieCart = null;
 
+            Cookie[] cookies = request.getCookies();
+            for(Cookie c : cookies) if(c.getName().equals("CART_CATCOSY")) cookieCart = c;
+
+            if(cookieCart == null){
+                model.addAttribute("notCart", "There are no products in the cart!");
+            }
 
         }else{
             Customer customer = customerService.findByUsername(principal.getName());
             Cart cart = customer.getCart();
 
-            if(cart == null) model.addAttribute("notCart", "There are no products in the cart!");
+            if(cart == null){
+                model.addAttribute("notCart", "There are no products in the cart!");
+//                model.addAttribute("totalProduct", 0);
+            }
 
             model.addAttribute("cart", cart);
         }
@@ -64,12 +75,25 @@ public class CartController {
 
         if(principal == null){
             //add product to cookie
+            //process product with cookie
             Cookie[] cookies = request.getCookies();
             Cookie cookieCart = null;
 
             for(Cookie cookie : cookies) if(cookie.getName().equals("CART_CATCOSY"))  cookieCart = cookie;
 
-            //process product with cookie
+            if(cookieCart == null){
+                    //create new cookie
+                    // need create cookie save product in the cart
+                    // may be jwt i think so
+                    Cookie cookie = new Cookie("CART_CATCOSY", "test");
+                    cookie.setPath("/");
+                    cookie.setMaxAge(3600 * 24 * 3);
+                    response.addCookie(cookie);
+            }else{
+
+                //process cookie to get product
+
+            }
 
             return "cart";
         }

@@ -61,8 +61,12 @@
                 <div class="user-detail-header">
                     <ul>
                         <li>
-                            <a href="#">ACCOUNT</a>
+                            <a th:if="${session.logged == false}" th:href="@{/login}">ACCOUNT</a>
                         </li>
+                        <li>
+                            <a th:if="${session.logged == true}" th:href="@{/account}">ACCOUNT</a>
+                        </li>
+
                         <li th:if="${session.nameForCustomer == null}">
                             <a th:href="@{/login}">LOGIN</a>
                         </li>
@@ -73,9 +77,9 @@
                         </li>
                     </ul>
                 </div>
-                <a th:href="@{/login}" class="cart-total-item">
+                <a th:href="@{/cart}" class="cart-total-item">
                     <i class="fa-solid fa-bag-shopping"></i>
-                <div class="cart-item">0</div>
+                <div class="cart-item" th:text="${session.totalProduct != null ? session.totalProduct : '0'}"></div>
                 </a>
 
             </div>

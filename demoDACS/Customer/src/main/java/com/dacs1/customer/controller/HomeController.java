@@ -2,6 +2,7 @@ package com.dacs1.customer.controller;
 
 import com.dacs1.library.dto.CustomerDto;
 import com.dacs1.library.dto.ProductDto;
+import com.dacs1.library.model.Cart;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.service.CustomerService;
 import com.dacs1.library.service.ProductService;
@@ -29,36 +30,18 @@ public class HomeController {
                               HttpSession session,
                               HttpServletRequest request,
                               HttpServletResponse response) {
-
-        if(principal != null){
-            Customer customer = customerService.findByUsername(principal.getName());
-            session.setAttribute("nameForCustomer", customer.getFirstName() + " " + customer.getLastName());
-            session.setAttribute("logged", true);
-            //process with cookie
-
-            Cookie[] cookies = request.getCookies();
-            boolean checkExistCookie = false;
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("CART_CATCOSY")) checkExistCookie = true;
-            }
-            if(!checkExistCookie){
-                //create new cookie
-                // need create cookie save product in the cart
-                // may be jwt i think so
-                Cookie cookie = new Cookie("CART_CATCOSY", "test");
-                cookie.setPath("/");
-                cookie.setMaxAge(3600 * 24 * 3);
-                response.addCookie(cookie);
-
-            }else{
-
-                //process cookie for get product add to cart
-
-            }
-
-
-        }else
-            session.setAttribute("logged", false);
+//
+//        if(principal != null){
+//            Customer customer = customerService.findByUsername(principal.getName());
+//            session.setAttribute("nameForCustomer", customer.getFirstName() + " " + customer.getLastName());
+//            session.setAttribute("logged", true);
+//
+//            Cart cart = customer.getCart();
+//            if(cart == null) session.setAttribute("totalProduct", 0);
+//            else session.setAttribute("totalProduct", cart.getTotalItem());
+//
+//        }else
+//            session.setAttribute("logged", false);
 
         List<ProductDto> productsNewArrival = productService.productRandomLimit(4);
         List<ProductDto> productsSale = productService.productRandomLimit(4);
