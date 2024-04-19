@@ -35,4 +35,9 @@ public class SizeServiceImpl implements SizeService {
         }
         return sizeIds;
     }
+
+    @Override
+    public Size getSizeById(Long id) {
+        return sizeRepository.getReferenceById(id);
+    }
 }

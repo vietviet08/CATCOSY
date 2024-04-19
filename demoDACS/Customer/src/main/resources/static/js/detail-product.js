@@ -13,9 +13,6 @@ $(document).ready(function () {
         // var zoomImageSrc = $('#productImage').attr('src');
         // $('#productImage').attr('data-cloudzoom', "zoomImage: '" + zoomImageSrc + "', easeTime: 0, zoomPosition: 'inside', autoInside: true, easing: 0, disableOnScreenWidth:1024");
 
-
-
-
     $('.slick-slider-nav-img').slick({
         slidesToShow: 5,
         slidesToScroll: 1,
@@ -29,5 +26,17 @@ $(document).ready(function () {
         asNavFor: '.slick-slider-nav-img',
         focusOnSelect: true,
         centerMode: true,
+    });
+
+    $(".decrease").click(function() {
+        var value = parseInt($("#quantity").val());
+        if (value > 1) {
+            $("#quantity").val(value - 1);
+        }
+    });
+
+    $(".increase").click(function() {
+        var value = parseInt($("#quantity").val());
+        $("#quantity").val(value + 1);
     });
 });

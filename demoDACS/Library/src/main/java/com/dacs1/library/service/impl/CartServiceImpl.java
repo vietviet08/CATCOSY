@@ -1,9 +1,6 @@
 package com.dacs1.library.service.impl;
 
-import com.dacs1.library.model.Cart;
-import com.dacs1.library.model.CartItem;
-import com.dacs1.library.model.Customer;
-import com.dacs1.library.model.Product;
+import com.dacs1.library.model.*;
 import com.dacs1.library.repository.CartItemRepository;
 import com.dacs1.library.repository.CartRepository;
 import com.dacs1.library.service.CartService;
@@ -11,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -23,8 +21,8 @@ public class CartServiceImpl implements CartService {
     private CartItemRepository cartItemRepository;
 
     @Override
-    public Cart addItemToCard(Product product, int quantity, Customer customer) {
-
+    public void addItemToCard(Product product, int quantity, Size size, Customer customer) {
+        if(quantity <=0 ) return;
 
         Cart cart = customer.getCart();
         if (cart == null) {
@@ -37,30 +35,34 @@ public class CartServiceImpl implements CartService {
         Set<CartItem> cartItems = cart.getItems();
         CartItem cartItem = findCartItem(product.getId(), cartItems);
 
-
         if (cartItems == null) {
             cartItems = new HashSet<>();
             cartItem = new CartItem();
             cartItem.setCart(cart);
             cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
+            cartItem.setSize(size);
             cartItem.setUnitPrice(product.getCostPrice());
             cartItem.setTotalPrice(product.getCostPrice() * quantity);
             cartItems.add(cartItem);
             cartItemRepository.save(cartItem);
+            cart.setTotalItem(cart.getTotalItem() + 1);
         } else {
-            if (cartItem == null) {
+            if (cartItem == null || cartItem.getSize().getId() != size.getId()) {
                 cartItem = new CartItem();
                 cartItem.setCart(cart);
                 cartItem.setProduct(product);
                 cartItem.setQuantity(quantity);
+                cartItem.setSize(size);
                 cartItem.setUnitPrice(product.getCostPrice());
                 cartItem.setTotalPrice(product.getCostPrice() * quantity);
                 cartItems.add(cartItem);
                 cartItemRepository.save(cartItem);
+                cart.setTotalItem(cart.getTotalItem() + 1);
             } else {
-                cartItem.setQuantity(product.getQuantity() + quantity);
-                cartItem.setTotalPrice(cart.getTotalPrice() + product.getCostPrice() * quantity);
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                cartItem.setSize(size);
+                cartItem.setTotalPrice(cartItem.getTotalPrice() + product.getCostPrice() * quantity);
                 cartItemRepository.save(cartItem);
             }
 
@@ -68,9 +70,61 @@ public class CartServiceImpl implements CartService {
 
         cart.setItems(cartItems);
         cart.setTotalPrice(cart.getTotalPrice() + cartItem.getTotalPrice());
-        cart.setTotalItem(cart.getTotalItem() + 1);
 
-        return cartRepository.save(cart);
+
+        cartRepository.save(cart);
+
+    }
+
+    @Override
+    public void deleteCartItem(Product product, Customer customer) {
+
+        Cart cart = customer.getCart();
+
+        Set<CartItem> items = cart.getItems();
+
+        CartItem cartItem = null;
+
+        for (CartItem item : items) {
+            if (Objects.equals(item.getProduct().getId(), product.getId()))
+                cartItem = item;
+        }
+
+        items.remove(cartItem);
+        cart.setItems(items);
+
+
+//        assert cartItem != null;
+        cart.setTotalPrice(cart.getTotalPrice() - cartItem.getTotalPrice());
+        cart.setTotalItem(cart.getTotalItem() - 1);
+        cartItemRepository.delete(cartItem);
+
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void updateCartItem(Product product, int quantity, Size size, Customer customer) {
+        if(quantity <=0 ) return;
+
+        Cart cart = customer.getCart();
+        Set<CartItem> items = cart.getItems();
+
+
+        for (CartItem item : items) {
+            if (item.getProduct().getId() == product.getId()) {
+                if(item.getQuantity() - quantity <= 0){
+                    deleteCartItem(product, customer);
+                    return;
+                }
+                item.setQuantity(quantity);
+                item.setTotalPrice(item.getTotalPrice() - quantity * item.getUnitPrice());
+                item.setSize(size);
+                cart.setTotalPrice(cart.getTotalPrice() - quantity * item.getUnitPrice());
+                cartItemRepository.save(item);
+            }
+        }
+
+        cartRepository.save(cart);
 
     }
 
@@ -80,7 +134,7 @@ public class CartServiceImpl implements CartService {
         CartItem cartItem = null;
 
         for (CartItem item : items) {
-            if (item.getProduct().getId() == idProduct) {
+            if (Objects.equals(item.getProduct().getId(), idProduct)) {
                 cartItem = item;
             }
 

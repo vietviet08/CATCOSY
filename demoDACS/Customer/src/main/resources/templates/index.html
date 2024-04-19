@@ -35,17 +35,20 @@
 
 
 <div class="container">
-    <div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin-top: 40px">PICK & WEAR COLLECTION</h2></div>
+    <div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin-top: 40px">
+        PICK & WEAR COLLECTION</h2></div>
 
     <div class="men-women d-flex justify-content-between">
 
-        <a class="women" href="#" >
+        <a class="women" href="#">
 
-            <img th:src="@{/images/pexels-ahmed-ツ-20447512.jpg}" alt="shop women" data-aos="fade-right" data-aos-duration="1000">
+            <img th:src="@{/images/pexels-ahmed-ツ-20447512.jpg}" alt="shop women" data-aos="fade-right"
+                 data-aos-duration="1000">
         </a>
-        <a class="men" href="#" >
+        <a class="men" href="#">
 
-            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="shop men" data-aos="fade-left" data-aos-duration="1000">
+            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="shop men" data-aos="fade-left"
+                 data-aos-duration="1000">
         </a>
 
 
@@ -55,13 +58,16 @@
 
 <div class="container my-5">
     <hr data-aos="fade-right" data-aos-duration="1000">
-    <h4 style="font-weight: 600; margin: 20px 0" data-aos="fade-down" data-aos-duration="1000">The Premier Destination for Fashion Enthusiasts</h4>
+    <h4 style="font-weight: 600; margin: 20px 0" data-aos="fade-down" data-aos-duration="1000">The Premier Destination
+        for Fashion Enthusiasts</h4>
     <div class="intro-shop row">
 
         <div class="  h-50 ">
 
-            <img th:src="@{/images/logoINF.png}" style="width: 280px; float: left" data-aos="fade-left" data-aos-duration="1000">
-            <p style="font-size: 18px; line-height: 1.8 ; color: #858E96" class="" data-aos="fade-right" data-aos-duration="1000">
+            <img th:src="@{/images/logoINF.png}" style="width: 280px; float: left" data-aos="fade-left"
+                 data-aos-duration="1000">
+            <p style="font-size: 18px; line-height: 1.8 ; color: #858E96" class="" data-aos="fade-right"
+               data-aos-duration="1000">
                 At CATCOSY, we bring together the perfect blend of the latest trends and diversity in styles. From
                 everyday
                 outfits to special occasion ensembles, we have everything to cater to your fashion needs.
@@ -82,74 +88,82 @@
     <hr data-aos="fade-left" data-aos-duration="1000">
 </div>
 
-<div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">NEW ARRIVALS</h2></div>
+<div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">NEW
+    ARRIVALS</h2></div>
 
 <div class="container d-flex justify-content-center align-items-center "
      style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
 
     <div class="container-product row w-100 d-flex justify-content-between align-items-center">
-        <div th:each="product : ${productsNewArrival}" class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a th:href="@{/product-detail/{id} (id = ${product.id})}">
-                <div class="card__main" style="">
-                    <div class="img__product">
-                        <img class="front-img "
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
-                             alt="">
-                        <img class="back-img"
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
-                             alt="">
+        <div th:each="product : ${productsNewArrival}" class="card border-0  col-12 col-md-4 col-xl-3"
+             style="cursor: pointer;">
+            <form th:action="@{/add-to-cart}" method="post">
+                <a th:href="@{/product-detail/{id} (id = ${product.id})}">
+                    <div class="card__main" style="">
+                        <div class="img__product">
+                            <img class="front-img "
+                                 th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
+                                 alt="">
+                            <img class="back-img"
+                                 th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
+                                 alt="">
 
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
+                            <div class="card__main--choose-options">
+                                <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
+                                    NOW</a>
+                                </div>
+                                <input type="hidden" name="id" th:value="${product.id}">
+                                <input type="submit" class="add-to-cart" value="ADD TO CART"/>
                             </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
                         </div>
                     </div>
-                </div>
-                <div class="card__name-price">
-                    <div th:text="${product.name}" class="name-product"></div>
-                    <div th:text="${product.costPrice}" class="price-product"></div>
-                </div>
-            </a>
+                    <div class="card__name-price">
+                        <div th:text="${product.name}" class="name-product"></div>
+                        <div th:text="${product.costPrice}" class="price-product"></div>
+                    </div>
+                </a>
+            </form>
         </div>
     </div>
 
 </div>
 
 
-<div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">FLASH SALE</h2></div>
+<div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">FLASH
+    SALE</h2></div>
 
 <div class="container d-flex justify-content-center align-items-center "
      style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
 
     <div class="container-product row w-100 d-flex justify-content-between align-content-center">
-        <div th:each="product : ${productsSale}" class="card border-0  col-12 col-md-4 col-xl-3" style="cursor: pointer;">
-            <a th:href="@{/product-detail/{id} (id = ${product.id})}">
-                <div class="card__main" style="">
-                    <div class="img__product">
-                        <img class="front-img "
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
-                             alt="">
-                        <img class="back-img"
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
-                             alt="">
+        <div th:each="product : ${productsSale}" class="card border-0  col-12 col-md-4 col-xl-3"
+             style="cursor: pointer;">
+            <form th:action="@{/add-to-cart}">
+                <a th:href="@{/product-detail/{id} (id = ${product.id})}">
+                    <div class="card__main" style="">
+                        <div class="img__product">
+                            <img class="front-img "
+                                 th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
+                                 alt="">
+                            <img class="back-img"
+                                 th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
+                                 alt="">
 
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
+                            <div class="card__main--choose-options">
+                                <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
+                                    NOW</a>
+                                </div>
+                                <input type="hidden" name="id" th:value="${product.id}">
+                                <input type="submit" class="add-to-cart" value="ADD TO CART"/>
                             </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
                         </div>
                     </div>
-                </div>
-                <div class="card__name-price">
-                    <div th:text="${product.name}" class="name-product"></div>
-                    <div th:text="${product.costPrice}" class="price-product"></div>
-                </div>
-            </a>
+                    <div class="card__name-price">
+                        <div th:text="${product.name}" class="name-product"></div>
+                        <div th:text="${product.costPrice}" class="price-product"></div>
+                    </div>
+                </a>
+            </form>
         </div>
     </div>
 
@@ -158,7 +172,8 @@
 
 <div class="container my-5">
     <hr>
-    <h4 style="font-weight: 600; margin: 20px 0" data-aos="fade-left" data-aos-duration="1000">Embark on a Fashion Adventure </h4>
+    <h4 style="font-weight: 600; margin: 20px 0" data-aos="fade-left" data-aos-duration="1000">Embark on a Fashion
+        Adventure </h4>
     <div class="intro-shop row">
 
         <div class="  h-50 " data-aos="fade-right" data-aos-duration="1000">
@@ -189,28 +204,33 @@
 </video>
 
 
-<div class="container d-flex justify-content-center align-items-center" style="padding: 50px 0" >
+<div class="container d-flex justify-content-center align-items-center" style="padding: 50px 0">
     <div class="row w-100 d-flex justify-content-between align-items-center ">
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" >
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-4.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000"
+             data-aos-delay="200">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-6.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000"
+             data-aos-delay="400">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-1.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000"
+             data-aos-delay="600">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-3.svg" alt="" srcset="">
         </div>
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000"
+             data-aos-delay="800">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-2.svg" alt="" srcset="">
         </div>
 
-        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000">
+        <div class="logo-brand col-6 col-md-6 col-lg-2 text-center my-4" data-aos="fade-up" data-aos-duration="1000"
+             data-aos-delay="1000">
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-5.svg" alt="" srcset="">
         </div>
     </div>

@@ -13,23 +13,25 @@
             <div class="detail-product-left-main row">
 
                 <div class="container-img-product slick-slider-nav-img col-12 col-lg-2 d-inline-block text-center py-2 slick-initialized slick-slider slick-vertical">
-                    <img style="cursor: pointer" th:each="image : ${product.images}" th:src="@{'data:image/jpeg;base64,' + ${image.image}}"
+                    <img style="cursor: pointer" th:each="image : ${product.images}"
+                         th:src="@{'data:image/jpeg;base64,' + ${image.image}}"
                          alt="">
                 </div>
 
-<!--                <div class="img-main-detail slick-slider-for-img col-12 col-lg-10 order-first order-sm-1 d-inline-block  py-4 ">-->
-<!--                    <img id="productImage" class="cloudzoom"-->
-<!--                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="" data-cloudzoom="-->
-<!--                         zoomImage: '',-->
-<!--                         easeTime: 0,-->
-<!--                         zoomPosition: 'inside',-->
-<!--                         autoInside: true,-->
-<!--                         easing: 0,-->
-<!--                         disableOnScreenWidth:1024">-->
-<!--                </div>-->
-                <div id="img-product-detail" class="img-main-detail slick-slider-for-img col-12 col-lg-10 order-first order-sm-1 d-inline-block  py-4 ">
+                <!--                <div class="img-main-detail slick-slider-for-img col-12 col-lg-10 order-first order-sm-1 d-inline-block  py-4 ">-->
+                <!--                    <img id="productImage" class="cloudzoom"-->
+                <!--                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="" data-cloudzoom="-->
+                <!--                         zoomImage: '',-->
+                <!--                         easeTime: 0,-->
+                <!--                         zoomPosition: 'inside',-->
+                <!--                         autoInside: true,-->
+                <!--                         easing: 0,-->
+                <!--                         disableOnScreenWidth:1024">-->
+                <!--                </div>-->
+                <div id="img-product-detail"
+                     class="img-main-detail slick-slider-for-img col-12 col-lg-10 order-first order-sm-1 d-inline-block  py-4 ">
                     <img
-                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="" >
+                            th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="">
                 </div>
             </div>
 
@@ -42,30 +44,46 @@
                       th:text="${product.costPrice}"></span>
             </div>
             <hr/>
-            <div class="product-selection">
-                <div class="choose-size my-4">
-                    <label>Size</label>
-                    <div class="list-size">
-                        <a class="text-center d-inline-block font-weight-bold" href="">S</a>
-                        <a class="text-center d-inline-block font-weight-bold" href="">M</a>
-                        <a class="text-center d-inline-block font-weight-bold" href="">L</a>
-                        <a class="text-center d-inline-block font-weight-bold" href="">XL</a>
+            <form th:action="@{/add-to-cart}" method="post">
+                <div class="product-selection">
+                    <div class="choose-size my-4">
+                        <label>Size</label>
+                        <div class="list-size">
+                            <div class="choose-choose" style="display: inline" th:each="size, element : ${product.sizes}">
+                                <input type="radio" th:id="'size-' + ${size.size.id}" name="sizeId" class="size-option"
+                                       th:value="${size.size.id}"  th:checked="${element.index == 0}">
+                                <label th:for="'size-' + ${size.size.id}"
+                                       class="text-center d-inline-block font-weight-bold"
+                                       th:text="${size.size.size}"></label>
+                            </div>
+
+                            <!--                            <input type="radio" id="size-m" name="size" class="size-option" value="M">-->
+                            <!--                            <label for="size-m" class="text-center d-inline-block font-weight-bold">M</label>-->
+
+                            <!--                            <input type="radio" id="size-l" name="size" class="size-option" value="L">-->
+                            <!--                            <label for="size-l" class="text-center d-inline-block font-weight-bold">L</label>-->
+
+                            <!--                            <input type="radio" id="size-xl" name="size" class="size-option" value="XL">-->
+                            <!--                            <label for="size-xl" class="text-center d-inline-block font-weight-bold">XL</label>-->
+                        </div>
                     </div>
+
+                    <div class="choose-quantity my-4">
+                        <label for="quantity">Quantity</label>
+                        <div class="choose-main-quantity">
+                            <span class="decrease font-weight-bold text-center d-inline-block">-</span>
+                            <input class="text-center" name="quantity" id="quantity" value="1">
+                            <span class="increase font-weight-bold text-center d-inline-block">+</span>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="choose-quantity my-4">
-                    <label for="quantity">Quantity</label>
-                    <span class="font-weight-bold text-center d-inline-block">-</span>
-                    <input class="text-center" name="quantity" id="quantity" value="1">
-                    <span class="font-weight-bold text-center d-inline-block">+</span>
+                <div class="push-cart  my-4" style="background-color: black">
+                    <input type="hidden" name="id" th:value="${idProduct}">
+                    <button type="submit" style="color: white; font-size: 16px">Add to cart</button>
                 </div>
-
-            </div>
-
-            <div class="push-cart  my-4" style="background-color: black">
-                <button type="submit" style="color: white; font-size: 16px">Add to cart</button>
-            </div>
-
+            </form>
             <p class="w-75"><span
                     style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;"><strong>CANDLES SPARK T-SHIRT</strong></span><br><span
                     style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Chất liệu</strong>: Cotton 260 GSM</span><br><span
@@ -94,30 +112,35 @@
 
 
         <div th:each="product : ${productsSameCategory}" class="card border-0" style="cursor: pointer;">
-            <a th:href="@{/product-detail/{id} (id = ${product.id})}">
-                <div class="card__main" style="">
-                    <div class="img__product">
-                        <img class="front-img "
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
-                             alt="">
-                        <img class="back-img"
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
-                             alt="">
+            <form th:action="@{/add-to-cart}" method="post">
+                <form th:action="@{/add-to-cart}" method="post">
+                    <a th:href="@{/product-detail/{id} (id = ${product.id})}">
+                        <div class="card__main" style="">
+                            <div class="img__product">
+                                <img class="front-img "
+                                     th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
+                                     alt="">
+                                <img class="back-img"
+                                     th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
+                                     alt="">
 
-                        <div class="card__main--choose-options">
-                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA NGAY</a>
+                                <div class="card__main--choose-options">
+                                    <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
+                                        NOW</a>
+                                    </div>
+                                    <input type="hidden" name="id" th:value="${product.id}">
+                                    <input type="submit" class="add-to-cart" value="ADD TO CART"/>
+
+                                </div>
                             </div>
-                            <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM VÀO
-                                GIỎ
-                                HÀNG</a></div>
                         </div>
-                    </div>
-                </div>
-                <div class="card__name-price">
-                    <div th:text="${product.name}" class="name-product"></div>
-                    <div th:text="${product.costPrice}" class="price-product"></div>
-                </div>
-            </a>
+                        <div class="card__name-price">
+                            <div th:text="${product.name}" class="name-product"></div>
+                            <div th:text="${product.costPrice}" class="price-product"></div>
+                        </div>
+                    </a>
+                </form>
+            </form>
         </div>
     </div>
 </div>
@@ -135,13 +158,21 @@
 <script th:src="@{/js/detail-product.js}"></script>
 
 <script>
-    // var options = {
-    //     width: 640,
-    //     height: 740,
-    //     zoomWidth: 500,
-    //     offset: {vertical: 0, horizontal: 10}
-    // };
-    // new ImageZoom(document.getElementById("img-product-detail"), options);
+    var input = document.getElementById("quantity");
+    var decreaseButton = document.querySelector(".decrease");
+    var increaseButton = document.querySelector(".increase");
+
+    decreaseButton.addEventListener("click", function () {
+        var value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    });
+
+    increaseButton.addEventListener("click", function () {
+        var value = parseInt(input.value);
+        input.value = value + 1;
+    });
 </script>
 
 </body>

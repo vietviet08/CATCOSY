@@ -1,3 +1,4 @@
+
 .nav{
     background-color: #f7f7f7;
 }
@@ -52,16 +53,46 @@ h2 {
     align-items: center;
 }
 
+.box-inf-product div{
+    margin: 14px 0;
+}
+
+
+.box-inf-product div:nth-child(1){
+    margin: 0;
+}
+
+
+.box-inf-product div:nth-child(2){
+    margin-top: 0;
+}
+
+
 .inf-product-cart .box-inf-product {
     width: 50%;
 }
 
+.box-inf-product .name-product p{
+    margin: 0;
+}
 
 .box-inf-product .name-product p a {
     text-decoration: none;
     color: #333333;
     font-size: 18px;
+    font-weight: 600;
 }
+
+.size-product{
+
+}
+
+.size-product p{
+    margin: 0;
+    font-size: 12px;
+    color: #afafaf;
+}
+
 
 .box-inf-product .delete-product a {
     text-decoration: none;
@@ -157,19 +188,16 @@ h2 {
 
 .btn-group-checkout:first-child:hover{
     color: #f7f7f7;
-    background: linear-gradient(to right, #ef6393 50%, #e91e63 50%);
-    background-position: right bottom;
+    background: linear-gradient(to right, #ef6393 50%, #e91e63 50%) right bottom;
     background-size: 200% 100%;
+    border: #e91e63;
 }
 
 .btn-group-checkout:last-child:hover{
-    /*background-color: var(--primary-1);*/
     color: #f7f7f7;
-    background: linear-gradient(to right, #ef6393 50%, #e91e63 50%);
-    /* Background position */
-    background-position: right bottom;
-    /* Background size */
+    background: linear-gradient(to right, #ef6393 50%, #e91e63 50%) right bottom;
     background-size: 200% 100%;
+    border: #e91e63;
 }
 
 @media only screen and ( max-width: 768px){

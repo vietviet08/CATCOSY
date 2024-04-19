@@ -411,12 +411,15 @@ img {
     transform: translateY(44px);
     opacity: 0;
     transition: 0.4s;
+    color: white;
 }
 
 .add-to-cart {
     left: unset;
     right: 0;
+    border: none;
 }
+
 
 .card__color {
     margin: 10px 0;
@@ -517,7 +520,7 @@ footer {
 }
 
 .protected-logo {
-    width: 60%;
+    width: 40%;
 }
 
 
@@ -549,7 +552,7 @@ footer {
 }
 
 .connect-social-media {
-    width: 100px;
+    width: 100%;
 }
 
 .group-social-media i {
@@ -643,6 +646,10 @@ footer p {
 
     .group-feature a i{
         margin: 0 14px 0 0;
+    }
+
+    .protected-logo{
+        width: 25%;
     }
 }
 

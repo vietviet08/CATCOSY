@@ -121,6 +121,7 @@ public class PageProductController {
 
         model.addAttribute("title", productDto.getName());
         model.addAttribute("product", productDto);
+        model.addAttribute("idProduct", id);
         model.addAttribute("productsSameCategory", productsSameCategory);
 
         return "detail-product";

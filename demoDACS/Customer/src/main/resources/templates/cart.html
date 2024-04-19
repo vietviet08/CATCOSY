@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div th:if="${session.totalProduct == 0}" class="row">
+    <div th:if="${session.totalProduct == 0 || session.logged == false}" class="row">
         <div class="not-have-products d-flex justify-content-center col-12">
             <div th:if="${notCart}" class=" text-center">
                 <div th:text="${notCart}" class="alert alert-warning"></div>
@@ -29,17 +29,17 @@
         </div>
     </div>
 
-    <div th:if="${session.totalProduct > 0}" class="row">
+    <div th:if="${cart != null && cart.getTotalItem() > 0}" class="row">
         <div class="have-product">
-            <form>
-                <div class="row">
-                    <div class="left-shopping-cart col-12 col-sm-12 col-lg-9">
-                        <div class="products">
+            <div class="row">
+                <div class="left-shopping-cart col-12 col-sm-12 col-lg-9">
+                    <div th:each="product : ${products}" class="products">
+                        <form th:action="@{/update-cart-item}" method="post">
                             <div class="row">
                                 <div class="container-image col-3 col-sm-3">
                                     <p class="image">
-                                        <a href="#">
-                                            <img th:src="@{/images/pexels-tembela-bohle-1884584.jpg}">
+                                        <a th:href="@{/product-detail/{id} (id = ${product.product.id})}">
+                                            <img th:src="@{'data:image/jpeg;base64,' + ${product.product.images.get(1).image}}" alt="">
                                         </a>
                                     </p>
                                 </div>
@@ -47,109 +47,86 @@
                                     <div class="box-inf-product">
                                         <div class="name-product">
                                             <p>
-                                                <a href="#">
-                                                    Mercedes-AMG Petronas F1 Team Street Woven Jacket - Black
+                                                <a th:href="@{/product-detail/{id} (id = ${product.product.id})}" th:text="${product.product.name}">
                                                 </a>
                                             </p>
                                         </div>
+
+                                        <div class="size-product">
+                                            <p th:text="${product.size.size}">XL</p>
+                                        </div>
+
                                         <div class="delete-product">
-                                            <a href="#">DELETE</a>
+                                                <input type="hidden" name="id" th:value="${product.product.id}">
+                                                <button style="background-color: transparent; border: none; color: #858E96" type="submit">
+                                                    DELETE
+                                                </button>
                                         </div>
                                     </div>
 
                                     <div class="box-price-product">
-                                        <p>999.999đ</p>
+                                        <p class="price-product" th:text="${product.product.costPrice}"></p>
                                     </div>
 
                                     <div class="box-quantity-product">
                                         <div class="choose-quantity my-4">
-                                            <label for="quantity">QUANTITY</label>
+<!--                                            <label for="quantity">QUANTITY</label>-->
                                             <div class="group-change-quantity">
                                                 <span class="font-weight-bold text-center d-inline-block">-</span>
-                                                <input class="text-center" name="quantity" id="quantity" value="1">
+                                                <input class="text-center" name="quantity" id="quantity" th:value="${product.quantity}">
                                                 <span class="font-weight-bold text-center d-inline-block">+</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="products">
-                            <div class="row">
-                                <div class="container-image col-3 col-sm-3">
-                                    <p class="image">
-                                        <a href="#">
-                                            <img th:src="@{/images/pexels-tembela-bohle-1884584.jpg}">
-                                        </a>
-                                    </p>
-                                </div>
-                                <div class="inf-product-cart col-9 col-sm-9 ">
-                                    <div class="box-inf-product">
-                                        <div class="name-product">
-                                            <p>
-                                                <a href="#">
-                                                    Mercedes-AMG Petronas F1 Team Street Woven Jacket - Black
-                                                </a>
-                                            </p>
-                                        </div>
-                                        <div class="delete-product">
-                                            <a href="#">DELETE</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="box-price-product">
-                                        <p>999.999đ</p>
-                                    </div>
-
-                                    <div class="box-quantity-product">
-                                        <div class="choose-quantity my-4">
-                                            <label for="quantity">QUANTITY</label>
-                                            <div class="group-change-quantity">
-                                                <span class="font-weight-bold text-center d-inline-block">-</span>
-                                                <input class="text-center" name="quantity" id="quantity-1" value="1">
-                                                <span class="font-weight-bold text-center d-inline-block">+</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="right-shopping-cart col-sm-12 col-lg-3">
-                        <div class="group-checkout">
-                            <div class="row">
-                                <div class="total-price">
-                                    <div class="left-total-price">
-                                        <p>INTO MONEY</p>
-                                    </div>
-                                    <div class="right-total-price">
-                                        <p>999.999đ</p>
-                                    </div>
-                                </div>
-
-                                <div class="btn">
-                                    <button class="btn-group-checkout">
-                                        PAY NOW
-                                    </button>
-
-                                    <button class="btn-group-checkout">
-                                        CONTINUE SHOPPING
-                                    </button>
-
-                                </div>
-                            </div>
-
-                        </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+
+                <div class="right-shopping-cart col-sm-12 col-lg-3">
+                    <div class="group-checkout">
+                        <div class="row">
+                            <div class="total-price">
+                                <div class="left-total-price">
+                                    <p>INTO MONEY</p>
+                                </div>
+                                <div class="right-total-price">
+                                    <p th:text="${cart.totalPrice} " class="price-product"></p>
+                                </div>
+                            </div>
+
+                            <div class="btn">
+                                <button class="btn-group-checkout">
+                                    PAY NOW
+                                </button>
+
+                                <button class="btn-group-checkout">
+                                    CONTINUE SHOPPING
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
-</div>
 
 <footer th:replace="~{fragments :: footer}"></footer>
+
+<script>
+    const VND = new Intl.NumberFormat('vi-VN', {
+        style: 'currency', currency: 'VND',
+    });
+    const nodePriceProduct = document.querySelectorAll(".price-product");
+    nodePriceProduct.forEach((nodePrice, index) => {
+        nodePrice.textContent = VND.format(nodePrice.textContent);
+    })
+</script>
 </body>
 </html>

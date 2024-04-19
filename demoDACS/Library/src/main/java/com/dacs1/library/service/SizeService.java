@@ -12,4 +12,6 @@ public interface SizeService {
 
     List<Long> getAllSizeId();
 
+    Size getSizeById(Long id);
+
 }

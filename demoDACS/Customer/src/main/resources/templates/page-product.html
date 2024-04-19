@@ -155,32 +155,33 @@
 
                 <div class="card border-0  col-6 col-sm-6 col-lg-4 " style="cursor: pointer; padding-bottom: 40px"
                      th:each="product, obj : ${products}">
-                    <a th:href="@{/product-detail/{id}(id = ${product.id})}">
-                        <div class="card__main" style="">
-                            <div class="img__product">
-                                <img class="front-img "
-                                     th:src="'data:image/jpeg;base64,' + ${product.images.get(0).image}"
-                                     alt="">
-                                <img class="back-img"
-                                     th:src="'data:image/jpeg;base64,' + ${product.images.get(1).image}"
-                                     alt="">
+                    <form th:action="@{/add-to-cart}" method="post">
+                        <a th:href="@{/product-detail/{id}(id = ${product.id})}">
+                            <div class="card__main" style="">
+                                <div class="img__product">
+                                    <img class="front-img "
+                                         th:src="'data:image/jpeg;base64,' + ${product.images.get(0).image}"
+                                         alt="">
+                                    <img class="back-img"
+                                         th:src="'data:image/jpeg;base64,' + ${product.images.get(1).image}"
+                                         alt="">
 
-                                <div class="card__main--choose-options">
-                                    <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">MUA
-                                        NGAY</a>
+                                    <div class="card__main--choose-options">
+                                        <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
+                                            NOW</a>
+                                        </div>
+                                        <input type="hidden" name="id" th:value="${product.id}">
+                                        <input type="hidden" name="sizeId" th:value="${product.sizes.get(0).size.id}">
+                                        <input type="submit" class="add-to-cart" value="ADD TO CART"/>
                                     </div>
-                                    <div class="add-to-cart"><a href="#" style="text-decoration: none; color: white;">THÊM
-                                        VÀO
-                                        GIỎ
-                                        HÀNG</a></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card__name-price">
-                            <div class="name-product" th:text="${product.name}"></div>
-                            <div class="price-product" th:text="${product.costPrice}"></div>
-                        </div>
-                    </a>
+                            <div class="card__name-price">
+                                <div class="name-product" th:text="${product.name}"></div>
+                                <div class="price-product" th:text="${product.costPrice}"></div>
+                            </div>
+                        </a>
+                    </form>
                 </div>
             </div>
 
