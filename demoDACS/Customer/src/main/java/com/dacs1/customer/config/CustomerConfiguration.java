@@ -43,6 +43,7 @@ public class CustomerConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
                         author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                                .requestMatchers("/cart-v0/").permitAll()
                                 .requestMatchers( "/find-product/*").hasAuthority("CUSTOMER")
                                 .requestMatchers("/*", "/product-detail/**").permitAll()
                                 .anyRequest().authenticated()

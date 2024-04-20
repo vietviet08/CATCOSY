@@ -534,7 +534,7 @@ footer {
 }
 
 .btn-send-mail {
-    top: 20%;
+    top: calc(20% + 2px);
     right: 30%;
     background-color: transparent;
 }

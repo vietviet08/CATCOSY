@@ -9,12 +9,11 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -55,7 +54,7 @@ public class CartController {
             Customer customer = customerService.findByUsername(principal.getName());
             Cart cart = customer.getCart();
 
-            if (cart == null) {
+            if (cart == null || cart.getTotalItem() == 0) {
                 model.addAttribute("notCart", "There are no products in the cart!");
 //                model.addAttribute("totalProduct", 0);
             } else {
@@ -116,13 +115,14 @@ public class CartController {
 
 
     @PostMapping("/delete-cart-item")
-    public String deleteCartItem(@RequestParam("id") Long id, Principal principal) {
+    public String deleteCartItem(@RequestParam(value = "idProduct") Long idProduct,
+                                 Principal principal) {
 
-        Product product = productService.getProductById(id);
+        Product product = productService.getProductById(idProduct);
         Customer customer = customerService.findByUsername(principal.getName());
         cartService.deleteCartItem(product, customer);
 
-        return "redirect:/cart";
+        return "redirect:cart";
     }
 
     @PostMapping("/update-cart-item")
@@ -139,6 +139,28 @@ public class CartController {
 
 
         return "redirect:/cart";
+    }
+
+
+    @GetMapping("/cart-v0")
+    public ResponseEntity<Set<CartItem>> findAll(Principal principal){
+        return new ResponseEntity<>(customerService.findByUsername("vietnq123").getCart().getItems(), HttpStatus.OK);
+    }
+
+    @PostMapping("/update-cart")
+    public ResponseEntity updateCart(@RequestBody CartItem cartItem,
+                                     @RequestParam("up") boolean up,
+                                     Principal principal) {
+
+        Product product = cartItem.getProduct();
+        Size size = cartItem.getSize();
+        int quantity = cartItem.getQuantity();
+        Customer customer = customerService.findByUsername(principal.getName());
+
+        if (up) cartService.addItemToCard(product, quantity, size, customer);
+        else cartService.updateCartItem(product, quantity, size, customer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

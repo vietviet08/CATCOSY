@@ -1,0 +1,189 @@
+
+.nav{
+    background-color: #f7f7f7;
+}
+
+a{
+    text-decoration: none;
+}
+
+p{margin: 0}
+
+.form-control:focus {
+    box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.25);
+    border: solid 1px var(--primary-1);
+}
+
+.information-customer input {
+    width: 100%;
+    height: 35px;
+    margin: 8px 0;
+}
+
+.group-email-phone {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.email {
+    width: 59%;
+    display: inline-block;
+}
+
+.phone {
+    display: inline-block;
+    width: 39%;
+}
+
+.information-customer .pay-method {
+    width: 15px;
+    height: 15px;
+}
+
+.information-customer {
+    width: 100%;
+}
+
+.btn-choose {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn-choose a {
+    text-decoration: none;
+    color: black;
+}
+
+.back-to-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-to-cart a {
+    transition: all 0.3s ease;
+    color: var(--primary-1);
+}
+
+.back-to-cart a:hover {
+
+    color: #858E96;
+
+}
+
+
+.complete-payment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    height: 40px;
+    border: 1px solid #e91e63;
+    color: var(--primary-1);
+    transition: ease-in-out 0.2s;
+    border-radius: 5px;
+}
+
+.complete-payment a{
+    color: var(--primary-1);
+}
+
+.complete-payment:hover{
+    background: linear-gradient(to right, #ef6393 50%, #e91e63 50%) right bottom;
+    background-size: 200% 100%;
+    border: #e91e63;
+    color: white;
+}
+
+.complete-payment:hover a{
+    color: #f7f7f7;
+}
+
+
+.main-right{
+    padding: 0 70px;
+}
+
+.products{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+
+}
+
+.products p{
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.products p a{
+    color: black;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+
+.products p a:hover{
+    color: var(--primary-1);
+}
+
+.products .img{
+    border: 1px solid #858E96;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.products .img a img{
+    width: 70px;
+    height: 70px;
+}
+
+.voucher{
+    margin-bottom: 10px ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.voucher input{
+    width: 80%;
+    height: 35px;
+}
+
+.enter-voucher{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-1);
+    padding: 0 20px;
+    border-radius: 5px;
+    color: white;
+}
+
+.enter-voucher a{
+    color: white;
+}
+
+
+.row-price{
+    display: flex;
+    justify-content: space-between;
+}
+
+.row-price p{
+    margin: 10px 0;
+}
+
+.title-total-price{
+
+}
+
+.total-price, .title-total-price{
+    font-size: 19px;
+    font-weight: inherit;
+}

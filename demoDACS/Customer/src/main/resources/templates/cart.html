@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div th:if="${session.totalProduct == 0 || session.logged == false}" class="row">
+    <div th:if="${ session.totalProduct == 0 || session.logged == false}" class="row">
         <div class="not-have-products d-flex justify-content-center col-12">
             <div th:if="${notCart}" class=" text-center">
                 <div th:text="${notCart}" class="alert alert-warning"></div>
@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="left-shopping-cart col-12 col-sm-12 col-lg-9">
                     <div th:each="product : ${products}" class="products">
-                        <form th:action="@{/update-cart-item}" method="post">
+                        <form th:action="@{/delete-cart-item}" method="post">
                             <div class="row">
                                 <div class="container-image col-3 col-sm-3">
                                     <p class="image">
@@ -53,11 +53,12 @@
                                         </div>
 
                                         <div class="size-product">
+                                            <input type="hidden" name="sizeId" th:value="${product.size.id}">
                                             <p th:text="${product.size.size}">XL</p>
                                         </div>
 
                                         <div class="delete-product">
-                                                <input type="hidden" name="id" th:value="${product.product.id}">
+                                                <input type="hidden" name="idProduct" th:value="${product.product.id}">
                                                 <button style="background-color: transparent; border: none; color: #858E96" type="submit">
                                                     DELETE
                                                 </button>
@@ -119,14 +120,16 @@
 
 <footer th:replace="~{fragments :: footer}"></footer>
 
-<script>
-    const VND = new Intl.NumberFormat('vi-VN', {
-        style: 'currency', currency: 'VND',
-    });
-    const nodePriceProduct = document.querySelectorAll(".price-product");
-    nodePriceProduct.forEach((nodePrice, index) => {
-        nodePrice.textContent = VND.format(nodePrice.textContent);
-    })
+
+<div th:replace="~{fragments :: scroll}"></div>
+
+<script th:src="@{/js/cart.js}">
+
 </script>
+
+
+<div th:replace="~{fragments :: script}"></div>
+
+
 </body>
 </html>

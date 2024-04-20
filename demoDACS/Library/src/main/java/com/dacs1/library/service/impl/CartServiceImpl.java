@@ -6,6 +6,7 @@ import com.dacs1.library.repository.CartRepository;
 import com.dacs1.library.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class CartServiceImpl implements CartService {
     private CartItemRepository cartItemRepository;
 
     @Override
+    @Transactional
     public void addItemToCard(Product product, int quantity, Size size, Customer customer) {
         if(quantity <=0 ) return;
 
@@ -77,6 +79,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public void deleteCartItem(Product product, Customer customer) {
 
         Cart cart = customer.getCart();
@@ -86,23 +89,23 @@ public class CartServiceImpl implements CartService {
         CartItem cartItem = null;
 
         for (CartItem item : items) {
-            if (Objects.equals(item.getProduct().getId(), product.getId()))
+            if (Objects.equals(item.getProduct().getId(), product.getId())){
                 cartItem = item;
+                break;
+            }
         }
-
+        cartItemRepository.removeCartItem(cartItem.getId());
         items.remove(cartItem);
         cart.setItems(items);
-
-
-//        assert cartItem != null;
         cart.setTotalPrice(cart.getTotalPrice() - cartItem.getTotalPrice());
         cart.setTotalItem(cart.getTotalItem() - 1);
-        cartItemRepository.delete(cartItem);
+
 
         cartRepository.save(cart);
     }
 
     @Override
+    @Transactional
     public void updateCartItem(Product product, int quantity, Size size, Customer customer) {
         if(quantity <=0 ) return;
 

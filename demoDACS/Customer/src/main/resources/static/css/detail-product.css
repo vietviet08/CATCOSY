@@ -1,3 +1,8 @@
+.main-detail-page{
+    margin-top: 80px;
+    margin-bottom: -40px;
+}
+
 .detail-product-left .detail-product-left-main{
     height: 100%;
 }
@@ -143,6 +148,12 @@
 }
 
 @media only screen and (max-width: 992px) {
+    .container-img-product img{
+        width: 100px;
+        height: 100px;
+        margin: 0 10px;
+    }
+
     .card {
         width: 290px;
         margin: 10px 0;
@@ -168,14 +179,19 @@
 
 /*mobile for detail-product*/
 @media only screen and (max-width: 576px) {
+    .main-detail-page{
+        margin-top: 40px;
+    }
+
     .container-img-product {
         padding-top: 40px;
+        height: 80px;
     }
 
     .container-img-product img {
         width: 100px;
         margin: 0 4px;
-        height: 60%;
+        height: 100%;
 
         /*height: 15%;*/
     }
@@ -197,9 +213,9 @@
 
 @media only screen and (max-width: 576px) {
 
-    .container-img-product img {
-        width: 75px;
-    }
+    /*.container-img-product img {*/
+    /*    width: 75px;*/
+    /*}*/
 
 }
 
