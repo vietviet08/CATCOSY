@@ -3,7 +3,12 @@
 <head th:replace="~{fragments :: head}">
 </head>
 <link rel="stylesheet" th:href="@{/css/detail-product.css}">
+<!--<link rel="stylesheet" th:href="@{/css/easyzoom.css}">-->
 <body>
+
+<!--loader-->
+<div th:replace="~{fragments :: loader}"></div>
+
 
 <header th:replace="~{fragments :: header}"></header>
 
@@ -12,7 +17,7 @@
         <div class="detail-product-left col-12 col-lg-7 ">
             <div class="detail-product-left-main row">
 
-                <div class="container-img-product slick-slider-nav-img col-12 col-lg-2 d-inline-block text-center py-2 slick-initialized slick-slider slick-vertical">
+                <div class="container-img-product order-2 order-sm-2 order-lg-1 order slick-slider-nav-img col-12 col-lg-2 d-inline-block text-center py-2 slick-initialized slick-slider slick-vertical">
                     <img style="cursor: pointer" th:each="image : ${product.images}"
                          th:src="@{'data:image/jpeg;base64,' + ${image.image}}"
                          alt="">
@@ -29,8 +34,8 @@
                 <!--                         disableOnScreenWidth:1024">-->
                 <!--                </div>-->
                 <div id="img-product-detail"
-                     class="img-main-detail slick-slider-for-img col-12 col-lg-10 order-first order-sm-1 d-inline-block  py-4 ">
-                    <img
+                     class="img-main-detail slick-slider-for-img col-12 col-lg-10  order-1 order-sm-1 order-lg-2 d-inline-block  py-4 ">
+                    <img class="img-product"
                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="">
                 </div>
             </div>
@@ -156,6 +161,10 @@
 <div th:replace="~{fragments :: script}"></div>
 
 <script th:src="@{/js/detail-product.js}"></script>
+
+<!--<script th:src="@{/js/easyzoom.js}"></script>-->
+
+
 
 <script>
     var input = document.getElementById("quantity");

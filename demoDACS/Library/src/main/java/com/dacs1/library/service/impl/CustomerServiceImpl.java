@@ -29,6 +29,12 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(toEntity(customerDto));
     }
 
+    @Override
+    public Customer updateCustomer(Customer customer) {
+
+        return customerRepository.save(customer);
+    }
+
     private CustomerDto toDto(Customer customer) {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setFirstName(customer.getFirstName());
@@ -53,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPassword(customerDto.getPassword());
         customer.setCity(customerDto.getCity());
         customer.setPhone(customerDto.getPhone());
-        customer.setEmail(customer.getEmail());
+        customer.setEmail(customerDto.getEmail());
 //        customer.setBirthDay(customerDto.getBirthDay());
         if (customerDto.getSex().equals("Male")) customer.setSex(1);
         else customer.setSex(0);

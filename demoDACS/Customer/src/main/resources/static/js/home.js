@@ -1,3 +1,25 @@
+const loaderWapper = document.querySelector('.loader-wrapper');
+
+function showLoader() {
+    loaderWapper.style.display = 'flex';
+    loaderWapper.classList.remove('op-load-wrapper-end');
+}
+
+function hideLoader() {
+    loaderWapper.classList.add('op-load-wrapper-start');
+    setTimeout(() => {
+        loaderWapper.style.display = 'none';
+    }, 200);
+
+}
+
+window.addEventListener('load', function () {
+    showLoader();
+    setTimeout(hideLoader, 200);
+
+});
+
+
 const navbar = document.querySelector(".nav");
 window.addEventListener("scroll", function (e) {
     if (this.scrollY > 5) {
@@ -65,15 +87,15 @@ nodeCard.forEach((card, index) => {
     })
 })
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var toasts = document.querySelectorAll('.toast-login');
-    toasts.forEach(function(toast) {
-        setTimeout(function() {
+    toasts.forEach(function (toast) {
+        setTimeout(function () {
             toast.classList.add('hide');
 
         }, 2000);
 
-        setTimeout(function (){
+        setTimeout(function () {
             document.querySelector('.toast-container').style.display = 'none';
         }, 3000)
 

@@ -7,6 +7,11 @@ a{
     text-decoration: none;
 }
 
+select{
+    height: 35px;
+    margin: 15px 0;
+}
+
 p{margin: 0}
 
 .form-control:focus {
@@ -186,4 +191,15 @@ p{margin: 0}
 .total-price, .title-total-price{
     font-size: 19px;
     font-weight: inherit;
+}
+
+
+@media only screen and ( max-width: 991px){
+
+    .main-right{
+        margin-bottom: 40px;
+        padding: 0;
+    }
+
+
 }

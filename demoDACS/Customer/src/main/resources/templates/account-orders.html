@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+
+<link rel="stylesheet" th:href="@{/css/account.css}">
+<body>
+<div th:replace="~{fragments :: loader}"></div>
+
+<header th:replace="~{fragments :: header}"></header>
+
+
+<div class="container my-5 py-5">
+
+    <div class="row">
+
+        <div class="left-page col-12 col-sm-12 col-lg-4">
+            <div class="tool-bar">
+
+                <h4 class="title">ACCOUNT</h4>
+
+                <div class="main-tool-bar">
+                    <a th:href="@{/account}"><div >My profile</div></a>
+                    <a th:href="@{/address}"><div >My address</div></a>
+                    <a th:href="@{/orders}"><div class="active">My orders</div></a>
+                    <a th:href="@{/change-password}"><div >Change password</div></a>
+                    <a th:href="@{/logout}"><div >Logout</div></a>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="right-page col-12 col-sm-12 col-lg-8">
+            <form class="w-100">
+                <h4 class="title">MY ORDERS</h4>
+
+                <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+                <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID order</th>
+                        <th scope="col">Image product</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Unit price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry the Bird</td>
+                        <td>@twitter</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+<div th:replace="~{fragments :: scroll}"></div>
+
+<div th:replace="~{fragments :: script}"></div>
+
+</body>
+</html>

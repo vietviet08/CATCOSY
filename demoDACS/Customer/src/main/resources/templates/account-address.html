@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+
+<link rel="stylesheet" th:href="@{/css/account.css}">
+<body>
+<div th:replace="~{fragments :: loader}"></div>
+
+<header th:replace="~{fragments :: header}"></header>
+
+
+<div class="container my-5 py-5">
+
+    <div class="row">
+
+        <div class="left-page col-12 col-sm-12 col-lg-4">
+            <div class="tool-bar">
+
+                <h4 class="title">ACCOUNT</h4>
+
+                <div class="main-tool-bar">
+                    <a th:href="@{/account}">
+                        <div>My profile</div>
+                    </a>
+                    <a th:href="@{/address}">
+                        <div class="active">My address</div>
+                    </a>
+                    <a th:href="@{/orders}">
+                        <div>My orders</div>
+                    </a>
+                    <a th:href="@{/change-password}">
+                        <div>Change password</div>
+                    </a>
+                    <a th:href="@{/logout}">
+                        <div>Logout</div>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="right-page col-12 col-sm-12 col-lg-8">
+            <form>
+                <h4 class="title">DELIVERY ADDRESS</h4>
+
+                <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+                <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+                <label for="fullName">Full name</label>
+                <input class="form-control" id="fullName" name="fullName" type="text" placeholder="Full name" th:value="${nameUser}" readonly="readonly" disabled="disabled">
+
+                <label for="email">Email</label>
+                <input class="form-control" id="email" name="email" type="email" placeholder="Email" readonly="readonly"
+                       disabled="disabled" th:value="${emailUser}">
+
+                <label for="phone">Phone</label>
+                <input class="form-control" id="phone" name="phone" type="text" placeholder="Phone" th:value="${phone}">
+
+                <div>
+                    <select class="form-control form-select form-select-sm mb-3" id="city"
+                            aria-label=".form-select-sm" onchange="getDistricts(event)">
+                        <option value="" selected>Select province or city</option>
+                    </select>
+
+                    <select class=" form-control form-select form-select-sm mb-3" id="district"
+                            aria-label=".form-select-sm" onchange="getWards(event)">
+                        <option value="" selected>Select district</option>
+                    </select>
+
+                    <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                        <option value="" selected>Select ward and commune</option>
+                    </select>
+                </div>
+
+                <label for="addressDetail" style="margin-top: 10px">Address detail</label>
+                <input class="form-control" id="addressDetail" name="address" type="text" placeholder="Address detail" th:value="${address}">
+
+
+                <input class="submit" type="submit" value="SAVE CHANGE">
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+<div th:replace="~{fragments :: scroll}"></div>
+
+<div th:replace="~{fragments :: script}"></div>
+
+<script th:src="@{/js/checkout.js}"></script>
+
+</body>
+</html>

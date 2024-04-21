@@ -23,6 +23,13 @@
 </head>
 <body>
 
+
+<!--Loader start-->
+<div th:fragment="loader" class="loader-wrapper op-load-wrapper-end">
+    <div class="loader"></div>
+</div>
+<!--Loader end-->
+
 <!--Header start-->
 <header th:fragment="header" class="header d-flex flex-column">
     <div class="nav">
@@ -55,7 +62,7 @@
             </div>
             <div class="group-feature d-flex justify-content-end align-items-center w-25 ">
                 <a th:href="@{/login}"> <i class="fa-solid fa-magnifying-glass"></i></a>
-                <a th:href="@{/login}" class="user-detail-need">
+                <a th:href="@{/account}" class="user-detail-need">
                     <i class="fa-regular fa-user"></i>
                 </a>
                 <div class="user-detail-header">
@@ -73,13 +80,14 @@
                         <li th:if="${session.nameForCustomer != null}">
                             <a th:href="@{/logout}">LOGOUT</a>
                         </li>
-                        <li th:if="session.nameForCustomer" th:text="${session.nameForCustomer}" style="color: #e91e63; font-weight: 600">
+                        <li th:if="session.nameForCustomer" th:text="${session.nameForCustomer}"
+                            style="color: #e91e63; font-weight: 600">
                         </li>
                     </ul>
                 </div>
                 <a th:href="@{/cart}" class="cart-total-item">
                     <i class="fa-solid fa-bag-shopping"></i>
-                <div class="cart-item" th:text="${session.totalProduct != null ? session.totalProduct : '0'}"></div>
+                    <div class="cart-item" th:text="${session.totalProduct != null ? session.totalProduct : '0'}"></div>
                 </a>
 
             </div>
@@ -149,7 +157,7 @@
                     <a href="#">
                         Payment regulations
                     </a>
-                    <a  href="#">
+                    <a href="#">
                         Warranty policy
                     </a>
 
@@ -245,7 +253,7 @@
 
 <!--'&priceCdt=' + ${minPrice == min ? max : (minPrice != null && minPrice < min ? minPrice : min)} + ':' + ${maxPrice == max ? min : (maxPrice > max && maxPrice != null ? maxPrice : max)}-->
 <a th:fragment="filterPrice(min, max, label)"
-    th:href="@{'products?' +
+   th:href="@{'products?' +
               'page=' + ${currentPage}  +
              '&idCategory=' + ${idCategory} +
              ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
@@ -254,15 +262,16 @@
              ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
    onclick="window.location.href=this.getAttribute('href'); return false;">
     <span>
-        <label ></label>
-        <input type="checkbox" th:checked="${(min > minPrice && min < maxPrice) || (max > minPrice && max < maxPrice) || (min == minPrice && max == maxPrice)}">
+        <label></label>
+        <input type="checkbox"
+               th:checked="${(min > minPrice && min < maxPrice) || (max > minPrice && max < maxPrice) || (min == minPrice && max == maxPrice)}">
         [[${label}]]
     </span>
 </a>
 
 
 <a th:fragment="filterSizes(sizeProduct, hate, label)"
-       th:href="@{'products?' +
+   th:href="@{'products?' +
                 'page=' + ${currentPage}  +
                 '&idCategory=' + ${idCategory} +
                 ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
@@ -272,12 +281,11 @@
        }"
    onclick="window.location.href=this.getAttribute('href'); return false;">
     <span>
-        <label ></label>
+        <label></label>
         <input type="checkbox" th:checked="${#lists.contains(sizeChoose, sizeProduct.longValue())}">
         [[${label}]]
     </span>
 </a>
-
 
 
 <!--for="filter-by-price-2"-->

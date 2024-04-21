@@ -6,6 +6,10 @@
 
 <body>
 
+<!--loader-->
+<div th:replace="~{fragments :: loader}"></div>
+
+
 <header th:replace="~{fragments :: header}"></header>
 
 
@@ -13,7 +17,7 @@
 
     <div class="row">
 
-        <div class="left-page col-12 col-sm-12 col-lg-6">
+        <div class="left-page col-12 col-sm-12 col-lg-6 order-lg-1 order-sm-2 order-2">
 
             <form>
                 <h4 class="text-center">INFORMATION PAYMENT</h4>
@@ -32,12 +36,27 @@
 
                     <input class="form-control" name="address" type="text" placeholder="Address">
 
+                    <div>
+                        <select class="form-control form-select form-select-sm mb-3" id="city"
+                                aria-label=".form-select-sm" onchange="getDistricts(event)">
+                            <option value="" selected>Select province or city</option>
+                        </select>
+
+                        <select class=" form-control form-select form-select-sm mb-3" id="district"
+                                aria-label=".form-select-sm" onchange="getWards(event)">
+                            <option value="" selected>Select district</option>
+                        </select>
+
+                        <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                            <option value="" selected>Select ward and commune</option>
+                        </select>
+                    </div>
 
                     <h4 style="margin-top: 40px">PAYMENT METHODS</h4>
 
                     <div class="pay-methods">
                         <div>
-                            <input class="pay-method" id="pay-home" name="type-pay" type="radio">
+                            <input class="pay-method" id="pay-home" name="type-pay" type="radio" checked>
                             <label for="pay-home">Pay at home</label>
                         </div>
                         <div>
@@ -46,6 +65,9 @@
                         </div>
                     </div>
                 </div>
+
+
+
 
                 <div class="btn-choose">
 
@@ -69,10 +91,67 @@
 
         </div>
 
-        <div class="right-page col-12 order-1 col-sm-12 col-lg-6">
+        <div class="right-page col-12 col-sm-12 col-lg-6 order-lg-2 order-sm-1 order-1">
 
             <div class="container">
                 <div class="row main-right">
+                    <div class="products">
+
+                        <div class="img">
+                            <a>
+                                <img th:src="@{/images/pexels-yaritza-16215951.jpg}">
+                            </a>
+                        </div>
+                        <div class="inf-product">
+                            <p>
+                                <a href="#">Name product Name product Name product Name product</a>
+                            </p>
+
+                            <p style="color: #858E96">
+                                XL x1
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="products">
+
+                        <div class="img">
+                            <a>
+                                <img th:src="@{/images/pexels-yaritza-16215951.jpg}">
+                            </a>
+                        </div>
+                        <div class="inf-product">
+                            <p>
+                                <a href="#">Name product Name product Name product Name product</a>
+                            </p>
+
+                            <p style="color: #858E96">
+                                XL x1
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="products">
+
+                        <div class="img">
+                            <a>
+                                <img th:src="@{/images/pexels-yaritza-16215951.jpg}">
+                            </a>
+                        </div>
+                        <div class="inf-product">
+                            <p>
+                                <a href="#">Name product Name product Name product Name product</a>
+                            </p>
+
+                            <p style="color: #858E96">
+                                XL x1
+                            </p>
+
+                        </div>
+                    </div>
+
                     <div class="products">
 
                         <div class="img">
@@ -132,10 +211,15 @@
 
 </div>
 
+<div th:replace="~{fragments :: script}"></div>
 
 <footer th:replace="~{fragments :: footer}"></footer>
 
+<div th:rel="~{fragments :: scroll}"></div>
+
 <div th:replace="~{fragments :: scroll}"></div>
+
+<script th:src="@{/js/checkout.js}"></script>
 
 
 </body>

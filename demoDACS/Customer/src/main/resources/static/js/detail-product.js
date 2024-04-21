@@ -1,5 +1,26 @@
 
+
+let img = document.querySelector(".img-product");
+
+img.onmousemove = function(e) {
+    // e.target.style.setProperty('--x',(100*e.offsetX/e.target.offsetWidth)+'%');
+    // e.target.style.setProperty('--y',(100*e.offsetY/e.target.offsetHeight)+'%');
+
+    // requestAnimationFrame(() => {
+    //     e.target.style.setProperty('--x', (100 * e.offsetX / e.target.offsetWidth) + '%');
+    //     e.target.style.setProperty('--y', (100 * e.offsetY / e.target.offsetHeight) + '%');
+    // });
+
+}
+function roundToHalf(num) {
+    return Math.round(num * 2) / 2;
+}
+
+
+
 $(document).ready(function () {
+
+    // $('.img-product').easyZoom();
 
     $('.container-img-product img').on('click', function(){
         var src = $(this).attr('src');
@@ -40,3 +61,6 @@ $(document).ready(function () {
         $("#quantity").val(value + 1);
     });
 });
+
+
+

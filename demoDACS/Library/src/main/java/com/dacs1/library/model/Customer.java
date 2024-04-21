@@ -49,6 +49,10 @@ public class Customer {
     @Column(length = 10)
     private Integer sex;
 
+
+    @Column(length = 512)
+    private String addressDetail;
+
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private Cart cart;
 
