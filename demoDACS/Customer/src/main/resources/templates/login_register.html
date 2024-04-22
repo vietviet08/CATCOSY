@@ -93,33 +93,71 @@
 
 <div class="container" style="padding-top: 80px">
     <div class="row ">
-        <div class="container-login col-md-6 p-lg-5 my-3 ">
+        <div class="container-login d-flex justify-content-center col-md-6 p-lg-5 my-3 ">
             <div class="login">
-                <h2 class="text-center" style="font-weight: 900">Login</h2>
+                <h2 class="text-center" style="font-weight: 900">LOGIN</h2>
                 <form th:action="@{/do-login}" method="post">
                     <ul>
                         <li>
                             <input class="form-control" placeholder="Username" type="text" name="username"
-                                   id="username" required>
+                                   id="username" required autofocus>
                         </li>
-                        <li>
-                            <input class="form-control" placeholder="Password" type="password" name="password"
+                        <li style="margin-top: 20px; position: relative">
+                            <input class="form-control password-login" placeholder="Password" type="password"
+                                   name="password"
                                    id="password" required>
+                            <i class="fa-regular fa-eye show-pass" onclick="showPassword()">
+                            </i>
+                            <i class="fa-regular fa-eye-slash hide-pass" onclick="showPassword()"></i>
                         </li>
-                        <li>
+
+                        <li style="margin: 10px 0; display: flex; justify-content: flex-start">
+                            <div style="display: flex; align-content: center; justify-content: flex-start; align-items: center;">
+
+                                <input type="checkbox" name="remember-me"
+                                       id="remember" style="margin-right: 2px">
+                                <label for="remember">Remember me</label>
+                            </div>
+                        </li>
+
+                        <li style="margin: 0">
                             <button type="submit" class="" id="login">
                                 Login
                             </button>
                         </li>
+
+
                     </ul>
 
+                    <hr/>
+
                 </form>
+                <div class="login-other">
+                    <a th:href="@{/oauth2/authorization/google}" class="oauth2 google">
+                        <div>
+                            <i class="fa-brands fa-google"></i>
+                            Login with google
+                        </div>
+                    </a>
+
+                    <div class="or-login">
+                        <p>OR</p>
+                    </div>
+
+                    <a th:href="@{/oauth2/authorization/facebook}" class="oauth2 facebook">
+                        <div>
+                            <i class="fa-brands fa-facebook">
+                            </i>
+                            Login with facebook
+                        </div>
+                    </a>
+                </div>
 
             </div>
         </div>
-        <div class="container-register col-md-6 p-lg-5 my-3">
+        <div class="container-register d-flex justify-content-center col-md-6 p-lg-5 my-3">
             <div class="login">
-                <h2 class="text-center" style="font-weight: 900">Register</h2>
+                <h2 class="text-center" style="font-weight: 900">REGISTER</h2>
                 <div class="alert alert-warning" th:if="${message}" th:text="${message}"></div>
                 <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
 
@@ -142,15 +180,23 @@
                                    id="username-register" required>
                         </li>
 
-                        <li>
-                            <input th:field="*{password}" class="form-control" placeholder="Password" type="password"
+                        <li style="position: relative">
+                            <input th:field="*{password}" class="form-control pass-register" placeholder="Password"
+                                   type="password"
                                    name="password"
                                    id="password-register" required>
+                            <i class="fa-regular fa-eye show-pass-1" onclick="showPasswordRegister()">
+                            </i>
+                            <i class="fa-regular fa-eye-slash hide-pass-1" onclick="showPasswordRegister()"></i>
                         </li>
-                        <li>
-                            <input th:field="*{passwordRepeat}" class="form-control" placeholder="Repeat password"
+                        <li style="position: relative">
+                            <input th:field="*{passwordRepeat}" class="form-control pass-register"
+                                   placeholder="Repeat password"
                                    type="password" name="passwordRepeat"
                                    id="repeat-password-register" required>
+                            <i class="fa-regular fa-eye show-pass-1" onclick="showPasswordRegister()">
+                            </i>
+                            <i class="fa-regular fa-eye-slash hide-pass-1" onclick="showPasswordRegister()"></i>
                         </li>
 
                         <li id="input-email">
@@ -199,6 +245,9 @@
 <div th:replace="~{fragments :: scroll}"></div>
 
 <div th:replace="~{fragments :: script}"></div>
+
+<script th:src="@{/js/login-register.js}"></script>
+
 
 </body>
 </html>

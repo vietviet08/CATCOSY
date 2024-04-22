@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
@@ -83,6 +83,12 @@
                         <li th:if="session.nameForCustomer" th:text="${session.nameForCustomer}"
                             style="color: #e91e63; font-weight: 600">
                         </li>
+
+<!--                        <li-->
+<!--                            style="color: #e91e63; font-weight: 600">-->
+<!--                            <a sec:authentication = "principal.fullName"></a>-->
+<!--                        </li>-->
+
                     </ul>
                 </div>
                 <a th:href="@{/cart}" class="cart-total-item">

@@ -1,13 +1,24 @@
+.nav{
+    background-color: #f7f7f7;
+}
 
+ul{
+    padding: 0;
+    margin: 0;
+}
+
+.login{
+    width: 70%;
+}
 
 form ul li {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    margin: 20px 0 0 0;
 }
 
 .login h2{
-    margin-left: 30px   ;
+    /*margin-left: 30px   ;*/
 }
 
 /*#f ul li:not(#register,#input-email, #input-phone,#input-date,  #input-sex){*/
@@ -15,11 +26,17 @@ form ul li {
 /*}*/
 
 input:not(.input-email){
-    border-radius: unset;
+    border-radius: 5px;
     border: 1px solid #858E96;
     height: 35px;
-    width: 80%;
+    width: 100%;
     padding: 5px;
+
+}
+
+#remember{
+    width: 13px;
+    height: 13px;
 }
 
 .form-control:focus{
@@ -27,14 +44,156 @@ input:not(.input-email){
     border: solid 1px var(--primary-1);
 }
 
+
+
+.show-pass, .hide-pass{
+    position: absolute;
+    top: 28%;
+    right: 10px;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.show-pass-1, .hide-pass-1{
+    position: absolute;
+    top: 28%;
+    right: 10px;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.hide-pass{
+    display: none;
+}
+
+.hide-pass-1{
+    display: none;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+/*#eye:after{*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    top: calc( 30% + 2px);*/
+/*    transform: rotate(45deg);*/
+/*    left: -2px;*/
+/*    width: 120% ;*/
+/*    height: 2px;*/
+/*    background-color: black;*/
+/*    opacity: 0;*/
+/*    transition: opacity 0.3s ease;*/
+/*}*/
+
+
+/*.show:after {*/
+/*    opacity: 1;*/
+/*}*/
+
+
 #register, #login{
-    width: 45%;
+    width: 100%;
     height: 35px;
     border: unset;
+    border-radius: 5px;
+}
+
+.login-other{
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+.oauth2{
+
+    text-decoration: none;
+}
+
+.oauth2 div{
+    width: 100%;
+    height: 35px;
+    color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    border-radius: 5px;
+}
+
+
+
+.oauth2 div i{
+    color: #f7f7f7;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.google{
+    margin-bottom: 10px;
+}
+
+.facebook{
+    margin-top: 10px;
+}
+
+.google div{
+    background-color: #FF4231;
+}
+
+.facebook div{
+    background-color: #1877F3;
+}
+
+
+.or-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 18px;
+}
+
+.or-login p{
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    font-size: 14px;
+    color: #858E96;
+}
+
+.or-login p:before{
+    position: absolute;
+    content: "";
+    width: 45%;
+    height: 1px;
+    background-color: #858E96;
+    top: 50%;
+    left: 0;
+}
+
+
+.or-login p:after{
+    position: absolute;
+    content: "";
+    width: 45%;
+    height: 1px;
+    background-color: #858E96;
+    top: 50%;
+    right: 0;
 }
 
 #birthdate{
-    width: 60%;
+    width: 75%;
+}
+
+.birthdate-sex{
+    justify-content: space-between;
 }
 
 .birthdate-sex input{
@@ -64,35 +223,43 @@ button:hover{
     animation: hideToast 1s forwards;
 }
 
-@media only screen and (max-width: 1400px){
-    .birthdate-sex input{
-        margin-right: 5px;
-    }
-    .birthdate-sex select{
-        margin-left: 5px;
-    }
-}
+/*@media only screen and (max-width: 1400px){*/
+/*    .birthdate-sex input{*/
+/*        margin-right: 5px;*/
+/*    }*/
+/*    .birthdate-sex select{*/
+/*        margin-left: 5px;*/
+/*    }*/
+/*}*/
+
+
+
 
 @media only screen and (max-width:  1200px){
-    .birthdate-sex input{
-        width: 10%;
-        margin-right: 0;
-    }
-    .birthdate-sex select{
-        margin-left: 0;
-    }
+    /*.birthdate-sex input{*/
+    /*    width: 10%;*/
+    /*    margin-right: 0;*/
+    /*}*/
+    /*.birthdate-sex select{*/
+    /*    margin-left: 0;*/
+    /*}*/
 
-    #register, #login{
-        width: 80%;
-    }
+    /*#register, #login{*/
+    /*    width: 80%;*/
+    /*}*/
 
-    .login h2{
-        margin-left: 30px;
-    }
-}
+    /*.login h2{*/
+    /*    margin-left: 30px;*/
+    /*}*/
 
-@media only screen and (max-width:  560px){
     .login{
-        margin-right: 30px;
+        width: 100%;
     }
+
 }
+
+/*@media only screen and (max-width:  560px){*/
+/*    .login{*/
+/*        margin-right: 30px;*/
+/*    }*/
+/*}*/

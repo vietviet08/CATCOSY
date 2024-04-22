@@ -33,12 +33,14 @@ public class CommonInterceptor implements HandlerInterceptor {
             Principal principal = request.getUserPrincipal();
             if (principal != null) {
                 Customer customer = customerService.findByUsername(principal.getName());
-                session.setAttribute("nameForCustomer", customer.getFirstName() + " " + customer.getLastName());
-                session.setAttribute("logged", true);
+                if(customer != null) {
+                    session.setAttribute("nameForCustomer", customer.getFirstName() + " " + customer.getLastName());
+                    session.setAttribute("logged", true);
 
-                Cart cart = customer.getCart();
-                if (cart == null) session.setAttribute("totalProduct", 0);
-                else session.setAttribute("totalProduct", cart.getTotalItem());
+                    Cart cart = customer.getCart();
+                    if (cart == null) session.setAttribute("totalProduct", 0);
+                    else session.setAttribute("totalProduct", cart.getTotalItem());
+                }
             } else {
                 session.setAttribute("logged", false);
             }

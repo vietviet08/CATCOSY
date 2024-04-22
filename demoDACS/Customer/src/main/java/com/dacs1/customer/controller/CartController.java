@@ -44,7 +44,8 @@ public class CartController {
             Cookie cookieCart = null;
 
             Cookie[] cookies = request.getCookies();
-            for (Cookie c : cookies) if (c.getName().equals("CART_CATCOSY")) cookieCart = c;
+            if (cookies != null)
+                for (Cookie c : cookies) if (c.getName().equals("CART_CATCOSY")) cookieCart = c;
 
             if (cookieCart == null) {
                 model.addAttribute("notCart", "There are no products in the cart!");
@@ -52,17 +53,18 @@ public class CartController {
 
         } else {
             Customer customer = customerService.findByUsername(principal.getName());
-            Cart cart = customer.getCart();
+            if (customer != null) {
+                Cart cart = customer.getCart();
 
-            if (cart == null || cart.getTotalItem() == 0) {
-                model.addAttribute("notCart", "There are no products in the cart!");
+                if (cart == null || cart.getTotalItem() == 0) {
+                    model.addAttribute("notCart", "There are no products in the cart!");
 //                model.addAttribute("totalProduct", 0);
-            } else {
-                Set<CartItem> products = cart.getItems();
-                model.addAttribute("products", products);
-                model.addAttribute("cart", cart);
+                } else {
+                    Set<CartItem> products = cart.getItems();
+                    model.addAttribute("products", products);
+                    model.addAttribute("cart", cart);
+                }
             }
-
 
         }
 
@@ -143,7 +145,7 @@ public class CartController {
 
 
     @GetMapping("/cart-v0")
-    public ResponseEntity<Set<CartItem>> findAll(Principal principal){
+    public ResponseEntity<Set<CartItem>> findAll(Principal principal) {
         return new ResponseEntity<>(customerService.findByUsername("vietnq123").getCart().getItems(), HttpStatus.OK);
     }
 
