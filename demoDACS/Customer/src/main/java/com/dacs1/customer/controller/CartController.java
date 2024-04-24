@@ -16,8 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class CartController {
@@ -61,7 +60,10 @@ public class CartController {
 //                model.addAttribute("totalProduct", 0);
                 } else {
                     Set<CartItem> products = cart.getItems();
+
+
                     model.addAttribute("products", products);
+
                     model.addAttribute("cart", cart);
                 }
             }

@@ -16,7 +16,9 @@
 
     <link rel="stylesheet" th:href="@{/css/aos.css}">
 
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" th:href="@{/css/slick.css}"/>
+    <link rel="stylesheet" th:href="@{/css/slick-theme.css}">
+
     <!--    <link href="https://cdn.jsdelivr.net/npm/@cabbiepete/cloud-zoom@1.0.4/cloud-zoom.min.css" rel="stylesheet">-->
     <!--    <link rel="stylesheet" href="https://web.nvnstatic.net/js/jquery/cloudzoom/cloudzoom.css?v=2" type="text/css">-->
     <link rel="stylesheet" th:href="@{/css/index.css}">
@@ -234,7 +236,7 @@
                      ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
                      ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
    class="page-link"
-   style="color: #858E96"
+
 >
     [[${label}]]
 </a>
@@ -314,7 +316,7 @@
         AOS.init();
     </script>
 
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script th:src="@{/js/slick.min.js}" ></script>
 
     <!--    <script src="https://cdn.jsdelivr.net/npm/@cabbiepete/cloud-zoom@1.0.4/cloud-zoom.min.js"></script>-->
 

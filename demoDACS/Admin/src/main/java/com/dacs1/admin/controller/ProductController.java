@@ -46,14 +46,17 @@ public class ProductController {
                               @RequestParam(required = false) String search,
                               Model model) {
         Page<ProductDto> products = null;
+
+        int pageSize = 11;
+
         if (search != null && !search.isEmpty())
-            products = productService.pageProductSearch(search, page, 4);
+            products = productService.pageProductSearch(search, page, pageSize);
         else if (page == null) {
-            products = productService.pageProduct(0, 4);
+            products = productService.pageProduct(0, pageSize);
             page = 0;
 
         } else {
-            products = productService.pageProduct(page, 4);
+            products = productService.pageProduct(page, pageSize);
         }
         List<ProductImage> productImages = productImageService.findByIdProductUnique();
 

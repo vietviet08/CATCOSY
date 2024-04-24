@@ -60,6 +60,15 @@ $(document).ready(function () {
         var value = parseInt($("#quantity").val());
         $("#quantity").val(value + 1);
     });
+
+
+    $('.container-product-same').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+    });
+
 });
 
 

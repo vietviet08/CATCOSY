@@ -25,6 +25,16 @@ for (let option of selectElement.options) {
     }
 }
 
+document.getElementById('filter').addEventListener('change', function() {
+    var leftPageProduct = document.querySelector('.left-page-product');
+    var mainPage = document.querySelector('.page-product');
+    if (this.checked) {
+        leftPageProduct.style.height = '500px';
+    } else {
+        leftPageProduct.style.height = '0';
+    }
+});
+
 
 //
 // option_sorts.forEach((option) => {

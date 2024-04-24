@@ -100,7 +100,7 @@
 
     <div class="container-product row w-100 d-flex justify-content-between align-items-center">
         <div th:each="product : ${productsNewArrival}" class="card border-0  col-12 col-md-4 col-xl-3"
-             style="cursor: pointer;">
+             style="cursor: pointer;  margin: 0 10px">
             <form th:action="@{/add-to-cart}" method="post">
                 <a th:href="@{/product-detail/{id} (id = ${product.id})}">
                     <div class="card__main" style="">
@@ -118,6 +118,7 @@
                                 </div>
                                 <input type="hidden" name="id" th:value="${product.id}">
                                 <input type="submit" class="add-to-cart" value="ADD TO CART"/>
+
                             </div>
                         </div>
                     </div>
@@ -138,11 +139,10 @@
 
 <div class="container d-flex justify-content-center align-items-center "
      style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
-
     <div class="container-product row w-100 d-flex justify-content-between align-content-center">
         <div th:each="product : ${productsSale}" class="card border-0  col-12 col-md-4 col-xl-3"
-             style="cursor: pointer;">
-            <form th:action="@{/add-to-cart}">
+             style="cursor: pointer;  margin: 0 10px">
+            <form th:action="@{/add-to-cart}" method="post">
                 <a th:href="@{/product-detail/{id} (id = ${product.id})}">
                     <div class="card__main" style="">
                         <div class="img__product">
@@ -159,6 +159,7 @@
                                 </div>
                                 <input type="hidden" name="id" th:value="${product.id}">
                                 <input type="submit" class="add-to-cart" value="ADD TO CART"/>
+
                             </div>
                         </div>
                     </div>
@@ -170,17 +171,16 @@
             </form>
         </div>
     </div>
-
 </div>
 
 
-<div class="container my-5">
+<div class="container my-5" data-aos="fade-up" data-aos-duration="1000">
     <hr>
-    <h4 style="font-weight: 600; margin: 20px 0" data-aos="fade-left" data-aos-duration="1000">Embark on a Fashion
+    <h4 style="font-weight: 600; margin: 20px 0" >Embark on a Fashion
         Adventure </h4>
     <div class="intro-shop row">
 
-        <div class="  h-50 " data-aos="fade-right" data-aos-duration="1000">
+        <div class="  h-50 " >
 
             <!--            <img src="../../images/logoINF1.png"  style="width: 280px; float: right">-->
             <p style="font-size: 18px; line-height: 1.8; color: #858E96" class="">
@@ -248,6 +248,44 @@
 <div th:replace="~{fragments :: scroll}"></div>
 
 <script th:replace="~{fragments :: script}"></script>
+
+<script>
+
+    $(document).ready(function (){
+
+        $('.container-product').slick({
+            slidesToShow: 4,
+            slidesToScroll: 2,
+            autoplay: true,
+            autoplaySpeed: 1000,
+            dots: true,
+            arrows: true,
+            infinite: true,
+            responsive: [
+                {
+                    breakpoint: 992,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        infinite: true,
+                        dots: true,
+                        arrows: false,
+                    }
+                }
+            ]
+        });
+
+    });
+</script>
 
 </body>
 

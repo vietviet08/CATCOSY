@@ -1,3 +1,8 @@
+
+
+
+
+
 const loaderWapper = document.querySelector('.loader-wrapper');
 
 function showLoader() {

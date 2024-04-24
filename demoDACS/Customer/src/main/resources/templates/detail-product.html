@@ -12,7 +12,7 @@
 
 <header th:replace="~{fragments :: header}"></header>
 
-<div class="container main-detail-page" >
+<div class="container main-detail-page">
     <div class="row">
         <div class="detail-product-left col-12 col-lg-7 ">
             <div class="detail-product-left-main row">
@@ -36,7 +36,7 @@
                 <div id="img-product-detail"
                      class="img-main-detail slick-slider-for-img col-12 col-lg-10  order-1 order-sm-1 order-lg-2 d-inline-block  py-4 ">
                     <img class="img-product"
-                            th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="">
+                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="">
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
             <div class="product-information">
                 <h2 style="font-weight: 600" th:text="${product.name}"></h2>
                 <p style="font-size: 14px" th:text="'CP: '+  ${product.id}"></p>
-                <span class="price-product" style="font-weight: bold; font-size: 18px"
+                <span class="price-product" style="font-weight: bold; font-size: 24px"
                       th:text="${product.costPrice}"></span>
             </div>
             <hr/>
@@ -54,9 +54,10 @@
                     <div class="choose-size my-4">
                         <label>Size</label>
                         <div class="list-size">
-                            <div class="choose-choose" style="display: inline" th:each="size, element : ${product.sizes}">
+                            <div class="choose-choose" style="display: inline"
+                                 th:each="size, element : ${product.sizes}">
                                 <input type="radio" th:id="'size-' + ${size.size.id}" name="sizeId" class="size-option"
-                                       th:value="${size.size.id}"  th:checked="${element.index == 0}">
+                                       th:value="${size.size.id}" th:checked="${element.index == 0}">
                                 <label th:for="'size-' + ${size.size.id}"
                                        class="text-center d-inline-block font-weight-bold"
                                        th:text="${size.size.size}"></label>
@@ -89,8 +90,9 @@
                     <button type="submit" style="color: white; font-size: 16px">Add to cart</button>
                 </div>
             </form>
-            <p class="w-75"><span
-                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;"><strong>CANDLES SPARK T-SHIRT</strong></span><br><span
+            <p class="w-75" th:text="${product.description != null ? product.description : ''}">
+                <span
+                        style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;"><strong>CANDLES SPARK T-SHIRT</strong></span><br><span
                     style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Chất liệu</strong>: Cotton 260 GSM</span><br><span
                     style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Fitting</strong>: Oversized Fit</span><br><span
                     style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Chi tiết</strong>:&nbsp;</span><br><span
@@ -109,47 +111,43 @@
 
     </div>
 
-    <div class="text-center" style="padding-top: 40px">
+    <div class="text-center" style="padding: 40px 0">
 
         <h3 class="font-weight-bold">PRODUCT SAME</h3>
     </div>
-    <div class="container-product-same container d-flex justify-content-around">
-
-
-        <div th:each="product : ${productsSameCategory}" class="card border-0" style="cursor: pointer;">
-            <form th:action="@{/add-to-cart}" method="post">
-                <form th:action="@{/add-to-cart}" method="post">
-                    <a th:href="@{/product-detail/{id} (id = ${product.id})}">
-                        <div class="card__main" style="">
-                            <div class="img__product">
-                                <img class="front-img "
-                                     th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
-                                     alt="">
-                                <img class="back-img"
-                                     th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
-                                     alt="">
-
-                                <div class="card__main--choose-options">
-                                    <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
-                                        NOW</a>
-                                    </div>
-                                    <input type="hidden" name="id" th:value="${product.id}">
-                                    <input type="submit" class="add-to-cart" value="ADD TO CART"/>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card__name-price">
-                            <div th:text="${product.name}" class="name-product"></div>
-                            <div th:text="${product.costPrice}" class="price-product"></div>
-                        </div>
-                    </a>
-                </form>
-            </form>
-        </div>
-    </div>
 </div>
 
+<div class="container-product-same container d-flex justify-content-center " th:value="${productsSameCategory.size()}">
+    <div th:each="product : ${productsSameCategory}" class="card border-0" style="cursor: pointer; margin: 0 10px">
+        <form th:action="@{/add-to-cart}" method="post">
+            <a th:href="@{/product-detail/{id} (id = ${product.id})}">
+                <div class="card__main" style="">
+                    <div class="img__product">
+                        <img class="front-img "
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
+                             alt="">
+                        <img class="back-img"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
+                             alt="">
+
+                        <div class="card__main--choose-options">
+                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
+                                NOW</a>
+                            </div>
+                            <input type="hidden" name="id" th:value="${product.id}">
+                            <input type="submit" class="add-to-cart" value="ADD TO CART"/>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card__name-price">
+                    <div th:text="${product.name}" class="name-product"></div>
+                    <div th:text="${product.costPrice}" class="price-product"></div>
+                </div>
+            </a>
+        </form>
+    </div>
+</div>
 
 <!--footer start-->
 <footer th:replace="~{fragments :: footer}"></footer>
@@ -163,7 +161,6 @@
 <script th:src="@{/js/detail-product.js}"></script>
 
 <!--<script th:src="@{/js/easyzoom.js}"></script>-->
-
 
 
 <script>
@@ -182,6 +179,45 @@
         var value = parseInt(input.value);
         input.value = value + 1;
     });
+
+    $(document).ready(function () {
+            let numProduct = $('.card').length;
+            if (numProduct >= 4) {
+
+                $('.container-product-same').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 2,
+                    autoplay: true,
+                    autoplaySpeed: 1500,
+                    dots: true,
+                    arrows: true,
+                    infinite: true,
+                    responsive: [
+                        {
+                            breakpoint: 992,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3,
+                                infinite: true,
+                                dots: true
+                            }
+                        },
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 2,
+                                infinite: true,
+                                dots: true,
+                                arrows: false,
+                            }
+                        }
+                    ]
+                });
+            }
+        }
+    )
+
 </script>
 
 </body>
