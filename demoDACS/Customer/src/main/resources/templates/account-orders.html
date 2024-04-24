@@ -43,39 +43,30 @@
                     <thead>
                     <tr>
                         <th scope="col">ID order</th>
-                        <th scope="col">Image product</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Unit price</th>
+                        <th scope="col">Order date</th>
+                        <th scope="col">Delivery date</th>
+                        <th scope="col">Total price</th>
+                        <th scope="col">Shipping fee</th>
+                        <th scope="col">Delivery address</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                    <tr th:each="order : ${orders}">
+                        <th scope="row" th:text="${order.id}"></th>
+                        <td th:text="${order.orderDate}"></td>
+                        <td th:text="${order.deliveryDate}"></td>
+                        <td th:text="${order.totalPrice} " class="price-product"></td>
+                        <td th:text="${order.shippingFee}" class="price-product"></td>
+                        <td th:text="${order.deliveryAddress}"></td>
+                        <td th:text="${order.status}"></td>
+                        <td>
+                            <div class="btn btn-warning " th:if="${order.accept == false}">Cancel </div>
+                            <div class="btn btn-secondary " th:if="${order.accept == true}">Cancel </div>
+                        </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
 
-                    </tr>
                     </tbody>
                 </table>
 

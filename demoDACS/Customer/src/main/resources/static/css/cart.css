@@ -172,6 +172,12 @@ h2 {
     flex-direction: column;
     justify-content: space-between;
     padding: 0;
+    border: none;
+}
+
+.btn a:first-child button{
+    background-color: black;
+    color: white;
 }
 
 .btn .btn-group-checkout {

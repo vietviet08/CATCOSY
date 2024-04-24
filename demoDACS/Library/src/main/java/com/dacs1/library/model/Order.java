@@ -1,15 +1,14 @@
 package com.dacs1.library.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,8 +23,11 @@ public class Order {
     private Date deliveryDate;
     private Double totalPrice;
     private Double shippingFee;
+    private String deliveryAddress;
+    private String paymentMethod;
     private String status;
     private String notes;
+    private boolean isAccept;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")

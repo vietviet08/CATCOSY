@@ -13,4 +13,6 @@ public interface CartService {
 
     void updateCartItem(Product product, int quantity, Size size, Customer customer);
 
+    void deleteAllCartItem(Customer customer);
+
 }

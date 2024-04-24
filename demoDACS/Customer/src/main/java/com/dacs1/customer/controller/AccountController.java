@@ -1,7 +1,9 @@
 package com.dacs1.customer.controller;
 
 import com.dacs1.library.model.Customer;
+import com.dacs1.library.model.Order;
 import com.dacs1.library.service.CustomerService;
+import com.dacs1.library.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class AccountController {
@@ -20,6 +23,9 @@ public class AccountController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/account")
     public String myAccount(Principal principal, Model model) {
@@ -95,6 +101,10 @@ public class AccountController {
 
         if (principal == null) return "redirect:/login";
         model.addAttribute("title", "Orders");
+
+        List<Order> orders = orderService.finAllOrderByCustomerId(customerService.findByUsername(principal.getName()));
+
+        model.addAttribute("orders", orders);
 
         return "account-orders";
     }

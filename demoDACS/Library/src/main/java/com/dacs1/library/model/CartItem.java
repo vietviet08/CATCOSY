@@ -25,7 +25,7 @@ public class CartItem {
     @JoinColumn(name = "size_id", referencedColumnName = "size_id")
     private Size size;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
     private Cart cart;
 

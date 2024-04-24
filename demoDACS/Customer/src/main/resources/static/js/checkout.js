@@ -50,3 +50,4 @@ function getDistricts(event) {
 function getWards(event) {
     fetchWards(event.target.value);
 }
+

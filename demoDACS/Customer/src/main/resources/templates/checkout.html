@@ -19,22 +19,22 @@
 
         <div class="left-page col-12 col-sm-12 col-lg-6 order-lg-1 order-sm-2 order-2">
 
-            <form>
+            <form th:action="@{/process-checkout}" method="post" th:object="${orderInfo}">
                 <h4 class="text-center">INFORMATION PAYMENT</h4>
                 <div class="information-customer ">
-                    <input class="form-control" name="full-name" type="text" placeholder="Full name">
+                    <input  class="form-control" name="full-name" type="text" placeholder="Full name" th:value="${customer.getFirstName() + ' ' + customer.getLastName()}" required>
 
                     <div class="group-email-phone">
                         <div class="email">
-                            <input class="form-control" name="email" type="email" placeholder="Email">
+                            <input class="form-control" name="email" type="email" placeholder="Email" th:value="${customer.getEmail() != null && !#strings.equals(customer.getEmail(), '') ? customer.getEmail() : null}">
                         </div>
                         <div class="phone">
-                            <input class="form-control" name="phone" type="text" placeholder="Phone">
+                            <input class="form-control" name="phone" type="text" placeholder="Phone"  th:value="${customer.getPhone() != null && !#strings.equals(customer.getPhone(), '') ? customer.getPhone() : null}" required>
                         </div>
                     </div>
 
 
-                    <input class="form-control" name="address" type="text" placeholder="Address">
+                    <input th:field="*{deliveryAddress}" class="form-control" name="address" type="text" placeholder="Address"  th:value="${customer.getAddressDetail() != null && !#strings.equals(customer.getAddressDetail(), '') ? customer.getAddressDetail() : null}" required>
 
                     <div>
                         <select class="form-control form-select form-select-sm mb-3" id="city"
@@ -56,11 +56,11 @@
 
                     <div class="pay-methods">
                         <div>
-                            <input class="pay-method" id="pay-home" name="type-pay" type="radio" checked>
+                            <input th:field="*{paymentMethod}" class="pay-method" id="pay-home" name="type-pay" type="radio" th:value="${paymentMethod[0]}" checked>
                             <label for="pay-home">Pay at home</label>
                         </div>
                         <div>
-                            <input class="pay-method" id="pay-bank" name="type-pay" type="radio">
+                            <input th:field="*{paymentMethod}" class="pay-method" id="pay-bank" name="type-pay" type="radio" th:value="${paymentMethod[1]}">
                             <label for="pay-bank">Bank transfer</label>
                         </div>
                     </div>
@@ -79,11 +79,11 @@
                         </a>
                     </div>
 
-                    <a href="#">
+                    <button class="btn-payment" type="submit" style="border: none">
                         <div class="complete-payment">
                             COMPLETE PAYMENT
                         </div>
-                    </a>
+                    </button>
 
                 </div>
 
@@ -95,81 +95,26 @@
 
             <div class="container">
                 <div class="row main-right">
-                    <div class="products">
+                    <div class="products" th:each="product : ${products}">
 
                         <div class="img">
                             <a>
-                                <img th:src="@{/images/pexels-yaritza-16215951.jpg}">
+                                <img th:src="@{'data:image/jpeg;base64,' + ${product.product.images.get(0).image}}">
                             </a>
                         </div>
                         <div class="inf-product">
                             <p>
-                                <a href="#">Name product Name product Name product Name product</a>
+                                <a th:href="@{/product-detail/{id} (id = ${product.product.id})}" th:text="${product.product.name}"></a>
                             </p>
 
-                            <p style="color: #858E96">
-                                XL x1
+                            <p style="color: #858E96" th:text="${product.size.size + ' x' + product.quantity}">
+
                             </p>
 
                         </div>
                     </div>
 
-                    <div class="products">
 
-                        <div class="img">
-                            <a>
-                                <img th:src="@{/images/pexels-yaritza-16215951.jpg}">
-                            </a>
-                        </div>
-                        <div class="inf-product">
-                            <p>
-                                <a href="#">Name product Name product Name product Name product</a>
-                            </p>
-
-                            <p style="color: #858E96">
-                                XL x1
-                            </p>
-
-                        </div>
-                    </div>
-
-                    <div class="products">
-
-                        <div class="img">
-                            <a>
-                                <img th:src="@{/images/pexels-yaritza-16215951.jpg}">
-                            </a>
-                        </div>
-                        <div class="inf-product">
-                            <p>
-                                <a href="#">Name product Name product Name product Name product</a>
-                            </p>
-
-                            <p style="color: #858E96">
-                                XL x1
-                            </p>
-
-                        </div>
-                    </div>
-
-                    <div class="products">
-
-                        <div class="img">
-                            <a>
-                                <img th:src="@{/images/pexels-yaritza-16215951.jpg}">
-                            </a>
-                        </div>
-                        <div class="inf-product">
-                            <p>
-                                <a href="#">Name product Name product Name product Name product</a>
-                            </p>
-
-                            <p style="color: #858E96">
-                                XL x1
-                            </p>
-
-                        </div>
-                    </div>
 
 
                     <div class="voucher">
@@ -188,11 +133,11 @@
                     <div class="prices">
                         <div class="row-price">
                             <p>Provisional</p>
-                            <p class="price">999.999VND</p>
+                            <p class="price price-product" th:text="${cart.totalPrice}"></p>
                         </div>
                         <div class="row-price">
                             <p>Fee ship</p>
-                            <p class="fee-ship">999.999VND</p>
+                            <p class="fee-ship price-product" >0</p>
                         </div>
                     </div>
 
@@ -200,7 +145,10 @@
 
                     <div class="row-price">
                         <p class="title-total-price">Total price</p>
-                        <p class="total-price">999.999VND</p>
+                        <p class="price-product total-price" th:text="${cart.totalPrice}">
+
+                        </p>
+
                     </div>
                 </div>
             </div>
@@ -211,15 +159,18 @@
 
 </div>
 
-<div th:replace="~{fragments :: script}"></div>
 
 <footer th:replace="~{fragments :: footer}"></footer>
 
-<div th:rel="~{fragments :: scroll}"></div>
+<div th:replace="~{fragments :: scroll}"></div>
+
+<div th:replace="~{fragments :: script}"></div>
 
 <div th:replace="~{fragments :: scroll}"></div>
 
 <script th:src="@{/js/checkout.js}"></script>
+
+
 
 
 </body>

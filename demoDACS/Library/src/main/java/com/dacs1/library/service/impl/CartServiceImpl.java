@@ -7,6 +7,7 @@ import com.dacs1.library.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -25,7 +26,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void addItemToCard(Product product, int quantity, Size size, Customer customer) {
-        if(quantity <=0 ) return;
+        if (quantity <= 0) return;
 
         Cart cart = customer.getCart();
         if (cart == null) {
@@ -90,7 +91,7 @@ public class CartServiceImpl implements CartService {
         CartItem cartItem = null;
 
         for (CartItem item : items) {
-            if (Objects.equals(item.getProduct().getId(), product.getId())){
+            if (Objects.equals(item.getProduct().getId(), product.getId())) {
                 cartItem = item;
                 break;
             }
@@ -108,7 +109,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void updateCartItem(Product product, int quantity, Size size, Customer customer) {
-        if(quantity <=0 ) return;
+        if (quantity <= 0) return;
 
         Cart cart = customer.getCart();
         Set<CartItem> items = cart.getItems();
@@ -116,7 +117,7 @@ public class CartServiceImpl implements CartService {
 
         for (CartItem item : items) {
             if (item.getProduct().getId() == product.getId()) {
-                if(item.getQuantity() - quantity <= 0){
+                if (item.getQuantity() - quantity <= 0) {
                     deleteCartItem(product, customer);
                     return;
                 }
@@ -130,6 +131,24 @@ public class CartServiceImpl implements CartService {
 
         cartRepository.save(cart);
 
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllCartItem(Customer customer) {
+        Cart cart = customer.getCart();
+        Set<CartItem> items = cart.getItems();
+        if (!ObjectUtils.isEmpty(cart) && !ObjectUtils.isEmpty(cart.getItems())) {
+            cartItemRepository.deleteAll(items);
+        }
+
+//cartItemRepository.removeCartItemByCartId(cart.getId());
+        cart.setTotalPrice(0.0);
+        cart.setTotalItem(0);
+        cart.getItems().clear();
+        cart.setItems(null);
+
+        cartRepository.save(cart);
     }
 
     private CartItem findCartItem(Long idProduct, Set<CartItem> items) {

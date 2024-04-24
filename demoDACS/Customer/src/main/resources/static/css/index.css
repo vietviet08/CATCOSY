@@ -910,7 +910,7 @@ footer p {
     }
 
     .card {
-        width: 250px;
+        width: 230px;
     }
 
     .img__product {
@@ -920,7 +920,7 @@ footer p {
 
 @media only screen and (max-width: 653px) {
     .img__product {
-        height: 330px;
+        height: 320px;
     }
 
     .card {

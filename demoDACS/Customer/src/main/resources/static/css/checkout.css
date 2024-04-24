@@ -78,6 +78,9 @@ p{margin: 0}
 
 }
 
+.btn-payment:hover{
+    background-color: transparent;
+}
 
 .complete-payment {
     display: flex;
@@ -86,7 +89,8 @@ p{margin: 0}
     padding: 0 15px;
     height: 40px;
     border: 1px solid #e91e63;
-    color: var(--primary-1);
+    color: white;
+    background-color: var(--primary-1);
     transition: ease-in-out 0.2s;
     border-radius: 5px;
 }
@@ -96,10 +100,10 @@ p{margin: 0}
 }
 
 .complete-payment:hover{
-    background: linear-gradient(to right, #ef6393 50%, #e91e63 50%) right bottom;
+    background: linear-gradient(to right, #ef6393 50%, transparent 50%) right bottom;
     background-size: 200% 100%;
-    border: #e91e63;
-    color: white;
+    border: 1px solid #e91e63;
+    color: var(--primary-1);
 }
 
 .complete-payment:hover a{
@@ -182,10 +186,16 @@ p{margin: 0}
 
 .row-price p{
     margin: 10px 0;
+    font-weight: bolder;
+
 }
 
 .title-total-price{
 
+}
+
+.total-price{
+    font-weight: bolder;
 }
 
 .total-price, .title-total-price{
