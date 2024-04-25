@@ -3,6 +3,7 @@ package com.dacs1.admin.controller;
 import com.dacs1.admin.helper.SetNameAndRoleToPage;
 import com.dacs1.library.dto.AdminDto;
 import com.dacs1.library.model.Admin;
+import com.dacs1.library.model.Role;
 import com.dacs1.library.service.AdminService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -93,9 +95,15 @@ public class LoginController {
 
 
     @RequestMapping("/index")
-    public void home(Model model) {
+    public String home(Model model, HttpSession session, Principal principal) {
+        if(principal == null) return "redirect:/login";
+
+        Admin admin =  adminService.findByUsername(principal.getName());
+        session.setAttribute("nameAdmin",admin.getFirstName() + " " + admin.getLastName());
+        session.setAttribute("role", "ADMIN");
         model.addAttribute("title", "Home Page");
-       SetNameAndRoleToPage.setNameAndRoleToPage(model, "index", adminService);
+
+        return "index";
     }
 
 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+
+<style>
+
+    .nothing-orders{
+        padding: 10px 10px;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+        border-radius: 5px;
+    }
+</style>
+
+<body>
+
+<div th:replace="~{fragments ::  spinner}"></div>
+
+
+<div th:replace="~{fragments ::  sidebar}"></div>
+
+<div class="content position-relative">
+    <!-- Navbar Start -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <!-- Navbar End-->
+
+    <div class="container">
+        <div th:if="${orders.size() == 0}" class="nothing-orders bg-warning">There are no orders yet</div>
+        <div class="w-100 d-flex justify-content-between align-items-center">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">ID Order</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Delivery Date</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Shipping fee</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Delivery Address</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Request</th>
+                    <th scope="col">Action</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <input name="idOrder" type="hidden" th:value="${order.id}">
+                    <th scope="row" th:text="${order.id}"></th>
+                    <td th:text="${order.orderDate}"></td>
+                    <td th:text="${order.deliveryDate}"></td>
+                    <td th:text="${order.totalPrice}" class="price-col"></td>
+                    <td th:text="${order.shippingFee}" class="price-col"></td>
+                    <td th:text="${order.customer.id + ' - ' + order.customer.firstName + ' ' + order.customer.lastName}"></td>
+                    <td th:text="${order.deliveryAddress}"></td>
+                    <td th:text="${order.paymentMethod}"></td>
+                    <td th:text="${order.notes}"></td>
+                    <td>
+                        <a th:if="${order.accept == false && order.cancel == false}"
+                           th:href="@{/accept-order(id = ${order.id})}">
+                            <div class="btn btn-success">
+                                Accept
+                            </div>
+                        </a>
+                        <a th:if="${order.accept == false && order.cancel == true}">
+                            <button class="btn btn-secondary" disabled>
+                                Accept
+                            </button>
+                        </a>
+
+
+                        <a href="#" th:if="${order.accept == true}" th:href="@{/cancel-order(id = ${order.id})}">
+                            <div class="btn btn-warning">
+                                Cancel
+                            </div>
+                        </a>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-between" style="padding: 10px 0 ">
+                            <a th:href="@{/delete-order(id = ${order.id})}">
+                                <div>
+                                    <i class="fa-regular fa-trash-can" style="color: red"></i>
+                                </div>
+                            </a>
+
+
+                            <a href="#">
+                                <div>
+                                    <i class="fa-regular fa-pen-to-square" style="color: #0f5132"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
+
+<div th:replace="~{fragments :: toast}"></div>
+
+
+<div th:replace="~{fragments :: script}">
+</div>
+
+
+<script th:replace="~{fragments :: toastScript}"></script>
+
+<script th:inline="javascript">
+    const VND = new Intl.NumberFormat('vi-VN', {
+        style: 'currency', currency: 'VND',
+    });
+    const nodePriceProduct = document.querySelectorAll(".price-col");
+    nodePriceProduct.forEach((nodePrice, index) => {
+        nodePrice.textContent = VND.format(nodePrice.textContent);
+    })
+</script>
+</body>
+
+
+</html>

@@ -4,6 +4,8 @@
 </head>
 
 <link rel="stylesheet" th:href="@{/css/account.css}">
+
+<linK rel="stylesheet" th:href="@{/css/account-orders.css}">
 <body>
 <div th:replace="~{fragments :: loader}"></div>
 
@@ -14,17 +16,27 @@
 
     <div class="row">
 
-        <div class="left-page col-12 col-sm-12 col-lg-4">
+        <div class="left-page col-12 col-sm-12 col-lg-3">
             <div class="tool-bar">
 
                 <h4 class="title">ACCOUNT</h4>
 
                 <div class="main-tool-bar">
-                    <a th:href="@{/account}"><div >My profile</div></a>
-                    <a th:href="@{/address}"><div >My address</div></a>
-                    <a th:href="@{/orders}"><div class="active">My orders</div></a>
-                    <a th:href="@{/change-password}"><div >Change password</div></a>
-                    <a th:href="@{/logout}"><div >Logout</div></a>
+                    <a th:href="@{/account}">
+                        <div>My profile</div>
+                    </a>
+                    <a th:href="@{/address}">
+                        <div>My address</div>
+                    </a>
+                    <a th:href="@{/orders}">
+                        <div class="active">My orders</div>
+                    </a>
+                    <a th:href="@{/change-password}">
+                        <div>Change password</div>
+                    </a>
+                    <a th:href="@{/logout}">
+                        <div>Logout</div>
+                    </a>
 
                 </div>
 
@@ -32,24 +44,27 @@
         </div>
 
 
-        <div class="right-page col-12 col-sm-12 col-lg-8">
-            <form class="w-100">
-                <h4 class="title">MY ORDERS</h4>
+        <div class="right-page col-12 col-sm-12 col-lg-9">
+            <!--            <form class="w-100">-->
+            <h4 class="title">MY ORDERS</h4>
 
-                <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
-                <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+            <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+            <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+            <div class="table-responsive">
 
-                <table class="table">
+                <div th:if="${orders.size() == 0}" class="nothing-orders bg-warning">You haven't placed any orders yet
+                </div>
+                <table class="table" th:if="${orders.size() > 0}">
                     <thead>
                     <tr>
-                        <th scope="col">ID order</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Order date</th>
                         <th scope="col">Delivery date</th>
                         <th scope="col">Total price</th>
                         <th scope="col">Shipping fee</th>
                         <th scope="col">Delivery address</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,16 +77,25 @@
                         <td th:text="${order.deliveryAddress}"></td>
                         <td th:text="${order.status}"></td>
                         <td>
-                            <div class="btn btn-warning " th:if="${order.accept == false}">Cancel </div>
-                            <div class="btn btn-secondary " th:if="${order.accept == true}">Cancel </div>
+                            <div class="action">
+                                <a th:if="${order.accept == false}" th:href="@{/cancel-order(id = ${order.id})}">
+                                    <button class="btn btn-warning ">Cancel
+                                    </button>
+                                </a>
+                                <button class="btn btn-secondary " th:if="${order.accept == true}" disabled>
+                                    Cancel
+                                </button>
+                                <button class="btn btn-info">View</button>
+                            </div>
                         </td>
                     </tr>
 
                     </tbody>
                 </table>
+            </div>
 
 
-            </form>
+            <!--            </form>-->
         </div>
 
     </div>

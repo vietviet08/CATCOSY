@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.Set;
 
 @Controller
@@ -59,7 +60,11 @@ public class CheckoutController {
     public String processCheckout(@ModelAttribute("orderInfo") Order order, Model model, Principal principal) {
 
         if (principal == null) return "redirect:/login_register";
-        orderService.addOrder(customerService.findByUsername(principal.getName()).getCart(), order);
+        try {
+            orderService.addOrder(customerService.findByUsername(principal.getName()).getCart(), order);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         return "redirect:/orders";
     }

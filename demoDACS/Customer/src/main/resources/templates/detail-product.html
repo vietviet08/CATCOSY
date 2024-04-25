@@ -135,6 +135,7 @@
                                 NOW</a>
                             </div>
                             <input type="hidden" name="id" th:value="${product.id}">
+                            <input type="hidden" name="sizeId" th:value="${product.sizes.get(0).size.id}">
                             <input type="submit" class="add-to-cart" value="ADD TO CART"/>
 
                         </div>

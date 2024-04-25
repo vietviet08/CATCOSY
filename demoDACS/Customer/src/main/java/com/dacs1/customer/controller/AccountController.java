@@ -50,17 +50,17 @@ public class AccountController {
                              @RequestParam("lastName") String lastName,
                              @RequestParam("phone") String phone,
                              Model model,
-                             Principal principal){
+                             Principal principal) {
 
         Customer customer = customerService.findByUsername(principal.getName());
 
 
         try {
 
-            if(firstName.trim().equals("") || lastName.trim().equals("")) {
+            if (firstName.trim().equals("") || lastName.trim().equals("")) {
                 model.addAttribute("notAccept", "First name or last name not empty");
                 return "account";
-            }else{
+            } else {
 
                 customer.setFirstName(firstName);
                 customer.setLastName(lastName);
@@ -70,7 +70,7 @@ public class AccountController {
                 return "redirect:/account";
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", "Error from server!");
         }
@@ -96,6 +96,8 @@ public class AccountController {
         return "account-address";
     }
 
+
+    /*Orders*/
     @GetMapping("/orders")
     public String myOrders(Model model, Principal principal) {
 
@@ -108,6 +110,19 @@ public class AccountController {
 
         return "account-orders";
     }
+
+    @RequestMapping(value = "/cancel-order", method = {RequestMethod.GET, RequestMethod.PUT})
+    public String cancelOrder(Order order, Principal principal, Model model) {
+        if(principal == null) return "redirect:/404";
+
+        if(order.isAccept()) return "redirect:/orders";
+
+        orderService.cancelOrderForCustomer(order.getId());
+        model.addAttribute("success", "Accept order successfully!");
+
+        return "redirect:/orders";
+    }
+
 
     @GetMapping("/change-password")
     public String changePassword(Principal principal, Model model) {
@@ -137,7 +152,7 @@ public class AccountController {
                     model.addAttribute("notSame", "Please enter a matching password!");
                     return "account-password";
                 }
-            } else{
+            } else {
                 model.addAttribute("notCorrect", "Please enter the correct password!");
                 return "account-password";
             }

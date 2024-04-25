@@ -28,6 +28,7 @@ public class Order {
     private String status;
     private String notes;
     private boolean isAccept;
+    private boolean isCancel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")

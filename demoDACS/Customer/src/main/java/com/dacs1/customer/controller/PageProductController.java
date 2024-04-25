@@ -68,7 +68,7 @@ public class PageProductController {
             model.addAttribute("nameCategory", "Products");
         }
 
-        int pageSize = 12;
+        int pageSize = 18;
 
         Page<ProductDto> products = null;
         if (sortPrice == null) sortPrice = "";

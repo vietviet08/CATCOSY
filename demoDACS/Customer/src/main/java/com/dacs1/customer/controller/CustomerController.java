@@ -3,6 +3,7 @@ package com.dacs1.customer.controller;
 import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,12 @@ public class CustomerController {
 
     @GetMapping("*")
     public String errorPage(Model model){
+        model.addAttribute("title", "Error page");
+        return "404";
+    }
+
+    @GetMapping("/404")
+    public String page404(Model model){
         model.addAttribute("title", "Error page");
         return "404";
     }
