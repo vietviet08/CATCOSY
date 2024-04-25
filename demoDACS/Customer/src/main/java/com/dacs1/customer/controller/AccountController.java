@@ -134,20 +134,7 @@ public class AccountController {
     @RequestMapping(value = "/detail-order", method = {RequestMethod.GET})
     @ResponseBody
     public List<OrderDetailDto> viewOrderDetail(Long id, Model model) {
-        List<OrderDetailDto> orderDetails = orderDetailService.finAllByOrderIdDto(id);
-
-//        for(OrderDetail orderDetail : orderDetails){
-//            orderDetail.setOrder(null);
-//            orderDetail.getProduct().setSizes(null);
-//
-////            for(ProductImage productImage : orderDetail.getProduct().getImages()){
-////                productImage.setProduct(null);
-////            }
-//            orderDetail.setProduct(null);
-//        }
-
-//        model.addAttribute("orderDetails", orderDetails);
-        return orderDetails;
+        return orderDetailService.finAllByOrderIdDto(id);
     }
 
 

@@ -85,7 +85,7 @@
                                 <button class="btn btn-secondary " th:if="${order.accept == true}" disabled>
                                     Cancel
                                 </button>
-                                <a id="btnDetailOrder" th:href="@{/detail-order(id = ${order.id})}">
+                                <a class="btnDetailOrder" th:href="@{/detail-order(id = ${order.id})}">
                                     <button class="btn btn-info">View</button>
                                 </a>
                             </div>
@@ -142,41 +142,9 @@
 <div th:replace="~{fragments :: script}"></div>
 
 
-<script>
-
-    $('document').ready(function () {
-
-            $('#btnDetailOrder').on('click', function (e) {
-                e.preventDefault();
-                var href = $(this).attr('href');
-                $.get(href, function (orderDetails, status) {
-                    // $('#updateId').val(category.id);
-                    // $('#updateName').val(category.name);
-
-                    $("#listOrderDetail").empty();
-                    $.each(orderDetails, function (index, orderDetail) {
-                        $("#listOrderDetail").append(
-                            '<tr>' +
-                            '<th scope="row">' + '<img src="data:image/jpeg;base64,' + orderDetail.image + '" style="width: 60px; height: 60px;">' + '</th>' +
-                            '<td>' + orderDetail.nameProduct + '</td>' +
-                            '<td >' + orderDetail.unitPrice + '₫' + '</td>' +
-                            '<td>' + orderDetail.quantityAndSize + '</td>' +
-                            '<td>' + orderDetail.totalPrice + '₫' + '</td>' +
-                            '</tr>'
-                        );
-                        console.log(orderDetail);
-                    });
-                    console.log(orderDetails);
-
-                });
+<script th:src="@{/js/account.js}">
 
 
-                var updateCategoryModal = new bootstrap.Modal(document.getElementById('detailOrder'));
-                updateCategoryModal.show();
-            });
-
-        }
-    )
 </script>
 
 </body>

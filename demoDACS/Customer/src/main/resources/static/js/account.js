@@ -1,0 +1,34 @@
+$('document').ready(function () {
+
+
+    /*Order */
+        $('.btnDetailOrder').on('click', function(e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+            $.get(href, function(orderDetails, status) {
+                $("#listOrderDetail").empty();
+                const VND = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+                $.each(orderDetails, function(index, orderDetail) {
+                    $("#listOrderDetail").append(
+                        '<tr>' +
+                        '<th scope="row">' + '<img src="data:image/jpeg;base64,' + orderDetail.image + '" style="width: 60px; height: 60px;">' + '</th>' +
+                        '<td>' + orderDetail.nameProduct + '</td>' +
+                        '<td class="price-product">' + VND.format(orderDetail.unitPrice) + '</td>' +
+                        '<td>' + orderDetail.quantityAndSize + '</td>' +
+                        '<td class="price-product">' + VND.format(orderDetail.totalPrice) + '</td>' +
+                        '</tr>'
+                    );
+                });
+            });
+
+            var updateCategoryModal = new bootstrap.Modal(document.getElementById('detailOrder'));
+            updateCategoryModal.show();
+        });
+
+
+
+    }
+);
