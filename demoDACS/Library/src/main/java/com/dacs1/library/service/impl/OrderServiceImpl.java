@@ -53,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
         order.setAccept(false);
         order.setStatus(status[0]);
 
+
         List<OrderDetail> orderDetails = new ArrayList<>();
 
         for (CartItem item : items) {
@@ -62,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setQuantity(item.getQuantity());
             orderDetail.setTotalPrice(item.getTotalPrice());
             orderDetail.setUnitPrice(item.getUnitPrice());
+            orderDetail.setSize(item.getSize());
             orderDetailRepository.save(orderDetail);
             orderDetails.add(orderDetail);
         }

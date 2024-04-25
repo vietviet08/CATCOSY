@@ -44,7 +44,9 @@
             <td th:text="${category.name}"></td>
             <td>
                 <a id="btnUpdate" th:href="@{/findById(id = ${category.id})}" class="btn btn-success"
-                   style="width: 100px">Update</a>
+                   style="width: 100px">
+                    Update
+                </a>
             </td>
             <td>
                 <a th:if="${category.isActivated()}" th:href="@{/delete-category(id = ${category.id})}"

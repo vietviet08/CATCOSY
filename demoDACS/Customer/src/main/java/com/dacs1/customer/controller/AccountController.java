@@ -1,10 +1,15 @@
 package com.dacs1.customer.controller;
 
+import com.dacs1.library.dto.OrderDetailDto;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.model.Order;
+import com.dacs1.library.model.OrderDetail;
+import com.dacs1.library.model.ProductImage;
 import com.dacs1.library.service.CustomerService;
+import com.dacs1.library.service.OrderDetailService;
 import com.dacs1.library.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +31,9 @@ public class AccountController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     @GetMapping("/account")
     public String myAccount(Principal principal, Model model) {
@@ -113,14 +121,33 @@ public class AccountController {
 
     @RequestMapping(value = "/cancel-order", method = {RequestMethod.GET, RequestMethod.PUT})
     public String cancelOrder(Order order, Principal principal, Model model) {
-        if(principal == null) return "redirect:/404";
+        if (principal == null) return "redirect:/404";
 
-        if(order.isAccept()) return "redirect:/orders";
+        if (order.isAccept()) return "redirect:/orders";
 
         orderService.cancelOrderForCustomer(order.getId());
         model.addAttribute("success", "Accept order successfully!");
 
         return "redirect:/orders";
+    }
+
+    @RequestMapping(value = "/detail-order", method = {RequestMethod.GET})
+    @ResponseBody
+    public List<OrderDetailDto> viewOrderDetail(Long id, Model model) {
+        List<OrderDetailDto> orderDetails = orderDetailService.finAllByOrderIdDto(id);
+
+//        for(OrderDetail orderDetail : orderDetails){
+//            orderDetail.setOrder(null);
+//            orderDetail.getProduct().setSizes(null);
+//
+////            for(ProductImage productImage : orderDetail.getProduct().getImages()){
+////                productImage.setProduct(null);
+////            }
+//            orderDetail.setProduct(null);
+//        }
+
+//        model.addAttribute("orderDetails", orderDetails);
+        return orderDetails;
     }
 
 

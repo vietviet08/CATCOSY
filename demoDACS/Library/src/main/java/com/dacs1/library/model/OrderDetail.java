@@ -20,6 +20,10 @@ public class OrderDetail {
     private Double totalPrice;
     private Double unitPrice;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "size_id", referencedColumnName = "size_id")
+    private Size size;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
