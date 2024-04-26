@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -138,39 +139,30 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product update(List<MultipartFile> images, List<Long> newSizesId, ProductDto productDto) throws IOException {
 
         Product product = productRepository.getReferenceById(productDto.getId());
 
         List<ProductImage> productImagesOlds = product.getImages();
 
-        System.out.println(images.size());
-
-        if (!images.isEmpty() && images.size() != 1) {
-
+        List<ProductImage> productImagesNews = new ArrayList<>();
+        if (!images.isEmpty()) {
             productImagesOlds.clear();
-            int i = 0;
+
             for (MultipartFile newImage : images) {
                 if (newImage != null && !newImage.isEmpty()) {
-//                    ProductImage productImage = null;
-//                if (i < productImagesOlds.size()) {
-//                    productImage = productImagesOlds.get(i);
-//                    productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
-//
-//                } else {
                     ProductImage productImage = new ProductImage();
                     productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
                     productImage.setProduct(product);
-//                }
 
-                    productImagesOlds.add(productImage);
+                    productImagesNews.add(productImage);
                 }
-                i++;
             }
         }
 
-        product.setImages(productImagesOlds);
-        System.out.println(productImagesOlds.size());
+
+
 
 //        List<Long> oldSizes = product.getSizes().stream().map(size -> size.getSize().getId()).toList();
 //        for (Long sizeId : oldSizes) {
@@ -243,6 +235,10 @@ public class ProductServiceImpl implements ProductService {
         product.setSalePrice(productDto.getSalePrice());
         product.setCategory(productDto.getCategory());
 
+        if(!productImagesNews.isEmpty())  {
+            productImageRepository.deleteAllByProductId(product.getId());
+            product.setImages(productImagesNews);
+        }
         updateProductSize(product, newSizesId);
 
         return productRepository.save(product);
@@ -251,7 +247,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateProductSize(Product product, List<Long> newSizesId) {
         List<ProductSize> productSizes = product.getSizes();
-        productSizes.removeIf(productSize -> !newSizesId.contains(productSize.getSize().getId()));
+//        productSizes.removeIf(productSize -> !newSizesId.contains(productSize.getSize().getId()));
+
+        Iterator<ProductSize> iterator = productSizes.iterator();
+        while (iterator.hasNext()) {
+            ProductSize productSize = iterator.next();
+            if (!newSizesId.contains(productSize.getSize().getId())) {
+                product.setQuantity(product.getQuantity() - productSize.getQuantity());
+                iterator.remove();
+            }
+        }
 
         for (Long newSizeId : newSizesId) {
             if (!productSizes.stream().anyMatch(ps -> ps.getSize().getId().equals(newSizeId))) {
@@ -263,6 +268,8 @@ public class ProductServiceImpl implements ProductService {
                 productSizes.add(productSize);
             }
         }
+
+
     }
 
 

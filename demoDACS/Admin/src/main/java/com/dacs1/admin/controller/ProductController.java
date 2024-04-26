@@ -127,7 +127,6 @@ public class ProductController {
 
         productDto.getSizes().forEach(productSize -> sizesExisting.add(productSize.getSize()));
 
-        System.out.println("size existing: " + sizesExisting.size());
 
         model.addAttribute("title", "Update product");
         model.addAttribute("productDto", productDto);

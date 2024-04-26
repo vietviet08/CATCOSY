@@ -9,5 +9,5 @@ public interface OrderDetailService {
 
     List<OrderDetail> findAllByOrderId(Long id);
 
-    public List<OrderDetailDto> finAllByOrderIdDto(Long id);
+    List<OrderDetailDto> finAllByOrderIdDto(Long id);
 }

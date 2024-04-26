@@ -4,6 +4,7 @@ import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,5 +22,10 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Long
 
     @Query("select distinct pi from ProductImage pi where pi.product.id = :idP group by pi.product.id")
     List<ProductImage> findByIdProductUnique(@Param("idP") Long idP);
+
+
+    @Modifying
+    @Query(value = "delete from products_images where product_id = :id", nativeQuery = true)
+    void deleteAllByProductId(@Param("id") Long id);
 
 }

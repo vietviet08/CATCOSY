@@ -35,9 +35,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             OrderDetailDto orderDetailDto = new OrderDetailDto();
             orderDetailDto.setId(orderDetail.getId());
             orderDetailDto.setImage(orderDetail.getProduct().getImages().get(0).getImage());
+            orderDetailDto.setIdProduct(orderDetail.getProduct().getId());
             orderDetailDto.setNameProduct(orderDetail.getProduct().getName());
             orderDetailDto.setUnitPrice(orderDetail.getUnitPrice());
-            orderDetailDto.setQuantityAndSize(orderDetail.getQuantity() + " x" + orderDetail.getSize().getSize() );
+            orderDetailDto.setQuantityAndSize(orderDetail.getSize().getSize() + " x" + orderDetail.getQuantity());
             orderDetailDto.setTotalPrice(orderDetail.getTotalPrice());
             orderDetailDtos.add(orderDetailDto);
         }

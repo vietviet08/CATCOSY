@@ -1,6 +1,7 @@
 package com.dacs1.library.repository;
 
 import com.dacs1.library.model.Product;
+import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.ProductImage;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
