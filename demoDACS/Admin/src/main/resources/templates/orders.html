@@ -5,12 +5,17 @@
 
 <style>
 
-    .nothing-orders{
+    .nothing-orders {
         padding: 10px 10px;
         font-size: 18px;
         font-weight: 400;
         text-align: center;
         border-radius: 5px;
+    }
+
+    .action-order a div i {
+        margin: 0 5px;
+        font-size: 18px;
     }
 </style>
 
@@ -41,6 +46,7 @@
                     <th scope="col">Delivery Address</th>
                     <th scope="col">Payment Method</th>
                     <th scope="col">Notes</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Request</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -58,6 +64,7 @@
                     <td th:text="${order.deliveryAddress}"></td>
                     <td th:text="${order.paymentMethod}"></td>
                     <td th:text="${order.notes}"></td>
+                    <td th:text="${order.status}"></td>
                     <td>
                         <a th:if="${order.accept == false && order.cancel == false}"
                            th:href="@{/accept-order(id = ${order.id})}">
@@ -79,29 +86,94 @@
                         </a>
                     </td>
                     <td>
-                        <div class="d-flex justify-content-between" style="padding: 10px 0 ">
+                        <div class="action-order d-flex justify-content-between" style="padding: 10px 0 ">
+
+                            <a class="btnDetailOrder" th:href="@{/detail-order(id = ${order.id})}">
+                                <div>
+                                    <i class="fa-regular fa-eye" style="color: #009CFF"></i>
+                                </div>
+                            </a>
+
                             <a th:href="@{/delete-order(id = ${order.id})}">
                                 <div>
                                     <i class="fa-regular fa-trash-can" style="color: red"></i>
                                 </div>
                             </a>
 
-
-                            <a href="#">
+                            <a class="btnEdit" th:href="@{/status-order(id = ${order.id})}">
                                 <div>
                                     <i class="fa-regular fa-pen-to-square" style="color: #0f5132"></i>
                                 </div>
                             </a>
                         </div>
                     </td>
-
                 </tr>
                 </tbody>
             </table>
         </div>
+
+        <!--modal order detail-->
+        <div class="modal fade" id="detailOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Order Detail</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody id="listOrderDetail">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--modal edit status and notes-->
+        <div class="modal fade" id="edit-status" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-edit-status-title">Edit status & notes</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/save-change-status}" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="status-select" class="col-form-label">Status:</label>
+                                <select id="status-select" name="status">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes-text" class="col-form-label">Notes:</label>
+                                <textarea name="notes" class="form-control" id="notes-text"></textarea>
+                            </div>
+                            <div class="idOder">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-
 </div>
 
 
@@ -117,13 +189,79 @@
 <script th:replace="~{fragments :: toastScript}"></script>
 
 <script th:inline="javascript">
-    const VND = new Intl.NumberFormat('vi-VN', {
-        style: 'currency', currency: 'VND',
-    });
-    const nodePriceProduct = document.querySelectorAll(".price-col");
-    nodePriceProduct.forEach((nodePrice, index) => {
-        nodePrice.textContent = VND.format(nodePrice.textContent);
-    })
+
+
+    $('document').ready(function () {
+            const VND = new Intl.NumberFormat('vi-VN', {
+                style: 'currency', currency: 'VND',
+            });
+
+            $(".price-col").each(function (index) {
+                $(this).text(VND.format($(this).text()));
+            });
+
+
+            /*Order */
+            $('.btnDetailOrder').on('click', function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $.get(href, function (orderDetails, status) {
+                    $("#listOrderDetail").empty();
+                    const VND = new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    });
+                    $.each(orderDetails, function (index, orderDetail) {
+                        $("#listOrderDetail").append(
+                            '<tr>' +
+                            '<th scope="row">' +
+                            '<a href="/product-detail/' + orderDetail.idProduct + '" >' +
+                            '<img src="data:image/jpeg;base64,' + orderDetail.image + '" style="width: 60px; height: 60px;">' +
+                            '</a>' +
+                            '</th>' +
+                            '<td>' +
+                            '<a href="/product-detail/' + orderDetail.idProduct + '" style="text-decoration: none; color: #333333">' + orderDetail.nameProduct + '</a>' +
+                            '</td>' +
+                            '<td class="price-product">' + VND.format(orderDetail.unitPrice) + '</td>' +
+                            '<td>' + orderDetail.quantityAndSize + '</td>' +
+                            '<td class="price-product">' + VND.format(orderDetail.totalPrice) + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                });
+
+                var updateCategoryModal = new bootstrap.Modal(document.getElementById('detailOrder'));
+                updateCategoryModal.show();
+            });
+
+
+            $('.btnEdit').on('click', function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $.get(href, function (order, status) {
+                    $('.idOder').empty();
+
+                    $('#notes-text').val(order.notes)
+
+                    $('.idOder').append('<input name="idOrderNeed" type="hidden" value=" ' + order.id+ '">')
+
+                    const statusValue = ['Awaiting approval', 'Delivering', 'Goods received', 'Cancelled'];
+
+                    $.each(statusValue, function (index, s) {
+                        if (order.status === statusValue[index]) $('#status-select').append('<option value="' + index + '" selected>' + statusValue[index] + '</option>')
+                        else $('#status-select').append('<option value="' + index + '">' + statusValue[index] + '</option>')
+                    })
+
+                });
+
+                var updateCategoryModal = new bootstrap.Modal(document.getElementById('edit-status'));
+                updateCategoryModal.show();
+
+            });
+
+        }
+    );
+
 </script>
 </body>
 

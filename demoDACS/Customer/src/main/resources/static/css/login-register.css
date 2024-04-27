@@ -1,5 +1,11 @@
 .nav{
     background-color: #f7f7f7;
+    box-shadow: rgba(0,0,0,0.3) 0 1px 5px;
+    z-index: 9999;
+}
+
+footer{
+    box-shadow: rgba(0,0,0,0.3) 0 1px 5px;
 }
 
 ul{
@@ -27,10 +33,10 @@ form ul li {
 
 input:not(.input-email){
     border-radius: 5px;
-    border: 1px solid #858E96;
-    height: 35px;
+    /*border: 1px solid #858E96;*/
+    height: 40px;
     width: 100%;
-    padding: 5px;
+    padding: 8px;
 
 }
 
@@ -50,7 +56,7 @@ input:not(.input-email){
     position: absolute;
     top: 28%;
     right: 10px;
-    z-index: 9999;
+    z-index: 999;
     cursor: pointer;
 }
 
@@ -58,7 +64,7 @@ input:not(.input-email){
     position: absolute;
     top: 28%;
     right: 10px;
-    z-index: 9999;
+    z-index: 999;
     cursor: pointer;
 }
 
@@ -98,9 +104,10 @@ input:not(.input-email){
 
 #register, #login{
     width: 100%;
-    height: 35px;
+    height: 40px;
     border: unset;
     border-radius: 5px;
+    box-shadow: rgba(0,0,0,0.3) 0 1px 5px;
 }
 
 .login-other{
@@ -110,26 +117,30 @@ input:not(.input-email){
     /*justify-content: center;*/
 }
 
-.oauth2{
+.icon-google svg{
+    margin-bottom: 5px;
+}
 
+.oauth2{
     text-decoration: none;
 }
 
 .oauth2 div{
     width: 100%;
-    height: 35px;
+    height: 40px;
     color: #f7f7f7;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 400;
     border-radius: 5px;
+    box-shadow: rgba(0,0,0,0.3) 0 1px 5px;
 }
 
 
 
 .oauth2 div i{
-    color: #f7f7f7;
+    color: #FFFFFF;
     margin-right: 10px;
     font-size: 20px;
 }
@@ -143,7 +154,8 @@ input:not(.input-email){
 }
 
 .google div{
-    background-color: #FF4231;
+    background-color: #FFFFFF;
+    color: #858E96;
 }
 
 .facebook div{
@@ -201,7 +213,13 @@ input:not(.input-email){
 }
 .birthdate-sex select{
     margin-left: 15px;
-    border-radius: unset;
+    border: 1px solid #DEE2E6;
+    border-radius: 5px;
+    /*border: none;*/
+}
+
+.birthdate-sex select:focus-visible{
+    outline: none;
 }
 
 button{

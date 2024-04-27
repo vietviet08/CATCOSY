@@ -81,6 +81,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAllOrderByIdDesc() {
+        return orderRepository.findAllOrderByIdDesc();
+    }
+
+    @Override
     public List<Order> finAllOrderByCustomerId(Customer customer) {
         return orderRepository.findAllByCustomerId(customer.getId());
     }
@@ -122,6 +127,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.getReferenceById(id);
         order.setCancel(true);
 
+        order.setStatus(status[4]);
+
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         String strDate = formatter.format(date);
@@ -131,9 +138,14 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
-
     @Override
-    public Order changeStatus(Long id) {
-        return null;
+    public Order changeStatusAndNote(Long id, int statusValue, String notes) {
+        Order order = orderRepository.getReferenceById(id);
+        order.setStatus(status[statusValue]);
+        order.setNotes(notes);
+        return orderRepository.save(order);
     }
+
+
+
 }

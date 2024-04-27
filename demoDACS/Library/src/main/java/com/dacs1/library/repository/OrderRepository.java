@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    @Query(value = "select * from orders order by order_id desc", nativeQuery = true)
+    List<Order> findAllOrderByIdDesc();
 
     @Query(value = "select * from orders o where o.customer_id = :id and is_cancel = 0", nativeQuery = true)
     List<Order> findAllByCustomerId(@Param("id") Long id);

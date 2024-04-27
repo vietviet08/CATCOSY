@@ -10,9 +10,12 @@ import java.util.List;
 
 public interface OrderService {
 
+
     Order addOrder(Cart cart, Order order) throws ParseException;
 
     List<Order> findAllOrder();
+
+    List<Order> findAllOrderByIdDesc();
 
     List<Order> finAllOrderByCustomerId(Customer customer);
 
@@ -26,6 +29,6 @@ public interface OrderService {
 
     Order cancelOrderForCustomer(Long id);
 
-    Order changeStatus(Long id);
+    Order changeStatusAndNote(Long id, int statusValue, String notes);
 
 }
