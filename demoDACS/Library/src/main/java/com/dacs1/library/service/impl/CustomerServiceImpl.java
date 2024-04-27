@@ -1,6 +1,7 @@
 package com.dacs1.library.service.impl;
 
 import com.dacs1.library.dto.CustomerDto;
+import com.dacs1.library.enums.Provider;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.repository.CustomerRepository;
 import com.dacs1.library.repository.RoleRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -24,15 +26,32 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByUsername(username);
     }
 
+
     @Override
     public Customer save(CustomerDto customerDto) {
         return customerRepository.save(toEntity(customerDto));
     }
 
+
     @Override
     public Customer updateCustomer(Customer customer) {
 
         return customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer processOAuthLogin(String username, String email) {
+
+        Customer customer = customerRepository.findByUsername(username);
+        if (customer == null) {
+            Customer c = new Customer();
+            c.setUsername(username);
+            c.setRoles(Arrays.asList(roleRepository.findByName("CUSTOMER")));
+            c.setEmail(email);
+            c.setProvider(Provider.google.name());
+            return customerRepository.save(customer);
+        }
+        return null;
     }
 
     private CustomerDto toDto(Customer customer) {
@@ -64,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customerDto.getSex().equals("Male")) customer.setSex(1);
         else customer.setSex(0);
         customer.setRoles(Arrays.asList(roleRepository.findByName("CUSTOMER")));
-
+        customer.setProvider(Provider.local.name());
         return customer;
     }
 

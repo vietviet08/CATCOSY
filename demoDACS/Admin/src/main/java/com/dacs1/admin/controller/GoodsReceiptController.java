@@ -11,7 +11,7 @@ public class GoodsReceiptController {
     @GetMapping("/goods-receipt")
     public String  goodsReceiptPage(){
 
-        
+
 
         return "goods-receipt";
     }
