@@ -3,6 +3,7 @@ package com.dacs1.customer.controller;
 import com.dacs1.library.dto.CustomerDto;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.service.CustomerService;
+import com.dacs1.library.service.MailService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +28,9 @@ public class LoginController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private MailService mailService;
+
     @GetMapping({"/login", "/register"})
     public String loginPage(Model model) {
         model.addAttribute("title", "Login or Register");
@@ -38,6 +42,14 @@ public class LoginController {
     public String forgotPassword(Model model) {
         model.addAttribute("title", "Forgot password");
         return "forgot-password";
+    }
+
+    @GetMapping("/send-mail-test")
+    public String sendMailTest(){
+
+
+        mailService.testSendMail();
+        return "redirect:/shop";
     }
 
     @PostMapping("/do-register")

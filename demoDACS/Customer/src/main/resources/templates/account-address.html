@@ -43,7 +43,7 @@
 
 
         <div class="right-page col-12 col-sm-12 col-lg-8">
-            <form>
+            <form th:action="@{/address}" method="post">
                 <h4 class="title">DELIVERY ADDRESS</h4>
 
                 <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
@@ -61,22 +61,22 @@
 
                 <div>
                     <select class="form-control form-select form-select-sm mb-3" id="city"
-                            aria-label=".form-select-sm" onchange="getDistricts(event)">
-                        <option value="" selected>Select province or city</option>
+                            aria-label=".form-select-sm" onchange="getDistricts(event)" name="city">
+                        <option value="" th:selected="${citySelect == null}">Select province or city</option>
                     </select>
 
                     <select class=" form-control form-select form-select-sm mb-3" id="district"
-                            aria-label=".form-select-sm" onchange="getWards(event)">
+                            aria-label=".form-select-sm" onchange="getWards(event)" name="district">
                         <option value="" selected>Select district</option>
                     </select>
 
-                    <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                    <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm" name="commune">
                         <option value="" selected>Select ward and commune</option>
                     </select>
                 </div>
 
                 <label for="addressDetail" style="margin-top: 10px">Address detail</label>
-                <input class="form-control" id="addressDetail" name="address" type="text" placeholder="Address detail" th:value="${address}">
+                <input class="form-control" id="addressDetail" name="addressDetail" type="text" placeholder="Address detail" th:value="${address}">
 
 
                 <input class="submit" type="submit" value="SAVE CHANGE">

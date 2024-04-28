@@ -4,6 +4,15 @@
     z-index: 9999;
 }
 
+.user-detail-header{
+    padding-bottom: 10px;
+}
+
+.user-detail-header ul{
+    padding-left: 2rem;
+}
+
+
 footer{
     box-shadow: rgba(0,0,0,0.3) 0 1px 5px;
 }

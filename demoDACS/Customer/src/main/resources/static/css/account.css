@@ -36,6 +36,7 @@ select{
 .active{
     background-color: #eaecef;
     color: var(--primary-1);
+    box-shadow: rgba(0,0,0,0.3) 0 1px 5px;
 }
 
 .main-tool-bar  a{
@@ -64,6 +65,7 @@ select{
     background-color: black;
     color: #f7f7f7;
     transition: all 0.3s ease-in-out;
+    box-shadow: rgba(0,0,0,0.3) 0 1px 5px;
 }
 
 .right-page form .submit:hover{

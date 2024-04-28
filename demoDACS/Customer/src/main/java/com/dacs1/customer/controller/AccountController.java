@@ -99,9 +99,55 @@ public class AccountController {
         model.addAttribute("nameUser", customer.getFirstName() + " " + customer.getLastName());
         model.addAttribute("emailUser", customer.getEmail());
         model.addAttribute("phone", customer.getPhone());
-        model.addAttribute("address", customer.getAddressDetail());
+
+        String addressDetail = customer.getAddressDetail();
+        if (addressDetail != null) {
+            String[] address = addressDetail.split(" - ");
+
+            if (address.length > 1) {
+                String addressSelect = address[1];
+                String[] childAddress = addressSelect.split(", ");
+
+                model.addAttribute("citySelect", childAddress[0]);
+                model.addAttribute("districtSelect", childAddress[1]);
+                model.addAttribute("communeSelect", childAddress[2]);
+            }
+            model.addAttribute("address", address[0]);
+        }
 
         return "account-address";
+    }
+
+    @PostMapping("/address")
+    public String saveMyAddress(Principal principal, Model model,
+                                @RequestParam("phone") String phone,
+                                @RequestParam("addressDetail") String addressDetail,
+                                @RequestParam("city") String city,
+                                @RequestParam("district") String district,
+                                @RequestParam("commune") String commune) {
+
+        if (principal == null) return "redirect:/login";
+        Customer customer = customerService.findByUsername(principal.getName());
+        try {
+            String finishAddress = "";
+
+            if (city.isEmpty()) finishAddress = addressDetail;
+            else if (district.isEmpty()) finishAddress = addressDetail + " - " + city;
+            else if (commune.isEmpty()) finishAddress = addressDetail + " - " + city + ", " + district;
+            else finishAddress = addressDetail + " - " + city + ", " + district + ", " + commune;
+
+            customer.setPhone(phone);
+            customer.setAddressDetail(finishAddress);
+
+
+            customerService.updateCustomer(customer);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return "redirect:/address";
     }
 
 
