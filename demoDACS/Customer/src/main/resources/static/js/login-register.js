@@ -5,12 +5,12 @@ var eyeHide = document.querySelector('.hide-pass');
 function showPassword(){
     if (inputPassword.type === 'password') {
         inputPassword.type = 'text';
-        eyeShow.classList.add('hide');
-        eyeHide.classList.add('show');
+        eyeShow.classList.add('hide-password');
+        eyeHide.classList.add('show-password');
     } else {
         inputPassword.type = 'password';
-        eyeShow.classList.remove('hide');
-        eyeHide.classList.remove('show');
+        eyeShow.classList.remove('hide-password');
+        eyeHide.classList.remove('show-password');
     }
 }
 
@@ -23,20 +23,20 @@ function showPasswordRegister(){
         if (e.type === 'password') {
             e.type = 'text';
             eyeShow1.forEach((e) => {
-                e.classList.add('hide');
+                e.classList.add('hide-password');
             })
             eyeHide1.forEach((e) => {
-                e.classList.add('show');
+                e.classList.add('show-password');
             })
         } else {
             e.type = 'password';
             // eyeShow1.classList.remove('hide');
             // eyeHide1.classList.remove('show');
             eyeShow1.forEach((e) => {
-                e.classList.remove('hide');
+                e.classList.remove('hide-password');
             })
             eyeHide1.forEach((e) => {
-                e.classList.remove('show');
+                e.classList.remove('show-password');
             })
         }
 

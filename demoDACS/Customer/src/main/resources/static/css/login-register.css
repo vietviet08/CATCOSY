@@ -85,11 +85,11 @@ input:not(.input-email){
     display: none;
 }
 
-.hide{
+.hide-password{
     display: none;
 }
 
-.show{
+.show-password{
     display: block;
 }
 /*#eye:after{*/

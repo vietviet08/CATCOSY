@@ -44,13 +44,6 @@ public class LoginController {
         return "forgot-password";
     }
 
-    @GetMapping("/send-mail-test")
-    public String sendMailTest(){
-
-
-        mailService.testSendMail();
-        return "redirect:/shop";
-    }
 
     @PostMapping("/do-register")
     public String doRegister(@Valid @ModelAttribute("customer") CustomerDto customerDto, Model model, BindingResult result) {
@@ -76,6 +69,9 @@ public class LoginController {
                         customerService.save(customerDto);
                         model.addAttribute("customerDto", customerDto);
                         model.addAttribute("success", "Register successfully!");
+
+                        mailService.sendMailToCustomer(customerDto);
+
                         return "login_register";
                     }else{
                         model.addAttribute("customerDto", customerDto);

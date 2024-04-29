@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface CustomerService {
     Customer findByUsername(String username);
 
+    CustomerDto findByUsernameDto(String username);
 
     Customer save(CustomerDto customerDto);
 

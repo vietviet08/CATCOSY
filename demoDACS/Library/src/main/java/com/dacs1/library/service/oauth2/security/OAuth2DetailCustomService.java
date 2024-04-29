@@ -4,6 +4,7 @@ import com.dacs1.library.model.Customer;
 import com.dacs1.library.repository.CustomerRepository;
 import com.dacs1.library.repository.RoleRepository;
 import com.dacs1.library.service.CustomerService;
+import com.dacs1.library.service.MailService;
 import com.dacs1.library.service.oauth2.OAuth2UserDetailFactory;
 import com.dacs1.library.service.oauth2.OAuth2UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,13 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
     private CustomerRepository customerRepository;
 
     @Autowired
+    private CustomerService customerService;
+
+    @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -66,6 +73,7 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
             customerDetail = updateOAuth2Customer(customerDetail, oAuth2UserDetails);
         } else {
             customerDetail = createNewOAuth2Customer(userRequest, oAuth2UserDetails);
+            mailService.sendMailToCustomer(customerService.findByUsernameDto(customerDetail.getUsername()));
         }
 
 

@@ -20,14 +20,11 @@ public class MailSenderConfig {
     @Value("${spring.mail.port}")
     private int port;
 
-
     @Value("${spring.mail.username}")
     private String username;
 
-
     @Value("${spring.mail.password}")
     private String password;
-
 
     @Value("${spring.mail.properties.mail.smtp.auth}")
     private String auth;
@@ -37,7 +34,6 @@ public class MailSenderConfig {
 
     @Value("${spring.mail.properties.mail.debug}")
     private String debug;
-
 
     @Value("${spring.mail.protocol}")
     private String protocol;

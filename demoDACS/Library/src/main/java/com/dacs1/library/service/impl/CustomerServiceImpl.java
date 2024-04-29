@@ -26,6 +26,11 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByUsername(username);
     }
 
+    @Override
+    public CustomerDto findByUsernameDto(String username) {
+        return toDto(customerRepository.findByUsername(username));
+    }
+
 
     @Override
     public Customer save(CustomerDto customerDto) {
@@ -64,7 +69,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerDto.setPhone(customer.getPhone());
         customerDto.setEmail(customer.getEmail());
 //        customerDto.setBirthDay(customer.getBirthDay());
-        if (customer.getSex() == 0) customerDto.setSex("Female");
+        if(customer.getSex() != null) if (customer.getSex() == 0) customerDto.setSex("Female");
         else customerDto.setSex("Male");
 
         return customerDto;

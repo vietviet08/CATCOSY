@@ -47,6 +47,6 @@ public class OAuth2FacebookUser extends OAuth2UserDetails {
 
     private String[] nameUser(){
         String fullName = (String) attributes.get("name");
-        return fullName.split(" ");
+        return fullName.split(" ", 1);
     }
 }

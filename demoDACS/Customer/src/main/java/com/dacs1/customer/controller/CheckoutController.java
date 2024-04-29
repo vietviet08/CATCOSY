@@ -5,6 +5,7 @@ import com.dacs1.library.model.CartItem;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.model.Order;
 import com.dacs1.library.service.CustomerService;
+import com.dacs1.library.service.MailService;
 import com.dacs1.library.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.convert.JMoleculesConverters;
@@ -26,6 +27,9 @@ public class CheckoutController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private MailService mailService;
 
 
     @GetMapping("/checkout")
@@ -62,6 +66,7 @@ public class CheckoutController {
         if (principal == null) return "redirect:/login_register";
         try {
             orderService.addOrder(customerService.findByUsername(principal.getName()).getCart(), order);
+            mailService.sendMailOrderToCustomer(customerService.findByUsername(principal.getName()), order);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
