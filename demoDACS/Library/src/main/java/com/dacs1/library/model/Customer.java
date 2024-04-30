@@ -66,4 +66,7 @@ public class Customer {
 
     private String provider;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
 }

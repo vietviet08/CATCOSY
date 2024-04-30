@@ -127,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.getReferenceById(id);
         order.setCancel(true);
 
-        order.setStatus(status[4]);
+        order.setStatus(status[3]);
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");

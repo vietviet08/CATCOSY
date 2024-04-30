@@ -18,4 +18,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 //    @Query(value = "select * from customers where idoath2 = :idOAth2 and provider = :provider", nativeQuery = true)
     Optional<Customer> findByIdOAuth2AndProvider( String idOAuth2, String provider);
 
+    Customer findByResetPasswordToken(String resetPasswordToken);
+
+
+    Customer findByEmail(String email);
+
 }

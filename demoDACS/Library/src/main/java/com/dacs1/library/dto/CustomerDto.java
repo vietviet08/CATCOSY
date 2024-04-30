@@ -39,4 +39,8 @@ public class CustomerDto {
 
     private String sex;
 
+    private String provider;
+
+    private String resetPasswordToken;
+
 }

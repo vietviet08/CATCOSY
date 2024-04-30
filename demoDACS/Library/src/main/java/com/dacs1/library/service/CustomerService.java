@@ -12,8 +12,14 @@ public interface CustomerService {
 
     Customer save(CustomerDto customerDto);
 
-
     Customer updateCustomer(Customer customer);
 
     Customer processOAuthLogin(String username, String email);
+
+
+    CustomerDto findByResetPasswordToken(String token);
+
+    void updateResetPasswordToken(String email, String token);
+
+    void updatePassword(CustomerDto customer, String password);
 }

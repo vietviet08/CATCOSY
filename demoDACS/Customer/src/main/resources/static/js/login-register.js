@@ -2,7 +2,7 @@ var inputPassword = document.querySelector(' .password-login');
 var eyeShow = document.querySelector('.show-pass');
 var eyeHide = document.querySelector('.hide-pass');
 
-function showPassword(){
+function showPassword() {
     if (inputPassword.type === 'password') {
         inputPassword.type = 'text';
         eyeShow.classList.add('hide-password');
@@ -18,7 +18,8 @@ function showPassword(){
 var inputPasswords = document.querySelectorAll('.pass-register');
 var eyeShow1 = document.querySelectorAll('.show-pass-1');
 var eyeHide1 = document.querySelectorAll('.hide-pass-1');
-function showPasswordRegister(){
+
+function showPasswordRegister() {
     inputPasswords.forEach((e) => {
         if (e.type === 'password') {
             e.type = 'text';
@@ -43,5 +44,13 @@ function showPasswordRegister(){
 
     })
 
+}
+
+function checkPasswordMatch(fieldConfirmPassword) {
+    if (fieldConfirmPassword.value !== $("#password").val()) {
+        fieldConfirmPassword.setCustomValidity("Passwords do not match!");
+    } else {
+        fieldConfirmPassword.setCustomValidity("");
+    }
 }
 

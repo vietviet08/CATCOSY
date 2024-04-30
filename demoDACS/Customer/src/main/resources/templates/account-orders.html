@@ -57,11 +57,11 @@
                 <table class="table" th:if="${orders.size() > 0}">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Order date</th>
-                        <th scope="col">Delivery date</th>
+                        <th scope="col">ID </th>
+                        <th scope="col" style="width: 130px">Order date</th>
+                        <th scope="col" style="width: 130px">Delivery date </th>
                         <th scope="col">Total price</th>
-                        <th scope="col">Shipping fee</th>
+                        <th scope="col" style="width: 130px">Shipping fee</th>
                         <th scope="col">Delivery address</th>
                         <th scope="col">Status</th>
                         <th scope="col" class="text-center">Action</th>
@@ -70,8 +70,8 @@
                     <tbody>
                     <tr th:each="order : ${orders}">
                         <th scope="row" th:text="${order.id}"></th>
-                        <td th:text="${order.orderDate}"></td>
-                        <td th:text="${order.deliveryDate}"></td>
+                        <td th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy')}"></td>
+                        <td th:text="${#dates.format(order.deliveryDate, 'dd-MM-yyyy')}"></td>
                         <td th:text="${order.totalPrice} " class="price-product"></td>
                         <td th:text="${order.shippingFee}" class="price-product"></td>
                         <td th:text="${order.deliveryAddress}"></td>

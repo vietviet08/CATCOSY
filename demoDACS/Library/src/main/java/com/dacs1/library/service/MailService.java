@@ -12,6 +12,6 @@ public interface MailService {
 
     void sendMailOrderToCustomer(Customer customer, Order order);
 
-    void sendMaiOTPToCustomer(Customer customer );
+    void sendMaiResetPasswordToCustomer(String email, String linkReset);
 
 }

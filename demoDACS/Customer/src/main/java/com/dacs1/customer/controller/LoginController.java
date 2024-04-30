@@ -38,13 +38,6 @@ public class LoginController {
         return "login_register";
     }
 
-    @GetMapping("/forgot-password")
-    public String forgotPassword(Model model) {
-        model.addAttribute("title", "Forgot password");
-        return "forgot-password";
-    }
-
-
     @PostMapping("/do-register")
     public String doRegister(@Valid @ModelAttribute("customer") CustomerDto customerDto, Model model, BindingResult result) {
         try {

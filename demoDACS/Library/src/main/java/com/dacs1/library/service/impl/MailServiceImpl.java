@@ -26,9 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -47,7 +45,6 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private OrderDetailService orderDetailService;
-
 
     @Value("${spring.mail.username}")
     private String email;
@@ -167,17 +164,49 @@ public class MailServiceImpl implements MailService {
             variable.put("deliveryAddress", order.getDeliveryAddress());
 
             helper.setText(thymeleafService.createContent("mail-ordered-customer", variable), true);
-            helper.setSubject("Welcome to our shop");
+            helper.setSubject("Your order in CATCOSY");
             javaMailSender.send(message);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void sendMaiOTPToCustomer(Customer customer) {
+    public void sendMaiResetPasswordToCustomer(String emailCustomer, String linkReset) {
+        try {
 
+            MimeMessage message = javaMailSender.createMimeMessage();
+
+            MimeMessageHelper helper = new MimeMessageHelper(
+                    message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name()
+            );
+
+            helper.setFrom(email);
+            helper.setTo(emailCustomer);
+
+            Map<String, Object> variable = new HashMap<>();
+//            variable.put("fullName", customer.getFirstName() + " " + customer.getLastName());
+//            variable.put("firstName", customer.getFirstName());
+//            variable.put("lastName", customer.getLastName());
+//            variable.put("username", customer.getUsername());
+            variable.put("email", emailCustomer);
+//            if (customer.getPhone() != null) variable.put("phone", customer.getPhone());
+
+            variable.put("linkReset", linkReset);
+
+            helper.setText(thymeleafService.createContent("mail-reset-password-customer", variable), true);
+            helper.setSubject("Reset password in CATCOSY");
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     private byte[] readAllBytes(InputStream inputStream) throws IOException {
         try {

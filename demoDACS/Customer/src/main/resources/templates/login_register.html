@@ -75,12 +75,19 @@
                             <i class="fa-regular fa-eye-slash hide-pass" onclick="showPassword()"></i>
                         </li>
 
-                        <li style="margin: 10px 0; display: flex; justify-content: flex-start">
-                            <div style="display: flex; align-content: center; justify-content: flex-start; align-items: center;">
-
-                                <input type="checkbox" name="remember-me"
-                                       id="remember" style="margin-right: 2px">
-                                <label for="remember">Remember me</label>
+                        <li style="margin: 10px 0; display: flex; align-items: center">
+                            <div style="width: 100%; display: flex; align-content: center; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <input type="checkbox" name="remember-me"
+                                           id="remember" style="margin-right: 2px">
+                                    <label for="remember">Remember me</label>
+                                </div>
+                                <div>
+                                    <a th:href="@{/forgot-password}"
+                                            style="text-decoration: none; color: #333333; background-color: transparent; border: none">
+                                        Forgot password?
+                                    </a>
+                                </div>
                             </div>
                         </li>
 
@@ -218,6 +225,40 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="forgot-password-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Forgot password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/send-otp}">
+                        <div class="mb-3">
+                            <label for="email-forgot" class="col-form-label">Message:</label>
+                            <input type="text" class="form-control" id="email-forgot" name="email-forgot" required>
+                        </div>
+                        <div class="mb-3">
+                            <div>
+                                <label for="otp" class="col-form-label">OTP:</label>
+                                <input type="text" class="form-control" id="otp" name="otp" required>
+                            </div>
+                            <div>
+                                <button type="submit">Get OTP</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--footer-->
@@ -228,6 +269,25 @@
 <div th:replace="~{fragments :: script}"></div>
 
 <script th:src="@{/js/login-register.js}"></script>
+
+<script>
+    // $('document').ready(function () {
+    //
+    //
+    //     $('.btnForgot').on('click', function (e) {
+    //         e.preventDefault();
+    //         // var href = $(this).attr('href');
+    //         // $.get(href, function (order, status) {
+    //         //
+    //         //
+    //         // });
+    //
+    //         var updateCategoryModal = new bootstrap.Modal(document.getElementById('forgot-password-modal'));
+    //         updateCategoryModal.show();
+    //
+    //     });
+    // });
+</script>
 
 
 </body>

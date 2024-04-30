@@ -7,9 +7,11 @@ import com.dacs1.library.repository.CustomerRepository;
 import com.dacs1.library.repository.RoleRepository;
 import com.dacs1.library.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private RoleRepository roleRepository;
+
 
     @Override
     public Customer findByUsername(String username) {
@@ -59,6 +62,31 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
+    @Override
+    public CustomerDto findByResetPasswordToken(String token) {
+        Customer customer = customerRepository.findByResetPasswordToken(token);
+        if (Objects.equals(customer.getProvider(), Provider.local))
+            return toDto(customer);
+        else return null;
+    }
+
+    @Override
+    public void updateResetPasswordToken(String email, String token) {
+        Customer customer = customerRepository.findByEmail(email);
+
+        customer.setResetPasswordToken(token);
+
+        customerRepository.save(customer);
+
+    }
+
+    @Override
+    public void updatePassword(CustomerDto customer, String password) {
+        customer.setPassword(password);
+        customer.setResetPasswordToken(null);
+        customerRepository.save(toEntity(customer));
+    }
+
     private CustomerDto toDto(Customer customer) {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setFirstName(customer.getFirstName());
@@ -69,8 +97,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerDto.setPhone(customer.getPhone());
         customerDto.setEmail(customer.getEmail());
 //        customerDto.setBirthDay(customer.getBirthDay());
-        if(customer.getSex() != null) if (customer.getSex() == 0) customerDto.setSex("Female");
+        if (customer.getSex() != null) if (customer.getSex() == 0) customerDto.setSex("Female");
         else customerDto.setSex("Male");
+        customerDto.setProvider(customerDto.getProvider());
+        customerDto.setResetPasswordToken(customer.getResetPasswordToken());
 
         return customerDto;
     }
@@ -89,6 +119,8 @@ public class CustomerServiceImpl implements CustomerService {
         else customer.setSex(0);
         customer.setRoles(Arrays.asList(roleRepository.findByName("CUSTOMER")));
         customer.setProvider(Provider.local.name());
+        customer.setResetPasswordToken(customerDto.getResetPasswordToken());
+
         return customer;
     }
 
