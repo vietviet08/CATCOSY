@@ -14,6 +14,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     Customer findByUsername(String username);
 
+    @Query(value = "select * from customers where username = :username and is_active = 1", nativeQuery = true)
+    Customer findByUsernameAndActive(String username);
+
 
 //    @Query(value = "select * from customers where idoath2 = :idOAth2 and provider = :provider", nativeQuery = true)
     Optional<Customer> findByIdOAuth2AndProvider( String idOAuth2, String provider);
@@ -21,6 +24,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Customer findByResetPasswordToken(String resetPasswordToken);
 
 
-    Customer findByEmail(String email);
+    Customer findByEmailAndProvider(String email, String provider);
 
 }

@@ -1,6 +1,7 @@
 package com.dacs1.customer.controller;
 
 import com.dacs1.library.dto.CustomerDto;
+import com.dacs1.library.enums.Provider;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.service.CustomerService;
 import com.dacs1.library.service.MailService;
@@ -58,15 +59,23 @@ public class LoginController {
                     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
                     Pattern pattern = Pattern.compile(emailRegex);
                     if (pattern.matcher(customerDto.getEmail()).matches()) {
-                        customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
-                        customerService.save(customerDto);
-                        model.addAttribute("customerDto", customerDto);
-                        model.addAttribute("success", "Register successfully!");
+                        CustomerDto customer1 = customerService.findByEmail(customerDto.getEmail(), Provider.local.name());
+                        if (customer1 == null) {
 
-                        mailService.sendMailToCustomer(customerDto);
+                            customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+                            customerService.save(customerDto);
+                            model.addAttribute("customerDto", customerDto);
+                            model.addAttribute("success", "Register successfully!");
 
-                        return "login_register";
-                    }else{
+                            mailService.sendMailToCustomer(customerDto);
+
+                            return "login_register";
+                        } else {
+                            model.addAttribute("customerDto", customerDto);
+                            model.addAttribute("message", "Email registered, please choose another email!");
+                            return "login_register";
+                        }
+                    } else {
                         model.addAttribute("customerDto", customerDto);
                         model.addAttribute("message", "Please enter email in correct format!");
                         return "login_register";

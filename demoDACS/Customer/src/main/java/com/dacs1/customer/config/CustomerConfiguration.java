@@ -1,5 +1,6 @@
 package com.dacs1.customer.config;
 
+import com.dacs1.customer.config.handler.CustomAuthenticationFailureHandler;
 import com.dacs1.customer.config.oauth2.CustomOauth2Service;
 import com.dacs1.customer.config.oauth2.CustomOauth2User;
 import com.dacs1.customer.config.oauth2.OAuth2LoginSuccessHandler;
@@ -53,6 +54,9 @@ public class CustomerConfiguration {
     private OAuth2FailureHandler oAuth2FailureHandler;
     /*new*/
 
+    @Autowired
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomerServiceConfig();
@@ -88,6 +92,7 @@ public class CustomerConfiguration {
                         login.loginPage("/login")
                                 .loginProcessingUrl("/do-login")
                                 .defaultSuccessUrl("/shop", true)
+                                .failureHandler(customAuthenticationFailureHandler)
                                 .permitAll()
                 )
                 .oauth2Login(oauth2 ->

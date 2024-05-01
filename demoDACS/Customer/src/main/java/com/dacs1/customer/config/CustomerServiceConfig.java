@@ -20,8 +20,9 @@ public class CustomerServiceConfig implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findByUsername(username);
+        Customer customer = customerRepository.findByUsernameAndActive(username);
         if(customer == null) throw new UsernameNotFoundException("Not found user!");
+        else if(!customer.isActive() ) throw  new UsernameNotFoundException("User is locked, please contact with admin!");
 
         return new User(customer.getUsername(),
                 customer.getPassword(),

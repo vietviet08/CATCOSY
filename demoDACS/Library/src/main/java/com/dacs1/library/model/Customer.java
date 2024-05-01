@@ -69,4 +69,6 @@ public class Customer {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
+    private boolean isActive = true;
+
 }

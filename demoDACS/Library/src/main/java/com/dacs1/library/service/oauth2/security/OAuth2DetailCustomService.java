@@ -1,5 +1,6 @@
 package com.dacs1.library.service.oauth2.security;
 
+import com.dacs1.library.dto.CustomerDto;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.repository.CustomerRepository;
 import com.dacs1.library.repository.RoleRepository;
@@ -63,6 +64,11 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
 
         if (customer.isPresent()) {
             customerDetail = customer.get();
+//
+//            CustomerDto customerDto = customerService.findByEmail(oAuth2UserDetails.getEmail());
+//
+//
+//            if(!customerDetail.getProvider().equals(customerDto.getProvider())) throw new RuntimeException("Email already exists, please create an account with another email!");
 
             if (!customerDetail.getProvider().equals(userRequest.getClientRegistration().getRegistrationId())) try {
                 throw new Exception();

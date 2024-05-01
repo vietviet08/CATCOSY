@@ -30,8 +30,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public CustomerDto finByUsernameIsActive(String username) {
+        return toDto(customerRepository.findByUsernameAndActive(username));
+    }
+
+    @Override
     public CustomerDto findByUsernameDto(String username) {
         return toDto(customerRepository.findByUsername(username));
+    }
+
+    @Override
+    public CustomerDto findByEmail(String email, String provider) {
+        return toDto(customerRepository.findByEmailAndProvider(email, provider));
     }
 
 
@@ -63,28 +73,32 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDto findByResetPasswordToken(String token) {
+    public Customer findByResetPasswordToken(String token) {
         Customer customer = customerRepository.findByResetPasswordToken(token);
-        if (Objects.equals(customer.getProvider(), Provider.local))
-            return toDto(customer);
+        if (customer == null) return null;
+        if (Objects.equals(customer.getProvider(), Provider.local.name()))
+            return customer;
         else return null;
     }
 
     @Override
-    public void updateResetPasswordToken(String email, String token) {
-        Customer customer = customerRepository.findByEmail(email);
+    public Customer updateResetPasswordToken(String email, String token) {
+        Customer customer = customerRepository.findByEmailAndProvider(email, Provider.local.name());
+
+        if(customer == null) return null;
 
         customer.setResetPasswordToken(token);
 
-        customerRepository.save(customer);
+       return customerRepository.save(customer);
 
     }
 
     @Override
-    public void updatePassword(CustomerDto customer, String password) {
-        customer.setPassword(password);
-        customer.setResetPasswordToken(null);
-        customerRepository.save(toEntity(customer));
+    public void updatePassword(Customer customer, String password) {
+        Customer customer1 = customerRepository.getReferenceById(customer.getId());
+        customer1.setPassword(password);
+        customer1.setResetPasswordToken(null);
+        customerRepository.save(customer1);
     }
 
     private CustomerDto toDto(Customer customer) {
@@ -101,6 +115,7 @@ public class CustomerServiceImpl implements CustomerService {
         else customerDto.setSex("Male");
         customerDto.setProvider(customerDto.getProvider());
         customerDto.setResetPasswordToken(customer.getResetPasswordToken());
+        customerDto.setActive(customer.isActive());
 
         return customerDto;
     }
@@ -120,7 +135,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setRoles(Arrays.asList(roleRepository.findByName("CUSTOMER")));
         customer.setProvider(Provider.local.name());
         customer.setResetPasswordToken(customerDto.getResetPasswordToken());
-
+        customer.setActive(customerDto.isActive());
         return customer;
     }
 

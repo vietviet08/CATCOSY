@@ -1,9 +1,11 @@
 package com.dacs1.customer.controller;
 
 import com.dacs1.library.dto.CustomerDto;
+import com.dacs1.library.model.Customer;
 import com.dacs1.library.service.CustomerService;
 import com.dacs1.library.service.MailService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.http.HttpResponse;
 import java.util.UUID;
 
 @Controller
@@ -34,22 +37,27 @@ public class ForgotPasswordController {
         return "forgot-password";
     }
 
-    @PostMapping("/forgot-password-post")
+    @PostMapping("/forgot-password")
     public String processForgotPassword(HttpServletRequest request, Model model) {
         String email = request.getParameter("email");
         String token = UUID.randomUUID().toString();
-        System.out.println(token);
         try {
-            customerService.updateResetPasswordToken(email, token);
+            Customer customer = customerService.updateResetPasswordToken(email, token);
+
+            if (customer == null) {
+                model.addAttribute("error", "Email not found please login with Google or Facebook!");
+                return "forgot-password";
+            }
             String siteURL = request.getRequestURL().toString();
             String url = siteURL.replace(request.getServletPath(), "");
             String resetPasswordLink = url + "/reset-password?token=" + token;
-            mailService.sendMaiResetPasswordToCustomer(email, resetPasswordLink);
-
             model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
 
+            mailService.sendMaiResetPasswordToCustomer(email, resetPasswordLink);
+
         } catch (Exception ex) {
-            model.addAttribute("error", ex.getMessage());
+
+            model.addAttribute("error", "Error from server!");
             ex.printStackTrace();
         }
         return "forgot-password";
@@ -59,23 +67,24 @@ public class ForgotPasswordController {
     public String resetPassword(@RequestParam("token") String token, Model model) {
         model.addAttribute("title", "Reset password");
 
-        if (token == null) return "404";
+        if (token.equals("")) return "404";
 
-        CustomerDto customerDto = customerService.findByResetPasswordToken(token);
+
+        Customer customerDto = customerService.findByResetPasswordToken(token);
 
         if (customerDto == null) return "404";
 
-
+        model.addAttribute("token", token);
         return "reset-password";
     }
 
-    @PostMapping("/reset-password-post")
+    @PostMapping("/reset-password")
     public String processResetPassword(@RequestParam("token") String token, @RequestParam("password") String password) {
-        CustomerDto customerDto = customerService.findByResetPasswordToken(token);
+        Customer customer = customerService.findByResetPasswordToken(token);
         String finalPassword = bCryptPasswordEncoder.encode(password);
 
-        if (customerDto != null) customerService.updatePassword(customerDto, finalPassword);
+        if (customer != null) customerService.updatePassword(customer, finalPassword);
 
-        return "login_register";
+        return "redirect:/login";
     }
 }

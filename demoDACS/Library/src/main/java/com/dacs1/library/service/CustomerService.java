@@ -8,7 +8,11 @@ import java.util.Optional;
 public interface CustomerService {
     Customer findByUsername(String username);
 
+    CustomerDto finByUsernameIsActive(String username);
+
     CustomerDto findByUsernameDto(String username);
+
+    CustomerDto findByEmail(String email, String provider);
 
     Customer save(CustomerDto customerDto);
 
@@ -17,9 +21,9 @@ public interface CustomerService {
     Customer processOAuthLogin(String username, String email);
 
 
-    CustomerDto findByResetPasswordToken(String token);
+    Customer findByResetPasswordToken(String token);
 
-    void updateResetPasswordToken(String email, String token);
+    Customer updateResetPasswordToken(String email, String token);
 
-    void updatePassword(CustomerDto customer, String password);
+    void updatePassword(Customer customer, String password);
 }
