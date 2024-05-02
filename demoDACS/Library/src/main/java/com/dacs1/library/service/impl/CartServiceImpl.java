@@ -46,8 +46,9 @@ public class CartServiceImpl implements CartService {
             cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
             cartItem.setSize(size);
-            cartItem.setUnitPrice(product.getCostPrice());
-            cartItem.setTotalPrice(product.getCostPrice() * quantity);
+            double unitPrice = product.getCostPrice() - product.getSalePrice();
+            cartItem.setUnitPrice(unitPrice);
+            cartItem.setTotalPrice(unitPrice * quantity);
             cartItems.add(cartItem);
             cartItemRepository.save(cartItem);
             cart.setTotalItem(cart.getTotalItem() + 1);
@@ -58,15 +59,17 @@ public class CartServiceImpl implements CartService {
                 cartItem.setProduct(product);
                 cartItem.setQuantity(quantity);
                 cartItem.setSize(size);
-                cartItem.setUnitPrice(product.getCostPrice());
-                cartItem.setTotalPrice(product.getCostPrice() * quantity);
+                double unitPrice = product.getCostPrice() - product.getSalePrice();
+                cartItem.setUnitPrice(unitPrice);
+                cartItem.setTotalPrice(unitPrice * quantity);
                 cartItems.add(cartItem);
                 cartItemRepository.save(cartItem);
                 cart.setTotalItem(cart.getTotalItem() + 1);
             } else {
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
                 cartItem.setSize(size);
-                cartItem.setTotalPrice(cartItem.getTotalPrice() + product.getCostPrice() * quantity);
+                double unitPrice = product.getCostPrice() - product.getSalePrice();
+                cartItem.setTotalPrice(cartItem.getTotalPrice() + unitPrice * quantity);
                 cartItemRepository.save(cartItem);
             }
 

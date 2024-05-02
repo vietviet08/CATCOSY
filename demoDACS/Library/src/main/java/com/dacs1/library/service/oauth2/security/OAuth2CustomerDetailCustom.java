@@ -22,11 +22,12 @@ public class OAuth2CustomerDetailCustom implements OAuth2User, UserDetails {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
 
-    public OAuth2CustomerDetailCustom(Long id, String userName, String password, List<GrantedAuthority> grantedAuthorityList) {
+    public OAuth2CustomerDetailCustom(Long id, String userName, String password, List<GrantedAuthority> grantedAuthorityList, boolean isEnabled) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.grantedAuthorityList = grantedAuthorityList;
+        this.isEnabled = isEnabled;
     }
 
     @Override

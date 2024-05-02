@@ -188,9 +188,19 @@
                             </div>
                             <div class="card__name-price">
                                 <div class="name-product" th:text="${product.name}"></div>
-                                <div class="price-product" th:text="${product.costPrice}"></div>
+                                <div class="container-price-product" >
+                                    <div class="have-sale-product d-flex align-items-center" th:if="${product.getSalePrice() > 0}" >
+                                        <div class="sale-price price-product"
+                                             th:text="${product.costPrice - product.salePrice}"></div>
+                                        <div class="root-price price-product" th:text="${product.costPrice}"
+                                             style="text-decoration: line-through; color: #858E96"></div>
+                                    </div>
+                                    <div class="no-sale-product price-product" th:if="${product.getSalePrice() == 0.0}"
+                                         th:text="${product.getCostPrice()}"></div>
+                                </div>
                             </div>
                         </form>
+                        <div class="tag-sale-product d-flex justify-content-center align-items-center" th:if="${product.salePrice > 0}" th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}"></div>
                     </a>
                 </div>
             </div>

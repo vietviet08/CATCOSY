@@ -28,6 +28,10 @@ public class Admin {
 
     private String password;
 
+    private String email;
+
+    private String phone;
+
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;

@@ -45,8 +45,24 @@
             <div class="product-information">
                 <h2 style="font-weight: 600" th:text="${product.name}"></h2>
                 <p style="font-size: 14px" th:text="'CP: '+  ${product.id}"></p>
-                <span class="price-product" style="font-weight: bold; font-size: 24px"
-                      th:text="${product.costPrice}"></span>
+                <div>
+                    <div th:if="${product.salePrice > 0}" class="d-flex align-items-center">
+
+                        <div class="child-have-sale box-percent-product" th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}"></div>
+
+                <span class="price-product child-have-sale" style="font-weight: bold; font-size: 24px"
+                      th:text="${product.costPrice - product.salePrice}"></span>
+                        <span class="price-product child-have-sale"
+                              style="font-weight: bold; font-size: 20px; color: #858E96; text-decoration: line-through"
+                              th:text="${product.costPrice}"></span>
+                    </div>
+                    <div th:if="${product.salePrice == 0.0}">
+                        <span class="price-product" style="font-weight: bold; font-size: 24px"
+                              th:text="${product.costPrice}"></span>
+                    </div>
+
+
+                </div>
             </div>
             <hr/>
             <form th:action="@{/add-to-cart}" method="post">

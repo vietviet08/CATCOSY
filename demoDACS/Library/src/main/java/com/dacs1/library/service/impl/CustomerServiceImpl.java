@@ -4,11 +4,13 @@ import com.dacs1.library.dto.CustomerDto;
 import com.dacs1.library.enums.Provider;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.repository.CustomerRepository;
+import com.dacs1.library.repository.OrderRepository;
 import com.dacs1.library.repository.RoleRepository;
 import com.dacs1.library.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +24,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
 
     @Override
@@ -129,8 +134,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public Customer deleteCustomer(String username) {
-        return null;
+        Customer customer = customerRepository.findByUsername(username);
+        orderRepository.deleteAllByIDCustomer(customer.getId());
+        customerRepository.delete(customer);
+        return customerRepository.findByUsername(username);
     }
 
     private CustomerDto toDto(Customer customer) {

@@ -2,6 +2,7 @@ package com.dacs1.library.repository;
 
 import com.dacs1.library.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -17,5 +18,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "select * from orders o where o.order_id = :id and is_accept = 1", nativeQuery = true)
     Order checkAcceptAdmin(Long id);
+
+    @Query(value = "delete from orders where customer_id = :id", nativeQuery = true)
+    @Modifying
+    void deleteAllByIDCustomer(@Param("id") Long id);
 
 }

@@ -66,7 +66,7 @@
                     <td th:text="${order.notes}"></td>
                     <td th:text="${order.status}"></td>
                     <td>
-                        <a th:if="${order.accept == false && order.cancel == false}"
+                        <a th:if="${(order.accept == false && order.cancel == false) && (!#strings.equals(order.status, 'Goods received'))}"
                            th:href="@{/accept-order(id = ${order.id})}">
                             <div class="btn btn-success">
                                 Accept
@@ -79,11 +79,21 @@
                         </a>
 
 
-                        <a href="#" th:if="${order.accept == true}" th:href="@{/cancel-order(id = ${order.id})}">
+                        <a  th:if="${order.accept == true && !#strings.equals(order.status, 'Goods received')}" th:href="@{/cancel-order(id = ${order.id})}">
                             <div class="btn btn-warning">
                                 Cancel
                             </div>
                         </a>
+
+
+
+
+                        <a th:if="${#strings.equals(order.status, 'Goods received')}" >
+                            <button class="btn btn-warning" disabled>
+                                Cancel
+                            </button>
+                        </a>
+
                     </td>
                     <td>
                         <div class="action-order d-flex justify-content-between" style="padding: 10px 0 ">
@@ -240,6 +250,8 @@
                 var href = $(this).attr('href');
                 $.get(href, function (order, status) {
                     $('.idOder').empty();
+
+                    $('#status-select').empty();
 
                     $('#notes-text').val(order.notes)
 

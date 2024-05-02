@@ -73,7 +73,8 @@
                                     </div>
 
                                     <div class="box-price-product">
-                                        <p class="price-product" th:text="${product.product.costPrice}"></p>
+                                        <p class="price-product mx-1" th:text="${product.unitPrice}"></p>
+                                        <p class="price-product mx-1" th:if="${product.product.salePrice > 0}" th:text="${product.product.costPrice}" style="text-decoration: line-through; color: #858E96"></p>
                                     </div>
 
                                     <div class="box-quantity-product">

@@ -589,6 +589,24 @@ img {
     color: var(--primary-1);
 }
 
+
+.have-sale-product .price-product{
+    margin: 0 8px;
+}
+
+.tag-sale-product{
+    position: absolute;
+    content: "";
+    top: 10px;
+    left: 12px;
+    width: 55px;
+    height: 25px;
+    background-color: rgba(1, 1, 1, 0.3);
+    z-index: 99;
+    color: #f7f7f7;
+    font-size: 14px;
+}
+
 /*end-card*/
 
 

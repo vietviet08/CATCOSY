@@ -22,7 +22,7 @@ public class CustomerController {
     @GetMapping("/customers")
     public String listAllCustomer(Model model) {
         List<CustomerDto> customerDtoList = customerService.getAllCustomer();
-        model.addAttribute("Title", "Customers");
+        model.addAttribute("title", "Customers");
         model.addAttribute("customers", customerDtoList);
 
         return "customer";
@@ -35,20 +35,28 @@ public class CustomerController {
     }
 
     @PostMapping("/lock-customer")
-    public String lockCustomer(@RequestParam("usernameCustomerNeedLock") String usernameCustomerNeed) {
+    public String lockCustomer(@RequestParam("usernameCustomerNeedLock") String usernameCustomerNeed, Model model) {
         customerService.lockCustomer(usernameCustomerNeed);
+        model.addAttribute("success", "Lock customer successfully");
         return "redirect:/customers";
     }
 
     @PostMapping("/unlock-customer")
-    public String unlockCustomer(@RequestParam("usernameCustomer") String username){
+    public String unlockCustomer(@RequestParam("usernameCustomer") String username, Model model){
         customerService.unlockCustomer(username);
+        model.addAttribute("success", "Unlock customer successfully");
         return "redirect:/customers";
     }
 
     @PostMapping("/delete-customer")
-    public String deleteCustomer(@RequestParam("usernameCustomerNeedDelete") String usernameCustomerNeed) {
-        customerService.deleteCustomer(usernameCustomerNeed);
+    public String deleteCustomer(@RequestParam("usernameCustomerNeedDelete") String usernameCustomerNeed, Model model) {
+       Customer customer = customerService.deleteCustomer(usernameCustomerNeed);
+       if(customer == null) {
+           model.addAttribute("success", "Delete customer successfully");
+       }else{
+           model.addAttribute("error", "Delete customer failure, may be error from server");
+       }
+
         return "redirect:/customers";
     }
 

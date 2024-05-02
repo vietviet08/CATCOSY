@@ -36,6 +36,21 @@
 /*    --zoom: 2;*/
 /*}*/
 
+.box-percent-product{
+    width: 55px;
+    height: 25px;
+    background-color: rgba(1, 1, 1, 0.3);
+    color: #f7f7f7;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.child-have-sale{
+    margin-right: 10px;
+}
+
 
 .list-size a {
     border: 1px solid #333;

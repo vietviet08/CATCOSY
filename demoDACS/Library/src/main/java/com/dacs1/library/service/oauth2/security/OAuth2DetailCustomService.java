@@ -89,7 +89,8 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
                 customerDetail.getPassword(),
                 customerDetail.getRoles()
                         .stream()
-                        .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
+                        .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()),
+                customerDetail.isActive());
     }
 
     private Customer createNewOAuth2Customer(OAuth2UserRequest userRequest, OAuth2UserDetails oAuth2UserDetails) {

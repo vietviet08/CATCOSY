@@ -82,6 +82,11 @@ h2 {
     font-size: 18px;
     font-weight: 600;
     transition: all 0.3s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 .box-inf-product .name-product p a:hover{
@@ -108,6 +113,8 @@ h2 {
     color: #afafaf;
     font-size: 16px;
 }
+
+
 
 .inf-product-cart .box-price-product {
     width: 20%;
@@ -215,7 +222,17 @@ h2 {
     border: #e91e63;
 }
 
+@media only screen and ( max-width: 1200px){
+    .box-price-product {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
 @media only screen and ( max-width: 768px){
+
+
     .box-inf-product .name-product p a{
         font-size: 16px;
     }
@@ -243,6 +260,8 @@ h2 {
     .left-total-price p, .right-total-price p{
         font-size: 16px;
     }
+
+
 }
 
 
