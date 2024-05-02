@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Date;
 import java.util.Collection;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -42,8 +42,7 @@ public class Customer {
 
     private String email;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "birth_day")
+    @Column(name = "birth_day", columnDefinition = "TIMESTAMP")
     private Date birthDay;
 
     @Column(length = 10)

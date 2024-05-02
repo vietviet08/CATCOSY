@@ -14,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerDto {
+    private Long id;
 
     @Size(min = 3, max = 15, message = "First name from 3 to 15 characters")
     private String firstName;
@@ -38,6 +39,8 @@ public class CustomerDto {
     private String birthDay;
 
     private String sex;
+
+    private String addressDetail;
 
     private String provider;
 

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+
+<style>
+
+    .nothing-orders {
+        padding: 10px 10px;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .action-order a div i {
+        margin: 0 5px;
+        font-size: 18px;
+    }
+</style>
+
+<body>
+
+<div th:replace="~{fragments ::  spinner}"></div>
+
+
+<div th:replace="~{fragments ::  sidebar}"></div>
+
+<div class="content position-relative">
+    <!-- Navbar Start -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <!-- Navbar End-->
+
+    <div class="container">
+        <!--        <div class="d-flex justify-content-between align-items-center">-->
+        <table class="table table-bordered table-responsive">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Image</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Birth day</th>
+                <th scope="col">Gentle</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address Detail</th>
+                <th scope="col">Provider</th>
+                <th scope="col">Action</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${customers}">
+
+                <th scope="row" th:text="${customer.id}"></th>
+                <th scope="row"></th>
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td th:text="${customer.username}" class="price-col"></td>
+                <td th:text="${customer.birthDay}" class="price-col"></td>
+                <td th:text="${customer.sex}"></td>
+                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.phone}"></td>
+                <td th:text="${customer.addressDetail}"></td>
+                <td th:text="${customer.provider}"></td>
+                <td>
+                    <form th:action="@{/unlock-customer}" method="post">
+                        <a class="btn-unlock" th:if="${customer.active == false}">
+                            <input name="usernameCustomer" type="hidden" th:value="${customer.username}">
+                            <button type="submit" class="btn btn-success">
+                                Unlock
+                            </button>
+                        </a>
+                    </form>
+
+                    <a class="btn-lock" th:if="${customer.active == true}"
+                       th:href="@{/find-customer(username = ${customer.username})}">
+                        <div class="btn btn-warning">
+                            Lock
+                        </div>
+                    </a>
+
+                    <a class="btn-delete" th:href="@{/find-customer(username = ${customer.username})}">
+                        <div class="btn btn-danger">
+                            Delete
+                        </div>
+                    </a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--        </div>-->
+
+
+        <!--modal lock user-->
+        <div class="modal fade" id="lock-user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-lock-user-title">Lock user</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/lock-customer}" method="post">
+                        <div class="modal-body">
+                            <!--                            <div class="username-customer"></div>-->
+
+                            <input name="usernameCustomerNeedLock" type="hidden" id="usernameCustomerNeedLock">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <h3>Are you sure to block this user?</h3>
+                                <img th:src="@{/img/pngwing.com.png}" alt="" style="width: 100px">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-warning">Lock</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--modal delete user-->
+        <div class="modal fade" id="delete-user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-edit-status-title">Delete user</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/delete-customer}" method="post">
+                        <div class="modal-body">
+                            <!--                            <div class="username-customer"></div>-->
+                            <input name="usernameCustomerNeedDelete" type="hidden" id="usernameCustomerNeedDelete">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+
+                                <h2>Are you sure to delete this user?</h2>
+                                <img th:src="@{/img/Warning-icon.-The-attention-icon.png}" alt="" style="width: 100px">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
+
+<div th:replace="~{fragments :: toast}"></div>
+
+
+<div th:replace="~{fragments :: script}">
+</div>
+
+
+<script th:replace="~{fragments :: toastScript}"></script>
+
+<script th:inline="javascript">
+
+
+    $('document').ready(function () {
+
+        $('.btn-lock').on('click', function (e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+            $.get(href, function (customer, status) {
+                $('#usernameCustomerNeedLock').val(customer.username);
+                // $('.username-customer').append('<input name="usernameCustomerNeed" type="hidden" value=" ' + customer.username + '">')
+                console.log(customer.username);
+            });
+
+            var updateCategoryModal = new bootstrap.Modal(document.getElementById('lock-user'));
+            updateCategoryModal.show();
+        });
+
+        $('.btn-delete').on('click', function (e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+            $.get(href, function (customer, status) {
+                $('#usernameCustomerNeedDelete').val(customer.username);
+                // $('.username-customer').append('<input name="usernameCustomerNeed" type="hidden" value=" ' + customer.username + '">')
+
+            });
+
+            var updateCategoryModal = new bootstrap.Modal(document.getElementById('delete-user'));
+            updateCategoryModal.show();
+        });
+
+    });
+
+</script>
+</body>
+
+
+</html>

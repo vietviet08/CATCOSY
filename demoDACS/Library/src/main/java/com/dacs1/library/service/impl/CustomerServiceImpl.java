@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -23,6 +23,19 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private RoleRepository roleRepository;
 
+
+    @Override
+    public List<CustomerDto> getAllCustomer() {
+        List<Customer> customers = customerRepository.findAll();
+
+        List<CustomerDto> customerDtoList = new ArrayList<>();
+        for(Customer customer : customers){
+            customerDtoList.add(toDto(customer));
+
+        }
+
+        return customerDtoList;
+    }
 
     @Override
     public Customer findByUsername(String username) {
@@ -85,11 +98,11 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer updateResetPasswordToken(String email, String token) {
         Customer customer = customerRepository.findByEmailAndProvider(email, Provider.local.name());
 
-        if(customer == null) return null;
+        if (customer == null) return null;
 
         customer.setResetPasswordToken(token);
 
-       return customerRepository.save(customer);
+        return customerRepository.save(customer);
 
     }
 
@@ -101,8 +114,30 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(customer1);
     }
 
+    @Override
+    public Customer lockCustomer(String username) {
+        Customer customer = customerRepository.findByUsername(username);
+        customer.setActive(false);
+        return customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer unlockCustomer(String username) {
+        Customer customer = customerRepository.findByUsername(username);
+        customer.setActive(true);
+        return customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer deleteCustomer(String username) {
+        return null;
+    }
+
     private CustomerDto toDto(Customer customer) {
+        if (customer == null) return null;
+
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(customer.getId());
         customerDto.setFirstName(customer.getFirstName());
         customerDto.setLastName(customer.getLastName());
         customerDto.setUsername(customer.getUsername());
@@ -110,15 +145,23 @@ public class CustomerServiceImpl implements CustomerService {
         customerDto.setCity(customer.getCity());
         customerDto.setPhone(customer.getPhone());
         customerDto.setEmail(customer.getEmail());
-//        customerDto.setBirthDay(customer.getBirthDay());
+
+        if(customer.getBirthDay() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            customerDto.setBirthDay(sdf.format(customer.getBirthDay()));
+        }
+
         if (customer.getSex() != null) if (customer.getSex() == 0) customerDto.setSex("Female");
         else customerDto.setSex("Male");
-        customerDto.setProvider(customerDto.getProvider());
+
+        customerDto.setAddressDetail(customer.getAddressDetail());
+        customerDto.setProvider(customer.getProvider());
         customerDto.setResetPasswordToken(customer.getResetPasswordToken());
         customerDto.setActive(customer.isActive());
 
         return customerDto;
     }
+
 
     private Customer toEntity(CustomerDto customerDto) {
         Customer customer = new Customer();
@@ -129,7 +172,17 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCity(customerDto.getCity());
         customer.setPhone(customerDto.getPhone());
         customer.setEmail(customerDto.getEmail());
-//        customer.setBirthDay(customerDto.getBirthDay());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(customerDto.getBirthDay());
+        try {
+            Date date = sdf.parse(customerDto.getBirthDay());
+            java.sql.Date birthDay = new java.sql.Date(date.getTime());
+            customer.setBirthDay(birthDay);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         if (customerDto.getSex().equals("Male")) customer.setSex(1);
         else customer.setSex(0);
         customer.setRoles(Arrays.asList(roleRepository.findByName("CUSTOMER")));
