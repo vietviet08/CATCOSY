@@ -4,7 +4,6 @@ import com.dacs1.library.dto.CustomerDto;
 import com.dacs1.library.model.Customer;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CustomerService {
     List<CustomerDto> getAllCustomer();
@@ -15,7 +14,9 @@ public interface CustomerService {
 
     CustomerDto findByUsernameDto(String username);
 
-    CustomerDto findByEmail(String email, String provider);
+    CustomerDto findByEmailAndProvider(String email, String provider);
+
+    CustomerDto findByEmail(String email);
 
     Customer save(CustomerDto customerDto);
 

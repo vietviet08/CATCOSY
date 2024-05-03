@@ -1,5 +1,3 @@
-
-
 fetch('https://xapi.leninn.com/api/cities?language=vi')
     .then(response => response.json())
     .then(data => {
@@ -51,5 +49,18 @@ function getDistricts(event) {
 
 function getWards(event) {
     fetchWards(event.target.value);
+}
+
+function showInfoBank() {
+
+    const checkBank = document.querySelector('#pay-bank');
+    const frameBank = document.querySelector('.my-bank');
+
+    if (checkBank.checked) {
+        frameBank.style.height = 'auto';
+    } else {
+        frameBank.style.height = '0';
+    }
+
 }
 

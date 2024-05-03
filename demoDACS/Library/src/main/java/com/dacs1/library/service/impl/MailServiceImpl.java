@@ -5,9 +5,8 @@ import com.dacs1.library.dto.OrderDetailDto;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.model.Order;
 import com.dacs1.library.model.OrderDetail;
-import com.dacs1.library.service.MailService;
-import com.dacs1.library.service.OrderDetailService;
-import com.dacs1.library.service.ThymeleafService;
+import com.dacs1.library.model.Voucher;
+import com.dacs1.library.service.*;
 import com.nimbusds.jose.util.IOUtils;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +44,12 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private OrderDetailService orderDetailService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private VoucherService voucherService;
 
     @Value("${spring.mail.username}")
     private String email;
@@ -188,13 +193,7 @@ public class MailServiceImpl implements MailService {
             helper.setTo(emailCustomer);
 
             Map<String, Object> variable = new HashMap<>();
-//            variable.put("fullName", customer.getFirstName() + " " + customer.getLastName());
-//            variable.put("firstName", customer.getFirstName());
-//            variable.put("lastName", customer.getLastName());
-//            variable.put("username", customer.getUsername());
             variable.put("email", emailCustomer);
-//            if (customer.getPhone() != null) variable.put("phone", customer.getPhone());
-
             variable.put("linkReset", linkReset);
 
             helper.setText(thymeleafService.createContent("mail-reset-password-customer", variable), true);
@@ -206,6 +205,46 @@ public class MailServiceImpl implements MailService {
         }
     }
 
+    @Override
+    public String sendMailVoucherToCustomer(String emailCustomer, Voucher voucher) {
+        try {
+            CustomerDto customer = customerService.findByEmail(email);
+            if (customer == null) return "Not found customer, email not registered!";
+
+            if (voucher.isUsed() || !voucher.getExpiryDate().after(new Date()) || !voucher.getForEmailCustomer().isEmpty())
+                return "Voucher has been used or expired or is reserved for a certain customer!";
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+
+            MimeMessageHelper helper = new MimeMessageHelper(
+                    message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name()
+            );
+
+            helper.setFrom(email);
+            helper.setTo(emailCustomer);
+
+            Map<String, Object> variable = new HashMap<>();
+            variable.put("email", emailCustomer);
+            variable.put("voucher", voucher);
+
+
+            helper.setText(thymeleafService.createContent("mail-voucher-customer", variable), true);
+            helper.setSubject("Your voucher in CATCOSY");
+
+            voucher.setForEmailCustomer(emailCustomer);
+            voucher.setUsageLimits(1);
+            voucherService.saveVoucher(voucher);
+
+            javaMailSender.send(message);
+            return "Send voucher to customer successfully!";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Send mail error maybe error from server!";
+        }
+    }
 
 
     private byte[] readAllBytes(InputStream inputStream) throws IOException {

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -23,12 +23,20 @@ public class Voucher {
 
     private Double price;
 
-    private Double applyProductPrice;
+    private int percentOfTotalPrice;
+
+    private Double minimumPrice;
+
+    private int minimumTotalProduct;
 
     private int usageLimits;
 
-    private Date expityDate;
+    private Date expiryDate;
 
-    private boolean isUsed;
+    private String forEmailCustomer;
+
+    private boolean isUsed = false;
+
+    private boolean isActivated = true;
 
 }

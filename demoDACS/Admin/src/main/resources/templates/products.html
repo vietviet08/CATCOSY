@@ -89,6 +89,7 @@
             <th scope="col">Name</th>
             <th scope="col">Category</th>
             <th scope="col">Price</th>
+            <th scope="col">Sale price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Image</th>
             <th scope="col">Update</th>
@@ -102,6 +103,7 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.category.name}"></td>
             <td class="price-col" th:text="${product.costPrice}"></td>
+            <td class="price-col" th:text="${product.salePrice}"></td>
             <td th:text="${product.quantity}"></td>
             <td class="text-center">
                 <img th:src="'data:image/jpeg;base64,'+ ${imagesMap.get(product.id)}" class="border rounded"

@@ -58,8 +58,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDto findByEmail(String email, String provider) {
+    public CustomerDto findByEmailAndProvider(String email, String provider) {
         return toDto(customerRepository.findByEmailAndProvider(email, provider));
+    }
+
+    @Override
+    public CustomerDto findByEmail(String email) {
+        return toDto(customerRepository.findByEmail(email));
     }
 
 
@@ -183,7 +188,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setEmail(customerDto.getEmail());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(customerDto.getBirthDay());
         try {
             Date date = sdf.parse(customerDto.getBirthDay());
             java.sql.Date birthDay = new java.sql.Date(date.getTime());

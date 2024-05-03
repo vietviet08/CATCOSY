@@ -14,10 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 @Controller
@@ -59,7 +56,7 @@ public class LoginController {
                     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
                     Pattern pattern = Pattern.compile(emailRegex);
                     if (pattern.matcher(customerDto.getEmail()).matches()) {
-                        CustomerDto customer1 = customerService.findByEmail(customerDto.getEmail(), Provider.local.name());
+                        CustomerDto customer1 = customerService.findByEmailAndProvider(customerDto.getEmail(), Provider.local.name());
                         if (customer1 == null) {
 
                             customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));

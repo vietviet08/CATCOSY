@@ -61,6 +61,7 @@
                         <th scope="col" style="width: 130px">Order date</th>
                         <th scope="col" style="width: 130px">Delivery date </th>
                         <th scope="col">Total price</th>
+                        <th scope="col">Discount voucher</th>
                         <th scope="col" style="width: 130px">Shipping fee</th>
                         <th scope="col">Delivery address</th>
                         <th scope="col">Status</th>
@@ -73,6 +74,7 @@
                         <td th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy')}"></td>
                         <td th:text="${#dates.format(order.deliveryDate, 'dd-MM-yyyy')}"></td>
                         <td th:text="${order.totalPrice} " class="price-product"></td>
+                        <td th:text="${order.discountPrice} " class="price-product"></td>
                         <td th:text="${order.shippingFee}" class="price-product"></td>
                         <td th:text="${order.deliveryAddress}"></td>
                         <td th:text="${order.status}"></td>

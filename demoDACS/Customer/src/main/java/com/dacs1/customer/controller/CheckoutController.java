@@ -7,13 +7,14 @@ import com.dacs1.library.model.Order;
 import com.dacs1.library.service.CustomerService;
 import com.dacs1.library.service.MailService;
 import com.dacs1.library.service.OrderService;
+import com.dacs1.library.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.convert.JMoleculesConverters;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.text.ParseException;
@@ -30,6 +31,9 @@ public class CheckoutController {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private VoucherService voucherService;
 
 
     @GetMapping("/checkout")
@@ -59,16 +63,34 @@ public class CheckoutController {
         return "checkout";
     }
 
+    @RequestMapping(value = "/checkout/check-voucher", method = {RequestMethod.GET, RequestMethod.PUT})
+    @ResponseBody
+    public String checkCartToVoucher(@RequestParam("codeVoucher") String codeVoucher,
+                                     @RequestParam("idCart") Long id,
+                                     Model model) {
+        try {
+            model.addAttribute("success", "Apply voucher successfully!");
+            double voucherAmount = voucherService.checkCartToApplyVoucher(codeVoucher, id);
+            return String.valueOf(voucherAmount);
+        } catch (Exception e) {
+            model.addAttribute("error", "Voucher not exist!");
+            e.printStackTrace();
+            return "0.0";
+        }
+    }
 
     @PostMapping("/process-checkout")
-    public String processCheckout(@ModelAttribute("orderInfo") Order order, Model model, Principal principal) {
+    public String processCheckout(@ModelAttribute("orderInfo") Order order,
+                                  @RequestParam("codeVoucherCompletePayment") String codeVoucherCompletePayment,
+                                  Model model, Principal principal) {
 
         if (principal == null) return "redirect:/login_register";
         try {
-            orderService.addOrder(customerService.findByUsername(principal.getName()).getCart(), order);
+            Order orderAdded = orderService.addOrder(customerService.findByUsername(principal.getName()).getCart(), order);
+            voucherService.applyVoucher(codeVoucherCompletePayment, orderAdded.getId());
             mailService.sendMailOrderToCustomer(customerService.findByUsername(principal.getName()), order);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return "redirect:/orders";

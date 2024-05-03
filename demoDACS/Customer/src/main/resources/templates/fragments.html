@@ -30,6 +30,51 @@
 </div>
 <!--Loader end-->
 
+<!--Toast start-->
+<div th:fragment="toast" class="position-fixed top-0 end-0 p-3" style="z-index: 9999999">
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${success}">
+        <div class="toast-header bg-success ">
+            <strong class="me-auto" style="color: white">Success</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${success}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${warning}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${warning}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${message}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${message}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${error}">
+        <div class="toast-header bg-danger ">
+            <strong class="me-auto" style="color: white">Error</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${error}">
+        </div>
+    </div>
+</div>
+<!--Toast end-->
+
+
 <!--Header start-->
 <header th:fragment="header" class="header d-flex flex-column">
     <div class="nav">

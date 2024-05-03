@@ -46,6 +46,38 @@ p{margin: 0}
     height: 15px;
 }
 
+.my-bank{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+}
+
+
+.my-bank p{
+    text-align: center;
+}
+
+
+
+.my-bank .qr-bank{
+    background: #858E96;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.more-about-bank p{
+    margin: 5px 0;
+}
+
+.show-info-bank{
+    height: 100%;
+}
+
 .information-customer {
     width: 100%;
 }
@@ -159,7 +191,7 @@ p{margin: 0}
 }
 
 .voucher input{
-    width: 80%;
+    /*width: 80%;*/
     height: 35px;
 }
 
@@ -172,6 +204,7 @@ p{margin: 0}
     padding: 0 20px;
     border-radius: 5px;
     color: white;
+    border: none;
 }
 
 .enter-voucher a{

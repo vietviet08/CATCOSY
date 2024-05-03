@@ -48,10 +48,11 @@
                 <div>
                     <div th:if="${product.salePrice > 0}" class="d-flex align-items-center">
 
-                        <div class="child-have-sale box-percent-product" th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}"></div>
+                        <div class="child-have-sale box-percent-product"
+                             th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}"></div>
 
-                <span class="price-product child-have-sale" style="font-weight: bold; font-size: 24px"
-                      th:text="${product.costPrice - product.salePrice}"></span>
+                        <span class="price-product child-have-sale" style="font-weight: bold; font-size: 24px"
+                              th:text="${product.costPrice - product.salePrice}"></span>
                         <span class="price-product child-have-sale"
                               style="font-weight: bold; font-size: 20px; color: #858E96; text-decoration: line-through"
                               th:text="${product.costPrice}"></span>
@@ -135,8 +136,8 @@
 
 <div class="container-product-same container d-flex justify-content-center " th:value="${productsSameCategory.size()}">
     <div th:each="product : ${productsSameCategory}" class="card border-0" style="cursor: pointer; margin: 0 10px">
-        <form th:action="@{/add-to-cart}" method="post">
-            <a th:href="@{/product-detail/{id} (id = ${product.id})}">
+        <a th:href="@{/product-detail/{id} (id = ${product.id})}">
+            <form th:action="@{/add-to-cart}" method="post">
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
@@ -159,10 +160,22 @@
                 </div>
                 <div class="card__name-price">
                     <div th:text="${product.name}" class="name-product"></div>
-                    <div th:text="${product.costPrice}" class="price-product"></div>
+                    <div class="container-price-product">
+                        <div class="have-sale-product d-flex align-items-center" th:if="${product.getSalePrice() > 0}">
+                            <div class="sale-price price-product"
+                                 th:text="${product.costPrice - product.salePrice}"></div>
+                            <div class="root-price price-product" th:text="${product.costPrice}"
+                                 style="text-decoration: line-through; color: #858E96"></div>
+                        </div>
+                        <div class="no-sale-product price-product" th:if="${product.getSalePrice() == 0.0}"
+                             th:text="${product.getCostPrice()}"></div>
+                    </div>
                 </div>
-            </a>
-        </form>
+            </form>
+            <div class="tag-sale-product d-flex justify-content-center align-items-center"
+                 th:if="${product.salePrice > 0}"
+                 th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}" style="left: 0"></div>
+        </a>
     </div>
 </div>
 

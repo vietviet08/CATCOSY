@@ -41,6 +41,7 @@
                     <th scope="col">Order Date</th>
                     <th scope="col">Delivery Date</th>
                     <th scope="col">Total Price</th>
+                    <th scope="col">Discount Voucher</th>
                     <th scope="col">Shipping fee</th>
                     <th scope="col">Customer</th>
                     <th scope="col">Delivery Address</th>
@@ -59,6 +60,7 @@
                     <td th:text="${order.orderDate}"></td>
                     <td th:text="${order.deliveryDate}"></td>
                     <td th:text="${order.totalPrice}" class="price-col"></td>
+                    <td th:text="${order.discountPrice}" class="price-col"></td>
                     <td th:text="${order.shippingFee}" class="price-col"></td>
                     <td th:text="${order.customer.id + ' - ' + order.customer.firstName + ' ' + order.customer.lastName}"></td>
                     <td th:text="${order.deliveryAddress}"></td>

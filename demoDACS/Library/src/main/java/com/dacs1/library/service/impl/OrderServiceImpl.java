@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCustomer(cart.getCustomer());
 
         order.setTotalPrice(cart.getTotalPrice());
+        order.setDiscountPrice(0.0);
         order.setShippingFee(0.0);
         order.setAccept(false);
         order.setStatus(status[0]);
