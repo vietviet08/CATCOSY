@@ -50,7 +50,8 @@
                 <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
                 <label for="fullName">Full name</label>
-                <input class="form-control" id="fullName" name="fullName" type="text" placeholder="Full name" th:value="${nameUser}" readonly="readonly" disabled="disabled">
+                <input class="form-control" id="fullName" name="fullName" type="text" placeholder="Full name"
+                       th:value="${nameUser}" readonly="readonly" disabled="disabled">
 
                 <label for="email">Email</label>
                 <input class="form-control" id="email" name="email" type="email" placeholder="Email" readonly="readonly"
@@ -60,23 +61,32 @@
                 <input class="form-control" id="phone" name="phone" type="text" placeholder="Phone" th:value="${phone}">
 
                 <div>
+                    <input type="hidden" name="haveCodeCity" id="haveCodeCity"
+                           th:value="${citySelect != null ? citySelect : ''}">
+                    <input type="hidden" name="haveCodeDistrict" id="haveCodeDistrict"
+                           th:value="${districtSelect != null ? districtSelect : ''}">
+                    <input type="hidden" name="haveCodeWard" id="haveCodeWard"
+                           th:value="${communeSelect != null ? communeSelect : ''}">
+
                     <select class="form-control form-select form-select-sm mb-3" id="city"
-                            aria-label=".form-select-sm" onchange="getDistricts(event)" name="city">
-                        <option value="" th:selected="${citySelect == null}">Select province or city</option>
+                            aria-label=".form-select-sm" onchange="getDistricts(event)"    name="city">
+                        <option>Select province or city</option>
                     </select>
 
                     <select class=" form-control form-select form-select-sm mb-3" id="district"
                             aria-label=".form-select-sm" onchange="getWards(event)" name="district">
-                        <option value="" selected>Select district</option>
+                        <option value="">Select district</option>
                     </select>
 
-                    <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm" name="commune">
+                    <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm"
+                            name="commune">
                         <option value="" selected>Select ward and commune</option>
                     </select>
                 </div>
 
                 <label for="addressDetail" style="margin-top: 10px">Address detail</label>
-                <input class="form-control" id="addressDetail" name="addressDetail" type="text" placeholder="Address detail" th:value="${address}">
+                <input class="form-control" id="addressDetail" name="addressDetail" type="text"
+                       placeholder="Address detail" th:value="${address}">
 
 
                 <input class="submit" type="submit" value="SAVE CHANGE">

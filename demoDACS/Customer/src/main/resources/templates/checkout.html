@@ -45,17 +45,25 @@
                            required>
 
                     <div>
+                        <input type="hidden" name="haveCodeCity" id="haveCodeCity"
+                               th:value="${citySelect != null ? citySelect : ''}">
+                        <input type="hidden" name="haveCodeDistrict" id="haveCodeDistrict"
+                               th:value="${districtSelect != null ? districtSelect : ''}">
+                        <input type="hidden" name="haveCodeWard" id="haveCodeWard"
+                               th:value="${communeSelect != null ? communeSelect : ''}">
+
                         <select class="form-control form-select form-select-sm mb-3" id="city"
-                                aria-label=".form-select-sm" onchange="getDistricts(event)">
-                            <option value="" selected>Select province or city</option>
+                                aria-label=".form-select-sm" onchange="getDistricts(event)" name="city">
+                            <option>Select province or city</option>
                         </select>
 
                         <select class=" form-control form-select form-select-sm mb-3" id="district"
-                                aria-label=".form-select-sm" onchange="getWards(event)">
-                            <option value="" selected>Select district</option>
+                                aria-label=".form-select-sm" onchange="getWards(event)" name="district">
+                            <option value="">Select district</option>
                         </select>
 
-                        <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                        <select class="form-control form-select form-select-sm" id="ward" aria-label=".form-select-sm"
+                                name="commune">
                             <option value="" selected>Select ward and commune</option>
                         </select>
                     </div>

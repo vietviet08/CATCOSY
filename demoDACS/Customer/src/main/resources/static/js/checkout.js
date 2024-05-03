@@ -1,7 +1,12 @@
-fetch('https://xapi.leninn.com/api/cities?language=vi')
+fetch('https://leninn.com/checkout/addresses.json')
     .then(response => response.json())
     .then(data => {
-        data.map(city => document.getElementById('city').innerHTML += `<option value="${city.slug}">${city.name}</option>`);
+        const haveCodeCity = $('#haveCodeCity').val();
+
+        data.provinces.map(city => {
+            if (haveCodeCity === city.code) document.getElementById('city').innerHTML += `<option value="${city.code}" selected>${city.name}</option>`;
+            else document.getElementById('city').innerHTML += `<option value="${city.code}">${city.name}</option>`
+        });
     })
     .catch(error => {
         console.log(error);
@@ -10,14 +15,20 @@ fetch('https://xapi.leninn.com/api/cities?language=vi')
 
 //slug
 function fetchDistricts(provincesName) {
-    fetch(`https://xapi.leninn.com/api/cities/${provincesName}/districts?language=vi`)
+    fetch('https://leninn.com/checkout/addresses.json')
         .then(response => response.json())
         .then(data => {
             const districtSelect = document.getElementById('district');
-            districtSelect.innerHTML = '<option value="" selected>Select district</option>';
+            const haveCodeDistrict = $('#haveCodeDistrict').val();
+            if(haveCodeDistrict.length > 0) districtSelect.innerHTML = '<option value="" >Select district</option>';
+            else districtSelect.innerHTML = '<option value="" selected>Select district</option>';
             if (data !== undefined) {
-
-                data.map(value => document.getElementById('district').innerHTML += `<option value='${value._id}'>${value.name}</option>`);
+                var idProvince = $('#city').val();
+                data.districts.map(value => {
+                    if (value.province_id == idProvince) {
+                        document.getElementById('district').innerHTML += `<option value='${value.code}'>${value.name}</option>`
+                    }
+                });
             }
         })
         .catch(error => {
@@ -27,13 +38,21 @@ function fetchDistricts(provincesName) {
 
 //_id
 function fetchWards(id) {
-    fetch(`https://xapi.leninn.com/api/districts/${id}/communes?language=vi`)
+    fetch('https://leninn.com/checkout/addresses.json')
         .then(response => response.json())
         .then(data => {
             const wardSelect = document.getElementById('ward');
             wardSelect.innerHTML = '<option value="" selected>Select ward and commune</option>';
+            var idProvince = $('#city').val();
+            var idDistrict = $('#district').val();
+
             if (data !== undefined) {
-                data.map(value => document.getElementById('ward').innerHTML += `<option value='${value.ma_code}'>${value.name}</option>`);
+                data.wards.map(value => {
+                    if (value.province_id == idProvince && value.district_id == idDistrict) {
+                        document.getElementById('ward').innerHTML += `<option value='${value.code}'>${value.name}</option>`
+                    }
+                })
+                ;
             }
         })
         .catch(error => {
@@ -41,15 +60,18 @@ function fetchWards(id) {
         });
 }
 
-function getDistricts(event) {
+function getDistricts(event, load) {
     fetchDistricts(event.target.value);
-    const wardSelect = document.getElementById('ward');
-    wardSelect.innerHTML = '<option value="" selected>Select ward and commune</option>';
+    if (!load) {
+        const wardSelect = document.getElementById('ward');
+        wardSelect.innerHTML = '<option value="" selected>Select ward and commune</option>';
+    }
 }
 
 function getWards(event) {
     fetchWards(event.target.value);
 }
+
 
 function showInfoBank() {
 

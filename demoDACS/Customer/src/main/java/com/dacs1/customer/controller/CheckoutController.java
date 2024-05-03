@@ -53,6 +53,20 @@ public class CheckoutController {
         String[] paymentMethod = {"Cash", "Transfer"};
         model.addAttribute("paymentMethod", paymentMethod);
 
+        String addressDetail = customer.getAddressDetail();
+        if (addressDetail != null) {
+            String[] address = addressDetail.split(" - ");
+
+            if (address.length > 1) {
+                String addressSelect = address[1];
+                String[] childAddress = addressSelect.split(", ");
+
+                model.addAttribute("citySelect", childAddress[0]);
+                model.addAttribute("districtSelect", childAddress[1]);
+                model.addAttribute("communeSelect", childAddress[2]);
+            }
+            model.addAttribute("address", address[0]);
+        }
 
         model.addAttribute("products", items);
         model.addAttribute("totalPrice", totalPrice);
