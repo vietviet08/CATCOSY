@@ -9,10 +9,7 @@ import com.dacs1.library.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class VoucherServiceImpl implements VoucherService {
@@ -75,6 +72,13 @@ public class VoucherServiceImpl implements VoucherService {
             Voucher voucher = voucherRepository.findByCodeVoucher(code);
             if (voucher == null) return 0.0;
 
+            if(!voucher.getCustomerUsedVoucher().isEmpty()) {
+                List<Customer> customersUsedVoucher = voucher.getCustomerUsedVoucher();
+                for (Customer customer : customersUsedVoucher)
+                    if (customer.getEmail().equals(cart.getCustomer().getEmail()))
+                        return 0.0;
+            }
+
             int totalItem = 0;
             Set<CartItem> cartItems = cart.getItems();
             for (CartItem cartItem : cartItems) totalItem += cartItem.getQuantity();
@@ -121,6 +125,13 @@ public class VoucherServiceImpl implements VoucherService {
                 double priceSale = calculatePriceSale(voucher, order);
                 voucher.setUsed(true);
                 voucher.setUsageLimits(0);
+
+                if(voucher.getCustomerUsedVoucher().isEmpty()){
+                    List<Customer> customersUsedVoucher = new ArrayList<>();
+                    customersUsedVoucher.add(order.getCustomer());
+                    voucher.setCustomerUsedVoucher(customersUsedVoucher);
+                }else voucher.getCustomerUsedVoucher().add(order.getCustomer());
+
                 voucherRepository.save(voucher);
                 order.setTotalPrice(order.getTotalPrice() - priceSale);
                 order.setDiscountPrice(priceSale);

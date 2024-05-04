@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,14 @@ public class Voucher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "voucher_id")
     private Long id;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "vouchers_customers",
+            joinColumns = @JoinColumn(name = "voucher_id", referencedColumnName = "voucher_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"))
+    private List<Customer> customerUsedVoucher;
 
     private String codeVoucher;
 

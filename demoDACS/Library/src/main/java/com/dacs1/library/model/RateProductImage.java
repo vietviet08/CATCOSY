@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "comment_images")
-public class CommentImage {
+public class RateProductImage {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
