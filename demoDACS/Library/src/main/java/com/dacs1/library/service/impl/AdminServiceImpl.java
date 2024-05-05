@@ -6,6 +6,8 @@ import com.dacs1.library.repository.AdminRepository;
 import com.dacs1.library.repository.RoleRepository;
 import com.dacs1.library.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -22,6 +24,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Admin findByUsername(String username) {
         return adminRepository.findByUsername(username);
+    }
+
+    @Override
+    public UserDetails finByUsername(String username) throws UsernameNotFoundException {
+        return (UserDetails) adminRepository.findByUsername(username);
     }
 
     @Override
