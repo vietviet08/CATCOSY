@@ -66,6 +66,18 @@ public class JwtUtils {
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
+    public String refreshToken(UserDetails userDetails){
+
+        return Jwts.builder()
+                .setClaims(new HashMap<>())
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 3000))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .compact();
+
+    }
+
 
     //while creating the token -
     //1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID

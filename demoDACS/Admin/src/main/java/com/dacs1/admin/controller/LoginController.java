@@ -3,6 +3,7 @@ package com.dacs1.admin.controller;
 import com.dacs1.admin.helper.SetNameAndRoleToPage;
 import com.dacs1.library.dto.AdminDto;
 import com.dacs1.library.model.Admin;
+import com.dacs1.library.model.AuthenticationRequest;
 import com.dacs1.library.model.Role;
 import com.dacs1.library.service.AdminService;
 import jakarta.servlet.http.HttpSession;
@@ -39,6 +40,7 @@ public class LoginController {
     @GetMapping("/login")
     public String loginForm(Model model) {
         model.addAttribute("title", "Login");
+        model.addAttribute("authRequest", new AuthenticationRequest());
         return "login";
     }
 
