@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationService authenticationService;
-
-    @PostMapping("do-login")
-    public String doLogin(@RequestBody() AuthenticationRequest request) {
-        try {
-            authenticationService.authenticate(request);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "index";
-    }
+//    @Autowired
+//    private AuthenticationService authenticationService;
+//
+//    @PostMapping("do-login")
+//    public String doLogin(@RequestBody() AuthenticationRequest request) {
+//        try {
+//            authenticationService.authenticate(request);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return "index";
+//    }
 
 }

@@ -17,9 +17,9 @@ public class RateProductImage {
     @Column(name = "id_comment_image")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-    private Product product;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+//    private Product rateProduct;
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")

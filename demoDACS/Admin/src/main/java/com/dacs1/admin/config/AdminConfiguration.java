@@ -1,7 +1,7 @@
 package com.dacs1.admin.config;
 
 
-import com.dacs1.admin.jwt.JwtRequestFilter;
+//import com.dacs1.admin.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -31,43 +31,37 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class AdminConfiguration {
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return new AdminServiceConfig();
-//    }
-
-//    @Autowired
-//    private AdminServiceConfig adminServiceConfig;
-
-//    @Autowired
-//    private UserDetailsService userDetailsService;
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new AdminServiceConfig();
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    public JwtRequestFilter jwtRequestFilter;
+//    @Autowired
+//    private JwtRequestFilter jwtRequestFilter;
 
 //    @Bean
 //    public DaoAuthenticationProvider daoAuthenticationProvider() {
 //        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-//        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
 //        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 //        return daoAuthenticationProvider;
 //    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-//
-//        authenticationManagerBuilder
-//                .userDetailsService(userDetailsService)
-//                .passwordEncoder(passwordEncoder());
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+
+        authenticationManagerBuilder
+                .userDetailsService(userDetailsService())
+                .passwordEncoder(passwordEncoder());
 
 
-//        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
@@ -89,10 +83,9 @@ public class AdminConfiguration {
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll()
                 )
-//                .authenticationManager(authenticationManager)
-//                .authenticationProvider(daoAuthenticationProvider())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .authenticationManager(authenticationManager)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+//                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

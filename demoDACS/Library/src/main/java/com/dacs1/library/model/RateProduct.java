@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -18,21 +19,19 @@ public class RateProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "rate_id")
     private Long id;
 
     @ManyToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "id_customer", referencedColumnName = "id_customer")
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
     private int star;
 
     private String content;
 
-    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.DETACH)
-    @JoinTable(name = "customers_roles",
-            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    private List<RateProductImage> images;
+//    @OneToMany(mappedBy = "rateProduct", cascade = CascadeType.ALL)
+//    private List<RateProductImage> images;
 
     private Date dateUpload;
 

@@ -1,4 +1,4 @@
-package com.dacs1.library.model;
+package com.dacs1.admin.config;
 
 import com.dacs1.library.model.Admin;
 import com.dacs1.library.model.Role;
@@ -51,6 +51,4 @@ public class AdminDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    public Collection<Role> getRole(){ return admin.getRoles();}
 }
