@@ -14,6 +14,4 @@ public interface AdminService {
     Admin save(AdminDto adminDto);
 
 
-
-
 }

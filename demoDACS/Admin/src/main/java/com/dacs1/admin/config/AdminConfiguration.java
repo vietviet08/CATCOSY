@@ -31,10 +31,16 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class AdminConfiguration {
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new AdminServiceConfig();
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return new AdminServiceConfig();
+//    }
+
+//    @Autowired
+//    private AdminServiceConfig adminServiceConfig;
+
+//    @Autowired
+//    private UserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -42,26 +48,26 @@ public class AdminConfiguration {
     }
 
     @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+    public JwtRequestFilter jwtRequestFilter;
 
 //    @Bean
 //    public DaoAuthenticationProvider daoAuthenticationProvider() {
 //        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-//        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
 //        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 //        return daoAuthenticationProvider;
 //    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+//        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+//
+//        authenticationManagerBuilder
+//                .userDetailsService(userDetailsService)
+//                .passwordEncoder(passwordEncoder());
 
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
 
-
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+//        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
@@ -83,8 +89,9 @@ public class AdminConfiguration {
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll()
                 )
-                .authenticationManager(authenticationManager)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+//                .authenticationManager(authenticationManager)
+//                .authenticationProvider(daoAuthenticationProvider())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
