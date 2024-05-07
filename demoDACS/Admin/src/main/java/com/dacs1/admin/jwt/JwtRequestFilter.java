@@ -4,6 +4,7 @@ import com.dacs1.admin.config.AdminDetailsServiceConfig;
 import com.dacs1.library.service.AdminService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
@@ -24,7 +25,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private  JwtUtils jwtUtils;
+    private JwtUtils jwtUtils;
 
     @Autowired
     private AdminDetailsServiceConfig adminDetailsServiceConfig;
@@ -33,14 +34,28 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
-        final  String jwtToken;
-        final String username;
-        if (authHeader == null || authHeader.isBlank()) {
+//        String authHeader;
+        String jwtToken = "";
+        String username;
+
+        if (request.getCookies() != null) {
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) jwtToken = cookie.getValue().toString();
+            }
+        }
+
+
+//        if (authHeader == null || authHeader.isBlank()) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+        if(jwtToken.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
-        jwtToken = authHeader.substring(7);
+
+//        jwtToken = authHeader.substring(7);
         username = jwtUtils.getUsernameFromToken(jwtToken);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = adminDetailsServiceConfig.loadUserByUsername(username);

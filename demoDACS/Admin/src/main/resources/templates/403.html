@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="~{fragments :: head}">
+
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div th:replace="~{fragments :: spinner}"></div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div th:replace="~{fragments :: sidebar}"></div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav th:replace="~{fragments :: navbar}"></nav>
+            <!-- Navbar End -->
+
+
+            <!-- 404 Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
+                    <div class="col-md-6 text-center p-4">
+                        <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+                        <h1 class="display-1 fw-bold">403</h1>
+                        <h1 class="mb-4">Not approved</h1>
+                        <p class="mb-4">You do not have access rights, your actions are not approved, please contact admin for more details.</p>
+                        <a class="btn btn-primary rounded-pill py-3 px-5" th:href="@{/index}">Go Back To Home</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 404 End -->
+
+
+            <!-- Footer Start -->
+            <div th:replace="~{fragments :: footer}"></div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <div th:replace="~{fragments :: script}"></div>
+</body>
+
+</html>

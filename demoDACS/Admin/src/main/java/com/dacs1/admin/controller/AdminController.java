@@ -7,12 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminController {
 
     @GetMapping("/")
-    public String toIndex(){
+    public String toIndex() {
         return "redirect:/index";
     }
 
     @GetMapping("/error-500")
-    public String error500(){
+    public String error500() {
         return "500";
+    }
+
+    @GetMapping("/403")
+    public String error403() {
+        return "403";
     }
 }

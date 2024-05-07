@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -51,10 +52,15 @@ public class AdminConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
                         author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/admin/products/**").hasAuthority("ADMIN")
-                                .requestMatchers("/admin/orders/**").hasAuthority("SELLER")
-                                .requestMatchers("/forgot-password", "register", "register-new").permitAll()
+                                .requestMatchers("/products/**").hasAuthority("ADMIN")
+                                .requestMatchers("/orders/**").hasAuthority("SELLER")
+//                                .requestMatchers(HttpMethod.POST,"/admin/do-login").hasAnyAuthority("ADMIN", "SELLER")
+                                .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/").permitAll()
                                 .anyRequest().authenticated()
+
+                )
+                .exceptionHandling(ex ->
+                        ex.accessDeniedPage("/403")
                 )
 //                .formLogin(login ->
 //                        login.loginPage("/login")
@@ -65,12 +71,13 @@ public class AdminConfiguration {
                 .logout(logout ->
                         logout.invalidateHttpSession(true)
                                 .clearAuthentication(true)
+                                .deleteCookies("token")
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll()
                 )
                 .authenticationManager(authenticationManager)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

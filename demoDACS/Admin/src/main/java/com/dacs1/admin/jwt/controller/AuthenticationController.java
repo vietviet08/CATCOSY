@@ -5,6 +5,10 @@ import com.dacs1.admin.jwt.JwtUtils;
 import com.dacs1.library.model.AuthenticationRequest;
 import com.dacs1.admin.jwt.service.AuthenticationService;
 import com.dacs1.library.model.AuthenticationResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,31 +30,51 @@ public class AuthenticationController {
 
 
     @PostMapping("/do-login")
-    public String doLogin(@ModelAttribute("authRequest") AuthenticationRequest request) {
+    public String doLogin(@ModelAttribute("authRequest") AuthenticationRequest request, HttpServletResponse response) {
         try {
 
 
             authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
-        var user = adminDetailsServiceConfig.loadUserByUsername(request.getUsername());
-        var jwtToken = jwtUtils.generateToken(user);
-        var refreshToken = jwtUtils.refreshToken(user);
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+            var user = adminDetailsServiceConfig.loadUserByUsername(request.getUsername());
+            var jwtToken = jwtUtils.generateToken(user);
+            var refreshToken = jwtUtils.refreshToken(user);
 //        revokeAllUserTokens(user);
 //        saveUserToken(user, jwtToken);
-         AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+            AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            Cookie cookie = new Cookie("token", jwtToken);
+            cookie.setMaxAge(3600 * 24);
+            response.addCookie(cookie);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        return "index";
+        return "redirect:/index";
     }
+
+//    @GetMapping("/logout")
+//    public String logout(HttpServletRequest request, HttpServletResponse res, HttpSession session) {
+//        String msg = null;
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie cookie : cookies) {
+//            if (cookie.getName().equals("token")) {
+//                cookie.setMaxAge(0);
+//                res.addCookie(cookie);
+//                msg = "Logout successfully";
+//            }
+//        }
+//        session.setAttribute("msg", msg);
+//        return "redirect:/login?logout";
+//    }
 
 }
