@@ -1,6 +1,7 @@
 package com.dacs1.library.service;
 
 import com.dacs1.library.dto.CustomerDto;
+import com.dacs1.library.model.Admin;
 import com.dacs1.library.model.Customer;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface CustomerService {
     CustomerDto findByEmail(String email);
 
     Customer save(CustomerDto customerDto);
+
+    Customer saveByAdmin(Admin admin);
 
     Customer updateCustomer(Customer customer);
 

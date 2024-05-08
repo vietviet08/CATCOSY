@@ -10,8 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -24,8 +27,18 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
+    public List<Admin> findAll() {
+        return adminRepository.findAll();
+    }
+
+    @Override
     public Admin findByUsername(String username) {
         return adminRepository.findByUsername(username);
+    }
+
+    @Override
+    public Admin findByEmail(String email) {
+        return adminRepository.findByEmail(email);
     }
 
     @Override
@@ -49,6 +62,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Admin saveEmployee(Admin admin) {
+        return adminRepository.save(admin);
+    }
+
+    @Override
     public Admin update(AdminDto adminDto, Long id) {
         Admin admin = adminRepository.getReferenceById(id);
         admin.setFirstName(adminDto.getFirstName());
@@ -58,6 +76,21 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.save(admin);
     }
 
+    @Transactional
+    @Override
+    public Admin updateEmployee(AdminDto admin, Long id, String roleUpdate) {
+        Admin ad = adminRepository.getReferenceById(id);
+        System.out.println(id);
+        System.out.println(admin.getEmail());
+        ad.setFirstName(admin.getFirstName());
+        ad.setLastName(admin.getLastName());
+        ad.setPhone(admin.getPhone());
+        ad.setEmail(admin.getEmail());
+        ad.getRoles().clear();
+        ad.getRoles().add(roleRepository.findByName(roleUpdate));
+        return adminRepository.save(ad);
+    }
+
     @Override
     public Admin saveChangePassword(Long id, String currentPassword, String newPassword) {
         Admin admin = adminRepository.getReferenceById(id);
@@ -65,5 +98,28 @@ public class AdminServiceImpl implements AdminService {
         if (!passwordEncoder.matches(currentPassword, admin.getPassword())) return null;
         admin.setPassword(passwordEncoder.encode(newPassword));
         return adminRepository.save(admin);
+    }
+
+    @Override
+    public void lockEmployee(Long id, Principal principal) {
+        Admin admin = adminRepository.getReferenceById(id);
+        if (admin.getUsername().equals(principal.getName())) return;
+        admin.setEnable(false);
+        adminRepository.save(admin);
+    }
+
+    @Override
+    public void activateEmployee(Long id) {
+        Admin admin = adminRepository.getReferenceById(id);
+        admin.setEnable(true);
+        adminRepository.save(admin);
+    }
+
+    @Transactional
+    @Override
+    public void deleteEmployee(Long id, Principal principal) {
+        Admin admin = adminRepository.getReferenceById(id);
+        if (admin.getUsername().equals(principal.getName())) return;
+        adminRepository.delete(admin);
     }
 }

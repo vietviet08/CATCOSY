@@ -46,6 +46,6 @@ public class CustomerDto {
 
     private String resetPasswordToken;
 
-    private boolean isActive;
+    private boolean isActive = true;
 
 }

@@ -42,6 +42,8 @@ public class CommonInterceptor implements HandlerInterceptor {
                     session.setAttribute("nameForAdmin", admin.getFirstName() + " " + admin.getLastName());
                     session.setAttribute("logged", true);
                     session.setAttribute("roleFor", admin.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()) );
+                    session.setAttribute("idAd", admin.getId() );
+
                 }
             } else {
                 session.setAttribute("logged", false);

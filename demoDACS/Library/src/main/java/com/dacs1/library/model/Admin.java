@@ -41,4 +41,6 @@ public class Admin {
             joinColumns = @JoinColumn(name = "admin_id", referencedColumnName = "admin_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Collection<Role> roles;
+
+    private boolean isEnable = true;
 }

@@ -8,9 +8,12 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthenticationController {
@@ -26,7 +29,9 @@ public class AuthenticationController {
 
 
     @PostMapping("/do-login")
-    public String doLogin(@ModelAttribute("authRequest") AuthenticationRequest request, HttpServletResponse response) {
+    public String doLogin(@ModelAttribute("authRequest") AuthenticationRequest request,
+                          HttpServletResponse response,
+                          RedirectAttributes attributes) {
         try {
 
 
@@ -50,11 +55,19 @@ public class AuthenticationController {
 //            cookie.setMaxAge(3600 * 24);
             response.addCookie(cookie);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (DisabledException e){
+            attributes.addFlashAttribute("warning", "Your account has been locked, please contact to ADMIN!");
+            return "redirect:/login";
+        }
+        catch (BadCredentialsException e) {
+            attributes.addFlashAttribute("error", "Username or password not correct!");
+            return "redirect:/login";
+        }catch (Exception e){
+            attributes.addFlashAttribute("error", "Error from server!");
+            return "redirect:/login";
         }
 
-
+        attributes.addFlashAttribute("success", "Welcome back, have a nice day!");
         return "redirect:/index";
     }
 

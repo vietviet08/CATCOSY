@@ -2,6 +2,7 @@ package com.dacs1.library.service.impl;
 
 import com.dacs1.library.dto.CustomerDto;
 import com.dacs1.library.enums.Provider;
+import com.dacs1.library.model.Admin;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.repository.CustomerRepository;
 import com.dacs1.library.repository.OrderRepository;
@@ -27,6 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private OrderRepository orderRepository;
+
 
 
     @Override
@@ -70,6 +72,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(CustomerDto customerDto) {
+        return customerRepository.save(toEntity(customerDto));
+    }
+
+    @Override
+    public Customer saveByAdmin(Admin admin) {
+        if(customerRepository.findByUsername(admin.getUsername()) != null || customerRepository.findByEmail(admin.getEmail()) != null) return null;
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setUsername(admin.getUsername());
+        customerDto.setFirstName(admin.getFirstName());
+        customerDto.setLastName(admin.getLastName());
+        customerDto.setEmail(admin.getEmail());
+        customerDto.setPhone(admin.getPhone());
+        customerDto.setPassword(passwordEncoder.encode(admin.getPassword()));
         return customerRepository.save(toEntity(customerDto));
     }
 
