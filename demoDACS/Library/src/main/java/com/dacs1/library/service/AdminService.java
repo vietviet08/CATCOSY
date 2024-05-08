@@ -13,5 +13,8 @@ public interface AdminService {
 
     Admin save(AdminDto adminDto);
 
+    Admin update(AdminDto adminDto, Long id);
+
+    Admin saveChangePassword(Long id, String currentPassword, String newPassword);
 
 }

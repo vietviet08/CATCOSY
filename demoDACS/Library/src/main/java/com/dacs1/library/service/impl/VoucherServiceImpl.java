@@ -141,6 +141,13 @@ public class VoucherServiceImpl implements VoucherService {
 
                 voucher.setUsageLimits(voucher.getUsageLimits() - 1);
                 if (voucher.getUsageLimits() == 0) voucher.setUsed(true);
+
+                if(voucher.getCustomerUsedVoucher().isEmpty()){
+                    List<Customer> customersUsedVoucher = new ArrayList<>();
+                    customersUsedVoucher.add(order.getCustomer());
+                    voucher.setCustomerUsedVoucher(customersUsedVoucher);
+                }else voucher.getCustomerUsedVoucher().add(order.getCustomer());
+
                 voucherRepository.save(voucher);
 
                 order.setTotalPrice(order.getTotalPrice() - priceSale);
