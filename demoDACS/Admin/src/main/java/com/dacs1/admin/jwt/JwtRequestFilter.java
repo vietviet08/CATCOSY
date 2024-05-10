@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
@@ -52,6 +53,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 //        }
         if(jwtToken.isEmpty()) {
             filterChain.doFilter(request, response);
+            returnToLoginPage();
             return;
         }
 
@@ -71,5 +73,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private ModelAndView returnToLoginPage(){
+        return new ModelAndView("login");
     }
 }
