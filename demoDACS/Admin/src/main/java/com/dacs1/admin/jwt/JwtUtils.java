@@ -17,7 +17,9 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtils {
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+
+    @Value("${spring.jwt.key.expiry}")
+    private long JWT_TOKEN_VALIDITY;
 
     @Value("${spring.jwt.key.secret}")
     private String keySecret;

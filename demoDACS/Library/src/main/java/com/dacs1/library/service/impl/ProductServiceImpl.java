@@ -400,8 +400,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> productRandomSameCategoryLimit(Long idCategory, Long idProduct) {
-        return convertToDtoList(productRepository.findAllProductSameCategory(idCategory, idProduct));
+    public List<ProductDto> productSaleRandomLimit(int limit) {
+        return convertToDtoList(productRepository.findAllRandomProductSale(limit));
+    }
+
+    @Override
+    public List<ProductDto> productRandomSameCategoryLimit(Long idCategory, Long idProduct, int limit) {
+        return convertToDtoList(productRepository.findAllProductSameCategory(idCategory, idProduct, limit));
     }
 
 

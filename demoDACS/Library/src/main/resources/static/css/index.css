@@ -610,6 +610,63 @@ img {
 /*end-card*/
 
 
+
+/*discover store start*/
+.discover-store-element {
+    padding: 0;
+    height: 660px;
+}
+
+.discover-store-video video {
+    width: 100%;
+    height: 100%;
+}
+
+.discover-store-img img {
+    height: 100%;
+}
+
+
+.discover-store-content-main {
+    width: 60%;
+}
+
+.discover-store-content-main h2 {
+    font-weight: 600;
+    font-size: 36px;
+}
+
+.discover-store-content-main p {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.discover-store-content-main a {
+    text-decoration: none;
+}
+
+
+.discover-store-content-main a .box-discover {
+    height: 55px;
+    background-color: transparent;
+    border: 1px solid #333333;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.discover-store-content-main a .box-discover p {
+    padding: 0;
+    margin: 0;
+    color: black;
+    font-size: 16px;
+}
+
+/*discover store end*/
+
+
+
 .logo-brand img {
     width: 120px;
 }

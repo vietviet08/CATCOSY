@@ -71,7 +71,7 @@
                         <form th:action="@{/unlock-customer}" method="post">
                             <a class="btn-unlock" th:if="${customer.active == false}">
                                 <input name="usernameCustomer" type="hidden" th:value="${customer.username}">
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" class="btn btn-success my-1" style="width: 90px">
                                     Unlock
                                 </button>
                             </a>
@@ -79,13 +79,13 @@
 
                         <a class="btn-lock" th:if="${customer.active == true}"
                            th:href="@{/find-customer(username = ${customer.username})}">
-                            <div class="btn btn-warning">
+                            <div class="btn btn-warning my-1" style="width: 90px">
                                 Lock
                             </div>
                         </a>
 
                         <a class="btn-delete" th:href="@{/find-customer(username = ${customer.username})}">
-                            <div class="btn btn-danger">
+                            <div class="btn btn-danger my-1" style="width: 90px">
                                 Delete
                             </div>
                         </a>

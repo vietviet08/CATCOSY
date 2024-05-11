@@ -12,12 +12,15 @@
 
     .ribbon {
         position: absolute;
-        right: -5px; top: -5px;
+        right: -5px;
+        top: -5px;
         z-index: 99;
         overflow: hidden;
-        width: 75px; height: 75px;
+        width: 75px;
+        height: 75px;
         text-align: right;
     }
+
     .ribbon span {
         font-size: 10px;
         font-weight: bold;
@@ -33,20 +36,27 @@
         background: linear-gradient(#F70505 0%, #8F0808 100%);
         box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
         position: absolute;
-        top: 19px; right: -21px;
+        top: 19px;
+        right: -21px;
     }
+
     .ribbon span::before {
         content: "";
-        position: absolute; left: 0px; top: 100%;
+        position: absolute;
+        left: 0px;
+        top: 100%;
         z-index: -1;
         border-left: 3px solid #8F0808;
         border-right: 3px solid transparent;
         border-bottom: 3px solid transparent;
         border-top: 3px solid #8F0808;
     }
+
     .ribbon span::after {
         content: "";
-        position: absolute; right: 0px; top: 100%;
+        position: absolute;
+        right: 0px;
+        top: 100%;
         z-index: -1;
         border-left: 3px solid transparent;
         border-right: 3px solid #8F0808;
@@ -96,12 +106,12 @@
 
         <a class="women" href="#">
 
-            <img th:src="@{/images/pexels-ahmed-ツ-20447512.jpg}" alt="shop women" data-aos="fade-right"
+            <img th:src="@{/images/pexels-harsh-kushwaha-804217-1721558.jpg}" alt="shop women" data-aos="fade-right"
                  data-aos-duration="1000">
         </a>
         <a class="men" href="#">
 
-            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="shop men" data-aos="fade-left"
+            <img th:src="@{/images/sirio-7_ZNLVlJchs-unsplash.jpg}" alt="shop men" data-aos="fade-left"
                  data-aos-duration="1000">
         </a>
 
@@ -119,7 +129,7 @@
         <div class="  h-50 ">
 
             <img th:src="@{/images/logoINF.png}" style="width: 280px; float: left" data-aos="fade-left"
-                 data-aos-duration="1000">
+                 data-aos-duration="1000" alt="">
             <p style="font-size: 18px; line-height: 1.8 ; color: #858E96" class="" data-aos="fade-right"
                data-aos-duration="1000">
                 At CATCOSY, we bring together the perfect blend of the latest trends and diversity in styles. From
@@ -142,11 +152,12 @@
     <hr data-aos="fade-left" data-aos-duration="1000">
 </div>
 
+
 <div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">NEW
     ARRIVALS</h2></div>
 
 <div class="container d-flex justify-content-center align-items-center "
-     style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000">
+     style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
 
     <div class="container-product row w-100 d-flex justify-content-between align-items-center">
         <div th:each="product : ${productsNewArrival}" class="card border-0  col-12 col-md-4 col-xl-3"
@@ -185,11 +196,11 @@
 </div>
 
 
-<div class="text-center"><h2 style="font-weight: 600; margin: 0">FLASH
+<div class="text-center" data-aos="fade-up" data-aos-duration="1000"><h2 style="font-weight: 600; margin: 0">FLASH
     SALE</h2></div>
 
 <div class="container d-flex justify-content-center align-items-center "
-     style="padding: 30px 0; overflow: hidden">
+     style="padding: 30px 0; overflow: hidden" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
     <div class="container-product row w-100 d-flex justify-content-between align-content-center">
         <div th:each="product : ${productsSale}" class="card border-0  col-12 col-md-4 col-xl-3"
              style="cursor: pointer;  margin: 0 10px">
@@ -240,15 +251,13 @@
 </div>
 
 
-<div class="container my-5">
+<div class="container my-5" data-aos="fade-up" data-aos-duration="1000">
     <hr>
     <h4 style="font-weight: 600; margin: 20px 0">Embark on a Fashion
         Adventure </h4>
     <div class="intro-shop row">
 
         <div class="  h-50 ">
-
-            <!--            <img src="../../images/logoINF1.png"  style="width: 280px; float: right">-->
             <p style="font-size: 18px; line-height: 1.8; color: #858E96" class="">
                 Picture yourself strolling through racks adorned with the latest styles, each garment whispering tales
                 of elegance and sophistication. From the vibrant hues of summer dresses to the timeless allure of
@@ -268,8 +277,7 @@
     <hr>
 </div>
 
-<video width="100%" autoplay muted loop>
-    <source src=”http://techslides.com/demos/sample-videos/small.ogv” type=video/ogg>
+<video width="100%" autoplay muted loop data-aos="zoom-in" data-aos-duration="1000">
     <source th:src="@{/images/production.mp4}" type="video/mp4">
 </video>
 
@@ -304,7 +312,105 @@
             <img src="https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/brand/brand-5.svg" alt="" srcset="">
         </div>
     </div>
+</div>
 
+
+<div class="container discover-store my-5">
+    <div class="row">
+        <div class="discover-store-section-1 col-sm-12 col-12">
+            <div class="row">
+                <div class="discover-store-img discover-store-element col-sm-6 col-12" data-aos="fade-up"
+                     data-aos-duration="1000">
+                    <img th:src="@{/images/alireza-dolati-OVS3rqXq9gg-unsplash.jpg}" alt="">
+                </div>
+                <div class="discover-store-content discover-store-element d-flex justify-content-center col-sm-6 col-12"
+                     data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="discover-store-content-main d-flex flex-column justify-content-center">
+                        <h2>SPOTTED ON</h2>
+                        <p>Is where we showcase the latest inspirations from our community and VIPs, celebrating diversity and creativity.</p>
+                        <a href="#">
+                            <div class="box-discover">
+                                <p> Discover me</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="discover-store-section-1 col-sm-12 col-12">
+            <div class="row">
+
+                <div class="discover-store-content discover-store-element d-flex justify-content-center col-sm-6 col-12"
+                     data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="discover-store-content-main d-flex flex-column justify-content-center">
+                        <h2>NEW ARRIVALS ALERT</h2>
+                        <p>Discover the latest trends and must-have pieces at our fashion boutique, now available in-store and online.</p>
+                        <a href="#">
+                            <div class="box-discover">
+                                <p>Discover me</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="discover-store-img discover-store-element col-sm-6 col-12" data-aos="fade-up"
+                     data-aos-duration="1000" data-aos-delay="200">
+                    <img th:src="@{/images/mike-von-rj8ohjW9RBA-unsplash.jpg}" alt="">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="discover-store-section-1 col-sm-12 col-12">
+            <div class="row">
+
+                <div class="discover-store-img discover-store-element col-sm-6 col-12" data-aos="fade-up"
+                     data-aos-duration="1000" data-aos-delay="200">
+                    <img th:src="@{/images/pexels-philboakye-1813947.jpg}" alt="">
+                </div>
+
+                <div class="discover-store-content discover-store-element d-flex justify-content-center col-sm-6 col-12"
+                     data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="discover-store-content-main d-flex flex-column justify-content-center">
+                        <h2>WEDDING STUDIO</h2>
+                        <p>Your destination for all things marriage material, from bridal pieces to best dressed guest
+                            essentials.</p>
+                        <a href="#">
+                            <div class="box-discover">
+                                <p>Discover Now</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="discover-store-section-1 col-sm-12 col-12">
+            <div class="row">
+
+                <div class="discover-store-content discover-store-element d-flex justify-content-center col-sm-6 col-12"
+                     data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="discover-store-content-main d-flex flex-column justify-content-center">
+                        <h2>PIERCING IS HERE</h2>
+                        <p>Unleash your style with our ear stack collection, available now at our Monmouth Street store.</p>
+                        <a href="#">
+                            <div class="box-discover">
+                                <p>Book your Appointment</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="discover-store-img discover-store-element col-sm-6 col-12" data-aos="fade-up"
+                     data-aos-duration="1000" data-aos-delay="200">
+
+                        <img th:src="@{/images/rayul-_M6gy9oHgII-unsplash.jpg}" alt="">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div>
 
 
@@ -317,40 +423,7 @@
 
 <script>
 
-    $(document).ready(function () {
 
-        $('.container-product').slick({
-            slidesToShow: 4,
-            slidesToScroll: 2,
-            autoplay: true,
-            autoplaySpeed: 1000,
-            dots: true,
-            arrows: true,
-            infinite: true,
-            responsive: [
-                {
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
-                        infinite: true,
-                        dots: true
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        infinite: true,
-                        dots: true,
-                        arrows: false,
-                    }
-                }
-            ]
-        });
-
-    });
 </script>
 
 </body>

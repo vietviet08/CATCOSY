@@ -159,19 +159,32 @@
 
     // Pie Chart
     var ctx5 = $("#pie-chart").get(0).getContext("2d");
+    const totalBottom = $('#totalBottom').val();
+    const totalTop = $('#totalTop').val();
+    const totalJacket = $('#totalJacket').val();
+    const totalSweeter = $('#totalSweeter').val();
+    const totalHoodie = $('#totalHoodie').val();
+    const totalPolo = $('#totalPolo').val();
+    const totalTShirt = $('#totalTShirt').val();
+    const totalShort = $('#totalShort').val();
+    const totalShirt = $('#totalShirt').val();
     var myChart5 = new Chart(ctx5, {
         type: "pie",
         data: {
-            labels: ["Italy", "France", "Spain", "USA", "Argentina"],
+                labels: ["Bottom", "Top", "Jacket", "Sweeter", "Hoodie", "Polo", "T-shirt", "Short", "Shirt"],
             datasets: [{
                 backgroundColor: [
                     "rgba(0, 156, 255, .7)",
-                    "rgba(0, 156, 255, .6)",
-                    "rgba(0, 156, 255, .5)",
-                    "rgba(0, 156, 255, .4)",
-                    "rgba(0, 156, 255, .3)"
+                    "#FF6384",
+                    "#4CC0C0",
+                    "#FF9F40",
+                    "#9966FF",
+                    "#FFCD57",
+                    "#C9CBCF",
+                    "#FEB272",
+                    "#A3CFBB"
                 ],
-                data: [55, 49, 44, 24, 15]
+                data: [totalBottom,totalTop, totalJacket, totalSweeter, totalHoodie, totalPolo, totalTShirt, totalShort, totalShirt]
             }]
         },
         options: {

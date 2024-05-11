@@ -53,7 +53,7 @@ public class AuthenticationController {
 
             Cookie cookie = new Cookie("token", jwtToken);
 
-//            cookie.setMaxAge(3600 * 24);
+            cookie.setMaxAge(3600 * 5 - 60);
             response.addCookie(cookie);
 
         }catch (DisabledException e){

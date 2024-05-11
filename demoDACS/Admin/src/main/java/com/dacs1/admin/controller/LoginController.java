@@ -6,6 +6,7 @@ import com.dacs1.library.model.Admin;
 import com.dacs1.library.model.AuthenticationRequest;
 import com.dacs1.library.model.Role;
 import com.dacs1.library.service.AdminService;
+import com.dacs1.library.service.StatisticsService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class LoginController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private StatisticsService statisticsService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -104,6 +108,23 @@ public class LoginController {
         session.setAttribute("nameAdmin",admin.getFirstName() + " " + admin.getLastName());
         session.setAttribute("role", "ADMIN");
         model.addAttribute("title", "Home Page");
+
+
+        model.addAttribute("totalCustomer", statisticsService.getTotalCustomer());
+        model.addAttribute("totalOrder", statisticsService.getTotalOrdersDelivered());
+        model.addAttribute("totalPrice", statisticsService.getTotalPriceOrders());
+        model.addAttribute("totalProduct", statisticsService.getTotalProduct());
+        model.addAttribute("totalBottom", statisticsService.getTotalProductByCategory("Bottom"));
+        model.addAttribute("totalTop", statisticsService.getTotalProductByCategory("Top"));
+        model.addAttribute("totalJacket", statisticsService.getTotalProductByCategory("Jacket"));
+        model.addAttribute("totalSweeter", statisticsService.getTotalProductByCategory("Sweeter"));
+        model.addAttribute("totalHoodie", statisticsService.getTotalProductByCategory("Hoodie"));
+        model.addAttribute("totalPolo", statisticsService.getTotalProductByCategory("Polo"));
+        model.addAttribute("totalTShirt", statisticsService.getTotalProductByCategory("T-shirt"));
+        model.addAttribute("totalShort", statisticsService.getTotalProductByCategory("Short"));
+        model.addAttribute("totalShirt", statisticsService.getTotalProductByCategory("Shirt"));
+
+
 
         return "index";
     }

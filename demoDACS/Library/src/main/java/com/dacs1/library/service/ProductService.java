@@ -59,7 +59,9 @@ public interface ProductService {
 
     List<ProductDto> productRandomLimit(int limit);
 
-    List<ProductDto> productRandomSameCategoryLimit(Long idCategory, Long idProduct);
+    List<ProductDto> productSaleRandomLimit(int limit);
+
+    List<ProductDto> productRandomSameCategoryLimit(Long idCategory, Long idProduct, int limit);
 
 
 

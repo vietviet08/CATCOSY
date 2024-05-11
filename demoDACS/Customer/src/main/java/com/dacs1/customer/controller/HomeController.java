@@ -44,7 +44,7 @@ public class HomeController {
 //            session.setAttribute("logged", false);
 
         List<ProductDto> productsNewArrival = productService.productRandomLimit(8);
-        List<ProductDto> productsSale = productService.productRandomLimit(8);
+        List<ProductDto> productsSale = productService.productSaleRandomLimit(8);
         model.addAttribute("title", "Catcosy - Home");
         model.addAttribute("productsSale", productsSale);
         model.addAttribute("productsNewArrival", productsNewArrival);

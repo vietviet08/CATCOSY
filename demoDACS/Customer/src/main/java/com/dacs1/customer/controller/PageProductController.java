@@ -117,7 +117,7 @@ public class PageProductController {
     public String allProduct(@PathVariable("id") long id, Model model) {
 
         ProductDto productDto = productService.getById(id);
-        List<ProductDto> productsSameCategory = productService.productRandomSameCategoryLimit(productDto.getCategory().getId(), id);
+        List<ProductDto> productsSameCategory = productService.productRandomSameCategoryLimit(productDto.getCategory().getId(), id, 8);
 
         model.addAttribute("title", productDto.getName());
         model.addAttribute("product", productDto);
