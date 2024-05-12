@@ -126,15 +126,14 @@
             <p>Visit the store to continue shopping with us</p>
 
 
-            <div class="btn-to-shop" style="height: 40px; width: 130px; background-color: black; color: #f7f7f7; display: flex; align-items: center; justify-content: center;
-margin: 10px 0; font-size: 18px; border-radius: 5px" th:text="${'&nbsp;&nbsp;&nbsp;&nbsp;' + voucher.codeVoucher}">
+            <div class="text-center w-100" style="font-size: 28px; color: #e91e63" th:text="${'&nbsp;&nbsp;&nbsp;&nbsp;' + voucher.codeVoucher}">
 
             </div>
 
-            <div th:if="${voucher.percentOfTotalPrice > 0}" th:text="${'&nbsp;&nbsp;&nbsp;&nbsp;' + '-' + voucher.percentOfTotalPrice + '%'}"
-                 style="height: 20px; background-color: white; color: red; width: 60px"></div>
-            <div th:if="${voucher.price > 0}" th:text="${'&nbsp;&nbsp;&nbsp;&nbsp;' +'-' + voucher.price + 'VND'}"
-                 style="height: 20px; background-color: white; color: red; width: 80px"></div>
+            <div th:if="${voucher.percentOfTotalPrice > 0}" th:text="${ voucher.percentOfTotalPrice + '% will be deducted from the voucher'}"
+                 style="height: 20px; background-color: white; color: red; width: 100%"></div>
+            <div th:if="${voucher.price > 0}" th:text="${voucher.price + ' VND will be deducted from the voucher'}"
+                 style="height: 20px; background-color: white; color: red; width: 100%"></div>
 
         </div>
 

@@ -139,16 +139,22 @@
     var myChart4 = new Chart(ctx4, {
         type: "bar",
         data: {
-            labels: ["Italy", "France", "Spain", "USA", "Argentina"],
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             datasets: [{
                 backgroundColor: [
                     "rgba(0, 156, 255, .7)",
                     "rgba(0, 156, 255, .6)",
                     "rgba(0, 156, 255, .5)",
                     "rgba(0, 156, 255, .4)",
-                    "rgba(0, 156, 255, .3)"
+                    "rgba(0, 156, 255, .3)",
+                    "#4CC0C0",
+                    "#FF9F40",
+                    "#9966FF",
+                    "#FFCD57",
+                    "#C9CBCF",
+                    "#FF6384"
                 ],
-                data: [55, 49, 44, 24, 15]
+                data: [0, 0, 0,1220000, 9520000, 0,0, 0, 0,0, 0, 0]
             }]
         },
         options: {
@@ -182,6 +188,7 @@
                     "#FFCD57",
                     "#C9CBCF",
                     "#FEB272",
+                    "#A3CFBB",
                     "#A3CFBB"
                 ],
                 data: [totalBottom,totalTop, totalJacket, totalSweeter, totalHoodie, totalPolo, totalTShirt, totalShort, totalShirt]
