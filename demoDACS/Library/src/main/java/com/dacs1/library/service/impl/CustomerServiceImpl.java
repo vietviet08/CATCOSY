@@ -30,6 +30,10 @@ public class CustomerServiceImpl implements CustomerService {
     private OrderRepository orderRepository;
 
 
+    @Override
+    public List<Customer> getAll() {
+        return customerRepository.findAll();
+    }
 
     @Override
     public List<CustomerDto> getAllCustomer() {
@@ -38,7 +42,6 @@ public class CustomerServiceImpl implements CustomerService {
         List<CustomerDto> customerDtoList = new ArrayList<>();
         for(Customer customer : customers){
             customerDtoList.add(toDto(customer));
-
         }
 
         return customerDtoList;

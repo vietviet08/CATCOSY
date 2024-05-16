@@ -7,6 +7,8 @@ import com.dacs1.library.model.Customer;
 import java.util.List;
 
 public interface CustomerService {
+    List<Customer> getAll();
+
     List<CustomerDto> getAllCustomer();
 
     Customer findByUsername(String username);
