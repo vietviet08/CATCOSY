@@ -1,5 +1,6 @@
 package com.dacs1.library.service;
 
+import com.dacs1.library.model.Cart;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.model.Product;
 import com.dacs1.library.model.Size;
@@ -14,5 +15,9 @@ public interface CartService {
     void updateCartItem(Product product, int quantity, Size size, Customer customer);
 
     void deleteAllCartItem(Customer customer);
+
+    Cart updateQuantity(Long idCart, Long idCartItem, int quantity);
+
+    Cart deleteCartItem(Long idCart, Long idCartItem);
 
 }

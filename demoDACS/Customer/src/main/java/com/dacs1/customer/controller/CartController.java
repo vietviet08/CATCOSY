@@ -126,7 +126,7 @@ public class CartController {
         Customer customer = customerService.findByUsername(principal.getName());
         cartService.deleteCartItem(product, customer);
 
-        return "redirect:cart";
+        return "redirect:/cart";
     }
 
     @PostMapping("/update-cart-item")

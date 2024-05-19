@@ -34,12 +34,14 @@
     </div>
 
     <div th:if="${cart != null && cart.getTotalItem() > 0}" class="row">
+        <input type="hidden" th:value="${cart.id}" id="cartId">
         <div class="have-product">
             <div class="row">
                 <div class="left-shopping-cart col-12 col-sm-12 col-lg-9">
                     <div th:each="product : ${products}" class="products">
                         <form th:action="@{/delete-cart-item}" method="post">
                             <div class="row">
+                                <input type="hidden" th:value="${product.id}" class="idCartItem">
                                 <div class="container-image col-3 col-sm-3">
                                     <p class="image">
                                         <a th:href="@{/product-detail/{id} (id = ${product.product.id})}">
@@ -60,7 +62,7 @@
 
                                         <div class="size-product">
                                             <input type="hidden" name="sizeId" th:value="${product.size.id}">
-                                            <p th:text="${product.size.size}">XL</p>
+                                            <p th:text="${product.size.size}"></p>
                                         </div>
 
                                         <div class="delete-product">
@@ -81,10 +83,10 @@
                                         <div class="choose-quantity my-4">
                                             <!--                                            <label for="quantity">QUANTITY</label>-->
                                             <div class="group-change-quantity">
-                                                <span class="font-weight-bold text-center d-inline-block">-</span>
-                                                <input class="text-center" name="quantity" id="quantity"
+                                                <span class="font-weight-bold text-center d-inline-block decrease" >-</span>
+                                                <input class="text-center inputQuantity" name="quantity"
                                                        th:value="${product.quantity}">
-                                                <span class="font-weight-bold text-center d-inline-block">+</span>
+                                                <span class="font-weight-bold text-center d-inline-block increase">+</span>
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +104,7 @@
                                     <p>INTO MONEY</p>
                                 </div>
                                 <div class="right-total-price">
-                                    <p th:text="${cart.totalPrice} " class="price-product"></p>
+                                    <p th:text="${cart.totalPrice} " class="price-product" id="totalPrice"></p>
                                 </div>
                             </div>
 

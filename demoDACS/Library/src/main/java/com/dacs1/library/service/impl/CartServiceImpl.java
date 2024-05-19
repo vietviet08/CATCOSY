@@ -154,6 +154,48 @@ public class CartServiceImpl implements CartService {
         cartRepository.save(cart);
     }
 
+    @Override
+    public Cart updateQuantity(Long idCart, Long idCartItem, int quantity) {
+        Cart cart = cartRepository.getReferenceById(idCart);
+        for (CartItem cartItem : cart.getItems()) {
+            if (Objects.equals(cartItem.getId(), idCartItem)) {
+                if ( quantity <= 0) deleteCartItem(idCart, cartItem.getId());
+
+                double priceNeed = cartItem.getUnitPrice() * quantity;
+                cart.setTotalPrice(cart.getTotalPrice() - cartItem.getTotalPrice() + priceNeed);
+                cartItem.setQuantity(quantity);
+                cartItem.setTotalPrice(priceNeed);
+                cartItemRepository.save(cartItem);
+                break;
+            }
+        }
+
+        return cartRepository.save(cart);
+    }
+
+    @Override
+    public Cart deleteCartItem(Long idCart, Long idCartItem) {
+        Cart cart = cartRepository.getReferenceById(idCart);
+        CartItem cartItemNeed = null;
+        double priceNeed = 0.0;
+
+
+        for (CartItem cartItem : cart.getItems()) {
+            if (Objects.equals(cartItem.getId(), idCartItem)) {
+                cartItemNeed = cartItem;
+                priceNeed = cartItem.getTotalPrice();
+                break;
+            }
+        }
+
+        if (cartItemNeed != null && priceNeed != 0.0) {
+            cart.getItems().remove(cartItemNeed);
+            cart.setTotalPrice(cart.getTotalPrice() - priceNeed);
+        }
+
+        return cartRepository.save(cart);
+    }
+
     private CartItem findCartItem(Long idProduct, Set<CartItem> items) {
         if (items == null) return null;
 

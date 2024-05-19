@@ -1,5 +1,8 @@
 package com.dacs1.library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "carts")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cart {
 
     @Id
