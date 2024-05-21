@@ -1,13 +1,16 @@
 package com.dacs1.admin.controller;
 
+import com.dacs1.admin.utils.ExcelExporter;
 import com.dacs1.library.dto.AdminDto;
 import com.dacs1.library.dto.CustomerDto;
+import com.dacs1.library.enums.ObjectManage;
 import com.dacs1.library.enums.Role;
 import com.dacs1.library.model.Admin;
 import com.dacs1.library.model.Customer;
 import com.dacs1.library.service.AdminService;
 import com.dacs1.library.service.CustomerService;
 import com.dacs1.library.service.RoleService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.angus.mail.imap.protocol.MODSEQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,8 +19,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class EmployeesController {
@@ -44,6 +52,31 @@ public class EmployeesController {
 
         model.addAttribute("newEmployee", new Admin());
         return "employees";
+    }
+
+    @GetMapping("/export-employees")
+    public void exportProduct(HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=employees_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+
+        ExcelExporter excelExporter = new ExcelExporter(adminService.findAll());
+
+
+        List<String> fieldsToExport = List.of("id",
+                "firstName",
+                "lastName",
+                "username",
+                "email",
+                "phone",
+                "isEnable");
+        excelExporter.export(response, ObjectManage.Employees.name(), fieldsToExport);
     }
 
     @PostMapping("/new-employee")

@@ -1,9 +1,12 @@
 package com.dacs1.admin.controller;
 
 import com.dacs1.admin.helper.SetNameAndRoleToPage;
+import com.dacs1.admin.utils.ExcelExporter;
+import com.dacs1.library.enums.ObjectManage;
 import com.dacs1.library.model.Category;
 import com.dacs1.library.service.AdminService;
 import com.dacs1.library.service.CategoryService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +39,27 @@ public class CategoryController {
         model.addAttribute("newCategory", new Category());
         SetNameAndRoleToPage.setNameAndRoleToPage(model, "categories", adminService);
         return "categories";
+    }
+
+    @GetMapping("/export-categories")
+    public void exportCategories(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=categories_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+
+        ExcelExporter excelExporter = new ExcelExporter(categoryService.findAllCategory());
+
+
+        List<String> fieldsToExport = List.of("id",
+                "name",
+                "isDeleted",
+                "isActivated");
+        excelExporter.export(response, ObjectManage.Categories.name(), fieldsToExport);
     }
 
 

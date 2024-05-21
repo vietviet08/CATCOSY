@@ -12,7 +12,6 @@
 <div th:replace="~{fragments ::  sidebar}"></div>
 
 
-
 <div class="content position-relative">
     <!-- Navbar Start -->
     <div th:replace="~{fragments :: navbar}"></div>
@@ -20,9 +19,19 @@
 
 
     <div class="container">
-        <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#modalAdd"
-                data-bs-whatever="@mdo">Add voucher
-        </button>
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#modalAdd"
+                    data-bs-whatever="@mdo">Add voucher
+            </button>
+
+            <div class="my-2 mx-2">
+                <a th:href="@{/export-vouchers}" style="color: white">
+                    <div class="btn btn-primary">
+                        Export data
+                    </div>
+                </a>
+            </div>
+        </div>
 
         <div class="d-flex justify-content-center">
             <div th:if="${size == 0}" class="alert alert-danger text-center w-25 my-2" role="alert">
@@ -230,15 +239,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input id="sendMailDetailId" type="hidden" name="id" >
+                    <input id="sendMailDetailId" type="hidden" name="id">
                     <div class="mb-3">
                         <label for="sendMailDetailCodeVoucher" class="col-form-label">Code voucher</label>
-                        <input type="text" class="form-control" id="sendMailDetailCodeVoucher" name="sendMailDetailCodeVoucher" readonly>
+                        <input type="text" class="form-control" id="sendMailDetailCodeVoucher"
+                               name="sendMailDetailCodeVoucher" readonly>
                     </div>
 
                     <div class="mb-3">
                         <label for="sendDetailEmailCustomer" class="col-form-label">Email customer</label>
-                        <input type="email" class="form-control" id="sendDetailEmailCustomer" name="sendDetailEmailCustomer" autofocus>
+                        <input type="email" class="form-control" id="sendDetailEmailCustomer"
+                               name="sendDetailEmailCustomer" autofocus>
                     </div>
 
                 </div>
@@ -252,8 +263,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!--Toast Start-->

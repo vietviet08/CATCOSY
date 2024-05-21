@@ -2,11 +2,14 @@ package com.dacs1.admin.utils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
 import com.dacs1.library.enums.ObjectManage;
+import com.dacs1.library.model.Category;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
@@ -126,17 +129,12 @@ public class ExcelExporter<T> {
         CellStyle style = setStyleForHeader();
 
         createCell(row, 0, "ID", style);
-        createCell(row, 1, "Order Date", style);
-        createCell(row, 2, "Delivery Date", style);
-        createCell(row, 3, "Total Price", style);
-        createCell(row, 4, "Discount Price", style);
-        createCell(row, 5, "Shipping Fee", style);
-        createCell(row, 6, "Delivery Address", style);
-        createCell(row, 7, "Payment Method", style);
-        createCell(row, 8, "Status", style);
-        createCell(row, 9, "Notes", style);
-        createCell(row, 10, "Accept", style);
-        createCell(row, 11, "Cancel", style);
+        createCell(row, 1, "First Name", style);
+        createCell(row, 2, "Last Name", style);
+        createCell(row, 3, "Username", style);
+        createCell(row, 4, "Email", style);
+        createCell(row, 5, "Phone", style);
+        createCell(row, 6, "Enable", style);
 
         writeData();
     }
@@ -191,6 +189,12 @@ public class ExcelExporter<T> {
             cell.setCellValue((Long) value);
         } else if (value instanceof Double) {
             cell.setCellValue((Double) value);
+        }
+        else if (value instanceof Category) {
+            cell.setCellValue(((Category) value).getName());
+        }else if (value instanceof Date) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            cell.setCellValue(dateFormat.format((Date) value));
         } else {
             cell.setCellValue((String) value);
         }
@@ -222,7 +226,6 @@ public class ExcelExporter<T> {
         CellStyle style = setStyleForCell();
         T firstObject = objects.get(0);
         Field[] fields = firstObject.getClass().getDeclaredFields();
-        System.out.println(fields.length);
 
         for (T obj : objects) {
             Row row = sheet.createRow(rowCount++);

@@ -1,12 +1,15 @@
 package com.dacs1.admin.controller;
 
 import com.dacs1.admin.helper.SetNameAndRoleToPage;
+import com.dacs1.admin.utils.ExcelExporter;
 import com.dacs1.library.dto.ProductDto;
+import com.dacs1.library.enums.ObjectManage;
 import com.dacs1.library.model.Category;
 import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
 import com.dacs1.library.model.Size;
 import com.dacs1.library.service.*;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -75,6 +81,31 @@ public class ProductController {
         model.addAttribute("totalPage", products.getTotalPages());
         SetNameAndRoleToPage.setNameAndRoleToPage(model, "products", adminService);
         return "products";
+    }
+
+    @GetMapping("/export-products")
+    public void exportProduct(HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=products_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+
+        ExcelExporter excelExporter = new ExcelExporter(productService.getAllProduct());
+
+
+        List<String> fieldsToExport = List.of("id",
+                "name",
+                "category",
+                "costPrice",
+                "salePrice",
+                "description",
+                "isActivated");
+        excelExporter.export(response, ObjectManage.Products.name(), fieldsToExport);
     }
 
     @GetMapping("/add-product")

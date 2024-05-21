@@ -42,6 +42,7 @@
                     <option value="8">Crop-top</option>
                 </select>
 
+
             </div>
 
             <div class="d-flex justify-content-center">
@@ -62,17 +63,30 @@
             <!--                </div>-->
             <!--            </form>-->
 
-            <form id="searchForm" class="my-2">
-                <div class="input-group">
-                    <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"
-                           type="text" class="border-1" name="search" placeholder="Search product"
-                           aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary " style="color: white" type="submit">Search</button>
-                    </div>
+
+            <div class="" style="position: relative">
+                <div class="my-2  " style="position: absolute; top: 0; left: -100%">
+
+                    <a th:href="@{/export-products}" style="color: white">
+                        <div class="btn btn-primary">Export data
+                        </div>
+                    </a>
                 </div>
-            </form>
+                <form id="searchForm" class="my-2">
+                    <div class="input-group">
+                        <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"
+                               type="text" class="border-1" name="search" placeholder="Search product"
+                               aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary " style="color: white" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
         </div>
+
+
     </div>
 
     <div class="alert alert-success" th:if="${productSortedDesc}">ok</div>

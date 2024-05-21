@@ -32,8 +32,19 @@
     <!-- Navbar End-->
 
     <div class="container">
-        <div th:if="${orders.size() == 0}" class="nothing-orders bg-warning">There are no orders yet</div>
+        <div th:if="${orders.size() == 0}" class="nothing-orders bg-warning">There are no orders yet</div> <div class="my-2 ">
+        <a th:href="@{/export-orders}" style="color: white">
+            <div class="btn btn-primary">
+                Export data
+            </div>
+        </a>
+    </div>
+
         <div class="w-100 d-flex justify-content-between align-items-center">
+
+
+
+
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -81,16 +92,15 @@
                         </a>
 
 
-                        <a  th:if="${order.accept == true && !#strings.equals(order.status, 'Goods received')}" th:href="@{/cancel-order(id = ${order.id})}">
+                        <a th:if="${order.accept == true && !#strings.equals(order.status, 'Goods received')}"
+                           th:href="@{/cancel-order(id = ${order.id})}">
                             <div class="btn btn-warning">
                                 Cancel
                             </div>
                         </a>
 
 
-
-
-                        <a th:if="${#strings.equals(order.status, 'Goods received')}" >
+                        <a th:if="${#strings.equals(order.status, 'Goods received')}">
                             <button class="btn btn-warning" disabled>
                                 Cancel
                             </button>
@@ -257,7 +267,7 @@
 
                     $('#notes-text').val(order.notes)
 
-                    $('.idOder').append('<input name="idOrderNeed" type="hidden" value=" ' + order.id+ '">')
+                    $('.idOder').append('<input name="idOrderNeed" type="hidden" value=" ' + order.id + '">')
 
                     const statusValue = ['Awaiting approval', 'Delivering', 'Goods received', 'Cancelled'];
 

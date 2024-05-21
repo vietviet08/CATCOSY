@@ -1,14 +1,19 @@
 package com.dacs1.admin.controller;
 
+import com.dacs1.admin.utils.ExcelExporter;
+import com.dacs1.library.enums.ObjectManage;
 import com.dacs1.library.model.Voucher;
 import com.dacs1.library.service.MailService;
 import com.dacs1.library.service.VoucherService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +40,36 @@ public class VoucherController {
 
 
         return "voucher";
+    }
+
+    @GetMapping("/export-vouchers")
+    public void exportProduct(HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=vouchers_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+
+        ExcelExporter excelExporter = new ExcelExporter(voucherService.getAllVoucher());
+
+
+        List<String> fieldsToExport = List.of(
+                "id",
+                "codeVoucher",
+                "price",
+                "percentOfTotalPrice",
+                "minimumPrice",
+                "minimumTotalProduct",
+                "usageLimits",
+                "expiryDate",
+                "forEmailCustomer",
+                "isUsed",
+                "isActivated");
+        excelExporter.export(response, ObjectManage.Vouchers.name(), fieldsToExport);
     }
 
     @RequestMapping(value = "/findByIdVoucher", method = {RequestMethod.GET, RequestMethod.PUT})

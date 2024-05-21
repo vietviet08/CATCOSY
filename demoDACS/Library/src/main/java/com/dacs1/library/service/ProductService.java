@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ProductService {
+    List<Product> getAllProduct();
+
     List<ProductDto> findAllProduct();
 
     Product save(List<MultipartFile> images, List<Long> sizes, ProductDto productDto) throws IOException;

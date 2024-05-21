@@ -26,10 +26,22 @@
     <!-- Navbar End -->
 
     <div class="container">
+
+        <div class="d-flex">
         <div class="w-100 my-4">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                     data-bs-whatever="@mdo">New employee
             </button>
+        </div>
+
+            <div class="my-2 ">
+                <a th:href="@{/export-employees}" style="color: white">
+                    <div class="btn btn-primary" style="width: 120px;">
+                        Export data
+                    </div>
+                </a>
+            </div>
+
         </div>
 
         <div class="table-responsive">
