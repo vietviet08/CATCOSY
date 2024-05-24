@@ -2,6 +2,7 @@ package com.dacs1.library.service.impl;
 
 import com.dacs1.library.dto.AdminDto;
 import com.dacs1.library.model.Admin;
+import com.dacs1.library.model.Role;
 import com.dacs1.library.repository.AdminRepository;
 import com.dacs1.library.repository.RoleRepository;
 import com.dacs1.library.service.AdminService;
@@ -56,7 +57,13 @@ public class AdminServiceImpl implements AdminService {
         admin.setPassword(adminDto.getPassword());
         admin.setEmail(adminDto.getEmail());
         admin.setPhone(adminDto.getPhone());
-        admin.setRoles(Arrays.asList(roleRepository.findByName("ADMIN")));
+//        admin.setRoles(Arrays.asList(roleRepository.findByName("ADMIN")));
+
+        Role roleAdmin = roleRepository.findByName("ADMIN");
+        if (roleAdmin == null) {
+            throw new RuntimeException("Role ADMIN not found");
+        }
+        admin.setRoles(Arrays.asList(roleAdmin));
 
         return adminRepository.save(admin);
     }
