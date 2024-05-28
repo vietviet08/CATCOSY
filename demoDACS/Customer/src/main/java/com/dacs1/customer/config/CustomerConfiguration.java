@@ -83,6 +83,7 @@ public class CustomerConfiguration {
                 .authorizeHttpRequests(author ->
                         author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/detail-order/").permitAll()
+                                .requestMatchers("/orders/view/**").permitAll()
                                 .requestMatchers("/find-product/*").hasAuthority("CUSTOMER")
                                 .requestMatchers("/*", "/product-detail/**").permitAll()
                                 .anyRequest().authenticated()

@@ -167,6 +167,7 @@ public class MailServiceImpl implements MailService {
             variable.put("shippingFee", order.getShippingFee());
             variable.put("paymentMethod", order.getPaymentMethod());
             variable.put("deliveryAddress", order.getDeliveryAddress());
+            variable.put("codeViewOrder", order.getCodeViewOrder());
 
             helper.setText(thymeleafService.createContent("mail-ordered-customer", variable), true);
             helper.setSubject("Your order in CATCOSY");

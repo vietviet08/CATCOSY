@@ -21,6 +21,8 @@ public interface OrderService {
 
     Order findOrderById(Long id);
 
+    Order findOrderByCodeViewOrder(String code);
+
     void deleteOrder(Long id);
 
     Order acceptOrder(Long id);

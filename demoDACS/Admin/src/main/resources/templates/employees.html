@@ -28,11 +28,11 @@
     <div class="container">
 
         <div class="d-flex">
-        <div class="w-100 my-4">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo">New employee
-            </button>
-        </div>
+            <div class=" my-2 mx-2">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo">New employee
+                </button>
+            </div>
 
             <div class="my-2 ">
                 <a th:href="@{/export-employees}" style="color: white">
@@ -187,7 +187,8 @@
 
                     <div class="mb-3">
                         <label for="usernameUpdate" class="col-form-label">Username:</label>
-                        <input type="text" class="form-control" id="usernameUpdate" name="usernameUpdate" readonly="readonly">
+                        <input type="text" class="form-control" id="usernameUpdate" name="usernameUpdate"
+                               readonly="readonly">
                     </div>
 
                     <div class="mb-3">
@@ -210,7 +211,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="roleUpdate" class="col-form-label">Message:</label>
+                        <label for="roleUpdate" class="col-form-label">Role:</label>
                         <select id="roleUpdate" name="roleUpdate">
                             <option th:each="role : ${roles}" th:text="${role}"></option>
                         </select>
@@ -233,12 +234,12 @@
 <!-- JavaScript Libraries -->
 <div th:replace="~{fragments :: script}"></div>
 <script>
-    $('document').ready(function (){
+    $('document').ready(function () {
 
-            $('table #btnUpdate').on('click', function (e){
+            $('table #btnUpdate').on('click', function (e) {
                 e.preventDefault();
                 var href = $(this).attr('href');
-                $.get(href, function (employee, status){
+                $.get(href, function (employee, status) {
                     $('#idUpdate').val(employee.id);
                     $('#usernameUpdate').val(employee.name);
                     $('#firstNameUpdate').val(employee.firstName);

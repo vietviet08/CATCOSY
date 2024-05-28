@@ -51,6 +51,10 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalPrice(cart.getTotalPrice());
         order.setDiscountPrice(0.0);
         order.setShippingFee(0.0);
+
+        UUID uuid = UUID.randomUUID() ;
+        order.setCodeViewOrder(uuid.toString());
+
         order.setAccept(false);
         order.setStatus(status[0]);
 
@@ -94,6 +98,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findOrderById(Long id) {
         return orderRepository.getReferenceById(id);
+    }
+
+    @Override
+    public Order findOrderByCodeViewOrder(String code) {
+        return orderRepository.findOrderByCodeViewOrder(code);
     }
 
     @Override

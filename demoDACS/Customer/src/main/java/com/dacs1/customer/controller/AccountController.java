@@ -8,20 +8,41 @@ import com.dacs1.library.model.ProductImage;
 import com.dacs1.library.service.CustomerService;
 import com.dacs1.library.service.OrderDetailService;
 import com.dacs1.library.service.OrderService;
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.IWebContext;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class AccountController {
+    @Autowired
+    private ServletContext servletContext;
 
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
     @Autowired
     private CustomerService customerService;
@@ -163,6 +184,66 @@ public class AccountController {
         model.addAttribute("orders", orders);
 
         return "account-orders";
+    }
+
+//    @GetMapping("/orders/view/{code}")
+//    public String viewOrder(@PathVariable("code") String codeViewOrder, Model model) {
+//
+//        try {
+//            Order order = orderService.findOrderByCodeViewOrder(codeViewOrder);
+//
+//            model.addAttribute("order", order);
+//
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            return "404";
+//        }
+//
+//        return "view-orders";
+//    }
+
+    @GetMapping("/orders/view/test")
+    public String viewOrder(Model model) {
+        model.addAttribute("dateNow", new Date());
+        model.addAttribute("order", orderService.findOrderById(22L));
+        return "view-orders";
+    }
+
+    @GetMapping("orders/view/pdf/{code}")
+    public ResponseEntity<ByteArrayResource> getPDF(@PathVariable("code") String codeViewOrder,
+                                                    HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    Model model) throws IOException {
+
+        // Do Business Logic
+        Order order =  orderService.findOrderByCodeViewOrder(codeViewOrder);
+
+        // Create HTML using Thymeleaf template Engine
+        Context context = new Context();
+        context.setVariable("order", order);
+        String orderHtml = templateEngine.process("view-orders", context);
+
+        // Setup Source and target I/O streams
+        ByteArrayOutputStream target = new ByteArrayOutputStream();
+
+        // Setup converter properties
+        ConverterProperties converterProperties = new ConverterProperties();
+        converterProperties.setBaseUri("http://localhost:8086");
+
+        // Call convert method
+        HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
+
+        // Extract output as bytes
+        byte[] bytes = target.toByteArray();
+        ByteArrayResource byteArrayResource = new ByteArrayResource(bytes);
+
+        // Send the response as downloadable PDF
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
+                .contentLength(bytes.length)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(byteArrayResource);
     }
 
     @RequestMapping(value = "/cancel-order", method = {RequestMethod.GET, RequestMethod.PUT})

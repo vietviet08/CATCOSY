@@ -28,6 +28,7 @@ public class Order {
     private String paymentMethod;
     private String status;
     private String notes;
+    private String codeViewOrder;
     private boolean isAccept;
     private boolean isCancel;
 
