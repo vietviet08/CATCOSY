@@ -3,6 +3,7 @@ package com.dacs1.library.service;
 import com.dacs1.library.dto.AdminDto;
 import com.dacs1.library.model.Admin;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface AdminService {
 
     Admin saveEmployee(Admin admin);
 
-    Admin update(AdminDto adminDto, Long id);
+    Admin update(AdminDto adminDto, Long id, MultipartFile image);
 
     Admin updateEmployee(AdminDto admin, Long id, String roleUpdate);
 

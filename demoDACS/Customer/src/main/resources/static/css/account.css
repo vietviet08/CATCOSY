@@ -3,8 +3,8 @@
 }
 
 .avatar-frame{
-    width: 120px;
-    height: 120px;
+    width: 145px;
+    height: 145px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,6 +15,8 @@
 }
 
 .avatar-frame img{
+    height: 100%;
+
 }
 
 .input-file {
@@ -73,7 +75,7 @@ select{
 }
 
 .right-page form{
-    width: 60%;
+    width: 80%;
 }
 
 .right-page form .submit{

@@ -28,6 +28,10 @@
     opacity: 1;
 }
 
+.avatarImage{
+    object-fit: cover;
+}
+
 
 /*** Button ***/
 .btn {

@@ -51,30 +51,42 @@
 
 
             <div class="col-12 col-sm-12 col-lg-6">
-                <form th:action="@{/save-my-info}" method="post" class="form-info">
-                    <input type="hidden" th:value="${id}" name="id">
+                <form th:action="@{/save-my-info}" method="post" class="form-info" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-12 col-sm-4 d-flex flex-column align-items-center    ">
+                            <div class="avatar-frame">
+                                <img id="avatar-preview" th:src=" ${imageAvatar} != null ? 'data:image/jpeg;base64,' + ${imageAvatar} : '/admin/img/me-8-256.png' " alt="avt">
+                            </div>
 
-                    <label for="username">Username</label>
-                    <input class="form-control" type="text" placeholder="username" name="username" id="username"
-                           th:value="${username}" readonly="readonly" disabled="disabled">
+                            <input id="img" name="avatarImage" class="input-file" type="file">
+                        </div>
+                        <div class="col-12 col-sm-8">
+                            <input type="hidden" th:value="${id}" name="id">
 
-                    <label for="firstName">First name</label>
-                    <input class="form-control" type="text" placeholder="First name" name="firstName" id="firstName"
-                           th:value="${firstName}">
+                            <label for="username">Username</label>
+                            <input class="form-control" type="text" placeholder="username" name="username" id="username"
+                                   th:value="${username}" readonly="readonly" disabled="disabled">
 
-                    <label for="lastName">Last name</label>
-                    <input class="form-control" type="text" placeholder="Last name" name="lastName" id="lastName"
-                           th:value="${lastName}">
+                            <label for="firstName">First name</label>
+                            <input class="form-control" type="text" placeholder="First name" name="firstName" id="firstName"
+                                   th:value="${firstName}">
 
-                    <label for="email">Email</label>
-                    <input class="form-control" type="email" placeholder="Email" name="email" id="email"
-                           th:value="${email != null ? email : ''}">
+                            <label for="lastName">Last name</label>
+                            <input class="form-control" type="text" placeholder="Last name" name="lastName" id="lastName"
+                                   th:value="${lastName}">
 
-                    <label for="phone">Phone</label>
-                    <input class="form-control" type="text" placeholder="Phone" name="phone" id="phone"
-                           th:value="${phone != null ? phone : ''}">
+                            <label for="email">Email</label>
+                            <input class="form-control" type="email" placeholder="Email" name="email" id="email"
+                                   th:value="${email != null ? email : ''}">
 
-                    <button type="submit">Save change</button>
+                            <label for="phone">Phone</label>
+                            <input class="form-control" type="text" placeholder="Phone" name="phone" id="phone"
+                                   th:value="${phone != null ? phone : ''}">
+
+                            <button type="submit">Save change</button>
+                        </div>
+                    </div>
+
 
                 </form>
             </div>
@@ -91,6 +103,19 @@
 
 <!-- JavaScript Libraries -->
 <div th:replace="~{fragments :: script}"></div>
+
+<script>
+    document.getElementById('img').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('avatar-preview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 </body>
 
 </html>

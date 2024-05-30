@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -35,6 +36,7 @@ public class InfoAccountController {
         model.addAttribute("lastName", admin.getLastName());
         model.addAttribute("email", admin.getEmail());
         model.addAttribute("phone", admin.getPhone());
+        model.addAttribute("imageAvatar", admin.getImage());
 
         return "info";
     }
@@ -45,6 +47,7 @@ public class InfoAccountController {
                              @RequestParam("lastName") String lastName,
                              @RequestParam("email") String email,
                              @RequestParam("phone") String phone,
+                             @RequestParam("avatarImage") MultipartFile image,
                              RedirectAttributes model) {
 
         try {
@@ -54,8 +57,7 @@ public class InfoAccountController {
             admin.setLastName(lastName);
             admin.setEmail(email);
             admin.setPhone(phone);
-
-            adminService.update(admin, id);
+            adminService.update(admin, id, image);
 
             model.addFlashAttribute("success", "Update your information successfully!");
         } catch (Exception e) {

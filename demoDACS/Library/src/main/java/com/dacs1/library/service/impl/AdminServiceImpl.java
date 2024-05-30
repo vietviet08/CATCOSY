@@ -12,9 +12,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -74,12 +77,18 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin update(AdminDto adminDto, Long id) {
+    public Admin update(AdminDto adminDto, Long id, MultipartFile image) {
         Admin admin = adminRepository.getReferenceById(id);
-        admin.setFirstName(adminDto.getFirstName());
-        admin.setLastName(adminDto.getLastName());
-        admin.setPhone(adminDto.getPhone());
-        admin.setEmail(adminDto.getEmail());
+        try {
+            admin.setFirstName(adminDto.getFirstName());
+            admin.setLastName(adminDto.getLastName());
+            admin.setPhone(adminDto.getPhone());
+            admin.setEmail(adminDto.getEmail());
+            if(!image.isEmpty())
+                admin.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return adminRepository.save(admin);
     }
 
