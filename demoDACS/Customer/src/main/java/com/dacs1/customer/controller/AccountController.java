@@ -24,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IWebContext;
 import org.thymeleaf.context.WebContext;
@@ -32,6 +33,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -69,6 +71,7 @@ public class AccountController {
         model.addAttribute("lastName", customer.getLastName());
         model.addAttribute("emailUser", customer.getEmail());
         model.addAttribute("phone", customer.getPhone());
+        model.addAttribute("imageAvatar", customer.getImage());
 
         return "account";
     }
@@ -78,6 +81,7 @@ public class AccountController {
     public String changeInfo(@RequestParam("firstName") String firstName,
                              @RequestParam("lastName") String lastName,
                              @RequestParam("phone") String phone,
+                             @RequestParam("avatarImage") MultipartFile image,
                              Model model,
                              Principal principal) {
 
@@ -94,6 +98,8 @@ public class AccountController {
                 customer.setFirstName(firstName);
                 customer.setLastName(lastName);
                 customer.setPhone(phone);
+                if(!image.isEmpty())
+                    customer.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
                 customerService.updateCustomer(customer);
                 model.addAttribute("success", "Change info successfully!");
                 return "redirect:/account";

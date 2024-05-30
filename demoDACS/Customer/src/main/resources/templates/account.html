@@ -43,35 +43,49 @@
 
 
         <div class="right-page col-12 col-sm-12 col-lg-8">
-            <form th:action="@{/account}" method="post">
-                <h4 class="title">INFORMATION</h4>
+            <form th:action="@{/account}" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-12 col-sm-4 d-flex flex-column align-items-center    ">
+                        <div class="avatar-frame">
+                            <img id="avatar-preview" th:src=" ${imageAvatar} != null ? 'data:image/jpeg;base64,' + ${imageAvatar} : '#' " alt="avt">
+                        </div>
 
-                <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
-                <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+                        <input id="img" name="avatarImage" class="input-file" type="file">
+                    </div>
+                    <div class="col-12 col-sm-8">
+                        <h4 class="title">INFORMATION</h4>
 
-                <label for="fullName">Full name</label>
-                <input class="form-control" id="fullName" name="fullName" type="text" placeholder="Full name"
-                       th:value="${nameUser}" readonly="readonly" disabled="disabled">
+                        <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+                        <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
-                <label for="firstName">First name</label>
-                <input class="form-control" id="firstName" name="firstName" type="text" placeholder="Full name"
-                       th:value="${firstName}">
+                        <label for="fullName">Full name</label>
+                        <input class="form-control" id="fullName" name="fullName" type="text" placeholder="Full name"
+                               th:value="${nameUser}" readonly="readonly" disabled="disabled">
 
-                <label for="lastName">Last name</label>
-                <input class="form-control" id="lastName" name="lastName" type="text" placeholder="Full name"
-                       th:value="${lastName}">
+                        <label for="firstName">First name</label>
+                        <input class="form-control" id="firstName" name="firstName" type="text" placeholder="Full name"
+                               th:value="${firstName}">
 
-                <label for="email">Email</label>
-                <input class="form-control" id="email" name="email" type="email" placeholder="Email" readonly="readonly"
-                       disabled="disabled" th:value="${emailUser}">
+                        <label for="lastName">Last name</label>
+                        <input class="form-control" id="lastName" name="lastName" type="text" placeholder="Full name"
+                               th:value="${lastName}">
 
-                <label for="phone">Phone</label>
-                <input class="form-control" id="phone" name="phone" type="text" placeholder="Phone" th:value="${phone}">
+                        <label for="email">Email</label>
+                        <input class="form-control" id="email" name="email" type="email" placeholder="Email"
+                               readonly="readonly"
+                               disabled="disabled" th:value="${emailUser}">
+
+                        <label for="phone">Phone</label>
+                        <input class="form-control" id="phone" name="phone" type="text" placeholder="Phone"
+                               th:value="${phone}">
 
 
-                    <input onclick="forwardPage()" class="submit" type="submit" value="SAVE CHANGE ">
+                        <input onclick="forwardPage()" class="submit" type="submit" value="SAVE CHANGE ">
 
+                    </div>
+                </div>
             </form>
+
         </div>
 
     </div>
@@ -87,11 +101,38 @@
 
 <script>
 
-    function forwardPage(){
+    function forwardPage() {
         setTimeout(() => {
             window.location.href = "/account";
         }, 500);
     }
+
+    document.getElementById('img').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('avatar-preview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // const inputFile = document.querySelector('.input-file');
+    // const fileName = document.querySelector('.file-name');
+    // const customFileUpload = document.querySelector('.custom-file-upload');
+    //
+    // customFileUpload.addEventListener('click', () => {
+    //     inputFile.click();
+    // });
+    //
+    // inputFile.addEventListener('change', (event) => {
+    //     if (event.target.files.length > 0) {
+    //         fileName.textContent = event.target.files[0].name;
+    //     } else {
+    //         fileName.textContent = 'Không có tệp nào được chọn';
+    //     }
+    // });
 
 </script>
 

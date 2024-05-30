@@ -2,6 +2,26 @@
     background-color: #f7f7f7;
 }
 
+.avatar-frame{
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #858E96;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.avatar-frame img{
+}
+
+.input-file {
+    overflow: hidden;
+    width: 85px;
+}
+
 input{
     margin: 0 0 15px 0;
 }

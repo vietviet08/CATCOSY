@@ -107,7 +107,7 @@
                     <button type="submit" style="color: white; font-size: 16px">Add to cart</button>
                 </div>
             </form>
-            <p class="w-75" th:text="${product.description != null ? product.description : ''}">
+            <p class="w-75" th:utext="${product.description != null ? product.description : ''}">
                 <span
                         style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;"><strong>CANDLES SPARK T-SHIRT</strong></span><br><span
                     style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Chất liệu</strong>: Cotton 260 GSM</span><br><span

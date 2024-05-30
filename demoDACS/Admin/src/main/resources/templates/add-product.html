@@ -2,12 +2,17 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head th:replace="~{fragments :: head}">
 
-    <style>
-        form .form-group {
-            margin: 20px 0;
-        }
-    </style>
 </head>
+<style>
+    form .form-group {
+        margin: 20px 0;
+    }
+
+    .richText .richText-toolbar:last-child {
+        display: none;
+    }
+</style>
+<link rel="stylesheet" th:href="@{/css/richtext.min.css}">
 <body>
 
 
@@ -20,7 +25,7 @@
     <!-- Navbar Start -->
     <div th:replace="~{fragments :: navbar}"></div>
     <!-- Navbar End-->
-    <div class="container ">
+    <div class="container my-5">
         <form style="width: 100%" class="form-horizontal" th:action="@{/save-product}" method="post"
               enctype="multipart/form-data"
               th:object="${newProduct}">
@@ -84,9 +89,10 @@
                     <label class="col-md-4 control-label" for="description">Product description </label>
                     <div class="col-md-4">
                     <textarea style="height: 200px" th:field="*{description}" id="description" name="description"
-                              class="form-control input-md" type="text"></textarea>
+                              class="form-control input-md editorArea" type="text"></textarea>
                     </div>
                 </div>
+
 
                 <!-- Text input-->
 
@@ -110,7 +116,7 @@
 </div>
 
 
-<div th:replace="~{fragments ::  footer}"></div>
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
 
 <div th:replace="~{fragments :: toast}"></div>
 
@@ -118,10 +124,8 @@
 <div th:replace="~{fragments :: script}">
 </div>
 
-
 <script th:replace="~{fragments :: toastScript}"></script>
-
-
+<div th:replace="~{fragments :: richtext}"></div>
 
 </body>
 </html>
