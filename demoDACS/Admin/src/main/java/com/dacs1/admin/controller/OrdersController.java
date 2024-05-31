@@ -2,6 +2,7 @@ package com.dacs1.admin.controller;
 
 import com.dacs1.admin.utils.ExcelExporter;
 import com.dacs1.library.dto.OrderDetailDto;
+import com.dacs1.library.dto.OrderDto;
 import com.dacs1.library.enums.ObjectManage;
 import com.dacs1.library.model.Order;
 import com.dacs1.library.service.OrderDetailService;
@@ -107,8 +108,8 @@ public class OrdersController {
 
     @RequestMapping(value = "/status-order", method = {RequestMethod.GET, RequestMethod.PUT})
     @ResponseBody
-    public Order statusOrder(Long id) {
-        return orderService.findOrderById(id);
+    public OrderDto statusOrder(Long id) {
+        return orderService.findOrderByIdDto(id);
     }
 
     @PostMapping("/save-change-status")

@@ -1,0 +1,14 @@
+package com.dacs1.library.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class OrderDto {
+    private Long idOrder;
+    private String status;
+    private String notes;
+}

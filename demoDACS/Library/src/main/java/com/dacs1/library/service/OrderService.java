@@ -1,5 +1,6 @@
 package com.dacs1.library.service;
 
+import com.dacs1.library.dto.OrderDto;
 import com.dacs1.library.model.Cart;
 import com.dacs1.library.model.CartItem;
 import com.dacs1.library.model.Customer;
@@ -20,6 +21,8 @@ public interface OrderService {
     List<Order> finAllOrderByCustomerId(Customer customer);
 
     Order findOrderById(Long id);
+
+    OrderDto findOrderByIdDto(Long id);
 
     Order findOrderByCodeViewOrder(String code);
 

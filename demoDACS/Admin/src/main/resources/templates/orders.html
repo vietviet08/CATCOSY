@@ -181,9 +181,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="notes-text" class="col-form-label">Notes:</label>
-                                <textarea name="notes" class="form-control" id="notes-text"></textarea>
+                                <textarea name="notes" class="form-control " id="notes-text"></textarea>
                             </div>
-                            <div class="idOder">
+                            <div class="idOrder">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -261,13 +261,14 @@
                 e.preventDefault();
                 var href = $(this).attr('href');
                 $.get(href, function (order, status) {
-                    $('.idOder').empty();
+                    console.log(order)
+                    $('.idOrder').empty();
 
                     $('#status-select').empty();
 
                     $('#notes-text').val(order.notes)
 
-                    $('.idOder').append('<input name="idOrderNeed" type="hidden" value=" ' + order.id + '">')
+                    $('.idOrder').append('<input name="idOrderNeed" type="hidden" value=" ' + order.idOrder + '">')
 
                     const statusValue = ['Awaiting approval', 'Delivering', 'Goods received', 'Cancelled'];
 

@@ -1,11 +1,13 @@
 package com.dacs1.library.service.impl;
 
+import com.dacs1.library.dto.OrderDto;
 import com.dacs1.library.model.*;
 import com.dacs1.library.repository.CartRepository;
 import com.dacs1.library.repository.OrderDetailRepository;
 import com.dacs1.library.repository.OrderRepository;
 import com.dacs1.library.service.CartService;
 import com.dacs1.library.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         order.setDiscountPrice(0.0);
         order.setShippingFee(0.0);
 
-        UUID uuid = UUID.randomUUID() ;
+        UUID uuid = UUID.randomUUID();
         order.setCodeViewOrder(uuid.toString());
 
         order.setAccept(false);
@@ -99,6 +101,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findOrderById(Long id) {
         return orderRepository.getReferenceById(id);
+    }
+
+    @Override
+    public OrderDto findOrderByIdDto(Long id) {
+        Order order = orderRepository.getReferenceById(id);
+        return new OrderDto(order.getId(), order.getStatus(), order.getNotes());
     }
 
     @Override
@@ -154,7 +162,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.getReferenceById(id);
         order.setStatus(status[statusValue]);
 
-        if(statusValue == 3){
+
+        if (statusValue == 2) {
             List<OrderDetail> orderDetails = order.getOrderDetails();
             orderDetails.forEach(orderDetail -> {
                 orderDetail.setAllowComment(true);
@@ -165,7 +174,6 @@ public class OrderServiceImpl implements OrderService {
         order.setNotes(notes);
         return orderRepository.save(order);
     }
-
 
 
 }
