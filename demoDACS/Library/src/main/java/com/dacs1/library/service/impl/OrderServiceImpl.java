@@ -69,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setTotalPrice(item.getTotalPrice());
             orderDetail.setUnitPrice(item.getUnitPrice());
             orderDetail.setSize(item.getSize());
+            orderDetail.setAllowComment(false);
             orderDetailRepository.save(orderDetail);
             orderDetails.add(orderDetail);
         }
@@ -152,6 +153,15 @@ public class OrderServiceImpl implements OrderService {
     public Order changeStatusAndNote(Long id, int statusValue, String notes) {
         Order order = orderRepository.getReferenceById(id);
         order.setStatus(status[statusValue]);
+
+        if(statusValue == 3){
+            List<OrderDetail> orderDetails = order.getOrderDetails();
+            orderDetails.forEach(orderDetail -> {
+                orderDetail.setAllowComment(true);
+                orderDetailRepository.save(orderDetail);
+            });
+        }
+
         order.setNotes(notes);
         return orderRepository.save(order);
     }

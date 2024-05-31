@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +18,6 @@ public class OrderDetailDto {
     private Double unitPrice;
     private String quantityAndSize;
     private Double totalPrice;
-
+    private boolean isAllowComment;
 
 }

@@ -2,6 +2,7 @@ package com.dacs1.customer.controller;
 
 import com.dacs1.library.dto.ProductDto;
 import com.dacs1.library.model.Category;
+import com.dacs1.library.model.OrderDetail;
 import com.dacs1.library.model.Product;
 import com.dacs1.library.model.ProductImage;
 import com.dacs1.library.service.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +35,12 @@ public class PageProductController {
 
     @Autowired
     private SizeService sizeService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
+    private CustomerService customerService;
 
 //    @GetMapping({"/all-product", "/products"})
 //    public String getAllProduct(@RequestParam(required = false, defaultValue = "0") int page, Model model) {
@@ -114,15 +122,22 @@ public class PageProductController {
 
 
     @GetMapping("/product-detail/{id}")
-    public String allProduct(@PathVariable("id") long id, Model model) {
+    public String allProduct(@PathVariable("id") long id, Model model, Principal principal) {
 
         ProductDto productDto = productService.getById(id);
         List<ProductDto> productsSameCategory = productService.productRandomSameCategoryLimit(productDto.getCategory().getId(), id, 8);
+        boolean allowComment = false;
+        if(principal != null)
+            allowComment = orderDetailService.checkAllowComment(customerService.finByUsernameIsActive(principal.getName()).getId(), id);
+
 
         model.addAttribute("title", productDto.getName());
         model.addAttribute("product", productDto);
         model.addAttribute("idProduct", id);
         model.addAttribute("productsSameCategory", productsSameCategory);
+        model.addAttribute("allowComment", allowComment);
+
+        System.out.println(allowComment);
 
         return "detail-product";
     }

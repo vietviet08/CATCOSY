@@ -128,10 +128,290 @@
 
     </div>
 
-    <div class="text-center" style="padding: 40px 0">
+</div>
 
-        <h3 class="font-weight-bold">PRODUCT SAME</h3>
+<div class="container rate-comment my-5 py-5">
+    <div class="title-rate-product"><h3>RATE PRODUCT</h3></div>
+    <div class="over-view-star">
+        <div class="total-star">
+            <div class="total-start-main">
+                <div>
+                    <p>4.5</p>
+
+                </div>
+                <div class="star-star">
+                    <div class="rating-box">
+                        <div class="stars">
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star dive"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="total-rate">
+                <ul class="rate-list">
+                    <li>
+                        <div class="number-star">
+                            5<i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="timeline-star">
+                            <p class="timing" style="width: 70%"></p>
+                        </div>
+                        <span class="number-percent">70%</span>
+                    </li>
+                    <li>
+                        <div class="number-star">
+                            4<i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="timeline-star">
+                            <p class="timing" style="width: 22%"></p>
+                        </div>
+                        <span class="number-percent">22%</span>
+                    </li>
+                    <li>
+                        <div class="number-star">
+                            3<i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="timeline-star">
+                            <p class="timing" style="width: 4%"></p>
+                        </div>
+                        <span class="number-percent dsp">4%</span>
+                    </li>
+                    <li>
+                        <div class="number-star">
+                            2<i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="timeline-star">
+                            <p class="timing" style="width: 2%"></p>
+                        </div>
+                        <span class="number-percent dsp">2%</span>
+                    </li>
+                    <li>
+                        <div class="number-star">
+                            1<i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="timeline-star">
+                            <p class="timing" style="width: 2%"></p>
+                        </div>
+                        <span class="number-percent dsp">2%</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+    <div class="container container-main-rate-product ">
+        <div class="main-comment-rate my-3">
+            <div class="row">
+                <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
+                    <div class="avatar-customer">
+                        <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                    </div>
+                </div>
+                <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
+                    <div class="name-customer">Nguyen Quoc Viet</div>
+                    <div class="star-rated">
+                        <div class="stars stars-rate">
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star dive"></i>
+                        </div>
+                    </div>
+                    <div class="date-time-size">
+                        <div class="date-time"
+                             th:text="${#dates.format(#dates.createNow(),'dd-MM-yyy HH:mm:ss')}"></div>
+                        <div>|</div>
+                        <div class="size-bought">XL</div>
+                    </div>
+                    <div class="content-comment">Phần đen là chất dạ mỏng phối tay chất giả da PU màu trắng nha. Lỗi nhẹ
+                        1c cúc thôi nma cũng xinh nha giá này là hời r nha. Mình n58 50kg vừa hay trùm mông nha. Áo của
+                        shop rộng chứ kh dài mấy
+                    </div>
+                    <div class="container-image-rate-product">
+                        <div class="image-comment">
+                            <img  th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                    </div>
+
+                    <div class="container-image-rate-product slick-preview-comment">
+                        <div class="image-comment" >
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                    </div>
+
+                    <div class="like-comment">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <div class="total-like">23</div>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+        <div class="main-comment-rate my-3">
+            <div class="row">
+                <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
+                    <div class="avatar-customer">
+                        <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                    </div>
+                </div>
+                <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
+                    <div class="name-customer">Nguyen Quoc Viet</div>
+                    <div class="star-rated">
+                        <div class="stars stars-rate">
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star dive"></i>
+                        </div>
+                    </div>
+                    <div class="date-time-size">
+                        <div class="date-time"
+                             th:text="${#dates.format(#dates.createNow(),'dd-MM-yyy HH:mm:ss')}"></div>
+                        <div>|</div>
+                        <div class="size-bought">XL</div>
+                    </div>
+                    <div class="content-comment">Phần đen là chất dạ mỏng phối tay chất giả da PU màu trắng nha. Lỗi nhẹ
+                        1c cúc thôi nma cũng xinh nha giá này là hời r nha. Mình n58 50kg vừa hay trùm mông nha. Áo của
+                        shop rộng chứ kh dài mấy
+                    </div>
+                    <div class="container-image-rate-product">
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                    </div>
+
+                    <div class="container-image-rate-product slick-preview-comment">
+                        <div class="image-comment" >
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                    </div>
+
+                    <div class="like-comment">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <div class="total-like">23</div>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+        <div class="main-comment-rate my-3">
+            <div class="row">
+                <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
+                    <div class="avatar-customer">
+                        <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                    </div>
+                </div>
+                <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
+                    <div class="name-customer">Nguyen Quoc Viet</div>
+                    <div class="star-rated">
+                        <div class="stars stars-rate">
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star active"></i>
+                            <i class="fa-solid fa-star dive"></i>
+                        </div>
+                    </div>
+                    <div class="date-time-size">
+                        <div class="date-time"
+                             th:text="${#dates.format(#dates.createNow(),'dd-MM-yyy HH:mm:ss')}"></div>
+                        <div>|</div>
+                        <div class="size-bought">XL</div>
+                    </div>
+                    <div class="content-comment">Phần đen là chất dạ mỏng phối tay chất giả da PU màu trắng nha. Lỗi nhẹ
+                        1c cúc thôi nma cũng xinh nha giá này là hời r nha. Mình n58 50kg vừa hay trùm mông nha. Áo của
+                        shop rộng chứ kh dài mấy
+                    </div>
+                    <div class="container-image-rate-product">
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                    </div>
+
+                    <div class="container-image-rate-product slick-preview-comment">
+                        <div class="image-comment" >
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                        <div class="image-comment">
+                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+
+                        </div>
+                    </div>
+
+                    <div class="like-comment">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <div class="total-like">23</div>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="pagination-rate-product"></div>
+</div>
+
+
+<div class="text-center" style="padding: 20px 0">
+
+    <h3 class="font-weight-bold">PRODUCT SAME</h3>
 </div>
 
 <div class="container-product-same container d-flex justify-content-center " th:value="${productsSameCategory.size()}">
@@ -174,7 +454,8 @@
             </form>
             <div class="tag-sale-product d-flex justify-content-center align-items-center"
                  th:if="${product.salePrice > 0}"
-                 th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}" style="left: 0"></div>
+                 th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}"
+                 style="left: 0"></div>
         </a>
     </div>
 </div>
@@ -208,6 +489,42 @@
     increaseButton.addEventListener("click", function () {
         var value = parseInt(input.value);
         input.value = value + 1;
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy tất cả các container
+        var containers = document.querySelectorAll('.container-image-rate-product');
+
+        containers.forEach(function(container, index) {
+            var images = container.querySelectorAll('img');
+
+            images.forEach(function(image) {
+                image.addEventListener('click', function() {
+                    var previewContainer = containers[index + 1];
+
+                    if (previewContainer.classList.contains('active')) {
+                        // Nếu có, ẩn previewContainer
+                        previewContainer.classList.remove('active');
+                        previewContainer.style.visibility = 'hidden';
+                        previewContainer.style.opacity = '0';
+                        previewContainer.style.maxHeight = '0';
+                    } else {
+                        // document.querySelectorAll('.slick-preview-comment').forEach(function(pc) {
+                        //     pc.classList.remove('active');
+                        //     pc.style.visibility = 'hidden';
+                        //     pc.style.opacity = '0';
+                        //     pc.style.maxHeight = '0';
+                        // });
+
+                        previewContainer.classList.add('active');
+                        previewContainer.style.visibility = 'visible';
+                        previewContainer.style.opacity = '1';
+                        previewContainer.style.maxHeight = '1000px';
+                    }
+                });
+            });
+        });
     });
 
     $(document).ready(function () {
@@ -245,6 +562,12 @@
                     ]
                 });
             }
+
+            $('.slick-preview-comment').slick({
+
+            })
+
+
         }
     )
 

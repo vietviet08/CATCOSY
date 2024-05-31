@@ -267,6 +267,7 @@ public class AccountController {
     @RequestMapping(value = "/detail-order", method = {RequestMethod.GET})
     @ResponseBody
     public List<OrderDetailDto> viewOrderDetail(Long id, Model model) {
+
         return orderDetailService.finAllByOrderIdDto(id);
     }
 

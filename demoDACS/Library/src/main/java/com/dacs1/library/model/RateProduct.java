@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,10 +31,23 @@ public class RateProduct {
 
     private String content;
 
-//    @OneToMany(mappedBy = "rateProduct", cascade = CascadeType.ALL)
-//    private List<RateProductImage> images;
+    @OneToMany(mappedBy = "rateProduct", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RateProductImage> images;
 
-    private Date dateUpload;
+    private LocalDateTime dateUpload;
+
+    private boolean rated;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    private Product product;
+
+    private int amountOfLike;
+
+    private boolean isDelete;
+
+    @OneToMany(mappedBy = "rateProduct", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CustomerLikedComment> customersLikedComment;
 
 
 }

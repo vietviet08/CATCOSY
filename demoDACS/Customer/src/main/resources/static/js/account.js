@@ -12,6 +12,9 @@ $('document').ready(function () {
                     currency: 'VND'
                 });
                 $.each(orderDetails, function (index, orderDetail) {
+                    var allowComment = orderDetail.isAllowComment;
+                    console.log(orderDetail)
+                    console.log(allowComment)
                     $("#listOrderDetail").append(
                         '<tr>' +
                         '<th scope="row">' +
@@ -25,6 +28,11 @@ $('document').ready(function () {
                         '<td class="price-product">' + VND.format(orderDetail.unitPrice) + '</td>' +
                         '<td>' + orderDetail.quantityAndSize + '</td>' +
                         '<td class="price-product">' + VND.format(orderDetail.totalPrice) + '</td>' +
+                        '<td class="">' +
+                        (orderDetail.allowComment ? '<button class="btn btn-primary ">Rate </button>' : '<button class="btn btn-secondary" disabled>Rate </button>') +
+
+                        '</td>' +
+
                         '</tr>'
                     );
                 });

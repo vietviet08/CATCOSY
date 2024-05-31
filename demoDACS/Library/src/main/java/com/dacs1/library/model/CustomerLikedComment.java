@@ -9,21 +9,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "comment_images")
-public class RateProductImage {
+@Table(name = "customer_liked_comment")
+public class CustomerLikedComment {
 
     @Id
-    @Column(name = "id_comment_image")
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(name = "customer_liked_comment_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rate_id", referencedColumnName = "rate_id")
     private RateProduct rateProduct;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private String image;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    private Customer customer;
+
+    private boolean isLiked;
 
 
 }
