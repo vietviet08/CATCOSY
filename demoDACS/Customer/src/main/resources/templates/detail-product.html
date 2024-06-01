@@ -131,22 +131,28 @@
 </div>
 
 <div class="container rate-comment my-5 py-5">
+
     <div class="title-rate-product"><h3>RATE PRODUCT</h3></div>
+
+    <!--overview star-->
     <div class="over-view-star">
         <div class="total-star">
             <div class="total-start-main">
                 <div>
-                    <p>4.5</p>
-
+                    <p th:text="${EStar}"></p>
                 </div>
                 <div class="star-star">
                     <div class="rating-box">
                         <div class="stars">
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star dive"></i>
+                            <i th:each="star, index : ${#numbers.sequence(1, 5)}"
+                               class="fa-solid fa-star"
+                               th:classappend="(${star + 0.5 == EStar}) ? 'dive' : (${star <= EStar} ? 'active' : '')">
+                            </i>
+<!--                            <i class="fa-solid fa-star active"></i>-->
+<!--                            <i class="fa-solid fa-star active"></i>-->
+<!--                            <i class="fa-solid fa-star active"></i>-->
+<!--                            <i class="fa-solid fa-star active"></i>-->
+<!--                            <i class="fa-solid fa-star dive"></i>-->
                         </div>
                     </div>
                 </div>
@@ -158,110 +164,110 @@
                             5<i class="fa-solid fa-star"></i>
                         </div>
                         <div class="timeline-star">
-                            <p class="timing" style="width: 70%"></p>
+                            <p class="timing" th:style="${#strings.concat('width: ', star5Percent)}"></p>
                         </div>
-                        <span class="number-percent">70%</span>
+                        <span class="number-percent" th:text="${star5Percent + '%'}"></span>
                     </li>
                     <li>
                         <div class="number-star">
                             4<i class="fa-solid fa-star"></i>
                         </div>
                         <div class="timeline-star">
-                            <p class="timing" style="width: 22%"></p>
+                            <p class="timing" th:style="${#strings.concat('width: ', star4Percent)}"></p>
                         </div>
-                        <span class="number-percent">22%</span>
+                        <span class="number-percent" th:text="${star4Percent + '%'}"></span>
                     </li>
                     <li>
                         <div class="number-star">
                             3<i class="fa-solid fa-star"></i>
                         </div>
                         <div class="timeline-star">
-                            <p class="timing" style="width: 4%"></p>
+                            <p class="timing" th:style="${#strings.concat('width: ', star3Percent)}"></p>
                         </div>
-                        <span class="number-percent dsp">4%</span>
+                        <span class="number-percent " th:text="${star3Percent + '%'}"></span>
                     </li>
                     <li>
                         <div class="number-star">
                             2<i class="fa-solid fa-star"></i>
                         </div>
                         <div class="timeline-star">
-                            <p class="timing" style="width: 2%"></p>
+                            <p class="timing" th:style="${#strings.concat('width: ', star2Percent)}"></p>
                         </div>
-                        <span class="number-percent dsp">2%</span>
+                        <span class="number-percent  " th:text="${star2Percent + '%'}"></span>
                     </li>
                     <li>
                         <div class="number-star">
                             1<i class="fa-solid fa-star"></i>
                         </div>
                         <div class="timeline-star">
-                            <p class="timing" style="width: 2%"></p>
+                            <p class="timing" th:style="${#strings.concat('width: ', star1Percent)}"></p>
                         </div>
-                        <span class="number-percent dsp">2%</span>
+                        <span class="number-percent " th:text="${star1Percent + '%'}"></span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container container-main-rate-product ">
-        <div class="main-comment-rate my-3">
+
+    <!--content rate product-->
+    <div th:if="${rateProducts.size() == 0}" class="container d-flex justify-content-center align-items-center">
+        <div class="my-3 d-flex flex-column justify-content-center align-items-center">
+            <div class="img-no-rate w-25 my-2">
+                <img th:src="@{/images/5058062.png}" alt="">
+            </div>
+            <div>
+                <p style="font-size: 18px; font-weight: 600">This product has no reviews yet</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:if="${rateProducts.size() > 0}" class="container container-main-rate-product ">
+        <div th:each="rateProduct : ${rateProducts}" class="main-comment-rate my-3">
             <div class="row">
                 <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
                     <div class="avatar-customer">
-                        <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        <img th:src="'data:image/jpeg;base64,' + ${rateProduct.customer.image}" alt="">
                     </div>
                 </div>
                 <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
-                    <div class="name-customer">Nguyen Quoc Viet</div>
+                    <div class="name-customer"
+                         th:text="${rateProduct.customer.firstName + ' ' + rateProduct.customer.lastName }"></div>
                     <div class="star-rated">
                         <div class="stars stars-rate">
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star dive"></i>
+                            <i th:each="star, index : ${#numbers.sequence(1, 5)}"
+                               class="fa-solid fa-star"
+                               th:classappend="${star <= rateProduct.star} ? 'active' : ''"></i>
+                            <!--                            <i class="fa-solid fa-star active"></i>-->
+                            <!--                            <i class="fa-solid fa-star active"></i>-->
+                            <!--                            <i class="fa-solid fa-star active"></i>-->
+                            <!--                            <i class="fa-solid fa-star dive"></i>-->
                         </div>
                     </div>
                     <div class="date-time-size">
                         <div class="date-time"
-                             th:text="${#dates.format(#dates.createNow(),'dd-MM-yyy HH:mm:ss')}"></div>
+                             th:text="${#temporals.format(rateProduct.dateUpload,'dd-MM-yyy HH:mm:ss')}"></div>
                         <div>|</div>
-                        <div class="size-bought">XL</div>
+                        <div class="size-bought" >XL</div>
                     </div>
-                    <div class="content-comment">Phần đen là chất dạ mỏng phối tay chất giả da PU màu trắng nha. Lỗi nhẹ
-                        1c cúc thôi nma cũng xinh nha giá này là hời r nha. Mình n58 50kg vừa hay trùm mông nha. Áo của
-                        shop rộng chứ kh dài mấy
+                    <div class="content-comment" th:text="${rateProduct.content}">
                     </div>
                     <div class="container-image-rate-product">
-                        <div class="image-comment">
-                            <img  th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
+                        <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
+                            <img th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
                         </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
 
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
                     </div>
 
                     <div class="container-image-rate-product slick-preview-comment">
-                        <div class="image-comment" >
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
+                        <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
+                            <img th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
                         </div>
                     </div>
 
                     <div class="like-comment">
                         <i class="fa-solid fa-thumbs-up"></i>
-                        <div class="total-like">23</div>
+                        <div class="total-like" th:text="${rateProduct.amountOfLike}"></div>
                     </div>
                 </div>
                 <div>
@@ -270,140 +276,7 @@
 
             </div>
         </div>
-        <div class="main-comment-rate my-3">
-            <div class="row">
-                <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
-                    <div class="avatar-customer">
-                        <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-                    </div>
-                </div>
-                <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
-                    <div class="name-customer">Nguyen Quoc Viet</div>
-                    <div class="star-rated">
-                        <div class="stars stars-rate">
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star dive"></i>
-                        </div>
-                    </div>
-                    <div class="date-time-size">
-                        <div class="date-time"
-                             th:text="${#dates.format(#dates.createNow(),'dd-MM-yyy HH:mm:ss')}"></div>
-                        <div>|</div>
-                        <div class="size-bought">XL</div>
-                    </div>
-                    <div class="content-comment">Phần đen là chất dạ mỏng phối tay chất giả da PU màu trắng nha. Lỗi nhẹ
-                        1c cúc thôi nma cũng xinh nha giá này là hời r nha. Mình n58 50kg vừa hay trùm mông nha. Áo của
-                        shop rộng chứ kh dài mấy
-                    </div>
-                    <div class="container-image-rate-product">
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
 
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                    </div>
-
-                    <div class="container-image-rate-product slick-preview-comment">
-                        <div class="image-comment" >
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                    </div>
-
-                    <div class="like-comment">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                        <div class="total-like">23</div>
-                    </div>
-                </div>
-                <div>
-                    <hr>
-                </div>
-
-            </div>
-        </div>
-        <div class="main-comment-rate my-3">
-            <div class="row">
-                <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
-                    <div class="avatar-customer">
-                        <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-                    </div>
-                </div>
-                <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
-                    <div class="name-customer">Nguyen Quoc Viet</div>
-                    <div class="star-rated">
-                        <div class="stars stars-rate">
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star active"></i>
-                            <i class="fa-solid fa-star dive"></i>
-                        </div>
-                    </div>
-                    <div class="date-time-size">
-                        <div class="date-time"
-                             th:text="${#dates.format(#dates.createNow(),'dd-MM-yyy HH:mm:ss')}"></div>
-                        <div>|</div>
-                        <div class="size-bought">XL</div>
-                    </div>
-                    <div class="content-comment">Phần đen là chất dạ mỏng phối tay chất giả da PU màu trắng nha. Lỗi nhẹ
-                        1c cúc thôi nma cũng xinh nha giá này là hời r nha. Mình n58 50kg vừa hay trùm mông nha. Áo của
-                        shop rộng chứ kh dài mấy
-                    </div>
-                    <div class="container-image-rate-product">
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                    </div>
-
-                    <div class="container-image-rate-product slick-preview-comment">
-                        <div class="image-comment" >
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                        <div class="image-comment">
-                            <img th:src="@{/images/pexels-yaritza-16215951.jpg}" alt="">
-
-                        </div>
-                    </div>
-
-                    <div class="like-comment">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                        <div class="total-like">23</div>
-                    </div>
-                </div>
-                <div>
-                    <hr>
-                </div>
-
-            </div>
-        </div>
     </div>
     <div class="pagination-rate-product"></div>
 </div>
@@ -492,15 +365,15 @@
     });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Lấy tất cả các container
         var containers = document.querySelectorAll('.container-image-rate-product');
 
-        containers.forEach(function(container, index) {
+        containers.forEach(function (container, index) {
             var images = container.querySelectorAll('img');
 
-            images.forEach(function(image) {
-                image.addEventListener('click', function() {
+            images.forEach(function (image) {
+                image.addEventListener('click', function () {
                     var previewContainer = containers[index + 1];
 
                     if (previewContainer.classList.contains('active')) {
@@ -563,9 +436,7 @@
                 });
             }
 
-            $('.slick-preview-comment').slick({
-
-            })
+            $('.slick-preview-comment').slick({})
 
 
         }

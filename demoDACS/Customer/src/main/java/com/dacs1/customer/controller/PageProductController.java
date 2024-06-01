@@ -1,10 +1,7 @@
 package com.dacs1.customer.controller;
 
 import com.dacs1.library.dto.ProductDto;
-import com.dacs1.library.model.Category;
-import com.dacs1.library.model.OrderDetail;
-import com.dacs1.library.model.Product;
-import com.dacs1.library.model.ProductImage;
+import com.dacs1.library.model.*;
 import com.dacs1.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +38,9 @@ public class PageProductController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private RateProductService rateProductService;
 
 //    @GetMapping({"/all-product", "/products"})
 //    public String getAllProduct(@RequestParam(required = false, defaultValue = "0") int page, Model model) {
@@ -127,17 +127,80 @@ public class PageProductController {
         ProductDto productDto = productService.getById(id);
         List<ProductDto> productsSameCategory = productService.productRandomSameCategoryLimit(productDto.getCategory().getId(), id, 8);
         boolean allowComment = false;
-        if(principal != null)
+        if (principal != null)
             allowComment = orderDetailService.checkAllowComment(customerService.finByUsernameIsActive(principal.getName()).getId(), id);
 
+        List<RateProduct> rateProducts = rateProductService.getAllByIdProduct(id);
 
+
+        double EStar = 0;
+
+        double star5Percent = 0;
+        double star4Percent = 0;
+        double star3Percent = 0;
+        double star2Percent = 0;
+        double star1Percent = 0;
+
+        double totalStar = 0;
+
+        if (rateProducts != null && !rateProducts.isEmpty()) {
+            int sizeRate = rateProducts.size();
+            for (RateProduct rateProduct : rateProducts) {
+                int star = rateProduct.getStar();
+                totalStar += star;
+                switch (star) {
+                    case 5:
+                        star5Percent++;
+                        continue;
+                    case 4:
+                        star4Percent++;
+                        continue;
+                    case 3:
+                        star3Percent++;
+                        continue;
+                    case 2:
+                        star2Percent++;
+                        continue;
+                    case 1:
+                        star1Percent++;
+                        continue;
+                }
+            }
+
+            star5Percent =  Math.round(((star5Percent / sizeRate) * 100));
+            star4Percent =  Math.round(((star4Percent / sizeRate) * 100));
+            star3Percent =  Math.round(((star3Percent / sizeRate) * 100));
+            star2Percent =  Math.round(((star2Percent / sizeRate) * 100));
+            star1Percent =  Math.round(((star1Percent / sizeRate) * 100));
+
+            EStar = Math.round((totalStar / sizeRate) * 10);
+
+
+            int rounded = (int) (Math.round(EStar / 5.0) * 5);
+            int difference = (int) (EStar - rounded);
+
+            if (Math.abs(difference) <= 2) {
+                EStar = rounded;
+            } else {
+                EStar = rounded + (difference > 0 ? 5 : -5);
+            }
+
+            EStar /= 10;
+
+        }
         model.addAttribute("title", productDto.getName());
         model.addAttribute("product", productDto);
         model.addAttribute("idProduct", id);
         model.addAttribute("productsSameCategory", productsSameCategory);
         model.addAttribute("allowComment", allowComment);
+        model.addAttribute("EStar", EStar);
+        model.addAttribute("star5Percent", star5Percent);
+        model.addAttribute("star4Percent", star4Percent);
+        model.addAttribute("star3Percent", star3Percent);
+        model.addAttribute("star2Percent", star2Percent);
+        model.addAttribute("star1Percent", star1Percent);
+        model.addAttribute("rateProducts", rateProducts);
 
-        System.out.println(allowComment);
 
         return "detail-product";
     }

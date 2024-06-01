@@ -22,9 +22,10 @@ public class HelloWorldController {
     private CustomerService customerService;
 
     @GetMapping("/hello-world")
-    public String helloWorld(Model model, @AuthenticationPrincipal OAuth2User oAuth2User) {
+    public String helloWorld(Model model, @AuthenticationPrincipal OAuth2User oAuth2User, Authentication authentication) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2User oAuth2User1 = (OAuth2User) authentication.getPrincipal();
 
         model.addAttribute("authentication", authentication);
 

@@ -9,6 +9,7 @@ import com.dacs1.library.service.MailService;
 import com.dacs1.library.service.oauth2.OAuth2UserDetailFactory;
 import com.dacs1.library.service.oauth2.OAuth2UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -18,7 +19,13 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -49,6 +56,8 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
         OAuth2UserDetails oAuth2UserDetails = OAuth2UserDetailFactory.getOAuth2Detail(
                 userRequest.getClientRegistration().getRegistrationId(),
                 oAuth2User.getAttributes());
+
+        Map<String, Object> authentication = oAuth2User.getAttributes();
 
         if (ObjectUtils.isEmpty(oAuth2UserDetails)) try {
             throw new Exception();
@@ -102,6 +111,8 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
         customer.setRoles(Arrays.asList(roleRepository.findByName("CUSTOMER")));
         customer.setProvider(userRequest.getClientRegistration().getRegistrationId());
         customer.setIdOAuth2(oAuth2UserDetails.getId());
+        if(oAuth2UserDetails.getAvatar() != null)
+            customer.setImage(encodeImageToBase64(oAuth2UserDetails.getAvatar()));
         return customerRepository.save(customer);
     }
 
@@ -109,6 +120,44 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
         customer.setFirstName(oAuth2UserDetails.getFirstName());
         customer.setLastName(oAuth2UserDetails.getLastName());
         customer.setEmail(oAuth2UserDetails.getEmail());
+        if(oAuth2UserDetails.getAvatar() != null)
+            customer.setImage(encodeImageToBase64(oAuth2UserDetails.getAvatar()));
         return customerRepository.save(customer);
+    }
+
+    private String encodeImageToBase64(String stringUrl) {
+        String base64Image = "";
+        InputStream is = null;
+        ByteArrayOutputStream baos = null;
+
+        try {
+            URL url = new URL(stringUrl);
+            is = url.openStream();
+            baos = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+
+            byte[] imageBytes = baos.toByteArray();
+            base64Image = Base64.getEncoder().encodeToString(imageBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (baos != null) {
+                    baos.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return base64Image;
     }
 }

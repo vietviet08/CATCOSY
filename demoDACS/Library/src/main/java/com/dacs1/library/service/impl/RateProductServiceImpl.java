@@ -1,9 +1,11 @@
 package com.dacs1.library.service.impl;
 
 import com.dacs1.library.model.CustomerLikedComment;
+import com.dacs1.library.model.OrderDetail;
 import com.dacs1.library.model.RateProduct;
 import com.dacs1.library.model.RateProductImage;
 import com.dacs1.library.repository.*;
+import com.dacs1.library.service.OrderDetailService;
 import com.dacs1.library.service.RateProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +37,12 @@ public class RateProductServiceImpl implements RateProductService {
     @Autowired
     RateProductImageRepository rateProductImageRepository;
 
+    @Autowired
+    OrderDetailRepository orderDetailRepository;
+
 
     @Override
-    public RateProduct addComment(Long idProduct, String username, int star, String content, List<MultipartFile> images) {
+    public RateProduct addComment(Long idProduct, Long idOrderDetail, String username, int star, String content, List<MultipartFile> images) {
         RateProduct rateProduct = new RateProduct();
         rateProduct.setProduct(productRepository.getByIdProduct(idProduct));
         rateProduct.setCustomer(customerRepository.findByUsername(username));
@@ -65,6 +70,10 @@ public class RateProductServiceImpl implements RateProductService {
         });
 
         rateProduct.setImages(rateProductImages);
+
+        OrderDetail orderDetail = orderDetailRepository.getReferenceById(idOrderDetail);
+        orderDetail.setAllowComment(false);
+        orderDetailRepository.save(orderDetail);
 
         return rateProductRepository.save(rateProduct);
 
@@ -133,5 +142,10 @@ public class RateProductServiceImpl implements RateProductService {
     @Override
     public RateProduct answerComment(Long idCommentCustomer) {
         return null;
+    }
+
+    @Override
+    public List<RateProduct> getAllByIdProduct(Long idProduct) {
+        return rateProductRepository.getAllByIdProduct(idProduct);
     }
 }

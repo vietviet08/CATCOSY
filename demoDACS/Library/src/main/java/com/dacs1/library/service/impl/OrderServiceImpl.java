@@ -167,7 +167,7 @@ public class OrderServiceImpl implements OrderService {
             List<OrderDetail> orderDetails = order.getOrderDetails();
             orderDetails.forEach(orderDetail -> {
                 orderDetail.setAllowComment(true);
-                orderDetailRepository.save(orderDetail);
+//                orderDetailRepository.save(orderDetail);
             });
         }
 

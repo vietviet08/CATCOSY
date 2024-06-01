@@ -6,6 +6,8 @@
 <link rel="stylesheet" th:href="@{/css/account.css}">
 
 <linK rel="stylesheet" th:href="@{/css/account-orders.css}">
+
+<link rel="stylesheet" th:href="@{/css/image-uploader.min.css}">
 <body>
 <div th:replace="~{fragments :: loader}"></div>
 
@@ -59,7 +61,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col" style="width: 130px">Order date</th>
-                        <th scope="col" style="width: 130px">Delivery date </th>
+                        <th scope="col" style="width: 130px">Delivery date</th>
                         <th scope="col">Total price</th>
                         <th scope="col">Discount voucher</th>
                         <th scope="col" style="width: 130px">Shipping fee</th>
@@ -105,7 +107,7 @@
 
     </div>
 
-
+    <!--view order details-->
     <div class="modal fade" id="detailOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-xl">
             <div class="modal-content">
@@ -136,6 +138,56 @@
         </div>
     </div>
 
+    <!--rate product-->
+    <div class="modal fade" id="rateProduct" data-th-tabindex="9" tabindex="9" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-xl ">
+            <div class="modal-content">
+                <form th:action="@{/rate-product}" enctype="multipart/form-data" method="post" >
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="">Rate</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="idProduct" id="idProductRate">
+                        <input type="hidden" name="idOrderDetail" id="idOrderDetail">
+
+
+                        <div class="form-group d-flex align-items-center">
+                            <label style="margin-right: 10px" class="col-form-label">Quality Product:</label>
+                            <input type="hidden" name="starRate" id="star-need-rate">
+                            <div class="star-rated">
+                                <div class="stars stars-rate">
+                                    <i class="fa-solid fa-star active-rate"></i>
+                                    <i class="fa-solid fa-star active-rate"></i>
+                                    <i class="fa-solid fa-star active-rate"></i>
+                                    <i class="fa-solid fa-star active-rate"></i>
+                                    <i class="fa-solid fa-star active-rate"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content-text" class="col-form-label">Content:</label>
+                            <textarea name="contentRate" class="form-control " id="content-text" style="height: 200px"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label  class="col-form-label">Images:</label>
+                            <div class="input-images"></div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Rate</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -145,11 +197,13 @@
 
 <div th:replace="~{fragments :: script}"></div>
 
+<script th:src="@{/js/image-uploader.min.js}"></script>
 
 <script th:src="@{/js/account.js}">
 
 
 </script>
+
 
 </body>
 </html>

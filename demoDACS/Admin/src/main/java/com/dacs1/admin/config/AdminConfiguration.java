@@ -58,7 +58,7 @@ public class AdminConfiguration {
                                 .requestMatchers("/vouchers/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/customers/**").hasAnyAuthority("ADMIN","KEEPER")
                                 .requestMatchers("/employees/**").hasAuthority("ADMIN")
-                                .requestMatchers("/**").hasAuthority("ADMIN")
+//                                .requestMatchers("/").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.POST,"/orders/save-change-status").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.POST,"/admin/do-login").hasAnyAuthority("ADMIN", "SELLER")
                                 .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/").permitAll()

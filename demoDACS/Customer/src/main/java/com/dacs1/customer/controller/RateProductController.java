@@ -2,6 +2,7 @@ package com.dacs1.customer.controller;
 
 import com.dacs1.library.service.RateProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,37 +10,37 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 import java.util.List;
 
-@RestController
-@RequestMapping("/rate-product")
+@Controller
 public class RateProductController {
 
     @Autowired
     private RateProductService rateProductService;
 
-    @PostMapping("/rate/{id}")
-    public void rateProduct(@PathVariable("id") Long id,
-                            @RequestParam("starRate") int starRate,
-                            @RequestParam("contentRate") String contentRate,
-                            @RequestParam("imagesRate")List<MultipartFile> imagesRate,
-                            Principal principal,
-                            Model model){
+    @PostMapping("/rate-product")
+    public String rateProduct(@RequestParam(value = "idProduct") Long idProduct,
+                              @RequestParam("idOrderDetail") Long idOrderDetail,
+                              @RequestParam(value = "starRate") int starRate,
+                              @RequestParam(value = "contentRate", required = false) String contentRate,
+                              @RequestParam(value = "photos[]") List<MultipartFile> imagesRate,
+                              Principal principal,
+                              Model model) {
 
-        rateProductService.addComment(id, principal.getName(), starRate, contentRate, imagesRate);
+        rateProductService.addComment(idProduct, idOrderDetail, principal.getName(), starRate, contentRate, imagesRate);
 
-
+        return "redirect:/orders";
     }
 
     @PostMapping("/like-comment/{id}")
-    public void likeComment(@PathVariable("id")Long id, Principal principal){
+    public void likeComment(@PathVariable("id") Long id, Principal principal) {
         rateProductService.likeComment(id, principal.getName());
     }
 
-    public void editComment(){
+    public void editComment() {
 
     }
 
     @PostMapping("/delete-comment")
-    public void deleteComment(Long idComment, Principal principal){
+    public void deleteComment(Long idComment, Principal principal) {
         rateProductService.deleteComment(idComment, principal.getName());
 
     }

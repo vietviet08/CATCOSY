@@ -112,7 +112,7 @@ public class OrdersController {
         return orderService.findOrderByIdDto(id);
     }
 
-    @PostMapping("/save-change-status")
+    @PostMapping("/orders/save-change-status")
     public String saveChangeStatus(@RequestParam("idOrderNeed") Long idOrderNeed,
                                    @RequestParam("status") int status,
                                    @RequestParam("notes") String notes) {
