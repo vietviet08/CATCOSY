@@ -7,6 +7,7 @@ import com.dacs1.library.model.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class ProductDto {
     private List<ProductSize> sizes;
     private Double costPrice;
     private Double salePrice;
-    private List<ProductImage> images;
+    private List<String> images;
     private String description;
     private Integer quantity;
     private Boolean deleted;

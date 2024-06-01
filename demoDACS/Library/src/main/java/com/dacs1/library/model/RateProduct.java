@@ -46,7 +46,7 @@ public class RateProduct {
 
     private boolean isDelete;
 
-    @OneToMany(mappedBy = "rateProduct", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "rateProduct", cascade = CascadeType.ALL)
     private List<CustomerLikedComment> customersLikedComment;
 
 

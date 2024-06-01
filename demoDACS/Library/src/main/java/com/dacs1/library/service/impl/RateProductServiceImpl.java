@@ -9,6 +9,7 @@ import com.dacs1.library.service.OrderDetailService;
 import com.dacs1.library.service.RateProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -94,46 +95,53 @@ public class RateProductServiceImpl implements RateProductService {
     }
 
     @Override
+    @Transactional
     public RateProduct likeComment(Long idComment, String username) {
         RateProduct comment = rateProductRepository.getReferenceById(idComment);
         if (Objects.equals(comment.getCustomer().getUsername(), username)) return null;
         List<CustomerLikedComment> customerLikedComments = comment.getCustomersLikedComment();
-        AtomicBoolean check = new AtomicBoolean(false);
+        boolean check = false;
         if (customerLikedComments == null || customerLikedComments.isEmpty()) {
             customerLikedComments = new ArrayList<>();
             CustomerLikedComment customerLikedCommentNew = new CustomerLikedComment();
-            customerLikedCommentNew.setCustomer(customerRepository.getReferenceById(idComment));
+            customerLikedCommentNew.setCustomer(customerRepository.findByUsername(username));
             customerLikedCommentNew.setLiked(true);
             customerLikedCommentNew.setRateProduct(comment);
             customerLikedComments.add(customerLikedCommentNew);
 //            customerLikedCommentRepository.save(customerLikedCommentNew);
             comment.setCustomersLikedComment(customerLikedComments);
             comment.setAmountOfLike(comment.getAmountOfLike() + 1);
+            check = true;
+            System.out.println("1");
 
-        } else customerLikedComments.forEach(customerLikedComment -> {
-
-            if (Objects.equals(customerLikedComment.getCustomer().getUsername(), username)) {
-                if (customerLikedComment.isLiked()) {
-                    customerLikedComment.setLiked(false);
+        } else {
+            for (CustomerLikedComment customerLikedComment : customerLikedComments) {
+                if (Objects.equals(customerLikedComment.getCustomer().getUsername(), username)) {
+                    if (customerLikedComment.isLiked()) {
+                        customerLikedComment.setLiked(false);
 //                    customerLikedCommentRepository.save(customerLikedComment);
-                    comment.setAmountOfLike(comment.getAmountOfLike() + 1);
-                } else {
-                    customerLikedComment.setLiked(true);
+                        comment.setAmountOfLike(comment.getAmountOfLike() - 1);
+                    } else {
+                        customerLikedComment.setLiked(true);
 //                    customerLikedCommentRepository.save(customerLikedComment);
-                    comment.setAmountOfLike(comment.getAmountOfLike() - 1);
+                        comment.setAmountOfLike(comment.getAmountOfLike() + 1);
+                    }
+                   check = true;
+                    System.out.println("2");
+                    break;
                 }
-                check.set(true);
             }
-        });
+        }
 
-        if (!check.get()) {
+        if (!check) {
             CustomerLikedComment customerLikedCommentNew = new CustomerLikedComment();
-            customerLikedCommentNew.setCustomer(customerRepository.getReferenceById(idComment));
+            customerLikedCommentNew.setCustomer(customerRepository.findByUsername(username));
             customerLikedCommentNew.setLiked(true);
             customerLikedCommentNew.setRateProduct(comment);
             customerLikedComments.add(customerLikedCommentNew);
 //            customerLikedCommentRepository.save(customerLikedCommentNew);
             comment.setAmountOfLike(comment.getAmountOfLike() + 1);
+            System.out.println("3");
         }
 
         return rateProductRepository.save(comment);
@@ -142,6 +150,11 @@ public class RateProductServiceImpl implements RateProductService {
     @Override
     public RateProduct answerComment(Long idCommentCustomer) {
         return null;
+    }
+
+    @Override
+    public RateProduct getByIdComment(Long idComment) {
+        return rateProductRepository.getReferenceById(idComment);
     }
 
     @Override

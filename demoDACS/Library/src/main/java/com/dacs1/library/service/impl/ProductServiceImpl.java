@@ -48,7 +48,11 @@ public class ProductServiceImpl implements ProductService {
             productDto.setCostPrice(product.getCostPrice());
             productDto.setSalePrice(product.getSalePrice());
             productDto.setQuantity(product.getQuantity());
-            productDto.setImages(product.getImages());
+            List<String> strings = new ArrayList<>();
+            for (ProductImage productImage : product.getImages()) {
+                strings.add(productImage.getImage());
+            }
+            productDto.setImages(strings);
             productDto.setCategory(product.getCategory());
             productDto.setActivated(product.getIsActivated());
             productDto.setDeleted(product.getIsDeleted());
@@ -81,7 +85,11 @@ public class ProductServiceImpl implements ProductService {
         productDto.setCostPrice(product.getCostPrice());
         productDto.setSalePrice(product.getSalePrice());
         productDto.setQuantity(product.getQuantity());
-        productDto.setImages(product.getImages());
+        List<String> strings = new ArrayList<>();
+        for (ProductImage productImage : product.getImages()) {
+            strings.add(productImage.getImage());
+        }
+        productDto.setImages(strings);
         productDto.setCategory(product.getCategory());
         productDto.setActivated(product.getIsActivated());
         productDto.setDeleted(product.getIsDeleted());
@@ -167,8 +175,6 @@ public class ProductServiceImpl implements ProductService {
         }
 
 
-
-
 //        List<Long> oldSizes = product.getSizes().stream().map(size -> size.getSize().getId()).toList();
 //        for (Long sizeId : oldSizes) {
 //            if (!newSizes.contains(sizeId)) {
@@ -240,7 +246,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSalePrice(productDto.getSalePrice());
         product.setCategory(productDto.getCategory());
 
-        if(!productImagesNews.isEmpty())  {
+        if (!productImagesNews.isEmpty()) {
             productImageRepository.deleteAllByProductId(product.getId());
             product.setImages(productImagesNews);
         }

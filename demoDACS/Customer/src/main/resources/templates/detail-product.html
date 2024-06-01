@@ -19,7 +19,7 @@
 
                 <div class="container-img-product order-2 order-sm-2 order-lg-1 order slick-slider-nav-img col-12 col-lg-2 d-inline-block text-center py-2 slick-initialized slick-slider slick-vertical">
                     <img style="cursor: pointer" th:each="image : ${product.images}"
-                         th:src="@{'data:image/jpeg;base64,' + ${image.image}}"
+                         th:src="@{'data:image/jpeg;base64,' + ${image}}"
                          alt="">
                 </div>
 
@@ -36,7 +36,7 @@
                 <div id="img-product-detail"
                      class="img-main-detail slick-slider-for-img col-12 col-lg-10  order-1 order-sm-1 order-lg-2 d-inline-block  py-4 ">
                     <img class="img-product"
-                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="">
+                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0)}}" alt="">
                 </div>
             </div>
 
@@ -131,80 +131,78 @@
 </div>
 
 <div class="container rate-comment my-5 py-5">
+    <div style="margin-left: 20px; margin-bottom: 40px">
 
-    <div class="title-rate-product"><h3>RATE PRODUCT</h3></div>
-
-    <!--overview star-->
-    <div class="over-view-star">
-        <div class="total-star">
-            <div class="total-start-main">
-                <div>
-                    <p th:text="${EStar}"></p>
-                </div>
-                <div class="star-star">
-                    <div class="rating-box">
-                        <div class="stars">
-                            <i th:each="star, index : ${#numbers.sequence(1, 5)}"
-                               class="fa-solid fa-star"
-                               th:classappend="(${star + 0.5 == EStar}) ? 'dive' : (${star <= EStar} ? 'active' : '')">
-                            </i>
-<!--                            <i class="fa-solid fa-star active"></i>-->
-<!--                            <i class="fa-solid fa-star active"></i>-->
-<!--                            <i class="fa-solid fa-star active"></i>-->
-<!--                            <i class="fa-solid fa-star active"></i>-->
-<!--                            <i class="fa-solid fa-star dive"></i>-->
+        <!--overview star-->
+        <div class="over-view-star d-flex flex-column">
+            <div class="title-rate-product"><h3>RATE PRODUCT</h3></div>
+            <div class="total-star">
+                <div class="total-start-main">
+                    <div>
+                        <p th:text="${EStar}"></p>
+                    </div>
+                    <div class="star-star">
+                        <div class="rating-box">
+                            <div class="stars">
+                                <i th:each="star, index : ${#numbers.sequence(1, 5)}"
+                                   class="fa-solid fa-star"
+                                   th:classappend="(${star + 0.5 == EStar}) ? 'dive' : (${star <= EStar} ? 'active' : '')">
+                                </i>
+                            </div>
                         </div>
                     </div>
+                    <div><a th:text="${rateProducts.size()} + ' Rates'" href="#"
+                            style="text-decoration: none; font-size: 15px"></a></div>
                 </div>
-            </div>
-            <div class="total-rate">
-                <ul class="rate-list">
-                    <li>
-                        <div class="number-star">
-                            5<i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="timeline-star">
-                            <p class="timing" th:style="${#strings.concat('width: ', star5Percent)}"></p>
-                        </div>
-                        <span class="number-percent" th:text="${star5Percent + '%'}"></span>
-                    </li>
-                    <li>
-                        <div class="number-star">
-                            4<i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="timeline-star">
-                            <p class="timing" th:style="${#strings.concat('width: ', star4Percent)}"></p>
-                        </div>
-                        <span class="number-percent" th:text="${star4Percent + '%'}"></span>
-                    </li>
-                    <li>
-                        <div class="number-star">
-                            3<i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="timeline-star">
-                            <p class="timing" th:style="${#strings.concat('width: ', star3Percent)}"></p>
-                        </div>
-                        <span class="number-percent " th:text="${star3Percent + '%'}"></span>
-                    </li>
-                    <li>
-                        <div class="number-star">
-                            2<i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="timeline-star">
-                            <p class="timing" th:style="${#strings.concat('width: ', star2Percent)}"></p>
-                        </div>
-                        <span class="number-percent  " th:text="${star2Percent + '%'}"></span>
-                    </li>
-                    <li>
-                        <div class="number-star">
-                            1<i class="fa-solid fa-star"></i>
-                        </div>
-                        <div class="timeline-star">
-                            <p class="timing" th:style="${#strings.concat('width: ', star1Percent)}"></p>
-                        </div>
-                        <span class="number-percent " th:text="${star1Percent + '%'}"></span>
-                    </li>
-                </ul>
+                <div class="total-rate">
+                    <ul class="rate-list">
+                        <li>
+                            <div class="number-star">
+                                5<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star5Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent" th:text="${star5Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                4<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star4Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent" th:text="${star4Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                3<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star3Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent " th:text="${star3Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                2<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star2Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent  " th:text="${star2Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                1<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star1Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent " th:text="${star1Percent + '%'}"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -225,6 +223,7 @@
     <div th:if="${rateProducts.size() > 0}" class="container container-main-rate-product ">
         <div th:each="rateProduct : ${rateProducts}" class="main-comment-rate my-3">
             <div class="row">
+                <input type="hidden" th:value="${rateProduct.id}" class="idComment">
                 <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
                     <div class="avatar-customer">
                         <img th:src="'data:image/jpeg;base64,' + ${rateProduct.customer.image}" alt="">
@@ -248,7 +247,7 @@
                         <div class="date-time"
                              th:text="${#temporals.format(rateProduct.dateUpload,'dd-MM-yyy HH:mm:ss')}"></div>
                         <div>|</div>
-                        <div class="size-bought" >XL</div>
+                        <div class="size-bought">XL</div>
                     </div>
                     <div class="content-comment" th:text="${rateProduct.content}">
                     </div>
@@ -266,7 +265,7 @@
                     </div>
 
                     <div class="like-comment">
-                        <i class="fa-solid fa-thumbs-up"></i>
+                        <i class="fa-solid fa-thumbs-up btnLikeComment"></i>
                         <div class="total-like" th:text="${rateProduct.amountOfLike}"></div>
                     </div>
                 </div>
@@ -284,7 +283,7 @@
 
 <div class="text-center" style="padding: 20px 0">
 
-    <h3 class="font-weight-bold">PRODUCT SAME</h3>
+    <h3 class="font-weight-bold">RELATED PRODUCT</h3>
 </div>
 
 <div class="container-product-same container d-flex justify-content-center " th:value="${productsSameCategory.size()}">
@@ -294,10 +293,10 @@
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0)}}"
                              alt="">
                         <img class="back-img"
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1).image}}"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1)}}"
                              alt="">
 
                         <div class="card__main--choose-options">
@@ -399,6 +398,34 @@
             });
         });
     });
+
+    var btnLikeComments = document.querySelectorAll(".btnLikeComment");
+    var listComment = document.querySelectorAll(".idComment")
+    // var listIdComments = listComment.map()
+
+
+
+    btnLikeComments.forEach(function (btnLikeComment, index) {
+        btnLikeComment.addEventListener('click', function () {
+            likeRate(listComment[index].value, index);
+        })
+    })
+
+    function likeRate(idComment, indexComment) {
+        $.ajax({
+            url: '/detail-product/like-comment',
+            type: 'POST',
+            data: {
+                idComment: idComment,
+            },
+            success: function (totalLike) {
+                document.querySelectorAll(".total-like")[indexComment].textContent = totalLike;
+            },
+            error: function (xhr, status, error) {
+                console.error("Error updating like comment: ", error);
+            }
+        });
+    }
 
     $(document).ready(function () {
             let numProduct = $('.card').length;

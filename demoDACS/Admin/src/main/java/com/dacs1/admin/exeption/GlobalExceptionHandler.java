@@ -1,20 +1,23 @@
 package com.dacs1.admin.exeption;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.nio.file.AccessDeniedException;
 
-@RestControllerAdvice
+@ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ModelAndView handleForbiddenException(HttpServletRequest request,
-                                                 Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("login");
-        return modelAndView;
-    }
+//    @ExceptionHandler(AccessDeniedException.class)
+//        public String handleAccessDeniedException(HttpServletRequest request, HttpServletResponse response) {
+//        log.warn("into handleAccessDeniedException!");
+//        return "redirect:/login";
+//    }
 
 }

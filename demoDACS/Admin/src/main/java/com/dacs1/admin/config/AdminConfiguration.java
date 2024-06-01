@@ -1,6 +1,7 @@
 package com.dacs1.admin.config;
 
 
+import com.dacs1.admin.exeption.CustomAccessDeniedHandler;
 import com.dacs1.admin.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -38,6 +39,9 @@ public class AdminConfiguration {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -51,7 +55,9 @@ public class AdminConfiguration {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
-                        author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        author .requestMatchers("/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                                .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/" ).permitAll()
                                 .requestMatchers("/categories/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/products/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/orders/**").hasAnyAuthority("ADMIN","KEEPER")
@@ -61,13 +67,10 @@ public class AdminConfiguration {
 //                                .requestMatchers("/").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.POST,"/orders/save-change-status").hasAuthority("ADMIN")
 //                                .requestMatchers(HttpMethod.POST,"/admin/do-login").hasAnyAuthority("ADMIN", "SELLER")
-                                .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/").permitAll()
-                                .anyRequest().authenticated()
 
+                                .anyRequest().authenticated()
                 )
-                .exceptionHandling(ex ->
-                        ex.accessDeniedPage("/403")
-                )
+
 //                .formLogin(login ->
 //                        login.loginPage("/login")
 //                                .loginProcessingUrl("/do-login")
@@ -82,10 +85,14 @@ public class AdminConfiguration {
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll()
                 )
+
                 .authenticationManager(authenticationManager)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(ex ->
+                        ex.accessDeniedHandler(accessDeniedHandler)
+                );
         return http.build();
     }
 

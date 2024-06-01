@@ -30,10 +30,7 @@ public class RateProductController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/like-comment/{id}")
-    public void likeComment(@PathVariable("id") Long id, Principal principal) {
-        rateProductService.likeComment(id, principal.getName());
-    }
+
 
     public void editComment() {
 

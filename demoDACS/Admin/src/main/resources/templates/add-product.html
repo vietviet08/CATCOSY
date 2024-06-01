@@ -3,6 +3,7 @@
 <head th:replace="~{fragments :: head}">
 
 </head>
+<link rel="stylesheet" th:href="@{/css/image-uploader.min.css}">
 <style>
     form .form-group {
         margin: 20px 0;
@@ -97,12 +98,10 @@
                 <!-- Text input-->
 
 
-                <!--                 File Button -->
+                <!-- File Button -->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label" for="img">Image</label>
-                    <div class="col-md-4">
-                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple">
-                    </div>
+                    <label class="col-md-4 control-label">Images</label>
+                    <div class="input-images col-md-4"></div>
                 </div>
 
 
@@ -125,7 +124,24 @@
 </div>
 
 <script th:replace="~{fragments :: toastScript}"></script>
+
+<script th:src="@{/js/image-uploader.min.js}"></script>
+
 <div th:replace="~{fragments :: richtext}"></div>
+
+<script>
+
+
+    $('.input-images').imageUploader({
+        imagesInputName: 'photos',
+        preloadedInputName: 'old',
+        maxSize: 2 * 1024 * 1024,
+        maxFiles: 5,
+        label: 'Drag & Drop files here or click to browse (Maximum 5 images)',
+        extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp'],
+        mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp']
+    });
+</script>
 
 </body>
 </html>

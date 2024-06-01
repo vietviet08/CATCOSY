@@ -17,6 +17,8 @@ public interface RateProductService {
 
     RateProduct answerComment(Long idCommentCustomer);
 
+    RateProduct getByIdComment(Long idComment);
+
     List<RateProduct> getAllByIdProduct(Long idProduct);
 
 }

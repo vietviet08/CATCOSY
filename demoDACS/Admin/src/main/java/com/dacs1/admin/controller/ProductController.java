@@ -121,7 +121,7 @@ public class ProductController {
 
     @PostMapping("/save-product")
     public String addProduct(@ModelAttribute("newProduct") ProductDto productDto,
-                             @RequestParam("listImage") List<MultipartFile> ListFiles,
+                             @RequestParam("photos[]") List<MultipartFile> ListFiles,
                              @RequestParam("sizesChoose") String[] sizesSelected,
                              RedirectAttributes attributes) {
         List<Long> selectedSizeIds = new ArrayList<>();
@@ -158,18 +158,18 @@ public class ProductController {
 
         productDto.getSizes().forEach(productSize -> sizesExisting.add(productSize.getSize()));
 
-
         model.addAttribute("title", "Update product");
         model.addAttribute("productDto", productDto);
         model.addAttribute("sizes", sizeService.findAllSize());
         model.addAttribute("sizesExisting", sizesExisting);
         model.addAttribute("categories", categoryList);
+        model.addAttribute("images", productDto.getImages());
         return "update-product";
     }
 
     @PostMapping("/update-product/{id}")
     public String updateProduct(@ModelAttribute("productDto") ProductDto productDto,
-                                @RequestParam("listImage") List<MultipartFile> images,
+                                @RequestParam("photos[]") List<MultipartFile> images,
                                 @RequestParam("sizesChoose") String[] sizesSelected,
                                 RedirectAttributes attributes) {
         try {

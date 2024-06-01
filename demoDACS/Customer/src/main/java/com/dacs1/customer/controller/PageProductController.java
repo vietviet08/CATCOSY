@@ -135,11 +135,13 @@ public class PageProductController {
 
         double EStar = 0;
 
-        double star5Percent = 0;
-        double star4Percent = 0;
-        double star3Percent = 0;
-        double star2Percent = 0;
-        double star1Percent = 0;
+        double star5Percent = 0.0;
+        double star4Percent = 0.0;
+        double star3Percent = 0.0;
+        double star2Percent = 0.0;
+        double star1Percent = 0.0;
+
+        int star5 = 0, star4 = 0, star3 = 0, star2 = 0, star1 = 0;
 
         double totalStar = 0;
 
@@ -167,11 +169,11 @@ public class PageProductController {
                 }
             }
 
-            star5Percent =  Math.round(((star5Percent / sizeRate) * 100));
-            star4Percent =  Math.round(((star4Percent / sizeRate) * 100));
-            star3Percent =  Math.round(((star3Percent / sizeRate) * 100));
-            star2Percent =  Math.round(((star2Percent / sizeRate) * 100));
-            star1Percent =  Math.round(((star1Percent / sizeRate) * 100));
+            star5 = (int) Math.round(((star5Percent / sizeRate) * 100));
+             star4 = (int) Math.round(((star4Percent / sizeRate) * 100));
+             star3 = (int) Math.round(((star3Percent / sizeRate) * 100));
+             star2 = (int) Math.round(((star2Percent / sizeRate) * 100));
+             star1 = (int) Math.round(((star1Percent / sizeRate) * 100));
 
             EStar = Math.round((totalStar / sizeRate) * 10);
 
@@ -194,11 +196,11 @@ public class PageProductController {
         model.addAttribute("productsSameCategory", productsSameCategory);
         model.addAttribute("allowComment", allowComment);
         model.addAttribute("EStar", EStar);
-        model.addAttribute("star5Percent", star5Percent);
-        model.addAttribute("star4Percent", star4Percent);
-        model.addAttribute("star3Percent", star3Percent);
-        model.addAttribute("star2Percent", star2Percent);
-        model.addAttribute("star1Percent", star1Percent);
+        model.addAttribute("star5Percent", star5);
+        model.addAttribute("star4Percent", star4);
+        model.addAttribute("star3Percent", star3);
+        model.addAttribute("star2Percent", star2);
+        model.addAttribute("star1Percent", star1);
         model.addAttribute("rateProducts", rateProducts);
 
 

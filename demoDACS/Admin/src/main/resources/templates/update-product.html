@@ -3,6 +3,7 @@
 <head th:replace="~{fragments :: head}">
 
 </head>
+<link rel="stylesheet" th:href="@{/css/image-uploader.min.css}">
 <style>
     form .form-group {
         margin: 20px 0;
@@ -112,10 +113,11 @@
 
                 <!--                 File Button -->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label" for="img">Image</label>
-                    <div class="col-md-4">
-                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple">
-                    </div>
+                    <label class="col-md-4 control-label">Image</label>
+<!--                    <div class="col-md-4">-->
+<!--                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple">-->
+<!--                    </div>-->
+                    <div class="input-images col-md-4"></div>
                 </div>
 
 
@@ -133,13 +135,34 @@
 
 <div th:replace="~{fragments :: toast}"></div>
 
+<script th:replace="~{fragments :: toastScript}"></script>
 
 <div th:replace="~{fragments :: script}">
 </div>
 
 <div th:replace="~{fragments :: richtext}"></div>
+<script th:src="@{/js/image-uploader.min.js}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const preloaded = /*[[${images}]]*/ [];
 
-<script th:replace="~{fragments :: toastScript}"></script>
+        const preloadedImages = preloaded.map((img, index) => ({
+            id: index + 1,
+            src: 'data:image/jpeg;base64,' + img
+        }));
+        console.log("Preloaded images:", preloadedImages);
 
+        $('.input-images').imageUploader({
+            preloaded: preloadedImages,
+            imagesInputName: 'photos',
+            preloadedInputName: 'old',
+            maxSize: 2 * 1024 * 1024,
+            maxFiles: 5,
+            label: 'Drag & Drop files here or click to browse (Maximum 5 images)',
+            extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp'],
+            mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp']
+        });
+    })
+</script>
 </body>
 </html>
