@@ -85,10 +85,9 @@ public class AccountController {
                              Model model,
                              Principal principal) {
 
-        Customer customer = customerService.findByUsername(principal.getName());
-
-
         try {
+            Customer customer = customerService.findByUsername(principal.getName());
+
 
             if (firstName.trim().equals("") || lastName.trim().equals("")) {
                 model.addAttribute("notAccept", "First name or last name not empty");
@@ -98,7 +97,7 @@ public class AccountController {
                 customer.setFirstName(firstName);
                 customer.setLastName(lastName);
                 customer.setPhone(phone);
-                if(!image.isEmpty())
+                if (!image.isEmpty())
                     customer.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
                 customerService.updateCustomer(customer);
                 model.addAttribute("success", "Change info successfully!");
@@ -110,8 +109,7 @@ public class AccountController {
             model.addAttribute("error", "Error from server!");
         }
 
-
-        return "account";
+        return "redirect:/account";
     }
 
 
@@ -223,7 +221,7 @@ public class AccountController {
                                                     Model model) throws IOException {
 
         // Do Business Logic
-        Order order =  orderService.findOrderByCodeViewOrder(codeViewOrder);
+        Order order = orderService.findOrderByCodeViewOrder(codeViewOrder);
 
         // Create HTML using Thymeleaf template Engine
         Context context = new Context();

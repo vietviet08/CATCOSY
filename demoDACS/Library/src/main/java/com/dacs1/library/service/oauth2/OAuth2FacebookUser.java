@@ -15,7 +15,6 @@ public class OAuth2FacebookUser extends OAuth2UserDetails {
 
     @Override
     public String getFirstName() {
-
         String[] name = nameUser();
         return name[0];
     }
@@ -47,6 +46,6 @@ public class OAuth2FacebookUser extends OAuth2UserDetails {
 
     private String[] nameUser(){
         String fullName = (String) attributes.get("name");
-        return fullName.split(" ", 1);
+        return fullName.split(" ", 2);
     }
 }
