@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AllArgsConstructor
 @Entity
 @Table(name = "products_sizes")
-public class ProductSize {
+public class ProductSize extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

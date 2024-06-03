@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "products_images")
-public class ProductImage {
+public class ProductImage extends BaseEntity {
 
     @Id
     @Column(name = "id_product_image")
