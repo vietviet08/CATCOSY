@@ -15,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "coments")
-public class RateProduct {
+@Table(name = "comments")
+public class RateProduct extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,7 @@ public class RateProduct {
 
     private int star;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @OneToMany(mappedBy = "rateProduct", cascade = CascadeType.ALL, orphanRemoval = true)

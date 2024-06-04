@@ -39,8 +39,8 @@
 
                 <!-- Text input-->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label" for="name">Product name</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="name">Product name</label>
+                    <div class="">
                         <input th:field="*{name}" id="name" name="name"
                                class="form-control input-md" required="required" type="text">
 
@@ -49,11 +49,11 @@
 
 
                 <div class="form-group mt-3">
-                    <div class="col-md-4">
+                    <div class="">
                         Sizes
                         <div th:each="size : ${sizes}" class="d-inline-block mx-2">
 
-                            <label class="col-md-4 d-inline form-check-label"
+                            <label class=" d-inline form-check-label"
                                    th:for="'sizes' + ${size.size}"></label>
                             <input th:value="${size.id}" th:text="${size.size}" th:id="'sizes' + ${size.size}"
                                    th:checked="${#lists.contains(sizesExisting, size)}"
@@ -67,8 +67,8 @@
 
                 <!-- Select Basic -->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label" for="category">Category</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="category">Category</label>
+                    <div class="">
                         <select th:field="*{category}" id="category" name="product_category"
                                 class="form-control">
                             <option th:each="category : ${categories}" th:value="${category.id}"
@@ -80,8 +80,8 @@
 
                 <!-- Text input-->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label" for="price">Cost price</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="price">Cost price</label>
+                    <div class="">
                         <input th:field="*{costPrice}" id="price" name="price" class="form-control input-md"
                                required="required" type="text">
 
@@ -90,8 +90,8 @@
 
                 <!-- Text input-->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label" for="price">Sale price</label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="price">Sale price</label>
+                    <div class="">
                         <input th:field="*{salePrice}" id="salePrice" name="salePrice" class="form-control input-md"
                                type="text">
 
@@ -101,8 +101,8 @@
 
                 <!-- Text input-->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label" for="description">Product description </label>
-                    <div class="col-md-4">
+                    <label class=" control-label" for="description">Product description </label>
+                    <div class="">
                     <textarea style="height: 200px" th:field="*{description}" id="description" name="description"
                               class="form-control input-md editorArea" type="text"></textarea>
                     </div>
@@ -113,11 +113,11 @@
 
                 <!--                 File Button -->
                 <div class="form-group mt-3">
-                    <label class="col-md-4 control-label">Image</label>
-<!--                    <div class="col-md-4">-->
+                    <label class=" control-label">Image</label>
+<!--                    <div class="">-->
 <!--                        <input id="img" name="listImage" class="input-file" type="file" multiple="multiple">-->
 <!--                    </div>-->
-                    <div class="input-images col-md-4"></div>
+                    <div class="input-images "></div>
                 </div>
 
 

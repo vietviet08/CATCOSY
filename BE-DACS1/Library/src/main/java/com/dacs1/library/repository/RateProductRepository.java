@@ -16,7 +16,7 @@ public interface RateProductRepository extends JpaRepository<RateProduct, Long> 
 //    @Query(value = "select * fro", nativeQuery = true)
 //    void checkAllowComment(@Param("") Long idCustomer, @Param("") Long idOrderDetail);
 
-    @Query(value = "select * from coments c where c.product_id = :idProduct ", nativeQuery = true)
+    @Query(value = "select * from comments c where c.product_id = :idProduct ", nativeQuery = true)
     List<RateProduct> getAllByIdProduct(@Param("idProduct") Long idProduct);
 
 
