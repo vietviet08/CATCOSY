@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddd7caa9-2b49-488b-8eb0-bb001517e8e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/config/AdminConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/config/AdminConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/utils/ExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/utils/ExcelUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/PageProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/PageProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/RateProductRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/RateProductRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Library/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/repository/CustomerLikedCommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/repository/CustomerLikedCommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/RateProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/RateProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/impl/RateProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/impl/RateProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../report/SildeDACS1.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../report/SildeDACS1.pptx" afterDir="false" />
-    </list>
+    <list default="true" id="ddd7caa9-2b49-488b-8eb0-bb001517e8e4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,7 +63,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CustomerApplication">
+  <component name="RunManager" selected="Spring Boot.AdminApplication">
     <configuration name="AdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="Admin" />
@@ -128,6 +111,7 @@
       <workItem from="1717724933764" duration="1224000" />
       <workItem from="1717854511468" duration="4039000" />
       <workItem from="1717907917357" duration="1396000" />
+      <workItem from="1718018836941" duration="637000" />
     </task>
     <servers />
   </component>
