@@ -20,6 +20,7 @@ public class RateProductRestController {
 
     @PostMapping("/like-comment")
     public ResponseEntity<Integer> likeComment(@RequestParam("idComment") Long id, Principal principal) {
+        if(principal == null ) return ResponseEntity.ok(0);
         RateProduct rateProduct = rateProductService.likeComment(id, principal.getName());
         if (rateProduct != null)
             return ResponseEntity.ok(rateProduct.getAmountOfLike());

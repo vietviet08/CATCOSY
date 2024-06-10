@@ -11,8 +11,9 @@
     <groupId>com.dacs1</groupId>
     <artifactId>Customer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>Customer</name>
-    <description>Customer</description>
+    <description>Customer module inside Ecommerce project</description>
     <properties>
         <java.version>21</java.version>
     </properties>

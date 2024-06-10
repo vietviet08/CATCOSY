@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ddd7caa9-2b49-488b-8eb0-bb001517e8e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/config/AdminConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/config/AdminConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/utils/ExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/java/com/dacs1/admin/utils/ExcelUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/PageProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/PageProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/RateProductRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/java/com/dacs1/customer/controller/RateProductRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Library/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/repository/CustomerLikedCommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/repository/CustomerLikedCommentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/RateProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/RateProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/impl/RateProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/dacs1/library/service/impl/RateProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../report/SildeDACS1.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../report/SildeDACS1.pptx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2hNCawuE9xZWzzkLt9ilkKIzUCs" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.CustomerApplication">
+    <configuration name="AdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Admin" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dacs1.admin.AdminApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Customer" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dacs1.customer.CustomerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LibraryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="Library" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dacs1.library.LibraryApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ddd7caa9-2b49-488b-8eb0-bb001517e8e4" name="Changes" comment="" />
+      <created>1717425215530</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717425215530</updated>
+      <workItem from="1717425216663" duration="4553000" />
+      <workItem from="1717508055762" duration="5572000" />
+      <workItem from="1717518446576" duration="29000" />
+      <workItem from="1717518480821" duration="39000" />
+      <workItem from="1717518526230" duration="25000" />
+      <workItem from="1717518556153" duration="53000" />
+      <workItem from="1717518613997" duration="13000" />
+      <workItem from="1717542540630" duration="501000" />
+      <workItem from="1717543049475" duration="24000" />
+      <workItem from="1717543078419" duration="4290000" />
+      <workItem from="1717645243732" duration="2299000" />
+      <workItem from="1717724933764" duration="1224000" />
+      <workItem from="1717854511468" duration="4039000" />
+      <workItem from="1717907917357" duration="1396000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

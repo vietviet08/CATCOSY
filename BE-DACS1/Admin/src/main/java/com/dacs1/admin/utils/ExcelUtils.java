@@ -20,12 +20,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static com.dacs1.admin.utils.FileFactory.PATH_TEMPLATE;
 
-@Slf4j
+//@Slf4j
 @Component
 public class ExcelUtils {
+    static Logger log = Logger.getLogger(ExcelUtils.class.getName());
+
 
     //export config
     public static <T> ByteArrayInputStream exportCustomer(List<T> obj, String fileName) throws Exception {
@@ -64,7 +67,7 @@ public class ExcelUtils {
         try {
             file = ResourceUtils.getFile(PATH_TEMPLATE + fileName);
         } catch (Exception e) {
-            log.warn("File not found");
+            log.warning("File not found");
             file = FileFactory.createFile(fileName, workbook);
         }
 
@@ -155,7 +158,7 @@ public class ExcelUtils {
                 currentRowIndex++;
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.warning(e.getMessage());
         }
     }
 
@@ -183,7 +186,7 @@ public class ExcelUtils {
                 i++;
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.warning(e.getMessage());
         }
     }
 
@@ -206,7 +209,7 @@ public class ExcelUtils {
                 currentCell.setCellStyle(dataStyle);
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.warning(e.getMessage());
         }
 
     }

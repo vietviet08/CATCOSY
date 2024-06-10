@@ -21,4 +21,6 @@ public interface RateProductService {
 
     List<RateProduct> getAllByIdProduct(Long idProduct);
 
+    boolean checkLikedComment(String username, Long idComment);
+
 }

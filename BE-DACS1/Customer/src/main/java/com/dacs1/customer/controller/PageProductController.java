@@ -130,6 +130,8 @@ public class PageProductController {
         if (principal != null)
             allowComment = orderDetailService.checkAllowComment(customerService.finByUsernameIsActive(principal.getName()).getId(), id);
 
+//        boolean checkLikedComment = rateProductService.checkLikedComment(principal.getName(), id);
+
         List<RateProduct> rateProducts = rateProductService.getAllByIdProduct(id);
 
 

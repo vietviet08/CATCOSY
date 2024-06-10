@@ -57,7 +57,7 @@ public class AdminConfiguration {
                 .authorizeHttpRequests(author ->
                         author .requestMatchers("/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/" ).permitAll()
+                                .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/", "/index" ).permitAll()
                                 .requestMatchers("/categories/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/products/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/orders/**").hasAnyAuthority("ADMIN","KEEPER")

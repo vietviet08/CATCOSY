@@ -11,8 +11,9 @@
     <groupId>com.dacs1</groupId>
     <artifactId>Library</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>Library</name>
-    <description>Library</description>
+    <description>Library store model, repository, service,...</description>
     <properties>
         <java.version>21</java.version>
     </properties>
