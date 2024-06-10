@@ -105,8 +105,8 @@ public class LoginController {
         if(principal == null) return "redirect:/login";
 
         Admin admin =  adminService.findByUsername(principal.getName());
-        session.setAttribute("nameAdmin",admin.getFirstName() + " " + admin.getLastName());
-        session.setAttribute("role", "ADMIN");
+//        session.setAttribute("nameAdmin",admin.getFirstName() + " " + admin.getLastName());
+//        session.setAttribute("role", "ADMIN");
         model.addAttribute("title", "Home Page");
 
 

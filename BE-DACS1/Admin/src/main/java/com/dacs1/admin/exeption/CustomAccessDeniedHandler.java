@@ -18,6 +18,10 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         // Log the exception
         System.out.println("Access Denied: " + accessDeniedException.getMessage());
 
+        if (request.getUserPrincipal() != null){
+            response.sendRedirect(request.getContextPath() + "/403");
+            return;
+        }
         // Redirect to the login page
         response.sendRedirect(request.getContextPath() + "/login");
     }
