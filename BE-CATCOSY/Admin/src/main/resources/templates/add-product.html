@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+
+</head>
+<link rel="stylesheet" th:href="@{/css/image-uploader.min.css}">
+<style>
+    form .form-group {
+        margin: 20px 0;
+    }
+
+    .richText .richText-toolbar:last-child {
+        display: none;
+    }
+</style>
+<link rel="stylesheet" th:href="@{/css/richtext.min.css}">
+<body>
+
+
+<div th:replace="~{fragments ::  spinner}"></div>
+
+
+<div th:replace="~{fragments ::  sidebar}"></div>
+
+<div class="content">
+    <!-- Navbar Start -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <!-- Navbar End-->
+    <div class="container my-5">
+        <form style="width: 100%" class="form-horizontal" th:action="@{/save-product}" method="post"
+              enctype="multipart/form-data"
+              th:object="${newProduct}">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>ADD PRODUCTS</legend>
+
+
+                <!-- Text input-->
+                <div class="form-group mt-3">
+                    <label class=" control-label" for="name">Product name</label>
+                    <div class="">
+                        <input th:field="*{name}" id="name" name="name"
+                               class="form-control input-md" required="required" type="text">
+
+                    </div>
+                </div>
+
+
+                <div class="form-group mt-3">
+                    <div class="">
+                        Sizes
+                        <div th:each="size : ${sizes}" class="d-inline-block mx-2">
+                            <label class=" d-inline form-check-label"
+                                   th:for="'sizes' + ${size.size}"></label>
+                            <input th:value="${size.id}" th:text="${size.size}" th:id="'sizes' + ${size.size}"
+                                   name="sizesChoose"
+                                   class="d-inline form-check-input" type="checkbox">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- Select Basic -->
+                <div class="form-group mt-3">
+                    <label class=" control-label" for="category">Category</label>
+                    <div class="">
+                        <select th:field="*{category}" id="category" name="product_category"
+                                class="form-control">
+                            <option th:each="category : ${categories}" th:value="${category.id}"
+                                    th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group mt-3">
+                    <label class=" control-label" for="price">Price</label>
+                    <div class="">
+                        <input th:field="*{costPrice}" id="price" name="price" class="form-control input-md"
+                               required="required" type="number" min="0">
+
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label class=" control-label" for="sale-price">Sale Price</label>
+                    <div class="">
+                        <input th:field="*{salePrice}" id="sale-price" name="price" class="form-control input-md"
+                               required="required" type="number" min="0">
+
+                    </div>
+                </div>
+
+
+                <!-- Text input-->
+                <div class="form-group mt-3">
+                    <label class=" control-label" for="description">Product description </label>
+                    <div class="">
+                    <textarea style="height: 200px" th:field="*{description}" id="description" name="description"
+                              class="form-control input-md editorArea" type="text"></textarea>
+                    </div>
+                </div>
+
+
+                <!-- Text input-->
+
+
+                <!-- File Button -->
+                <div class="form-group mt-3">
+                    <label class=" control-label">Images</label>
+                    <div class="input-images "></div>
+                </div>
+
+
+            </fieldset>
+            <button type="submit" class="btn btn-success w-25 mt-3">
+                ADD
+            </button>
+        </form>
+    </div>
+
+</div>
+
+
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
+
+<div th:replace="~{fragments :: toast}"></div>
+
+
+<div th:replace="~{fragments :: script}">
+</div>
+
+<script th:replace="~{fragments :: toastScript}"></script>
+
+<script th:src="@{/js/image-uploader.min.js}"></script>
+
+<div th:replace="~{fragments :: richtext}"></div>
+
+<script>
+
+
+    $('.input-images').imageUploader({
+        imagesInputName: 'photos',
+        preloadedInputName: 'old',
+        maxSize: 2 * 1024 * 1024,
+        maxFiles: 5,
+        label: 'Drag & Drop files here or click to browse (Maximum 5 images)',
+        extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp'],
+        mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp']
+    });
+</script>
+
+</body>
+</html>

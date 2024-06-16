@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+<link rel="stylesheet" th:href="@{/css/detail-product.css}">
+<!--<link rel="stylesheet" th:href="@{/css/easyzoom.css}">-->
+<body>
+
+<!--loader-->
+<div th:replace="~{fragments :: loader}"></div>
+
+
+<header th:replace="~{fragments :: header}"></header>
+
+<div class="container main-detail-page">
+    <div class="row">
+        <div class="detail-product-left col-12 col-lg-7 ">
+            <div class="detail-product-left-main row">
+
+                <div class="container-img-product order-2 order-sm-2 order-lg-1 order slick-slider-nav-img col-12 col-lg-2 d-inline-block text-center py-2 slick-initialized slick-slider slick-vertical">
+                    <img style="cursor: pointer" th:each="image : ${product.images}"
+                         th:src="@{'data:image/jpeg;base64,' + ${image}}"
+                         alt="">
+                </div>
+
+                <!--                <div class="img-main-detail slick-slider-for-img col-12 col-lg-10 order-first order-sm-1 d-inline-block  py-4 ">-->
+                <!--                    <img id="productImage" class="cloudzoom"-->
+                <!--                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="" data-cloudzoom="-->
+                <!--                         zoomImage: '',-->
+                <!--                         easeTime: 0,-->
+                <!--                         zoomPosition: 'inside',-->
+                <!--                         autoInside: true,-->
+                <!--                         easing: 0,-->
+                <!--                         disableOnScreenWidth:1024">-->
+                <!--                </div>-->
+                <div id="img-product-detail"
+                     class="img-main-detail slick-slider-for-img col-12 col-lg-10  order-1 order-sm-1 order-lg-2 d-inline-block  py-4 ">
+                    <img class="img-product"
+                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0)}}" alt="">
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12 col-lg-5 py-4">
+            <div class="product-information">
+                <h2 style="font-weight: 600" th:text="${product.name}"></h2>
+                <p style="font-size: 14px" th:text="'CP: '+  ${product.id}"></p>
+                <div>
+                    <div th:if="${product.salePrice > 0}" class="d-flex align-items-center">
+
+                        <div class="child-have-sale box-percent-product"
+                             th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}"></div>
+
+                        <span class="price-product child-have-sale" style="font-weight: bold; font-size: 24px"
+                              th:text="${product.costPrice - product.salePrice}"></span>
+                        <span class="price-product child-have-sale"
+                              style="font-weight: bold; font-size: 20px; color: #858E96; text-decoration: line-through"
+                              th:text="${product.costPrice}"></span>
+                    </div>
+                    <div th:if="${product.salePrice == 0.0}">
+                        <span class="price-product" style="font-weight: bold; font-size: 24px"
+                              th:text="${product.costPrice}"></span>
+                    </div>
+
+
+                </div>
+            </div>
+            <hr/>
+            <form th:action="@{/add-to-cart}" method="post">
+                <div class="product-selection">
+                    <div class="choose-size my-4">
+                        <label>Size</label>
+                        <div class="list-size">
+                            <div class="choose-choose" style="display: inline"
+                                 th:each="size, element : ${product.sizes}">
+                                <input type="radio" th:id="'size-' + ${size.size.id}" name="sizeId" class="size-option"
+                                       th:value="${size.size.id}" th:checked="${element.index == 0}">
+                                <label th:for="'size-' + ${size.size.id}"
+                                       class="text-center d-inline-block font-weight-bold"
+                                       th:text="${size.size.size}"></label>
+                            </div>
+
+                            <!--                            <input type="radio" id="size-m" name="size" class="size-option" value="M">-->
+                            <!--                            <label for="size-m" class="text-center d-inline-block font-weight-bold">M</label>-->
+
+                            <!--                            <input type="radio" id="size-l" name="size" class="size-option" value="L">-->
+                            <!--                            <label for="size-l" class="text-center d-inline-block font-weight-bold">L</label>-->
+
+                            <!--                            <input type="radio" id="size-xl" name="size" class="size-option" value="XL">-->
+                            <!--                            <label for="size-xl" class="text-center d-inline-block font-weight-bold">XL</label>-->
+                        </div>
+                    </div>
+
+                    <div class="choose-quantity my-4">
+                        <label for="quantity">Quantity</label>
+                        <div class="choose-main-quantity">
+                            <span class="decrease font-weight-bold text-center d-inline-block">-</span>
+                            <input class="text-center" name="quantity" id="quantity" value="1">
+                            <span class="increase font-weight-bold text-center d-inline-block">+</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="push-cart  my-4" style="background-color: black">
+                    <input type="hidden" name="id" th:value="${idProduct}">
+                    <button type="submit" style="color: white; font-size: 16px">Add to cart</button>
+                </div>
+            </form>
+            <p class="w-75" th:utext="${product.description != null ? product.description : ''}">
+                <span
+                        style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;"><strong>CANDLES SPARK T-SHIRT</strong></span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Chất liệu</strong>: Cotton 260 GSM</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Fitting</strong>: Oversized Fit</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Chi tiết</strong>:&nbsp;</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Sử dụng chất liệu vải cotton 260 gsm dày dặn thoáng mát.</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Hình in Sparkler nhỏ trước ngực được in cao thành.</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Bo cổ phối cùng màu với hình in tạo nên sự đồng bộ.</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Câu quotes in quanh viền cổ sau mang ý nghĩa "đây sẽ là chiếc áo bạn sẽ sử dụng hàng ngày".</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">✦ <strong>Hướng dẫn bảo quản</strong>:&nbsp;</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Sản phẩm bền nhất khi giặt tay.</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Nếu giặt máy, hãy giặt ở nhiệt độ thường.&nbsp;</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Khi phơi tránh ánh nắng trực tiếp.&nbsp;</span><br><span
+                    style="font-family:'Times New Roman';font-size:10pt;font-style:normal;font-weight:normal;">+ Nên treo sản phẩm để sản phẩm có độ bền phom dáng.</span>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container rate-comment my-5 py-5">
+    <div style="margin-left: 20px; margin-bottom: 40px">
+
+        <!--overview star-->
+        <div class="over-view-star d-flex flex-column">
+            <div class="title-rate-product"><h3>RATE PRODUCT</h3></div>
+            <div class="total-star">
+                <div class="total-start-main">
+                    <div>
+                        <p th:text="${EStar}"></p>
+                    </div>
+                    <div class="star-star">
+                        <div class="rating-box">
+                            <div class="stars">
+                                <i th:each="star, index : ${#numbers.sequence(1, 5)}"
+                                   class="fa-solid fa-star"
+                                   th:classappend="(${star + 0.5 == EStar}) ? 'dive' : (${star <= EStar} ? 'active' : '')">
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                    <div><a th:text="${rateProducts.size()} + ' Rates'" href="#"
+                            style="text-decoration: none; font-size: 15px"></a></div>
+                </div>
+                <div class="total-rate">
+                    <ul class="rate-list">
+                        <li>
+                            <div class="number-star">
+                                5<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star5Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent" th:text="${star5Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                4<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star4Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent" th:text="${star4Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                3<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star3Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent " th:text="${star3Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                2<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star2Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent  " th:text="${star2Percent + '%'}"></span>
+                        </li>
+                        <li>
+                            <div class="number-star">
+                                1<i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="timeline-star">
+                                <p class="timing" th:style="'width:' + ${star1Percent} +'%'"></p>
+                            </div>
+                            <span class="number-percent " th:text="${star1Percent + '%'}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--content rate product-->
+    <div th:if="${rateProducts.size() == 0}" class="container d-flex justify-content-center align-items-center">
+        <div class="my-3 d-flex flex-column justify-content-center align-items-center">
+            <div class="img-no-rate w-25 my-2">
+                <img th:src="@{/images/5058062.png}" alt="">
+            </div>
+            <div>
+                <p style="font-size: 18px; font-weight: 600">This product has no reviews yet</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:if="${rateProducts.size() > 0}" class="container container-main-rate-product ">
+        <div th:each="rateProduct : ${rateProducts}" class="main-comment-rate my-3">
+            <div class="row">
+                <input type="hidden" th:value="${rateProduct.id}" class="idComment">
+                <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
+                    <div class="avatar-customer">
+                        <img th:src="'data:image/jpeg;base64,' + ${rateProduct.customer.image}" alt="">
+                    </div>
+                </div>
+                <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
+                    <div class="name-customer"
+                         th:text="${rateProduct.customer.firstName + ' ' + rateProduct.customer.lastName }"></div>
+                    <div class="star-rated">
+                        <div class="stars stars-rate">
+                            <i th:each="star, index : ${#numbers.sequence(1, 5)}"
+                               class="fa-solid fa-star"
+                               th:classappend="${star <= rateProduct.star} ? 'active' : ''"></i>
+                            <!--                            <i class="fa-solid fa-star active"></i>-->
+                            <!--                            <i class="fa-solid fa-star active"></i>-->
+                            <!--                            <i class="fa-solid fa-star active"></i>-->
+                            <!--                            <i class="fa-solid fa-star dive"></i>-->
+                        </div>
+                    </div>
+                    <div class="date-time-size">
+                        <div class="date-time"
+                             th:text="${#temporals.format(rateProduct.dateUpload,'dd-MM-yyy HH:mm:ss')}"></div>
+                        <div>|</div>
+                        <div class="size-bought">XL</div>
+                    </div>
+                    <div class="content-comment" th:text="${rateProduct.content}">
+                    </div>
+                    <div class="container-image-rate-product">
+                        <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
+                            <img th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
+                        </div>
+
+                    </div>
+
+                    <div class="container-image-rate-product slick-preview-comment">
+                        <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
+                            <img th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="like-comment">
+                        <i class="fa-solid fa-thumbs-up btnLikeComment"></i>
+                        <div class="total-like" th:text="${rateProduct.amountOfLike}"></div>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="pagination-rate-product"></div>
+</div>
+
+
+<div class="text-center" style="padding: 20px 0">
+
+    <h3 class="font-weight-bold">RELATED PRODUCT</h3>
+</div>
+
+<div class="container-product-same container d-flex justify-content-center " th:value="${productsSameCategory.size()}">
+    <div th:each="product : ${productsSameCategory}" class="card border-0" style="cursor: pointer; margin: 0 10px">
+        <a th:href="@{/product-detail/{id} (id = ${product.id})}">
+            <form th:action="@{/add-to-cart}" method="post">
+                <div class="card__main" style="">
+                    <div class="img__product">
+                        <img class="front-img "
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0)}}"
+                             alt="">
+                        <img class="back-img"
+                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1)}}"
+                             alt="">
+
+                        <div class="card__main--choose-options">
+                            <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
+                                NOW</a>
+                            </div>
+                            <input type="hidden" name="id" th:value="${product.id}">
+                            <input type="hidden" name="sizeId" th:value="${product.sizes.get(0).size.id}">
+                            <input type="submit" class="add-to-cart" value="ADD TO CART"/>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card__name-price">
+                    <div th:text="${product.name}" class="name-product"></div>
+                    <div class="container-price-product">
+                        <div class="have-sale-product d-flex align-items-center" th:if="${product.getSalePrice() > 0}">
+                            <div class="sale-price price-product"
+                                 th:text="${product.costPrice - product.salePrice}"></div>
+                            <div class="root-price price-product" th:text="${product.costPrice}"
+                                 style="text-decoration: line-through; color: #858E96"></div>
+                        </div>
+                        <div class="no-sale-product price-product" th:if="${product.getSalePrice() == 0.0}"
+                             th:text="${product.getCostPrice()}"></div>
+                    </div>
+                </div>
+            </form>
+            <div class="tag-sale-product d-flex justify-content-center align-items-center"
+                 th:if="${product.salePrice > 0}"
+                 th:text="${ '-' + #numbers.formatDecimal (((product.salePrice / product.costPrice) * 100), 0, 0) + '%'}"
+                 style="left: 0"></div>
+        </a>
+    </div>
+</div>
+
+<!--footer start-->
+<footer th:replace="~{fragments :: footer}"></footer>
+<!--footer end-->
+
+
+<div th:replace="~{fragments :: scroll}"></div>
+
+<div th:replace="~{fragments :: script}"></div>
+
+<script th:src="@{/js/detail-product.js}"></script>
+
+<!--<script th:src="@{/js/easyzoom.js}"></script>-->
+
+
+<script>
+    var input = document.getElementById("quantity");
+    var decreaseButton = document.querySelector(".decrease");
+    var increaseButton = document.querySelector(".increase");
+
+    decreaseButton.addEventListener("click", function () {
+        var value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    });
+
+    increaseButton.addEventListener("click", function () {
+        var value = parseInt(input.value);
+        input.value = value + 1;
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Lấy tất cả các container
+        var containers = document.querySelectorAll('.container-image-rate-product');
+
+        containers.forEach(function (container, index) {
+            var images = container.querySelectorAll('img');
+
+            images.forEach(function (image) {
+                image.addEventListener('click', function () {
+                    var previewContainer = containers[index + 1];
+
+                    if (previewContainer.classList.contains('active')) {
+                        // Nếu có, ẩn previewContainer
+                        previewContainer.classList.remove('active');
+                        previewContainer.style.visibility = 'hidden';
+                        previewContainer.style.opacity = '0';
+                        previewContainer.style.maxHeight = '0';
+                    } else {
+                        // document.querySelectorAll('.slick-preview-comment').forEach(function(pc) {
+                        //     pc.classList.remove('active');
+                        //     pc.style.visibility = 'hidden';
+                        //     pc.style.opacity = '0';
+                        //     pc.style.maxHeight = '0';
+                        // });
+
+                        previewContainer.classList.add('active');
+                        previewContainer.style.visibility = 'visible';
+                        previewContainer.style.opacity = '1';
+                        previewContainer.style.maxHeight = '1000px';
+                    }
+                });
+            });
+        });
+    });
+
+    var btnLikeComments = document.querySelectorAll(".btnLikeComment");
+    var listComment = document.querySelectorAll(".idComment")
+    // var listIdComments = listComment.map()
+
+
+
+    btnLikeComments.forEach(function (btnLikeComment, index) {
+        btnLikeComment.addEventListener('click', function () {
+            likeRate(listComment[index].value, index);
+        })
+    })
+
+    function likeRate(idComment, indexComment) {
+        $.ajax({
+            url: '/detail-product/like-comment',
+            type: 'POST',
+            data: {
+                idComment: idComment,
+            },
+            success: function (totalLike) {
+                document.querySelectorAll(".total-like")[indexComment].textContent = totalLike;
+            },
+            error: function (xhr, status, error) {
+                console.error("Error updating like comment: ", error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+            let numProduct = $('.card').length;
+            if (numProduct >= 4) {
+
+                $('.container-product-same').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 2,
+                    autoplay: true,
+                    autoplaySpeed: 1500,
+                    dots: true,
+                    arrows: true,
+                    infinite: true,
+                    responsive: [
+                        {
+                            breakpoint: 992,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3,
+                                infinite: true,
+                                dots: true
+                            }
+                        },
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 2,
+                                infinite: true,
+                                dots: true,
+                                arrows: false,
+                            }
+                        }
+                    ]
+                });
+            }
+
+            $('.slick-preview-comment').slick({})
+
+
+        }
+    )
+
+</script>
+
+</body>
+</html>

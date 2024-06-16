@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <title th:text="${title}"></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link th:href="@{/img/logo1.png}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css}" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+
+<!-- Spinner Start -->
+<div th:fragment="spinner" id="spinner"
+     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!-- Spinner End -->
+
+
+<!-- Sidebar Start -->
+<div th:fragment="sidebar" class="sidebar pe-4 pb-3">
+    <nav class="navbar bg-light navbar-light">
+        <a th:href="@{/index}" class="navbar-brand mx-4 mb-3">
+            <h3 class="text-primary">CATCOSY</h3>
+        </a>
+        <a th:href="@{/my-info}">
+
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle avatarImage" th:src=" ${session.avatarImage} != null ? 'data:image/jpeg;base64,' + ${session.avatarImage} : '/admin/img/me-8-256.png' "  alt="" style="width: 40px; height: 40px;">
+                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                </div>
+                <div class="ms-3">
+                    <h6 th:text="${session.nameForAdmin}" class="mb-0"></h6>
+                    <span th:text="${session.roleFor}"></span>
+                </div>
+            </div>
+        </a>
+        <div class="navbar-nav w-100">
+            <a th:href="@{/index}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                        class="fa fa-laptop me-2"></i>Manage</a>
+                <div class="dropdown-menu bg-transparent border-0">
+                    <a th:href="@{/categories}" class="dropdown-item">Manage Categories</a>
+                    <a th:href="@{/products}" class="dropdown-item">Manage Product</a>
+                    <!--                    <a href="#" class="dropdown-item">Other Elements</a>-->
+                </div>
+            </div>
+            <a th:href="@{/categories}" class="nav-item nav-link"><i class="fa-solid fa-layer-group me-2"></i>Categories</a>
+            <a th:href="@{/products}" class="nav-item nav-link"><i class="fa-solid fa-boxes-stacked me-2"></i>Products</a>
+            <a th:href="@{/orders}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Orders</a>
+            <a th:href="@{/vouchers}" class="nav-item nav-link"><i class="fa fa-ticket   me-2"></i>Vouchers</a>
+            <a th:href="@{/customers}" class="nav-item nav-link"><i class="fa fa-users   me-2"></i>Customers</a>
+            <a th:href="@{/employees}" class="nav-item nav-link"><i
+                    class="fa-solid fa-users-gear me-2"></i>Employees</a>
+<!--            <div class="nav-item dropdown">-->
+<!--                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i-->
+<!--                        class="far fa-file-alt me-2"></i>Pages</a>-->
+<!--                <div class="dropdown-menu bg-transparent border-0">-->
+<!--                    <a href="login.html" class="dropdown-item">Sign In</a>-->
+<!--                    <a href="register.html" class="dropdown-item">Sign Up</a>-->
+<!--                    <a href="404.html" class="dropdown-item">404 Error</a>-->
+<!--                    <a href="blank.html" class="dropdown-item">Blank Page</a>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </nav>
+</div>
+<!-- Sidebar End -->
+
+
+<!-- Navbar Start -->
+<nav th:fragment="navbar" class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+    <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+        <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+    </a>
+    <a href="#" class="sidebar-toggler flex-shrink-0">
+        <i class="fa fa-bars"></i>
+    </a>
+    <form class="d-none d-md-flex ms-4">
+        <input class="form-control border-0" type="search" placeholder="Search">
+    </form>
+    <div class="navbar-nav align-items-center ms-auto">
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="fa fa-envelope me-lg-2"></i>
+                <span class="d-none d-lg-inline-flex">Message</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                <a href="#" class="dropdown-item">
+                    <div class="d-flex align-items-center">
+                        <img class="rounded-circle" th:src="@{/img/me-8-256.png}" alt=""
+                             style="width: 40px; height: 40px;">
+                        <div class="ms-2">
+                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                            <small>15 minutes ago</small>
+                        </div>
+                    </div>
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">
+                    <div class="d-flex align-items-center">
+                        <img class="rounded-circle" th:src="@{/img/me-8-256.png}" alt=""
+                             style="width: 40px; height: 40px;">
+                        <div class="ms-2">
+                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                            <small>15 minutes ago</small>
+                        </div>
+                    </div>
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">
+                    <div class="d-flex align-items-center">
+                        <img class="rounded-circle" th:src="@{/img/me-8-256.png}" alt=""
+                             style="width: 40px; height: 40px;">
+                        <div class="ms-2">
+                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                            <small>15 minutes ago</small>
+                        </div>
+                    </div>
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item text-center">See all message</a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="fa fa-bell me-lg-2"></i>
+                <span class="d-none d-lg-inline-flex">Notificatin</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                <a href="#" class="dropdown-item">
+                    <h6 class="fw-normal mb-0">Profile updated</h6>
+                    <small>15 minutes ago</small>
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">
+                    <h6 class="fw-normal mb-0">New user added</h6>
+                    <small>15 minutes ago</small>
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">
+                    <h6 class="fw-normal mb-0">Password changed</h6>
+                    <small>15 minutes ago</small>
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item text-center">See all notifications</a>
+            </div>
+        </div>
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img class="rounded-circle me-lg-2 avatarImage" th:src=" ${session.avatarImage} != null ? 'data:image/jpeg;base64,' + ${session.avatarImage} : '/admin/img/me-8-256.png' " alt=""
+                     style="width: 40px; height: 40px;">
+                <span th:text="${session.nameForAdmin}" class="d-none d-lg-inline-flex"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                <a th:href="@{/my-info}" class="dropdown-item">My Profile</a>
+                <a href="#" class="dropdown-item">Settings</a>
+                <a th:href="@{/logout}" class="dropdown-item">Log Out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Navbar End -->
+
+<!-- Footer Start -->
+<div th:fragment="footer" class="container-fluid pt-4 px-4">
+    <div class="bg-light rounded-top p-4">
+        <div class="row">
+            <div class="col-12 col-sm-6 text-center text-sm-start">
+                &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+            </div>
+            <div class="col-12 col-sm-6 text-center text-sm-end">
+                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+<!--Toast Start-->
+<div th:fragment="toast" class="position-fixed top-0 end-0 p-3" style="z-index: 9999999">
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${success}">
+        <div class="toast-header bg-success ">
+            <strong class="me-auto" style="color: white">Success</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${success}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${warning}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${warning}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${message}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${message}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${error}">
+        <div class="toast-header bg-danger ">
+            <strong class="me-auto" style="color: white">Error</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${error}">
+        </div>
+    </div>
+</div>
+<!--Toast End-->
+
+
+<script th:fragment="toastScript" th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastEl = document.querySelectorAll('.myToast');
+        toastEl.forEach((toastEl, index) => {
+
+            if (toastEl) {
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show();
+                setTimeout(function () {
+                    toast.hide();
+                }, 3000);
+            }
+
+        })
+    });
+</script>
+
+<div th:fragment="richtext">
+
+    <script th:src="@{/js/jquery.richtext.min.js}"></script>
+    <script >
+        $('.editorArea').richText({
+
+            // text formatting
+            bold: true,
+            italic: true,
+            underline: true,
+
+            // text alignment
+            leftAlign: true,
+            centerAlign: true,
+            rightAlign: true,
+            justify: true,
+
+            // lists
+            ol: true,
+            ul: true,
+
+            // title
+            heading: true,
+
+            // fonts
+            fonts: true,
+            fontList: ["Arial",
+                "Arial Black",
+                "Comic Sans MS",
+                "Courier New",
+                "Geneva",
+                "Georgia",
+                "Helvetica",
+                "Impact",
+                "Lucida Console",
+                "Tahoma",
+                "Times New Roman",
+                "Verdana"
+            ],
+            fontColor: true,
+            backgroundColor: false,
+            fontSize: true,
+
+            // uploads
+            imageUpload: false,
+            fileUpload: false,
+
+            // media
+            videoEmbed: false,
+            // link
+            urls: false,
+
+            // tables
+            table: false,
+
+            // code
+            removeStyles: false,
+            code: false,
+
+            // colors
+            colors: [],
+
+            // dropdowns
+            fileHTML: '',
+            imageHTML: '',
+
+            // translations
+            translations: {
+                'title': 'Title',
+                'white': 'White',
+                'black': 'Black',
+                'brown': 'Brown',
+                'beige': 'Beige',
+                'darkBlue': 'Dark Blue',
+                'blue': 'Blue',
+                'lightBlue': 'Light Blue',
+                'darkRed': 'Dark Red',
+                'red': 'Red',
+                'darkGreen': 'Dark Green',
+                'green': 'Green',
+                'purple': 'Purple',
+                'darkTurquois': 'Dark Turquois',
+                'turquois': 'Turquois',
+                'darkOrange': 'Dark Orange',
+                'orange': 'Orange',
+                'yellow': 'Yellow',
+                'imageURL': 'Image URL',
+                'fileURL': 'File URL',
+                'linkText': 'Link text',
+                'url': 'URL',
+                'size': 'Size',
+                'responsive': '<a href="https://www.jqueryscript.net/tags.php?/Responsive/">Responsive</a>',
+                'text': 'Text',
+                'openIn': 'Open in',
+                'sameTab': 'Same tab',
+                'newTab': 'New tab',
+                'align': 'Align',
+                'left': 'Left',
+                'justify': 'Justify',
+                'center': 'Center',
+                'right': 'Right',
+                'rows': 'Rows',
+                'columns': 'Columns',
+                'add': 'Add',
+                'pleaseEnterURL': 'Please enter an URL',
+                'videoURLnotSupported': 'Video URL not supported',
+                'pleaseSelectImage': 'Please select an image',
+                'pleaseSelectFile': 'Please select a file',
+                'bold': 'Bold',
+                'italic': 'Italic',
+                'underline': 'Underline',
+                'alignLeft': 'Align left',
+                'alignCenter': 'Align centered',
+                'alignRight': 'Align right',
+                'addOrderedList': 'Ordered list',
+                'addUnorderedList': 'Unordered list',
+                'addHeading': 'Heading/title',
+                'addFont': 'Font',
+                'addFontColor': 'Font color',
+                'addBackgroundColor': 'Background color',
+                'addFontSize': 'Font size',
+                'addImage': 'Add image',
+                'addVideo': 'Add video',
+                'addFile': 'Add file',
+                'addURL': 'Add URL',
+                'addTable': 'Add table',
+                'removeStyles': 'Remove styles',
+                'code': 'Show HTML code',
+                'undo': 'Undo',
+                'redo': 'Redo',
+                'save': 'Save',
+                'close': 'Close'
+            },
+
+            // privacy
+            youtubeCookies: false,
+
+            // preview
+            preview: false,
+
+            // placeholder
+            placeholder: '',
+
+            // dev settings
+            useSingleQuotes: false,
+            height: 0,
+            heightPercentage: 0,
+            adaptiveHeight: false,
+            id: "",
+            class: "",
+            useParagraph: false,
+            maxlength: 0,
+            maxlengthIncludeHTML: false,
+            callback: undefined,
+            useTabForNext: false,
+            save: false,
+            saveCallback: undefined,
+            saveOnBlur: 0,
+            undoRedo: true
+
+        });
+    </script>
+
+</div>
+
+<div th:fragment="script">
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/lib/chart/chart.min.js}"></script>
+    <script th:src="@{/lib/easing/easing.min.js}"></script>
+    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
+    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+    <script th:src="@{/lib/tempusdominus/js/moment.min.js}"></script>
+    <script th:src="@{/lib/tempusdominus/js/moment-timezone.min.js}"></script>
+    <script th:src="@{/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js}"></script>
+
+    <!-- Template Javascript -->
+    <script th:src="@{/js/main.js}"></script>
+
+
+    <!--    <script>-->
+    <!--        const links = document.querySelectorAll('.nav-link');-->
+
+    <!--        const items = document.querySelectorAll('.nav-item');-->
+
+    <!--        const dropdownItems = document.querySelectorAll('.dropdown');-->
+
+    <!--        items.forEach((item, index) => {-->
+    <!--            console.log(item);-->
+    <!--            item.addEventListener('click', (e) => {-->
+
+    <!--                items.forEach((item) => {-->
+    <!--                    item.classList.remove('active');-->
+    <!--                })-->
+
+
+    <!--                this.classList.add('active');-->
+    <!--            });-->
+    <!--        });-->
+
+
+    <!--        dropdownItems.forEach((item) => {-->
+
+    <!--            item.addEventListener('click', (e) => {-->
+
+    <!--                const itemsForDD = item.querySelectorAll('.dropdown-item');-->
+    <!--                itemsForDD.forEach((it) => {-->
+
+    <!--                    itemsForDD.forEach((it) => {-->
+    <!--                        it.classList.remove('active')-->
+    <!--                    })-->
+
+    <!--                    it.classList.add('active')-->
+
+    <!--                    document.querySelectorAll('.dropdown-menu').forEach((i) => { i.classList.remove('show') })-->
+
+    <!--                    it.parentElement.classList.add('show')-->
+
+    <!--                })-->
+
+    <!--            })-->
+
+    <!--        })-->
+
+    <!--    </script>-->
+
+</div>
+
+
+
+
+
+<body>
+
+</body>
+</html>

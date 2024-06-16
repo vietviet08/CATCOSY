@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <link rel="icon" th:href="@{/images/logo.jpeg}">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/aos.css}">
+
+    <link rel="stylesheet" th:href="@{/css/slick.css}"/>
+    <link rel="stylesheet" th:href="@{/css/slick-theme.css}">
+
+    <!--    <link href="https://cdn.jsdelivr.net/npm/@cabbiepete/cloud-zoom@1.0.4/cloud-zoom.min.css" rel="stylesheet">-->
+    <!--    <link rel="stylesheet" href="https://web.nvnstatic.net/js/jquery/cloudzoom/cloudzoom.css?v=2" type="text/css">-->
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+
+
+<!--Loader start-->
+<div th:fragment="loader" class="loader-wrapper op-load-wrapper-end">
+    <div class="loader"></div>
+</div>
+<!--Loader end-->
+
+<!--Toast start-->
+<div th:fragment="toast" class="position-fixed top-0 end-0 p-3" style="z-index: 9999999">
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${success}">
+        <div class="toast-header bg-success ">
+            <strong class="me-auto" style="color: white">Success</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${success}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${warning}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${warning}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${message}">
+        <div class="toast-header bg-warning ">
+            <strong class="me-auto" style="color: white">Warning</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${message}">
+        </div>
+    </div>
+
+    <div class="myToast toast" role="alert" aria-live="assertive" aria-atomic="true" th:if="${error}">
+        <div class="toast-header bg-danger ">
+            <strong class="me-auto" style="color: white">Error</strong>
+            <button type="button" style="color: white" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="${error}">
+        </div>
+    </div>
+</div>
+<!--Toast end-->
+
+
+<!--Header start-->
+<header th:fragment="header" class="header d-flex flex-column">
+    <div class="nav">
+        <div class="nav-line container d-flex justify-content-around  align-items-center    ">
+
+
+            <div class="logo d-flex align-items-center w-25 " style="width: 100px">
+                <a class="name-brand" th:href="@{/}"><i>CATCOSY</i></a>
+                <img class="" th:src="@{/images/logo.png}" style="margin-top: 4px" alt="logo">
+            </div>
+
+            <input type="checkbox" id="check">
+            <div class="bars ">
+                <label for="check" class="icons-btn">
+                    <i class="fa-solid fa-bars" id="bar-btn"></i>
+                    <i class="fa-solid fa-xmark" id="exit-btn"></i>
+                </label>
+            </div>
+
+            <div class="menu">
+                <ul class=" d-flex justify-content-around align-content-center ">
+                    <li><a th:href="@{/}">HOME</a></li>
+                    <li><a th:href="@{/products}">PRODUCTS</a></li>
+                    <li><a th:href="@{/}">BOTTOM</a></li>
+                    <li><a th:href="@{/}">JACKET</a></li>
+                    <li><a th:href="@{/}">SALE</a></li>
+                    <li><a th:href="@{/}">TOP</a></li>
+                    <li><a th:href="@{/}">ABOUT US</a></li>
+                </ul>
+            </div>
+            <div class="group-feature d-flex justify-content-end align-items-center w-25 ">
+                <a th:href="@{/login}"> <i class="fa-solid fa-magnifying-glass"></i></a>
+                <a th:href="@{/account}" class="user-detail-need">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <div class="user-detail-header">
+                    <ul>
+                        <li>
+                            <a th:if="${session.logged == false}" th:href="@{/login}">ACCOUNT</a>
+                        </li>
+                        <li>
+                            <a th:if="${session.logged == true}" th:href="@{/account}">ACCOUNT</a>
+                        </li>
+
+                        <li th:if="${session.nameForCustomer == null}">
+                            <a th:href="@{/login}">LOGIN</a>
+                        </li>
+                        <li th:if="${session.nameForCustomer != null}">
+                            <a th:href="@{/logout}">LOGOUT</a>
+                        </li>
+                        <li th:if="session.nameForCustomer" th:text="${session.nameForCustomer}"
+                            style="color: #e91e63; font-weight: 600">
+                        </li>
+
+<!--                        <li-->
+<!--                            style="color: #e91e63; font-weight: 600">-->
+<!--                            <a sec:authentication = "principal.fullName"></a>-->
+<!--                        </li>-->
+
+                    </ul>
+                </div>
+                <a th:href="@{/cart}" class="cart-total-item">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <div class="cart-item" th:text="${session.totalProduct != null ? session.totalProduct : '0'}"></div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</header>
+<!--Header end-->
+
+<!--Footer start-->
+<footer th:fragment="footer" class="">
+    <div class="main-footer container d-flex justify-content-around ">
+        <div class="row">
+            <div class="info-company mb-4 pb-0 mt-1 col-12 col-lg-3 col-md-6">
+                <div class="name-logo d-flex justify-content-start align-items-center  " style="margin-left: 0">
+                    <div class="title-footer pt-3">
+                        <b>CATCOSY</b>
+                    </div>
+                    <a class="logo-footer w-25">
+                        <img class="" th:src="@{/images/logo1.png}">
+                    </a>
+                </div>
+                <ul class="p-0">
+                    <li>NQV PRODUCTION AND TRADING COMPANY LIMITED</li>
+                    <li>Representative: Nguyen Quoc Viet</li>
+                    <li>Business registration code: 90909090</li>
+                    <li>Date Range: 11/3/2024</li>
+                    <li>Place of issue: Da Nang Department of Planning and Investment</li>
+                    <li>Address: 111 Ly Tu Trong, Da Nang</li>
+                    <li class="pr-protected-logo">
+                        <img class="protected-logo" th:src="@{/images/bo-cong-thuong.png}" alt="bo-cong-thuong">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="support d-flex flex-column mb-4 pb-0  mt-3 col-12 col-lg-3 col-md-6">
+                <div class="title-footer">
+                    <b>SUPPORT</b>
+                </div>
+
+                <div class="footer-item d-flex flex-column  ">
+                    <a href="#">Check your order</a>
+                    <a th:href="@{/login-register}">Login</a>
+                    <a th:href="@{/login-register}">Register</a>
+                    <a href="#">
+                        Shopping guide
+                    </a>
+                    <a href="#">
+                        Delivery instructions
+                    </a>
+                    <a href="#">
+                        Payment guide
+                    </a>
+                    <a href="#">
+                        Terms of service
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="policy   mt-3 col-12 col-lg-3 col-md-6">
+                <div class="title-footer">
+                    <b>POLICY</b>
+                </div>
+                <div class="footer-item d-flex flex-column">
+
+                    <a href="#">
+                        Payment regulations
+                    </a>
+                    <a href="#">
+                        Warranty policy
+                    </a>
+
+                    <a href="#">
+                        Return policy
+                    </a>
+
+                    <a href="#">
+                        Shipping policy
+                    </a>
+                    <a href="#">
+                        Purchase policy
+                    </a>
+                    <a href="#">
+                        Goods inspection policy
+                    </a>
+                    <a href="#">
+                        User information protection policy
+                    </a>
+                </div>
+            </div>
+
+            <div class="send-mail mt-3 col-12 col-lg-3 col-md-6">
+                <div class="title-footer">
+                    <b>SEND MAIL</b>
+                </div>
+                <p>Send email to receive promotions</p>
+                <div class="group-send-mail position-relative ">
+                    <input placeholder="Email" type="email" class="input-email border-0">
+                    <button class="btn-send-mail position-absolute border-0  ">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
+
+                <div class="connect-social-media mt-3   ">
+                    <div class="title-footer"><b>SOCIAL MEDIA</b></div>
+                    <div class="group-social-media d-flex align-items-center">
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <hr class="mt-5">
+
+    <div class="text-center"><p style="color: rgba(156, 163, 175); font-size: 14px"> &copy; 2024 - Copyright NGUYEN QUOC
+        VIET </p></div>
+
+</footer>
+<!--Footer end-->
+
+<!--Scroll-->
+<div th:fragment="scroll" class="scroll-to-top">
+    <i class="fa-solid fa-angle-up"></i>
+</div>
+
+
+<a th:fragment="paging(pageNum, label)"
+   th:href="@{'products?' +
+                     'page=' + ${pageNum} +
+                     '&idCategory=' + ${idCategory} +
+                     ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
+                     ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
+                     ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
+                     ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
+   class="page-link"
+
+>
+    [[${label}]]
+</a>
+
+
+<option th:fragment="sort(sortBy, label)"
+        th:class="'option-sort option-sort-' + ${sortBy}"
+        th:value="'products?' +  'page=' + ${currentPage}  +
+        '&idCategory=' + ${idCategory} +
+        ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
+        '&sortPrice=' + ${sortBy} +
+        ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
+        ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}">
+    [[${label}]]
+</option>
+
+
+<!--   th:with="newMin = ${minPrice lt min ? min : minPrice}, newMax = ${maxPrice gt max ? maxPrice : max}"-->
+<!--'&priceCdt=' + ${minPrice != null && maxPrice != null ? minPrice : min} + ':' + ${minPrice != null && maxPrice != null ? maxPrice : max}}-->
+<!--${minPrice != null && maxPrice != null && maxPrice > max && minPrice < min ? '&priceCdt=' + minPrice + ':' + maxPrice  : '&priceCdt=' + min + ':' + max}-->
+
+
+<!--'&priceCdt=' + ${minPrice == min ? max : (minPrice != null && minPrice < min ? minPrice : min)} + ':' + ${maxPrice == max ? min : (maxPrice > max && maxPrice != null ? maxPrice : max)}-->
+<a th:fragment="filterPrice(min, max, label)"
+   th:href="@{'products?' +
+              'page=' + ${currentPage}  +
+             '&idCategory=' + ${idCategory} +
+             ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
+             ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
+             ${ minPrice != null && maxPrice != null && minPrice == min && maxPrice == max ? '' : ('&priceCdt=' + (minPrice == min ? max : (minPrice != null && minPrice < min ? minPrice : min)) + ':' + (maxPrice == max ? min : (maxPrice > max && maxPrice != null ? maxPrice : max)))} +
+             ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
+   onclick="window.location.href=this.getAttribute('href'); return false;">
+    <span>
+        <label></label>
+        <input type="checkbox"
+               th:checked="${(min > minPrice && min < maxPrice) || (max > minPrice && max < maxPrice) || (min == minPrice && max == maxPrice)}">
+        [[${label}]]
+    </span>
+</a>
+
+
+<a th:fragment="filterSizes(sizeProduct, hate, label)"
+   th:href="@{'products?' +
+                'page=' + ${currentPage}  +
+                '&idCategory=' + ${idCategory} +
+                ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
+                ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
+                ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
+                ${ sizeChooseString == sizeProduct + ',' ? '' :  (#lists.contains(sizeChoose, sizeProduct.longValue()) ? ('&bySize=' + #strings.replace(sizeChooseString, sizeProduct  + ',', '')) : (sizeChoose != null && sizeChooseString != null ? ('&bySize=' + sizeChooseString  + sizeProduct + ',') : ('&bySize=' + sizeProduct + ',')))}
+       }"
+   onclick="window.location.href=this.getAttribute('href'); return false;">
+    <span>
+        <label></label>
+        <input type="checkbox" th:checked="${#lists.contains(sizeChoose, sizeProduct.longValue())}">
+        [[${label}]]
+    </span>
+</a>
+
+
+<!--for="filter-by-price-2"-->
+<!--name="filter-by-price-1" id="filter-by-price-2"-->
+
+
+<!--Script-->
+<div th:fragment="script">
+    <script th:src="@{/js/home.js}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+
+    <script th:src="@{/js/aos.js}"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            $('.container-product').slick({
+                slidesToShow: 4,
+                slidesToScroll: 2,
+                autoplay: true,
+                autoplaySpeed: 1000,
+                dots: true,
+                arrows: true,
+                infinite: true,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2,
+                            infinite: true,
+                            dots: true,
+                            arrows: false,
+                        }
+                    }
+                ]
+            });
+
+            AOS.init();
+        });
+    </script>
+
+    <script th:src="@{/js/slick.min.js}" ></script>
+
+    <!--    <script src="https://cdn.jsdelivr.net/npm/@cabbiepete/cloud-zoom@1.0.4/cloud-zoom.min.js"></script>-->
+
+    <!--    <script defer="" type="text/javascript" src="https://web.nvnstatic.net/js/jquery/cloudzoom/cloudzoom.js?v=22"></script>-->
+    <!--    <script type="text/javascript">-->
+    <!--        CloudZoom.quickStart();-->
+    <!--    </script>-->
+
+    <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+</div>
+
+</body>
+</html>

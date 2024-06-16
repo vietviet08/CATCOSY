@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments ::  spinner}"></div>
+
+
+<div th:replace="~{fragments ::  sidebar}"></div>
+
+<div class="content position-relative">
+    <!-- Navbar Start -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <!-- Navbar End-->
+
+    <div class="container">
+        <div class="w-100 d-flex justify-content-between align-items-center">
+            <div class=" d-flex justify-content-between align-items-center" style="width: 35%">
+
+                <a type="button" class="btn btn-primary my-2 " th:href="@{/add-product}">Add product
+                </a>
+
+
+                <select class="form-select select-price" style="width: 150px" aria-label="Default select example">
+                    <option selected>Sort</option>
+                    <option value="1" th:onchange="">Prices decrease</option>
+                    <option value="2">Prices increase</option>
+                </select>
+
+
+                <select class="form-select select-category" style="width: 150px" aria-label="Default select example">
+                    <option selected>Category</option>
+                    <option value="1">Polo</option>
+                    <option value="2">Jacket</option>
+                    <option value="3">Hoodie</option>
+                    <option value="4">T-shirt</option>
+                    <option value="5">Sweeter</option>
+                    <option value="6">Bottom</option>
+                    <option value="7">Short</option>
+                    <option value="8">Crop-top</option>
+                </select>
+
+
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <div th:if="${size == 0}" class="alert alert-danger text-center w-25 my-2" role="alert">
+                    Don't have products in repository
+                </div>
+            </div>
+
+
+            <!--            <form th:action="@{/search-products/0}" class="my-2">-->
+            <!--                <div class="input-group">-->
+            <!--                    <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"-->
+            <!--                           type="text" class="border-1" name="keyword" placeholder="Search product"-->
+            <!--                           aria-label="Recipient's username" aria-describedby="basic-addon2">-->
+            <!--                    <div class="input-group-append">-->
+            <!--                        <button class="btn btn-primary " style="color: white" type="submit">Search</button>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </form>-->
+
+
+            <div class="" style="position: relative">
+                <div class="my-2  " style="position: absolute; top: 0; left: -100%">
+
+                    <a th:href="@{/export-products}" style="color: white">
+                        <div class="btn btn-primary">Export data
+                        </div>
+                    </a>
+                </div>
+                <form id="searchForm" class="my-2">
+                    <div class="input-group">
+                        <input style="border: none; background-color: #F4F6F9; padding: 0 10px; margin-right: 10px; border-radius: 5px; width: 250px; outline: none"
+                               type="text" class="border-1" name="search" placeholder="Search product"
+                               aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary " style="color: white" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="alert alert-success" th:if="${productSortedDesc}">ok</div>
+
+
+    <div class="alert alert-success" th:if="${productSortedAsc}">ok</div>
+
+
+    <table th:if="${size > 0}" class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Sale price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Image</th>
+            <th scope="col">Update</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        <tr th:each="product, obj : ${products}">
+            <td th:text="${obj.index}"></td>
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.category.name}"></td>
+            <td class="price-col" th:text="${product.costPrice}"></td>
+            <td class="price-col" th:text="${product.salePrice}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td class="text-center">
+                <img th:src="'data:image/jpeg;base64,'+ ${imagesMap.get(product.id)}" class="border rounded"
+                     style="width: 40px; height: 40px" alt=""/>
+            </td>
+            <td>
+                <a id="btnUpdate" th:href="@{/update-product/{id}(id = ${product.id})}" class="btn btn-success"
+                   style="width: 100px">Update</a>
+            </td>
+            <td>
+                <a th:if="${product.getActivated()}" th:href="@{/delete-product(id = ${product.id})}"
+                   class="btn btn-danger" style="width: 100px">Delete</a>
+                <a th:if="${product.getDeleted()}" th:href="@{/activate-product(id = ${product.id})}"
+                   class="btn btn-primary" style="width: 100px">Activate</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <div class="position-absolute bottom-0 end-50">
+        <nav aria-label="Page navigation example">
+            <!--            <ul class="pagination">-->
+            <!--                <li class="page-item" th:if="${currentPage > 0}">-->
+            <!--                    <a class="page-link" th:href="@{'/products/' + ${currentPage - 1}}" aria-label="Previous">-->
+            <!--                        <span aria-hidden="true">&laquo;</span>-->
+            <!--                        <span class="sr-only">Previous</span>-->
+            <!--                    </a>-->
+            <!--                </li>-->
+            <!--                <li th:each="i : ${#numbers.sequence(1, totalPage)}"-->
+            <!--                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"-->
+            <!--                    class="page-item">-->
+            <!--                    <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#"><span th:text="${i}"></span></a>-->
+            <!--                </li>-->
+            <!--                <li class="page-item" th:if="${currentPage + 1 != totalPage}">-->
+            <!--                    <a class="page-link" th:href="@{'/products/'+${currentPage+ 1}}" aria-label="Next">-->
+            <!--                        <span aria-hidden="true">&raquo;</span>-->
+            <!--                        <span class="sr-only">Next</span>-->
+            <!--                    </a>-->
+            <!--                </li>-->
+            <!--            </ul>-->
+
+            <!--            th:href="@{'/products?page=' + ${currentPage - 1}}"-->
+            <!--            th:href="@{'/products?page='+${currentPage+ 1}}"-->
+
+            <ul class="pagination" th:attr="data-current-page=${currentPage}, data-total-page=${totalPage}">
+                <li class="page-item" th:if="${currentPage > 0}">
+                    <a class="page-link page-previous"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(1, totalPage)}"
+                    th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+                    class="page-item">
+                    <a class="page-link page-number">
+                        <span th:text="${i}"></span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${currentPage + 1 != totalPage}">
+                    <a class="page-link page-next" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+
+
+</div>
+
+
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
+
+<div th:replace="~{fragments :: toast}"></div>
+
+
+<div th:replace="~{fragments :: script}">
+</div>
+
+
+<script th:replace="~{fragments :: toastScript}"></script>
+
+<!--select-->
+<script th:inline="javascript">
+    // $(document).ready(function () {
+    //
+    //     $('.select-price').change(function () {
+    //         var selectedOption = $(this).children("option:selected").val();
+    //         $.ajax({
+    //             type: 'GET',
+    //             url: '/sort-prices?nameOption=' + selectedOption,
+    //             // dataType: 'json',
+    //             success: function (data) {
+    //                 // var tableBody = $('#table-body');
+    //                 // tableBody.empty();
+    //                 // $.each(data, function (index, product) {
+    //                 //     tableBody.append(
+    //                 //         '<tr>' +
+    //                 //         '<td>' + index + '</td>' +
+    //                 //         '<td>' + product.id + '</td>' +
+    //                 //         '<td>' + product.name + '</td>' +
+    //                 //         '<td>' + product.category.name + '</td>' +
+    //                 //         '<td>' + product.costPrice + '</td>' +
+    //                 //         '<td>' + product.quantity + '</td>' +
+    //                 //         '</tr>'
+    //                 //     );
+    //                 // });
+    //                 console.log(data);
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 console.error("Error:", error);
+    //             }
+    //         });
+    //     });
+    // });
+
+
+    const VND = new Intl.NumberFormat('vi-VN', {
+        style: 'currency', currency: 'VND',
+    });
+    const nodePriceProduct = document.querySelectorAll(".price-col");
+    nodePriceProduct.forEach((nodePrice, index) => {
+        nodePrice.textContent = VND.format(nodePrice.textContent);
+    })
+
+    var globalLink = window.location.href;
+
+    document.getElementById('searchForm').addEventListener('submit',
+        function (event) {
+            event.preventDefault();
+
+            var searchTerm = document.querySelector('input[name="search"]').value;
+
+            if (globalLink.includes('?')) {
+                if (globalLink.includes("search=")) {
+                    const regexSearch = /search=[^&]*/;
+                    window.location.href = globalLink.replace(regexSearch, "search=" + encodeURIComponent(searchTerm));
+                    globalLink = window.location.href;
+                } else {
+                    window.location.href = globalLink + '&search=' + encodeURIComponent(searchTerm);
+                    globalLink = window.location.href;
+                }
+            } else {
+                window.location.href = globalLink + '?search=' + encodeURIComponent(searchTerm);
+                globalLink = window.location.href;
+            }
+
+        }
+    );
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentPage = parseInt(document.querySelector('.pagination').getAttribute('data-current-page'));
+        const totalPage = parseInt(document.querySelector('.pagination').getAttribute('data-total-page'));
+
+
+        const pagePrevious = document.querySelector(".page-previous")
+        const pageNext = document.querySelector(".page-next")
+
+
+        const pageNumbers = document.querySelectorAll(".page-number")
+
+
+        //icon pre & next
+
+
+        if (pageNext) {
+            if (globalLink.includes("search")) {
+                const regex = /page=\d+/;
+                pageNext.href = globalLink.replace(regex, "page=" + `${currentPage + 1}`);
+                if (!globalLink.includes("page=")) {
+                    pageNext.href = globalLink + "&page=" + `${currentPage + 1}`;
+                }
+            } else {
+                pageNext.href = '/admin/products?page=' + `${currentPage + 1}`;
+            }
+        }
+
+        if (pagePrevious) {
+            if (globalLink.includes("search")) {
+                const regex = /page=\d+/;
+                pagePrevious.href = globalLink.replace(regex, "page=" + `${currentPage - 1}`);
+                if (!globalLink.includes("page=")) {
+                    pagePrevious.href = globalLink + "&page=" + `${currentPage - 1}`;
+                }
+            } else {
+                pagePrevious.href = '/admin/products?page=' + `${currentPage - 1}`;
+                console.log(typeof currentPage)
+            }
+        }
+
+
+        //number page
+        pageNumbers.forEach((pageEl, index) => {
+            globalLink = window.location.href
+            if (globalLink.includes("search")) {
+                const regex = /page=\d+/;
+                pageEl.href = globalLink.replace(regex, "page=" + index);
+                if (!globalLink.includes("page=")) {
+                    pageEl.href = globalLink + "&page=" + index;
+                }
+            } else pageEl.href = '/admin/products?page=' + index;
+        });
+    });
+
+
+</script>
+</body>
+</html>

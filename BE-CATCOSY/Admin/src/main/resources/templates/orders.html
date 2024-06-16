@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+
+<style>
+
+    .nothing-orders {
+        padding: 10px 10px;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .action-order a div i {
+        margin: 0 5px;
+        font-size: 18px;
+    }
+</style>
+
+<body>
+
+<div th:replace="~{fragments ::  spinner}"></div>
+
+
+<div th:replace="~{fragments ::  sidebar}"></div>
+
+<div class="content position-relative">
+    <!-- Navbar Start -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <!-- Navbar End-->
+
+    <div class="container">
+        <div th:if="${orders.size() == 0}" class="nothing-orders bg-warning">There are no orders yet</div> <div class="my-2 ">
+        <a th:href="@{/export-orders}" style="color: white">
+            <div class="btn btn-primary">
+                Export data
+            </div>
+        </a>
+    </div>
+
+        <div class="w-100 d-flex justify-content-between align-items-center">
+
+
+
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">ID Order</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Delivery Date</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Discount Voucher</th>
+                    <th scope="col">Shipping fee</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Delivery Address</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Request</th>
+                    <th scope="col">Action</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <input name="idOrder" type="hidden" th:value="${order.id}">
+                    <th scope="row" th:text="${order.id}"></th>
+                    <td th:text="${order.orderDate}"></td>
+                    <td th:text="${order.deliveryDate}"></td>
+                    <td th:text="${order.totalPrice}" class="price-col"></td>
+                    <td th:text="${order.discountPrice}" class="price-col"></td>
+                    <td th:text="${order.shippingFee}" class="price-col"></td>
+                    <td th:text="${order.customer.id + ' - ' + order.customer.firstName + ' ' + order.customer.lastName}"></td>
+                    <td th:text="${order.deliveryAddress}"></td>
+                    <td th:text="${order.paymentMethod}"></td>
+                    <td th:text="${order.notes}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td>
+                        <a th:if="${(order.accept == false && order.cancel == false) && (!#strings.equals(order.status, 'Goods received'))}"
+                           th:href="@{/accept-order(id = ${order.id})}">
+                            <div class="btn btn-success">
+                                Accept
+                            </div>
+                        </a>
+                        <a th:if="${order.accept == false && order.cancel == true}">
+                            <button class="btn btn-secondary" disabled>
+                                Accept
+                            </button>
+                        </a>
+
+
+                        <a th:if="${order.accept == true && !#strings.equals(order.status, 'Goods received')}"
+                           th:href="@{/cancel-order(id = ${order.id})}">
+                            <div class="btn btn-warning">
+                                Cancel
+                            </div>
+                        </a>
+
+
+                        <a th:if="${#strings.equals(order.status, 'Goods received')}">
+                            <button class="btn btn-warning" disabled>
+                                Cancel
+                            </button>
+                        </a>
+
+                    </td>
+                    <td>
+                        <div class="action-order d-flex justify-content-between" style="padding: 10px 0 ">
+
+                            <a class="btnDetailOrder" th:href="@{/detail-order(id = ${order.id})}">
+                                <div>
+                                    <i class="fa-regular fa-eye" style="color: #009CFF"></i>
+                                </div>
+                            </a>
+
+                            <a th:href="@{/delete-order(id = ${order.id})}">
+                                <div>
+                                    <i class="fa-regular fa-trash-can" style="color: red"></i>
+                                </div>
+                            </a>
+
+                            <a class="btnEdit" th:href="@{/status-order(id = ${order.id})}">
+                                <div>
+                                    <i class="fa-regular fa-pen-to-square" style="color: #0f5132"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--modal order detail-->
+        <div class="modal fade" id="detailOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Order Detail</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody id="listOrderDetail">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--modal edit status and notes-->
+        <div class="modal fade" id="edit-status" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-edit-status-title">Edit status & notes</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/orders/save-change-status}" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="status-select" class="col-form-label">Status:</label>
+                                <select id="status-select" name="status">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes-text" class="col-form-label">Notes:</label>
+                                <textarea name="notes" class="form-control " id="notes-text"></textarea>
+                            </div>
+                            <div class="idOrder">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
+
+<div th:replace="~{fragments :: toast}"></div>
+
+
+<div th:replace="~{fragments :: script}">
+</div>
+
+
+<script th:replace="~{fragments :: toastScript}"></script>
+
+<script th:inline="javascript">
+
+
+    $('document').ready(function () {
+            const VND = new Intl.NumberFormat('vi-VN', {
+                style: 'currency', currency: 'VND',
+            });
+
+            $(".price-col").each(function (index) {
+                $(this).text(VND.format($(this).text()));
+            });
+
+
+            /*Order */
+            $('.btnDetailOrder').on('click', function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $.get(href, function (orderDetails, status) {
+                    $("#listOrderDetail").empty();
+                    const VND = new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    });
+                    $.each(orderDetails, function (index, orderDetail) {
+                        $("#listOrderDetail").append(
+                            '<tr>' +
+                            '<th scope="row">' +
+                            '<a href="/product-detail/' + orderDetail.idProduct + '" >' +
+                            '<img src="data:image/jpeg;base64,' + orderDetail.image + '" style="width: 60px; height: 60px;">' +
+                            '</a>' +
+                            '</th>' +
+                            '<td>' +
+                            '<a href="/product-detail/' + orderDetail.idProduct + '" style="text-decoration: none; color: #333333">' + orderDetail.nameProduct + '</a>' +
+                            '</td>' +
+                            '<td class="price-product">' + VND.format(orderDetail.unitPrice) + '</td>' +
+                            '<td>' + orderDetail.quantityAndSize + '</td>' +
+                            '<td class="price-product">' + VND.format(orderDetail.totalPrice) + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                });
+
+                var updateCategoryModal = new bootstrap.Modal(document.getElementById('detailOrder'));
+                updateCategoryModal.show();
+            });
+
+            /*Status*/
+            $('.btnEdit').on('click', function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $.get(href, function (order, status) {
+                    console.log(order)
+                    $('.idOrder').empty();
+
+                    $('#status-select').empty();
+
+                    $('#notes-text').val(order.notes)
+
+                    $('.idOrder').append('<input name="idOrderNeed" type="hidden" value=" ' + order.idOrder + '">')
+
+                    const statusValue = ['Awaiting approval', 'Delivering', 'Goods received', 'Cancelled'];
+
+                    $.each(statusValue, function (index, s) {
+                        if (order.status === statusValue[index]) $('#status-select').append('<option value="' + index + '" selected>' + statusValue[index] + '</option>')
+                        else $('#status-select').append('<option value="' + index + '">' + statusValue[index] + '</option>')
+                    })
+
+                });
+
+                var updateCategoryModal = new bootstrap.Modal(document.getElementById('edit-status'));
+                updateCategoryModal.show();
+
+            });
+
+        }
+    );
+
+</script>
+</body>
+
+
+</html>
