@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class VoucherController {
@@ -27,20 +28,6 @@ public class VoucherController {
 
     @Autowired
     private MailService mailService;
-
-    @GetMapping("/vouchers")
-    public String getAllVoucher(Model model) {
-
-        List<Voucher> vouchers = voucherService.getAllVoucher();
-
-        model.addAttribute("title", "Voucher");
-        model.addAttribute("vouchers", vouchers);
-        model.addAttribute("size", vouchers.size());
-        model.addAttribute("newVoucher", new Voucher());
-
-
-        return "voucher";
-    }
 
     @GetMapping("/export-vouchers")
     public void exportProduct(HttpServletResponse response) throws IOException {
@@ -72,14 +59,27 @@ public class VoucherController {
         excelExporter.export(response, ObjectManage.Vouchers.name(), fieldsToExport);
     }
 
+    @GetMapping("/vouchers")
+    public String getAllVoucher(Model model) {
+
+        List<Voucher> vouchers = voucherService.getAllVoucher();
+
+        model.addAttribute("title", "Voucher");
+        model.addAttribute("vouchers", vouchers);
+        model.addAttribute("size", vouchers.size());
+        model.addAttribute("newVoucher", new Voucher());
+
+        return "voucher";
+    }
+
     @RequestMapping(value = "/findByIdVoucher", method = {RequestMethod.GET, RequestMethod.PUT})
     @ResponseBody
-    public Voucher getVoucher(Long id) {
-        return voucherService.getVoucherById(id).get();
+    public Optional<Voucher> getVoucher(Long id) {
+        return voucherService.getVoucherById(id);
     }
 
     @PostMapping("/add-voucher")
-    public String saveVoucher(@ModelAttribute("newVoucher") Voucher newVoucher, @RequestParam("expiryDate") String expiryDate, RedirectAttributes  attributes) {
+    public String saveVoucher(@ModelAttribute("newVoucher") Voucher newVoucher, @RequestParam("expiryDate") String expiryDate, RedirectAttributes attributes) {
 
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -96,18 +96,15 @@ public class VoucherController {
         return "redirect:/vouchers";
     }
 
-    @PostMapping("update-voucher")
-    public String updateVoucher(RedirectAttributes attributes) {
-
+    @PostMapping("/update-voucher")
+    public String updateVoucher(Voucher voucher, RedirectAttributes attributes) {
         try {
-
+            voucherService.updateVoucher(voucher);
             attributes.addFlashAttribute("success", "Update voucher successfully");
         } catch (Exception e) {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Update voucher failure! Maybe error from server!");
         }
-
-
         return "redirect:/vouchers";
     }
 
@@ -143,15 +140,15 @@ public class VoucherController {
     @PostMapping("/send-mail-voucher")
     public String sendMailVoucher(Model model, @RequestParam("id") Long id, @RequestParam("sendDetailEmailCustomer") String email, RedirectAttributes attributes) {
         try {
-          String mess =  mailService.sendMailVoucherToCustomer(email, voucherService.getVoucherById(id).get());
-          model.addAttribute("message", mess);
-          model.addAttribute("success", "Send mail successfully!");
+            String mess = mailService.sendMailVoucherToCustomer(email, voucherService.getVoucherById(id).get());
+            model.addAttribute("message", mess);
+            model.addAttribute("success", "Send mail successfully!");
 
-          attributes.addFlashAttribute("message", mess);
+            attributes.addFlashAttribute("message", mess);
 //          attributes.addFlashAttribute("success", "Send mail successfully!");
         } catch (Exception e) {
             e.printStackTrace();
-            attributes.addFlashAttribute("error","Send mail failure! Maybe error from server!" );
+            attributes.addFlashAttribute("error", "Send mail failure! Maybe error from server!");
             model.addAttribute("error", "Send mail failure! Maybe error from server!");
         }
 

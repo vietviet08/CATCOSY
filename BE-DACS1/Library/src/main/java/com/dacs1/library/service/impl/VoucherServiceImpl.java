@@ -44,9 +44,15 @@ public class VoucherServiceImpl implements VoucherService {
     @Override
     public Voucher updateVoucher(Voucher v) {
         Voucher voucher = voucherRepository.getReferenceById(v.getId());
-
-
-        return null;
+        voucher.setCodeVoucher(v.getCodeVoucher());
+        voucher.setPrice(v.getPrice());
+        voucher.setPercentOfTotalPrice(v.getPercentOfTotalPrice());
+        voucher.setMinimumPrice(v.getMinimumPrice());
+        voucher.setMinimumTotalProduct(v.getMinimumTotalProduct());
+        voucher.setUsageLimits(v.getUsageLimits());
+        voucher.setExpiryDate(v.getExpiryDate());
+        voucher.setForEmailCustomer(v.getForEmailCustomer());
+        return voucherRepository.save(voucher);
     }
 
     @Override
@@ -72,7 +78,7 @@ public class VoucherServiceImpl implements VoucherService {
             Voucher voucher = voucherRepository.findByCodeVoucher(code);
             if (voucher == null) return 0.0;
 
-            if(!voucher.getCustomerUsedVoucher().isEmpty()) {
+            if (!voucher.getCustomerUsedVoucher().isEmpty()) {
                 List<Customer> customersUsedVoucher = voucher.getCustomerUsedVoucher();
                 for (Customer customer : customersUsedVoucher)
                     if (customer.getEmail().equals(cart.getCustomer().getEmail()))
@@ -88,7 +94,7 @@ public class VoucherServiceImpl implements VoucherService {
                     voucher.getUsageLimits() == 0 ||
                     !new Date().before(voucher.getExpiryDate()) ||
                     cart.getTotalPrice() < voucher.getMinimumPrice() ||
-                     totalItem < voucher.getMinimumTotalProduct() ) return 0.0;
+                    totalItem < voucher.getMinimumTotalProduct()) return 0.0;
             else if (!voucher.getForEmailCustomer().isEmpty()) {
                 if (voucher.getForEmailCustomer().equals(cart.getCustomer().getEmail()))
                     return calculatePriceSaleWithCart(voucher, cart);
@@ -120,17 +126,17 @@ public class VoucherServiceImpl implements VoucherService {
                     voucher.getUsageLimits() == 0 ||
                     !new Date().before(voucher.getExpiryDate()) ||
                     order.getTotalPrice() < voucher.getMinimumPrice() ||
-                    totalItem < voucher.getMinimumTotalProduct() ) ;
+                    totalItem < voucher.getMinimumTotalProduct()) ;
             else if (voucher.getForEmailCustomer().equals(order.getCustomer().getEmail())) {
                 double priceSale = calculatePriceSale(voucher, order);
                 voucher.setUsed(true);
                 voucher.setUsageLimits(0);
 
-                if(voucher.getCustomerUsedVoucher().isEmpty()){
+                if (voucher.getCustomerUsedVoucher().isEmpty()) {
                     List<Customer> customersUsedVoucher = new ArrayList<>();
                     customersUsedVoucher.add(order.getCustomer());
                     voucher.setCustomerUsedVoucher(customersUsedVoucher);
-                }else voucher.getCustomerUsedVoucher().add(order.getCustomer());
+                } else voucher.getCustomerUsedVoucher().add(order.getCustomer());
 
                 voucherRepository.save(voucher);
                 order.setTotalPrice(order.getTotalPrice() - priceSale);
@@ -142,11 +148,11 @@ public class VoucherServiceImpl implements VoucherService {
                 voucher.setUsageLimits(voucher.getUsageLimits() - 1);
                 if (voucher.getUsageLimits() == 0) voucher.setUsed(true);
 
-                if(voucher.getCustomerUsedVoucher().isEmpty()){
+                if (voucher.getCustomerUsedVoucher().isEmpty()) {
                     List<Customer> customersUsedVoucher = new ArrayList<>();
                     customersUsedVoucher.add(order.getCustomer());
                     voucher.setCustomerUsedVoucher(customersUsedVoucher);
-                }else voucher.getCustomerUsedVoucher().add(order.getCustomer());
+                } else voucher.getCustomerUsedVoucher().add(order.getCustomer());
 
                 voucherRepository.save(voucher);
 
