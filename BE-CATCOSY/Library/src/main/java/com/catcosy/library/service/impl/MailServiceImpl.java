@@ -19,6 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
 import java.util.*;
 
 @Service
@@ -154,16 +155,25 @@ public class MailServiceImpl implements MailService {
             if (customer.getPhone() != null) variable.put("phone", customer.getPhone());
 
             List<OrderDetailDto> orderDetailList = orderDetailService.finAllByOrderIdDto(order.getId());
-
+            variable.put("idOrder", order.getId());
             variable.put("products", orderDetailList);
-            variable.put("totalPrice", order.getTotalPrice());
-            variable.put("salePrice", 0);
-            variable.put("shippingFee", order.getShippingFee());
+
+            String subPrice = formatCurrency(order.getTotalPrice() + order.getDiscountPrice() + order.getShippingFee());
+            variable.put("subPrice", subPrice);
+
+            String totalPrice = formatCurrency(order.getTotalPrice());
+            variable.put("totalPrice", totalPrice);
+
+            String salePrice = formatCurrency(order.getDiscountPrice());
+            variable.put("salePrice", salePrice);
+
+            String shippingFee = formatCurrency(order.getShippingFee());
+            variable.put("shippingFee", shippingFee);
             variable.put("paymentMethod", order.getPaymentMethod());
             variable.put("deliveryAddress", order.getDeliveryAddress());
             variable.put("codeViewOrder", order.getCodeViewOrder());
 
-            helper.setText(thymeleafService.createContent("mail-ordered-customer", variable), true);
+            helper.setText(thymeleafService.createContent("mail-ordered-customer1", variable), true);
             helper.setSubject("Your order in CATCOSY");
             javaMailSender.send(message);
 
@@ -240,6 +250,13 @@ public class MailServiceImpl implements MailService {
             return "Send mail error maybe error from server!";
         }
     }
+
+    public String formatCurrency(double amount) {
+        Locale vietnam = new Locale("vi", "VN");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(vietnam);
+        return currencyFormatter.format(amount);
+    }
+
 
 
     private byte[] readAllBytes(InputStream inputStream) throws IOException {
