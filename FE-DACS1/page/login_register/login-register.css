@@ -1,0 +1,55 @@
+
+form ul li {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/*#f ul li:not(#register,#input-email, #input-phone,#input-date,  #input-sex){*/
+/*    width: 100%;*/
+/*}*/
+
+input:not(.input-email){
+    border-radius: unset;
+    border: 1px solid #858E96;
+    height: 35px;
+    width: 80%;
+    padding: 5px;
+}
+
+#register, #login{
+    width: 45%;
+    height: 35px;
+    border: unset;
+}
+
+#birthdate{
+    width: 60%;
+}
+
+.birthdate-sex input{
+    margin-right: 15px;
+}
+.birthdate-sex select{
+    margin-left: 15px;
+    border-radius: unset;
+}
+
+@media only screen and (max-width: 1400px){
+    .birthdate-sex input{
+        margin-right: 5px;
+    }
+    .birthdate-sex select{
+        margin-left: 5px;
+    }
+}
+
+@media only screen and(max-width: 1200px){
+    .birthdate-sex input{
+        width: 10%;
+        margin-right: 0;
+    }
+    .birthdate-sex select{
+        margin-left: 0;
+    }
+}

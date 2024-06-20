@@ -1,0 +1,651 @@
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+
+
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Monterrat", sans-serif;
+}
+
+img {
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/*.container {*/
+/*    max-width: 1200px;*/
+/*    width: 100%;*/
+/*    margin: 0 auto;*/
+/*    padding: 0 10px;*/
+/*}*/
+
+/*:root {*/
+/*    --white: rgb(255, 255, 255);*/
+/*    --white--op: rgb(255, 255, 255, 0.7);*/
+/*}*/
+
+
+/*.header {*/
+/*    position: relative;*/
+/*}*/
+
+/*.nav {*/
+/*    position: sticky !important;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 50px;*/
+/*}*/
+
+/*.menu>ul {*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*    align-items: center;*/
+/*}*/
+
+.header {
+    position: relative;
+}
+
+/*navbar*/
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    background-color: transparent;
+    z-index: 999;
+    width: 100%;
+}
+
+.nav-line {
+    height: 100%;
+}
+
+.scrolled {
+    background-color: white;
+    transition: all 0.3s;
+}
+
+.logo > img {
+    width: 40px;
+}
+
+.logo > img:hover {
+    cursor: pointer;
+}
+
+.logo .name-brand {
+    margin-right: 4px;
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.menu {
+    width: 70%;
+}
+
+.menu ul {
+    margin: 5px 0;
+    width: 100%;
+    padding-left: -32px;
+}
+
+
+.menu ul li a {
+    text-decoration: none;
+    margin: 0px 12px;
+}
+
+.menu ul li a:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: #333;
+    transition: ease-in-out 0.2s;
+    left: 10%;
+    bottom: -10px;
+}
+
+.menu ul li a:hover:after {
+    width: 80%;
+}
+
+.menu ul li {
+    list-style: none;
+    position: relative;
+}
+
+.menu ul li > a {
+    color: black;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.group-feature > i {
+    margin: 0 20px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.group-feature > i:hover {
+    cursor: pointer;
+}
+
+
+/*end header*/
+
+.carousel-inner {
+    height: 100vh;
+}
+
+.carousel-item img {
+    height: 100%;
+}
+
+.carousel-control-prev {
+    padding-right: 120px;
+    font-weight: 900;
+    color: white;
+}
+
+.carousel-control-next {
+    padding-left: 120px;
+    font-weight: 900;
+    color: white;
+}
+
+
+/*start choose shop*/
+.men-women {
+    margin: 60px 0;
+    height: 800px;
+    position: relative;
+}
+
+.men-women .women {
+    position: relative;
+    /*margin-right:  30px;*/
+    /*z-index: -1;*/
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    transition: filter .2s ease-in-out;
+    width: 48%;
+}
+
+.men-women .men {
+    position: relative;
+    /*margin-left:  30px;*/
+    /*z-index: -1;*/
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    transition: filter .2s ease-in-out;
+    width: 48%;
+}
+
+.men-women a img {
+    height: 100%;
+}
+
+
+.men-women a:hover {
+    cursor: pointer;
+    filter: none;
+    -webkit-filter: grayscale(0);
+}
+
+.men-women::before {
+    content: "WOMEN";
+    position: absolute;
+    width: 20%;
+    height: 60px;
+    top: 50%;
+    left: 15%;
+    color: white;
+    font-size: 44px;
+    font-weight: bolder;
+    text-align: center;
+    z-index: 9;
+}
+
+
+.men-women::after {
+    content: "MEN";
+    position: absolute;
+    width: 20%;
+    height: 60px;
+    top: 50%;
+    right: 15%;
+    color: white;
+    font-size: 44px;
+    font-weight: bolder;
+    text-align: center;
+    z-index: 9;
+}
+
+/*end choose shop*/
+
+
+/*card*/
+.card {
+    /*margin-top: 100px;*/
+    width: 290px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+.img__product {
+    overflow: hidden;
+    position: relative;
+    height: 450px;
+}
+
+
+.front-img {
+    transition: 0.4s;
+    height: 100%;
+}
+
+.back-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transition: 0.4s;
+    opacity: 0;
+    height: 100%;
+}
+
+.card__main {
+    /*height: 70%;*/
+}
+
+.card__main--choose-options {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    z-index: 3;
+}
+
+.buy-now,
+.add-to-cart {
+    position: absolute;
+    background-color: black;
+    width: 45%;
+    font-size: 10px;
+    text-align: center;
+    padding: 15px 0px;
+    top: 0;
+    left: 0;
+    transform: translateY(44px);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.add-to-cart {
+    left: unset;
+    right: 0;
+}
+
+.card__color {
+    margin: 10px 0;
+    height: 5px;
+    width: 40px;
+    background-color: blueviolet;
+}
+
+
+.card__color::before {
+    content: "";
+    width: 40px;
+    height: 5px;
+    background-color: chocolate;
+    display: block;
+    position: absolute;
+    z-index: 9;
+    transform: translateX(-60px);
+}
+
+.card__color::after {
+    content: "";
+    width: 40px;
+    height: 5px;
+    background-color: blue;
+    display: block;
+    position: absolute;
+    z-index: 9;
+    transform: translateX(60px);
+}
+
+.card__name-price {
+    font-weight: bold;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img__product img:hover {
+    cursor: pointer;
+    opacity: 0;
+}
+
+/*end-card*/
+
+
+.logo-brand img {
+    width: 120px;
+}
+
+
+/*footer*/
+footer > a {
+    font-size: 14px;
+}
+
+footer {
+
+    height: 100%;
+    background-color: #F7F7F7;
+
+}
+
+.main-footer {
+    padding-top: 40px;
+}
+
+.title-footer {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.info-company {
+    /*background-color: red;*/
+
+}
+
+
+.name-logo {
+    margin-left: 32px;
+    margin-bottom: 12px;
+}
+
+.info-company ul li {
+    list-style-type: none;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+
+.logo-footer img {
+    width: 60px;
+}
+
+.protected-logo {
+    width: 60%;
+}
+
+
+.input-email {
+    padding: 10px;
+
+}
+
+.input-email:focus {
+    outline: none;
+}
+
+.btn-send-mail {
+    top: 20%;
+    right: 30%;
+    background-color: transparent;
+}
+
+.footer-item a {
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.connect-social-media {
+    width: 100px;
+}
+
+.group-social-media i {
+    margin: 0 5px;
+    font-size: 24px;
+}
+
+footer p {
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+/*end footer*/
+
+/*scroll to top*/
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    color: #000000;
+    opacity: 0;
+    transition: all 0.6s ease;
+    transform: translateY(20px);
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-to-top > i {
+    transition: 0.4s;
+}
+
+.scroll-to-top:hover {
+    cursor: pointer;
+    background-color: #000000;
+}
+
+.scroll-to-top:hover > i {
+    color: white;
+}
+
+/*end scroll to top*/
+
+
+/*bars*/
+.bars {
+    position: absolute;
+    display: none;
+}
+
+#check {
+    display: none;
+}
+
+@media only screen and (max-width: 375px){
+    .logo {
+        margin-left: -40px;
+    }
+
+    .group-feature{
+        margin: 0 -8px   ;
+    }
+
+    .group-feature i:nth-child(1),.group-feature i:nth-child(2){
+        margin-right: 7px;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .container-product{
+        flex-direction: column;
+    }
+}
+
+/*mobile & tablet for header and footer*/
+
+@media only screen and (max-width: 992px) {
+
+    header .nav {
+        height: 44px;
+    }
+
+    .menu {
+        position: absolute;
+        height: 0;
+        width: 100%;
+        top: 100%;
+        left: 0;
+        transition: 0.3s ease-out;
+        overflow: hidden;
+        background-color: #f7f7f7;
+    }
+
+    #check:checked ~ .menu {
+        height: 500px;
+    }
+
+
+    .menu ul {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .menu ul li {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .logo {
+        position: absolute;
+        top: 0;
+        left: 40%;
+    }
+
+    .group-feature {
+        position: absolute;
+        top: 10px;
+        right: -10px;
+    }
+
+    .group-feature i {
+        margin: 0 20px 0 0;
+    }
+
+
+    .bars {
+        display: inline-block;
+        top: 10px;
+        left: 10px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .bars i {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    #bar-btn {
+        display: block;
+    }
+
+    #exit-btn {
+        display: none;
+    }
+
+    #check:checked ~ .bars .icons-btn #bar-btn {
+        display: none;
+    }
+
+    #check:checked ~ .bars .icons-btn #exit-btn {
+        display: block;
+    }
+
+
+    /*#carouselExampleAutoplaying {*/
+    /*    height: 60vh;*/
+    /*}*/
+    .carousel-inner {
+        height: 40vh;
+    }
+
+    .men-women::before {
+        left: 5%;
+    }
+
+    /*footer*/
+    /*.main-footer{*/
+    /*    flex-direction: column;*/
+    /*}*/
+
+
+
+
+
+}
+
+@media only screen and (max-width: 1200px) {
+    #carouselExampleAutoplaying {
+        /*height: 600px;*/
+
+    }
+
+    .menu ul {
+        padding: 0;
+        margin-bottom:30px ;
+        }
+
+
+    .menu ul li a {
+        white-space: nowrap;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    #carouselExampleAutoplaying {
+        /*height: 600px;*/
+    }
+
+    .menu ul  {
+        margin-top: 30px;
+    }
+
+    .intro-shop img{
+        width: 100%;
+        /*height: 120px;*/
+    }
+}

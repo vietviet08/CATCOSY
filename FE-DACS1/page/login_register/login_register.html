@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="../home/index.css">
+    <link rel="stylesheet" href="login-register.css">
+</head>
+<body>
+
+
+<header class="header d-flex flex-column">
+    <div class="nav">
+        <div class="nav-line container d-flex justify-content-around  align-items-center    ">
+
+
+            <div class="logo d-flex align-items-center w-25 " style="width: 100px">
+                <a class="name-brand" href="#"><i>CATCOSY</i></a>
+                <img class="" src="../../img/logo.png" style="margin-top: 4px" alt="logo">
+            </div>
+
+            <input type="checkbox" id="check">
+            <div class="bars ">
+                <label for="check" class="icons-btn">
+                    <i class="fa-solid fa-bars" id="bar-btn"></i>
+                    <i class="fa-solid fa-xmark" id="exit-btn"></i>
+                </label>
+
+
+            </div>
+
+            <div class="menu">
+                <ul class=" d-flex justify-content-around align-content-center ">
+                    <li><a href="/">HOME</a></li>
+                    <li><a href="/about">TOP</a></li>
+                    <li><a href="/services">BOTTOM</a></li>
+                    <li><a href="/contact">JACKET</a></li>
+                    <li><a href="/contact">SALE</a></li>
+                    <li><a href="/contact">ACCESSORIES</a></li>
+                    <li><a href="/contact">ABOUT US</a></li>
+                </ul>
+            </div>
+            <div class="group-feature d-flex justify-content-end align-items-center w-25 ">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-regular fa-user"></i>
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<div class="container my-5">
+    <div class="row ">
+        <div class="container-login col-md-6 p-lg-5 my-3 ">
+            <div class="login">
+                <h2 class="text-center" style="font-weight: 900">Login</h2>
+                <form >
+                    <ul>
+                        <li>
+                            <input placeholder="Username" type="text" name="username" id="username">
+                        </li>
+                        <li>
+                            <input placeholder="Password" type="password" name="password" id="password">
+                        </li>
+                        <li>
+                            <button type="submit" class="" id="login" style="background-color: black; color: white">
+                                Login
+                            </button>
+                        </li>
+                    </ul>
+
+                </form>
+
+            </div>
+        </div>
+        <div class="container-register col-md-6 p-lg-5 my-3">
+            <div class="login">
+                <h2 class="text-center" style="font-weight: 900">Register</h2>
+                <form id="f">
+                    <ul class="">
+                        <li>
+                            <input placeholder="Full name" type="text" name="fullname" id="fullname">
+                        </li>
+                        <li>
+                            <input placeholder="Password" type="password" name="password" id="password-register">
+                        </li>
+                        <li>
+                            <input placeholder="Repeat password" type="password" name="password"
+                                   id="repeat-password-register">
+                        </li>
+
+                        <li id="input-email">
+                            <input placeholder="Email" type="email" name="email" id="email">
+                        </li>
+
+                        <li id="input-phone">
+                            <input placeholder="Your phone" type="text" name="phone" id="phone">
+                        </li>
+
+                        <li class="birthdate-sex">
+                            <input placeholder="Birth date" type="date" name="phone" id="birthdate">
+
+                            <select name="sex" id="sex">
+                                <option value="male">
+                                    Male
+                                </option>
+                                <option value="female">
+                                    Female
+                                </option>
+                            </select>
+                        </li>
+
+
+
+                        <li>
+                            <button type="submit" class="" id="register" style="background-color: black; color: white">
+                                Register
+                            </button>
+                        </li>
+                    </ul>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<footer class="">
+    <div class="main-footer container d-flex justify-content-around ">
+        <div class="row">
+            <div class="info-company mb-4 pb-0 mt-1 col-12 col-lg-3 col-md-6">
+                <div class="name-logo d-flex justify-content-start align-items-center  " style="margin-left: 0">
+                    <div class="title-footer pt-3">
+                        <b>CATCOSY</b>
+                    </div>
+                    <a class="logo-footer w-25">
+                        <img class="" src="../../img/logo1.png">
+                    </a>
+                </div>
+                <ul class="p-0">
+                    <li>CÔNG TY TNHH SẢN XUẤT VÀ KINH DOANH THƯƠNG MẠI NQV</li>
+                    <li>Đại diện: Nguyễn Quốc Việt</li>
+                    <li>Mã ĐKKD: 90909090</li>
+                    <li>Ngày cấp: 11/3/2024</li>
+                    <li>Nơi cấp: Sở kế hoạch và đầu tư Đà Nẵng</li>
+                    <li>Địa chỉ: 111 Lý Tự Trọng, Đà Nẵng</li>
+                    <li class="pr-protected-logo">
+                        <img class="protected-logo w-25" src="../../img/bo-cong-thuong.png" alt="bo-cong-thuong">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="support d-flex flex-column mb-4 pb-0  mt-3 col-12 col-lg-3 col-md-6">
+                <div class="title-footer">
+                    <b>HỖ TRỢ</b>
+                </div>
+
+                <div class="footer-item d-flex flex-column  ">
+                    <a>Kiểm tra đơn hàng</a>
+                    <a>Đăng nhập</a>
+                    <a>Đăng ký</a>
+                    <a>
+                        Hướng dẫn mua hàng
+                    </a>
+                    <a>
+                        Hướng dẫn giao nhận
+                    </a>
+                    <a>
+                        Hướng dẫn thanh toán
+                    </a>
+                    <a>
+                        Điều khoản dịch vụ
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="policy   mt-3 col-12 col-lg-3 col-md-6">
+                <div class="title-footer">
+                    <b>CHÍNH SÁCH</b>
+                </div>
+                <div class="footer-item d-flex flex-column">
+
+                    <a>
+                        Quy định thanh toán
+                    </a>
+                    <a>
+                        Chính sách bảo hành
+                    </a>
+
+                    <a>
+                        Chính sách đổi trả hàng
+                    </a>
+
+                    <a>
+                        Chính sách vận chuyển
+                    </a>
+                    <a>
+                        Chính sách mua hàng
+                    </a>
+                    <a>
+                        Chính sách kiểm hàng
+                    </a>
+                    <a>
+                        Chính sách bảo vệ thông tin người dùng
+                    </a>
+                </div>
+            </div>
+
+            <div class="send-mail mt-3 col-12 col-lg-3 col-md-6">
+                <div class="title-footer">
+                    <b>GỬI MAIL</b>
+                </div>
+                <p>Gửi mail nhận khuyến mãi</p>
+                <div class="group-send-mail position-relative ">
+                    <input placeholder="Email" type="email" class="input-email border-0">
+                    <button class="btn-send-mail position-absolute border-0  ">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
+
+                <div class="connect-social-media mt-3   ">
+                    <div class="title-footer"><b>KẾT NỐI</b></div>
+                    <div class="group-social-media d-flex align-items-center">
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <hr class="mt-5">
+
+    <div class="text-center"><p style="color: rgba(156, 163, 175); font-size: 14px"> &copy; 2024 - Copyright NGUYEN QUOC
+        VIET </p></div>
+
+</footer>
+
+
+<div class="scroll-to-top">
+    <i class="fa-solid fa-angle-up"></i>
+</div>
+
+
+<script src="../home/home.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
