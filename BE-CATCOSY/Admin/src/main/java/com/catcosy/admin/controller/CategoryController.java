@@ -82,7 +82,7 @@ public class CategoryController {
             categoryService.deleteById(category.getId());
             attributes.addFlashAttribute("success", "Deleted category!");
         } catch (Exception e) {
-            attributes.addFlashAttribute("success", "Delete category failed!");
+            attributes.addFlashAttribute("error", "Delete category failed!");
         }
         return "redirect:/categories";
     }
@@ -93,7 +93,7 @@ public class CategoryController {
             categoryService.activatedById(category.getId());
             attributes.addFlashAttribute("success", "Activated category!");
         } catch (Exception e) {
-            attributes.addFlashAttribute("success", "Activate category failed!");
+            attributes.addFlashAttribute("error", "Activate category failed!");
         }
         return "redirect:/categories";
     }

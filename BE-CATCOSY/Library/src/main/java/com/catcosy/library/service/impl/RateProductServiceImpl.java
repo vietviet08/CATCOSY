@@ -93,6 +93,21 @@ public class RateProductServiceImpl implements RateProductService {
     }
 
     @Override
+    public void deleteCommentByAdmin(Long idComment) {
+        RateProduct rateProduct = rateProductRepository.getReferenceById(idComment);
+        rateProduct.setDelete(true);
+        rateProductRepository.save(rateProduct);
+    }
+
+    @Override
+    public void allowCommentByAdmin(Long idComment) {
+        RateProduct rateProduct = rateProductRepository.getReferenceById(idComment);
+        rateProduct.setDelete(false);
+        rateProductRepository.save(rateProduct);
+    }
+
+
+    @Override
     @Transactional
     public RateProduct likeComment(Long idComment, String username) {
         RateProduct comment = rateProductRepository.getReferenceById(idComment);

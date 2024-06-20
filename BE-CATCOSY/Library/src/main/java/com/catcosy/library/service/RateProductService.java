@@ -10,9 +10,14 @@ public interface RateProductService {
     RateProduct addComment(Long idProduct, Long idOrderDetail, String username, int star, String content, List<MultipartFile> images);
 
     RateProduct editComment(RateProduct comment);
+
     void deleteComment(Long idComment, String username);
 
-    RateProduct likeComment(Long idComment, String  username);
+    void deleteCommentByAdmin(Long idComment);
+
+    void allowCommentByAdmin(Long idComment);
+
+    RateProduct likeComment(Long idComment, String username);
 
     RateProduct answerComment(Long idCommentCustomer);
 
