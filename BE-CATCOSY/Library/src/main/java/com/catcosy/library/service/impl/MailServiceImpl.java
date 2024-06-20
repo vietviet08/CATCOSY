@@ -152,6 +152,8 @@ public class MailServiceImpl implements MailService {
             variable.put("lastName", customer.getLastName());
             variable.put("username", customer.getUsername());
             variable.put("email", customer.getEmail());
+            variable.put("codeViewOrder",order.getCodeViewOrder());
+
             if (customer.getPhone() != null) variable.put("phone", customer.getPhone());
 
             List<OrderDetailDto> orderDetailList = orderDetailService.finAllByOrderIdDto(order.getId());
@@ -169,6 +171,7 @@ public class MailServiceImpl implements MailService {
 
             String shippingFee = formatCurrency(order.getShippingFee());
             variable.put("shippingFee", shippingFee);
+
             variable.put("paymentMethod", order.getPaymentMethod());
             variable.put("deliveryAddress", order.getDeliveryAddress());
             variable.put("codeViewOrder", order.getCodeViewOrder());

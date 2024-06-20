@@ -11,6 +11,7 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -200,10 +201,18 @@ public class AccountController {
 //        return "view-orders";
 //    }
 
-    @GetMapping("/orders/view/test")
+    @GetMapping("/orders/test")
     public String viewOrder(Model model) {
         model.addAttribute("dateNow", new Date());
         model.addAttribute("order", orderService.findOrderById(22L));
+        return "view-orders";
+    }
+
+    @GetMapping("/order/{id}")
+    public String viewOrderByToken(@PathVariable("id")String id, Model model){
+        model.addAttribute("dateNow", new Date());
+        Order order = orderService.findOrderByCodeViewOrder(id);
+        model.addAttribute("order", order);
         return "view-orders";
     }
 
