@@ -1,9 +1,11 @@
 package com.catcosy.library.service.impl;
 
+import com.catcosy.library.dto.VoucherDto;
 import com.catcosy.library.model.*;
 import com.catcosy.library.repository.CartRepository;
 import com.catcosy.library.repository.OrderRepository;
 import com.catcosy.library.repository.VoucherRepository;
+import com.catcosy.library.service.MailService;
 import com.catcosy.library.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class VoucherServiceImpl implements VoucherService {
     @Autowired
     private OrderRepository orderRepository;
 
+//    @Autowired
+//    private MailService mailService;
+
     @Override
     public List<Voucher> getAllVoucher() {
         return voucherRepository.findAll();
@@ -33,11 +38,14 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
+    public VoucherDto getVoucherDtoById(Long id) {
+        return toVoucherDto(voucherRepository.getReferenceById(id));
+    }
+
+    @Override
     public Voucher saveVoucher(Voucher voucher) {
-
-
+//        if(!voucher.getForEmailCustomer().isBlank()) mailService.sendMailVoucherToCustomer(voucher.getForEmailCustomer(), voucher);
         return voucherRepository.save(voucher);
-
     }
 
     @Override
@@ -51,6 +59,7 @@ public class VoucherServiceImpl implements VoucherService {
         voucher.setUsageLimits(v.getUsageLimits());
         voucher.setExpiryDate(v.getExpiryDate());
         voucher.setForEmailCustomer(v.getForEmailCustomer());
+//        if(!voucher.getForEmailCustomer().isBlank()) mailService.sendMailVoucherToCustomer(voucher.getForEmailCustomer(), voucher);
         return voucherRepository.save(voucher);
     }
 
@@ -164,6 +173,15 @@ public class VoucherServiceImpl implements VoucherService {
         }
     }
 
+    @Override
+    public boolean checkEmailVoucher(Long idOld, String newEmail) {
+        Voucher voucher = voucherRepository.getReferenceById(idOld);
+        if (voucher.getForEmailCustomer() != null) {
+            return voucher.getForEmailCustomer().equals(newEmail);
+        }
+        return false;
+    }
+
     private double calculatePriceSale(Voucher voucher, Order order) {
         double priceSale = 0.0;
         if (voucher.getPrice() > 0 || voucher.getPrice() != null) priceSale = voucher.getPrice();
@@ -179,6 +197,20 @@ public class VoucherServiceImpl implements VoucherService {
             priceSale = cart.getTotalPrice() * ((double) voucher.getPercentOfTotalPrice() / 100);
 
         return priceSale;
+    }
+
+    private VoucherDto toVoucherDto(Voucher voucher) {
+        VoucherDto voucherDto = new VoucherDto();
+        voucherDto.setId(voucher.getId());
+        voucherDto.setCodeVoucher(voucher.getCodeVoucher());
+        voucherDto.setPrice(voucher.getPrice());
+        voucherDto.setPercentOfTotalPrice(voucher.getPercentOfTotalPrice());
+        voucherDto.setMinimumPrice(voucher.getMinimumPrice());
+        voucherDto.setMinimumTotalProduct(voucher.getMinimumTotalProduct());
+        voucherDto.setUsageLimits(voucher.getUsageLimits());
+        voucherDto.setExpiryDate(voucher.getExpiryDate());
+        voucherDto.setForEmailCustomer(voucher.getForEmailCustomer());
+        return voucherDto;
     }
 
 }

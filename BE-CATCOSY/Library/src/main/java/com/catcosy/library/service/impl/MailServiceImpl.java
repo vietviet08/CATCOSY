@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -152,7 +153,7 @@ public class MailServiceImpl implements MailService {
             variable.put("lastName", customer.getLastName());
             variable.put("username", customer.getUsername());
             variable.put("email", customer.getEmail());
-            variable.put("codeViewOrder",order.getCodeViewOrder());
+            variable.put("codeViewOrder", order.getCodeViewOrder());
 
             if (customer.getPhone() != null) variable.put("phone", customer.getPhone());
 
@@ -216,11 +217,15 @@ public class MailServiceImpl implements MailService {
     @Override
     public String sendMailVoucherToCustomer(String emailCustomer, Voucher voucher) {
         try {
-            CustomerDto customer = customerService.findByEmail(email);
-            if (customer == null) return "Not found customer, email not registered!";
+//            CustomerDto customer = customerService.findByEmail(emailCustomer);
+//            && customer == null
+//            || !emailCustomer.contains("@yopmail.com")
+            if (emailCustomer.equals(email))
+                return "Not found customer, email not registered!";
+            if (voucher.getId() != null)
+                if (voucher.isUsed() || voucher.getExpiryDate().before(new Date()) || voucherService.getVoucherDtoById(voucher.getId()).getForEmailCustomer().equals(emailCustomer))
+                    return "Voucher has been used or expired or is reserved for a certain customer!";
 
-            if (voucher.isUsed() || !voucher.getExpiryDate().after(new Date()) || !voucher.getForEmailCustomer().isEmpty())
-                return "Voucher has been used or expired or is reserved for a certain customer!";
 
             MimeMessage message = javaMailSender.createMimeMessage();
 
@@ -236,6 +241,10 @@ public class MailServiceImpl implements MailService {
             Map<String, Object> variable = new HashMap<>();
             variable.put("email", emailCustomer);
             variable.put("voucher", voucher);
+            variable.put("price", formatCurrency(voucher.getPrice()));
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            variable.put("dateExpiry", simpleDateFormat.format(voucher.getExpiryDate()));
 
 
             helper.setText(thymeleafService.createContent("mail-voucher-customer", variable), true);
@@ -259,7 +268,6 @@ public class MailServiceImpl implements MailService {
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(vietnam);
         return currencyFormatter.format(amount);
     }
-
 
 
     private byte[] readAllBytes(InputStream inputStream) throws IOException {

@@ -23,8 +23,10 @@ $('document').ready(function () {
         e.preventDefault();
         var href = $(this).attr('href');
         $.get(href, function (voucher, status) {
+            console.log(voucher.id);
             $('#sendMailDetailId').val(voucher.id)
             $('#sendMailDetailCodeVoucher').val(voucher.codeVoucher);
+            $('#sendDetailEmailCustomer').val(voucher.forEmailCustomer);
         });
 
         var updateCategoryModal = new bootstrap.Modal(document.getElementById('sendMailDetail'));

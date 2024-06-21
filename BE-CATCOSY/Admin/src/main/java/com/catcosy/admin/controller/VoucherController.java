@@ -1,6 +1,7 @@
 package com.catcosy.admin.controller;
 
 import com.catcosy.admin.utils.ExcelExporter;
+import com.catcosy.library.dto.VoucherDto;
 import com.catcosy.library.enums.ObjectManage;
 import com.catcosy.library.model.Voucher;
 import com.catcosy.library.service.MailService;
@@ -73,8 +74,10 @@ public class VoucherController {
 
     @RequestMapping(value = "/findByIdVoucher", method = {RequestMethod.GET, RequestMethod.PUT})
     @ResponseBody
-    public Optional<Voucher> getVoucher(Long id) {
-        return voucherService.getVoucherById(id);
+    public VoucherDto getVoucher(Long id) {
+        VoucherDto voucher = voucherService.getVoucherDtoById(id);
+        System.out.println(voucher.toString());
+        return voucher;
     }
 
     @PostMapping("/add-voucher")
@@ -85,6 +88,9 @@ public class VoucherController {
             Date date = sdf.parse(expiryDate);
             java.sql.Date expiry = new java.sql.Date(date.getTime());
             newVoucher.setExpiryDate(expiry);
+            if (!newVoucher.getForEmailCustomer().isBlank()) {
+                mailService.sendMailVoucherToCustomer(newVoucher.getForEmailCustomer(), newVoucher);
+            }
             voucherService.saveVoucher(newVoucher);
             attributes.addFlashAttribute("success", "Add voucher successfully!");
         } catch (Exception e) {
@@ -98,7 +104,13 @@ public class VoucherController {
     @PostMapping("/update-voucher")
     public String updateVoucher(Voucher voucher, RedirectAttributes attributes) {
         try {
-            voucherService.updateVoucher(voucher);
+            boolean check = voucherService.checkEmailVoucher(voucher.getId(), voucher.getForEmailCustomer());
+            boolean check1 = voucher.getForEmailCustomer().isEmpty();
+            if (!check1 && !check) {
+                String mess = mailService.sendMailVoucherToCustomer(voucher.getForEmailCustomer(), voucher);
+                System.out.println(mess);
+                voucherService.updateVoucher(voucher);
+            } else voucherService.updateVoucher(voucher);
             attributes.addFlashAttribute("success", "Update voucher successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,7 +155,7 @@ public class VoucherController {
             model.addAttribute("message", mess);
             model.addAttribute("success", "Send mail successfully!");
 
-            attributes.addFlashAttribute("message", mess);
+            attributes.addFlashAttribute("success", mess);
 //          attributes.addFlashAttribute("success", "Send mail successfully!");
         } catch (Exception e) {
             e.printStackTrace();
