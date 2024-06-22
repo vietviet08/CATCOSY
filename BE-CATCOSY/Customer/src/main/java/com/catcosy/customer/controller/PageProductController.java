@@ -170,10 +170,10 @@ public class PageProductController {
             }
 
             star5 = (int) Math.round(((star5Percent / sizeRate) * 100));
-             star4 = (int) Math.round(((star4Percent / sizeRate) * 100));
-             star3 = (int) Math.round(((star3Percent / sizeRate) * 100));
-             star2 = (int) Math.round(((star2Percent / sizeRate) * 100));
-             star1 = (int) Math.round(((star1Percent / sizeRate) * 100));
+            star4 = (int) Math.round(((star4Percent / sizeRate) * 100));
+            star3 = (int) Math.round(((star3Percent / sizeRate) * 100));
+            star2 = (int) Math.round(((star2Percent / sizeRate) * 100));
+            star1 = (int) Math.round(((star1Percent / sizeRate) * 100));
 
             EStar = Math.round((totalStar / sizeRate) * 10);
 
@@ -202,7 +202,6 @@ public class PageProductController {
         model.addAttribute("star2Percent", star2);
         model.addAttribute("star1Percent", star1);
         model.addAttribute("rateProducts", rateProducts);
-
 
         return "detail-product";
     }

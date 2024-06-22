@@ -41,6 +41,8 @@ public class RateProduct extends BaseEntity{
     @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
 
+    private String sizeAndQuantity;
+
     private int amountOfLike;
 
     private boolean isDelete;

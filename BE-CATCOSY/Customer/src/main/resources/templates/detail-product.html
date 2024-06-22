@@ -247,7 +247,7 @@
                         <div class="date-time"
                              th:text="${#temporals.format(rateProduct.dateUpload,'dd-MM-yyy HH:mm:ss')}"></div>
                         <div>|</div>
-                        <div class="size-bought">XL</div>
+                        <div class="size-bought" th:text="${rateProduct.sizeAndQuantity}"></div>
                     </div>
                     <div class="content-comment" th:text="${rateProduct.content}">
                     </div>

@@ -74,6 +74,8 @@ public class RateProductServiceImpl implements RateProductService {
         orderDetail.setAllowComment(false);
         orderDetailRepository.save(orderDetail);
 
+        rateProduct.setSizeAndQuantity(orderDetail.getSize().getSize() + " x" + orderDetail.getQuantity());
+
         return rateProductRepository.save(rateProduct);
 
     }
@@ -139,7 +141,7 @@ public class RateProductServiceImpl implements RateProductService {
 //                    customerLikedCommentRepository.save(customerLikedComment);
                         comment.setAmountOfLike(comment.getAmountOfLike() + 1);
                     }
-                   check = true;
+                    check = true;
                     System.out.println("2");
                     break;
                 }
