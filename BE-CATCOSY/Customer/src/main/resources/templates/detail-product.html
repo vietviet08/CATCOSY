@@ -253,14 +253,25 @@
                     </div>
                     <div class="container-image-rate-product">
                         <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
-                            <img th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
+                            <div th:if="${imageRated.isVideo()}" class="position-relative video-rate">
+                                <video class="child-container-rate">
+                                    <source th:src="'data:video/mp4;base64,' + ${imageRated.image}" type="video/mp4">
+                                </video>
+                                <i class="fa-solid fa-video"></i>
+                                <div class="blur-bottom"></div>
+                            </div>
+                            <img class="child-container-rate"
+                                 th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
                         </div>
-
                     </div>
 
                     <div class="container-image-rate-product slick-preview-comment">
                         <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
-                            <img th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
+                            <video class="child-container-rate" th:if="${imageRated.isVideo()}" controls>
+                                <source th:src="'data:video/mp4;base64,' + ${imageRated.image}" type="video/mp4">
+                            </video>
+                            <img class="child-container-rate"
+                                 th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
                         </div>
                     </div>
 
@@ -369,7 +380,7 @@
         var containers = document.querySelectorAll('.container-image-rate-product');
 
         containers.forEach(function (container, index) {
-            var images = container.querySelectorAll('img');
+            var images = container.querySelectorAll('.child-container-rate');
 
             images.forEach(function (image) {
                 image.addEventListener('click', function () {

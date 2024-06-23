@@ -1,10 +1,11 @@
 package com.catcosy.library.service.impl;
 
-import com.catcosy.library.repository.*;
+
 import com.catcosy.library.model.CustomerLikedComment;
 import com.catcosy.library.model.OrderDetail;
 import com.catcosy.library.model.RateProduct;
 import com.catcosy.library.model.RateProductImage;
+import com.catcosy.library.repository.*;
 import com.catcosy.library.service.RateProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,8 +61,9 @@ public class RateProductServiceImpl implements RateProductService {
             RateProductImage rateProductImage = new RateProductImage();
             try {
                 rateProductImage.setRateProduct(rateProduct);
-                rateProductImage.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
-//                rateProductImageRepository.save(rateProductImage);
+                String stringBase64 = Base64.getEncoder().encodeToString(file.getBytes());
+                rateProductImage.setImage(stringBase64);
+                rateProductImage.setVideo(isVideo(stringBase64));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -181,4 +183,12 @@ public class RateProductServiceImpl implements RateProductService {
     public boolean checkLikedComment(String username, Long idComment) {
         return customerLikedCommentRepository.checkLikedComment(customerRepository.findByUsername(username).getId(), idComment).isLiked();
     }
+
+    private boolean isVideo(String base64) {
+        if (base64 == null || base64.isEmpty()) {
+            return false;
+        }
+        return base64.startsWith("AAAA");
+    }
+
 }

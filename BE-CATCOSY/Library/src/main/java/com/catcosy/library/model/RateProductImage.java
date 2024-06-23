@@ -25,5 +25,5 @@ public class RateProductImage {
     @Column(columnDefinition = "LONGBLOB")
     private String image;
 
-
+    private boolean isVideo;
 }
