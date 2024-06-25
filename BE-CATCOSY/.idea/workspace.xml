@@ -6,14 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="a4af668b-52ad-4335-8194-70c6a4d451f2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/RateProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/RateProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/RateProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/RateProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/RateProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/RateProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Brand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/BrandRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/BrandService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -56,6 +63,9 @@
       <recent name="D:\DA\DACS1\BE-CATCOSY\Customer\src\main\resources\templates" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.catcosy.library.repository" />
+      <recent name="com.catcosy.library.service.impl" />
+      <recent name="com.catcosy.library.service" />
       <recent name="com.catcosy.customer.controller" />
     </key>
   </component>
@@ -101,7 +111,7 @@
       <option name="presentableId" value="Default" />
       <updated>1719145497135</updated>
       <workItem from="1719145498259" duration="891000" />
-      <workItem from="1719239378709" duration="1393000" />
+      <workItem from="1719239378709" duration="2725000" />
     </task>
     <servers />
   </component>
