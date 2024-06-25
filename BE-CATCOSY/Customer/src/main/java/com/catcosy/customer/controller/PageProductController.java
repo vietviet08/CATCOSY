@@ -130,7 +130,7 @@ public class PageProductController {
 
 //        boolean checkLikedComment = rateProductService.checkLikedComment(principal.getName(), id);
 
-        List<RateProduct> rateProducts = rateProductService.getAllByIdProduct(id);
+        List<RateProduct> rateProducts = rateProductService.getAllByIdProductAndEnable(id);
 
 
         double EStar = 0;

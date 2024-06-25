@@ -18,5 +18,7 @@ public interface RateProductRepository extends JpaRepository<RateProduct, Long> 
     @Query(value = "select * from comments c where c.product_id = :idProduct ", nativeQuery = true)
     List<RateProduct> getAllByIdProduct(@Param("idProduct") Long idProduct);
 
+    @Query(value = "select * from comments c where c.product_id = :idProduct and c.is_delete = false", nativeQuery = true)
+    List<RateProduct> getAllByIdProductAndEnable(@Param("idProduct") Long idProduct);
 
 }

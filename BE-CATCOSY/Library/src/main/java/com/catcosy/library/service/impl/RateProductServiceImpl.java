@@ -180,6 +180,11 @@ public class RateProductServiceImpl implements RateProductService {
     }
 
     @Override
+    public List<RateProduct> getAllByIdProductAndEnable(Long idProduct) {
+        return rateProductRepository.getAllByIdProductAndEnable(idProduct);
+    }
+
+    @Override
     public boolean checkLikedComment(String username, Long idComment) {
         return customerLikedCommentRepository.checkLikedComment(customerRepository.findByUsername(username).getId(), idComment).isLiked();
     }
