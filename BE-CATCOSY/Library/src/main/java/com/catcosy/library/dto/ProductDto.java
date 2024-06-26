@@ -1,5 +1,6 @@
 package com.catcosy.library.dto;
 
+import com.catcosy.library.model.Brand;
 import com.catcosy.library.model.Category;
 import com.catcosy.library.model.ProductSize;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ public class ProductDto {
     private Long id;
     private String name;
     private Category category;
+    private Brand brand;
     private List<ProductSize> sizes;
     private Double costPrice;
     private Double salePrice;

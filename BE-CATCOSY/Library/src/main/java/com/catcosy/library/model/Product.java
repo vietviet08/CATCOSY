@@ -1,13 +1,12 @@
 package com.catcosy.library.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -23,10 +22,9 @@ public class Product extends BaseEntity{
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "products_sizes",
-//            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
-//            inverseJoinColumns = @JoinColumn(name = "size_id", referencedColumnName = "size_id"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
+    private Brand brand;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductSize> sizes;

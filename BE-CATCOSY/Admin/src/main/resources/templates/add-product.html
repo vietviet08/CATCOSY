@@ -74,6 +74,18 @@
                     </div>
                 </div>
 
+                <!-- Select Basic -->
+                <div class="form-group mt-3">
+                    <label class=" control-label" for="brand">Brand</label>
+                    <div class="">
+                        <select th:field="*{brand}" id="brand" name="product_brand"
+                                class="form-control">
+                            <option th:each="brand : ${brands}" th:value="${brand.id}"
+                                    th:text="${brand.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- Text input-->
                 <div class="form-group mt-3">
                     <label class=" control-label" for="price">Price</label>

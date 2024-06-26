@@ -4,6 +4,7 @@ import com.catcosy.admin.helper.SetNameAndRoleToPage;
 import com.catcosy.admin.utils.ExcelExporter;
 import com.catcosy.library.dto.ProductDto;
 import com.catcosy.library.enums.ObjectManage;
+import com.catcosy.library.model.Brand;
 import com.catcosy.library.model.Category;
 import com.catcosy.library.model.ProductImage;
 import com.catcosy.library.model.Size;
@@ -34,6 +35,9 @@ public class ProductController {
 
     @Autowired
     private CategoryService categoryService;
+
+   @Autowired
+   private BrandService brandService;
 
     @Autowired
     private SizeService sizeService;
@@ -108,6 +112,7 @@ public class ProductController {
         model.addAttribute("title", "Add product");
         model.addAttribute("sizes", sizeService.findAllSize());
         model.addAttribute("categories", categoryService.findAllCategory());
+        model.addAttribute("brands", brandService.findAllBrand());
         model.addAttribute("newProduct", new ProductDto());
 //        SetNameAndRoleToPage.setNameAndRoleToPage(model, "add-product", adminService);
         return "add-product";
@@ -158,6 +163,7 @@ public class ProductController {
         model.addAttribute("sizes", sizeService.findAllSize());
         model.addAttribute("sizesExisting", sizesExisting);
         model.addAttribute("categories", categoryList);
+        model.addAttribute("brands", brandService.findAllBrand());
         model.addAttribute("images", productDto.getImages());
         return "update-product";
     }
@@ -174,8 +180,6 @@ public class ProductController {
             for (String n : sizesSelected) {
                 selectedSizeIds.add(Long.parseLong(n));
             }
-
-
 
             productService.update(images, selectedSizeIds, productDto);
 //            productService.updateProductSize(productDto, selectedSizeIds);

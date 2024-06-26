@@ -6,9 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="a4af668b-52ad-4335-8194-70c6a4d451f2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/config/AdminConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/config/AdminConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/add-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/resources/templates/add-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/resources/templates/categories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/resources/templates/fragments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/update-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/Admin/src/main/resources/templates/update-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/ProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/ProductDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/enums/ObjectManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/enums/ObjectManage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Brand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/BrandRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/BrandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/BrandServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/BrandServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ProductServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +59,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/DA/DACS1/BE-CATCOSY/Customer/src/main/resources/templates",
+    "last_opened_file_path": "D:/DA/DACS1/BE-CATCOSY/Admin/src/main/resources/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,9 +69,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\DA\DACS1\BE-CATCOSY\Admin\src\main\resources\templates" />
       <recent name="D:\DA\DACS1\BE-CATCOSY\Customer\src\main\resources\templates" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.catcosy.admin.controller" />
       <recent name="com.catcosy.library.repository" />
       <recent name="com.catcosy.library.service.impl" />
       <recent name="com.catcosy.library.service" />
@@ -76,7 +87,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CustomerApplication">
+  <component name="RunManager" selected="Spring Boot.AdminApplication">
     <configuration name="AdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="Admin" />
@@ -111,7 +122,8 @@
       <option name="presentableId" value="Default" />
       <updated>1719145497135</updated>
       <workItem from="1719145498259" duration="891000" />
-      <workItem from="1719239378709" duration="2725000" />
+      <workItem from="1719239378709" duration="3923000" />
+      <workItem from="1719375989949" duration="3377000" />
     </task>
     <servers />
   </component>

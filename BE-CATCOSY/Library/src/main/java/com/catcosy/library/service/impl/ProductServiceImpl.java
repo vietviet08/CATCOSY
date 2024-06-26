@@ -54,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
             }
             productDto.setImages(strings);
             productDto.setCategory(product.getCategory());
+            productDto.setBrand(product.getBrand());
             productDto.setActivated(product.getIsActivated());
             productDto.setDeleted(product.getIsDeleted());
             dtoList.add(productDto);
@@ -91,6 +92,7 @@ public class ProductServiceImpl implements ProductService {
         }
         productDto.setImages(strings);
         productDto.setCategory(product.getCategory());
+        productDto.setBrand(product.getBrand());
         productDto.setActivated(product.getIsActivated());
         productDto.setDeleted(product.getIsDeleted());
         return productDto;
@@ -119,6 +121,7 @@ public class ProductServiceImpl implements ProductService {
             product.setSalePrice(productDto.getSalePrice());
             product.setQuantity(0);
             product.setCategory(productDto.getCategory());
+            product.setBrand(productDto.getBrand());
             product.setIsActivated(true);
             product.setIsDeleted(false);
 
@@ -245,6 +248,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCostPrice(productDto.getCostPrice());
         product.setSalePrice(productDto.getSalePrice());
         product.setCategory(productDto.getCategory());
+        product.setBrand(productDto.getBrand());
 
         if (!productImagesNews.isEmpty()) {
             productImageRepository.deleteAllByProductId(product.getId());

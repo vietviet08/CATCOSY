@@ -58,6 +58,7 @@ public class AdminConfiguration {
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/", "/index" ).permitAll()
                                 .requestMatchers("/categories/**").hasAnyAuthority("ADMIN","SELLER")
+                                .requestMatchers("/brands/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/products/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/orders/**").hasAnyAuthority("ADMIN","KEEPER")
                                 .requestMatchers("/vouchers/**").hasAnyAuthority("ADMIN","SELLER")

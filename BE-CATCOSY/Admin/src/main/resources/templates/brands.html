@@ -18,12 +18,12 @@
     <div class="container">
         <div class="d-flex">
             <button type="button" class="btn btn-primary my-2 mx-1" data-bs-toggle="modal" data-bs-target="#modalAdd"
-                    data-bs-whatever="@mdo">Add category
+                    data-bs-whatever="@mdo">Add brand
             </button>
 
             <div class="my-2 mx-1">
 
-                <a th:href="@{/export-categories}" style="color: white">
+                <a th:href="@{/export-brands}" style="color: white">
                     <div class="btn btn-primary">Export data
                     </div>
                 </a>
@@ -32,7 +32,7 @@
 
         <div class="d-flex justify-content-center">
             <div th:if="${size == 0}" class="alert alert-danger text-center w-25 my-2" role="alert">
-                Don't have categories in repository
+                Don't have brands in repository
             </div>
         </div>
     </div>
@@ -49,20 +49,20 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="category, obj : ${categories}">
+        <tr th:each="brand, obj : ${brands}">
             <td th:text="${obj.index}"></td>
-            <td th:text="${category.id}"></td>
-            <td th:text="${category.name}"></td>
+            <td th:text="${brand.id}"></td>
+            <td th:text="${brand.name}"></td>
             <td>
-                <a id="btnUpdate" th:href="@{/findById(id = ${category.id})}" class="btn btn-success"
+                <a id="btnUpdate" th:href="@{/findByIdBrand(id = ${brand.id})}" class="btn btn-success"
                    style="width: 100px">
                     Update
                 </a>
             </td>
             <td>
-                <a th:if="${category.isActivated()}" th:href="@{/delete-category(id = ${category.id})}"
+                <a th:if="${brand.isActivated()}" th:href="@{/delete-brand(id = ${brand.id})}"
                    class="btn btn-danger" style="width: 100px">Delete</a>
-                <a th:if="${category.isDeleted()}" th:href="@{/activate-category(id = ${category.id})}"
+                <a th:if="${brand.isDeleted()}" th:href="@{/activate-brand(id = ${brand.id})}"
                    class="btn btn-primary" style="width: 100px">Activate</a>
             </td>
         </tr>
@@ -74,14 +74,14 @@
     <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form th:action="@{/add-category}" method="post" th:object="${newCategory}">
+                <form th:action="@{/add-brand}" method="post" th:object="${newBrand}">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add category</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add brand</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Name category</label>
+                            <label for="recipient-name" class="col-form-label">Name brand</label>
                             <input th:field="*{name}" type="text" class="form-control" id="recipient-name" required>
                         </div>
                     </div>
@@ -98,19 +98,19 @@
     <div class="modal fade" id="updateCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form th:action="@{/update-category}" method="put">
+                <form th:action="@{/update-brand}" method="post">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="updateCategoryLabel">Update category</h5>
+                        <h5 class="modal-title" id="updateCategoryLabel">Update brand</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Id category</label>
+                            <label for="recipient-name" class="col-form-label">Id brand</label>
                             <input name="id" type="text" class="form-control" id="updateId" readonly>
                         </div>
 
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Name category</label>
+                            <label for="recipient-name" class="col-form-label">Name brand</label>
                             <input name="name" type="text" class="form-control" id="updateName" required>
                         </div>
                     </div>
@@ -136,7 +136,26 @@
 </div>
 
 
-<script th:src="@{/js/categories.js}"></script>
+<script>
+    $('document').ready(function () {
+
+            $('table #btnUpdate').on('click', function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $.get(href, function (brand, status) {
+                    $('#updateId').val(brand.id);
+                    $('#updateName').val(brand.name);
+                });
+
+                var updateCategoryModal = new bootstrap.Modal(document.getElementById('updateCategory'));
+                updateCategoryModal.show();
+            });
+
+        }
+    )
+
+
+</script>
 
 <script th:replace="~{fragments :: toastScript}"></script>
 

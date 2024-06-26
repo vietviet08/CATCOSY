@@ -43,6 +43,8 @@ public class BrandServiceImpl implements BrandService {
     public Brand save(Brand brand){
         Brand c = new Brand();
         c.setName(brand.getName());
+        c.setActivated(true);
+        c.setDeleted(false);
         return brandRepository.save(c);
     }
 
