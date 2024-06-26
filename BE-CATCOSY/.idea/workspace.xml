@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a4af668b-52ad-4335-8194-70c6a4d451f2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/PageProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/PageProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/resources/templates/fragments.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/page-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/resources/templates/page-product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/BrandService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/BrandServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/BrandServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/detail-product.css" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/resources/static/css/detail-product.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +112,7 @@
       <updated>1719145497135</updated>
       <workItem from="1719145498259" duration="891000" />
       <workItem from="1719239378709" duration="3923000" />
-      <workItem from="1719375989949" duration="5498000" />
+      <workItem from="1719375989949" duration="8719000" />
     </task>
     <servers />
   </component>
