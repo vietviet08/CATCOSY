@@ -54,7 +54,8 @@ public interface ProductService {
                                                   Long idCategory,
                                                   Integer minPrice,
                                                   Integer maxPrice,
-                                                  List<Long> size);
+                                                  List<Long> size,
+                                                  List<Long> brand);
 
     List<ProductDto> productRandomLimit(int limit);
 

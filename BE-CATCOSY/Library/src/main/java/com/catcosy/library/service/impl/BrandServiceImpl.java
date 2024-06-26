@@ -9,6 +9,7 @@ import com.catcosy.library.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,14 @@ public class BrandServiceImpl implements BrandService {
 
     @Autowired
     private BrandRepository brandRepository;
+
+    @Override
+    public List<Long> getAllIdBrand() {
+        List<Long> longList = new ArrayList<>();
+        List<Brand> brands = brandRepository.findAll();
+        brands.forEach(brand -> longList.add(brand.getId()));
+        return longList;
+    }
 
     @Override
     public List<Brand> findAllBrand() {

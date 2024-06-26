@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface BrandService {
 
+    List<Long> getAllIdBrand();
+
     List<Brand> findAllBrand();
 
     List<Brand> findAllBrandIsActivate();

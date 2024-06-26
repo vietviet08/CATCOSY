@@ -33,6 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p " +
             "INNER JOIN Category c ON c.id = p.category.id WHERE p.isActivated = true AND c.isActivated = true " +
             "AND (:size IS NULL OR 0 in :size OR p.id IN (select s.product.id from ProductSize s where s.size.id in :size)) " +
+            "AND (:brand IS NULL OR 0 in :brand OR p.id IN (select pp.id from Product pp where pp.brand.id in :brand)) " +
             "AND (:idCategory IS NULL OR :idCategory = 0 OR p.category.id = :idCategory) " +
             "AND (:keyword IS NULL OR p.name LIKE %:keyword%)" +
             "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.costPrice BETWEEN :minPrice AND :maxPrice)) ORDER BY " +
@@ -44,7 +45,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                                            @Param("idCategory") Long idCategory,
                                            @Param("minPrice") Integer minPrice,
                                            @Param("maxPrice") Integer maxPrice,
-                                           @Param("size") List<Long> size);
+                                           @Param("size") List<Long> size,
+                                           @Param("brand") List<Long> brand);
 
     @Query("select p from Product p inner join Category c on c.id = p.category.id where  p.isActivated = true and c.isActivated = true and p.name like %?1%")
     List<Product> findAllIsActivatedFilterSearch(String keyword);

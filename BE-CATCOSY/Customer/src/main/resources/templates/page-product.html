@@ -29,7 +29,9 @@
                            ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
                            ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
                            ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
-                           ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
+                           ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''} +
+                           ${brandChoose != null && brandChooseString != null ? '&byBrand=' + brandChooseString : ''}
+                           }"
                            th:text="${category.name}"></a></li>
                 </ul>
 
@@ -119,40 +121,45 @@
                 <ul>
                     <li>By Brand</li>
                     <li>
-                    <span>
-                        <label for="filter-by-brand-1"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-brand-1">
-                        Nike
-                    </span>
+                        <a th:replace="~{fragments :: filterBrands(1, 0, 'Nike')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-brand-2"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-brand-2">
-                        Adidas
-                    </span>
+                        <a th:replace="~{fragments :: filterBrands(2, 0, 'Adidas')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-brand-3"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-brand-3">
-                        Catoste
-                    </span>
+                        <a th:replace="~{fragments :: filterBrands(3, 0, 'Reebok')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-brand-4"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-brand-4">
-                        Levi's
-                    </span>
+                        <a th:replace="~{fragments :: filterBrands(6, 0, 'Uniqlo')}"></a>
                     </li>
                     <li>
-                    <span>
-                        <label for="filter-by-brand-5"></label>
-                        <input type="checkbox" name="filter-by-price-1" id="filter-by-brand-5">
-                        Puma
-                    </span>
+                        <a th:replace="~{fragments :: filterBrands(7, 0, 'Puma')}"></a>
                     </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(8, 0, 'Champion')}"></a>
+                    </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(9, 0, 'Ralph Lauren')}"></a>
+                    </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(10, 0, 'G-Star')}"></a>
+                    </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(11, 0, 'Fred Perry')}"></a>
+                    </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(12, 0, 'Lacoste')}"></a>
+                    </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(13, 0, 'Under Armour')}"></a>
+                    </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(14, 0, 'New Blance')}"></a>
+                    </li>
+                    <li>
+                        <a th:replace="~{fragments :: filterBrands(15, 0, 'The North Face')}"></a>
+                    </li>
+
                 </ul>
             </div>
         </div>

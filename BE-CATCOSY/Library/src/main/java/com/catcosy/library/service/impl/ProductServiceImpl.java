@@ -388,7 +388,8 @@ public class ProductServiceImpl implements ProductService {
                                                          Long idCategory,
                                                          Integer minPrice,
                                                          Integer maxPrice,
-                                                         List<Long> size) {
+                                                         List<Long> size,
+                                                         List<Long> brand) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
 //        if (!sortPrice && (keyword.isEmpty() || keyword == null || keyword.equals(""))) {
 //            List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter());
@@ -405,7 +406,7 @@ public class ProductServiceImpl implements ProductService {
 //            return toPage(pageable, dtoList);
 //        }
 
-        List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter(keyword, sortPrice, idCategory, minPrice, maxPrice, size));
+        List<ProductDto> dtoList = convertToDtoList(productRepository.findAllIsActivatedFilter(keyword, sortPrice, idCategory, minPrice, maxPrice, size, brand));
         return toPage(pageable, dtoList);
     }
 

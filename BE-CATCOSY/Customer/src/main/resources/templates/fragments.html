@@ -278,7 +278,9 @@
                      ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
                      ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
                      ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
-                     ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
+                     ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''} +
+                     ${brandChoose != null && brandChooseString != null ? '&byBrand=' + brandChooseString : ''}
+                     }"
    class="page-link"
 
 >
@@ -293,7 +295,9 @@
         ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
         '&sortPrice=' + ${sortBy} +
         ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
-        ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}">
+        ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''} +
+        ${brandChoose != null && brandChooseString != null ? '&byBrand=' + brandChooseString : ''}
+">
     [[${label}]]
 </option>
 
@@ -310,8 +314,10 @@
              '&idCategory=' + ${idCategory} +
              ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
              ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
-             ${ minPrice != null && maxPrice != null && minPrice == min && maxPrice == max ? '' : ('&priceCdt=' + (minPrice == min ? max : (minPrice != null && minPrice < min ? minPrice : min)) + ':' + (maxPrice == max ? min : (maxPrice > max && maxPrice != null ? maxPrice : max)))} +
-             ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''}}"
+             ${minPrice != null && maxPrice != null && minPrice == min && maxPrice == max ? '' : ('&priceCdt=' + (minPrice == min ? max : (minPrice != null && minPrice < min ? minPrice : min)) + ':' + (maxPrice == max ? min : (maxPrice > max && maxPrice != null ? maxPrice : max)))} +
+             ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''} +
+             ${brandChoose != null && brandChooseString != null ? '&byBrand=' + brandChooseString : ''}
+             }"
    onclick="window.location.href=this.getAttribute('href'); return false;">
     <span>
         <label></label>
@@ -329,7 +335,8 @@
                 ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
                 ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
                 ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
-                ${ sizeChooseString == sizeProduct + ',' ? '' :  (#lists.contains(sizeChoose, sizeProduct.longValue()) ? ('&bySize=' + #strings.replace(sizeChooseString, sizeProduct  + ',', '')) : (sizeChoose != null && sizeChooseString != null ? ('&bySize=' + sizeChooseString  + sizeProduct + ',') : ('&bySize=' + sizeProduct + ',')))}
+                ${sizeChooseString == sizeProduct + ',' ? '' :  (#lists.contains(sizeChoose, sizeProduct.longValue()) ? ('&bySize=' + #strings.replace(sizeChooseString, sizeProduct  + ',', '')) : (sizeChoose != null && sizeChooseString != null ? ('&bySize=' + sizeChooseString  + sizeProduct + ',') : ('&bySize=' + sizeProduct + ',')))} +
+                ${brandChoose != null && brandChooseString != null ? '&byBrand=' + brandChooseString : ''}
        }"
    onclick="window.location.href=this.getAttribute('href'); return false;">
     <span>
@@ -338,6 +345,25 @@
         [[${label}]]
     </span>
 </a>
+
+<a th:fragment="filterBrands(brandProduct, hate, label)"
+   th:href="@{'products?' +
+                'page=' + ${currentPage}  +
+                '&idCategory=' + ${idCategory} +
+                ${keyword != null && keyword != '' ? ' &keyword=' + keyword : ''} +
+                ${sort != null && sort != '' ? '&sortPrice=' + sort : ''} +
+                ${minPrice != null && maxPrice != null ? '&priceCdt=' + minPrice + ':' + maxPrice : '' } +
+                ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''} +
+                ${brandChooseString == brandProduct + ',' ? '' :  (#lists.contains(brandChoose, brandProduct.longValue()) ? ('&byBrand=' + #strings.replace(brandChooseString, brandProduct  + ',', '')) : (brandChoose != null && brandChooseString != null ? ('&byBrand=' + brandChooseString  + brandProduct + ',') : ('&byBrand=' + brandProduct + ',')))}
+       }"
+   onclick="window.location.href=this.getAttribute('href'); return false;">
+    <span>
+        <label></label>
+        <input type="checkbox" th:checked="${#lists.contains(brandChoose, brandProduct.longValue())}">
+        [[${label}]]
+    </span>
+</a>
+
 
 
 <!--for="filter-by-price-2"-->

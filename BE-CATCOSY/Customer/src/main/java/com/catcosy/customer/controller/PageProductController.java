@@ -29,6 +29,9 @@ public class PageProductController {
     private CategoryService categoryService;
 
     @Autowired
+    private BrandService brandService;
+
+    @Autowired
     private SizeService sizeService;
 
     @Autowired
@@ -60,7 +63,9 @@ public class PageProductController {
                                     @RequestParam(required = false) String sortPrice,
                                     @RequestParam(required = false, defaultValue = "0") Long idCategory,
                                     @RequestParam(required = false) String priceCdt,
-                                    @RequestParam(required = false) String bySize) {
+                                    @RequestParam(required = false) String bySize,
+                                    @RequestParam(required = false) String byBrand
+                                    ) {
 
         List<Category> categoryList = categoryService.findAllCategoryIsActivate();
         model.addAttribute("categories", categoryList);
@@ -101,7 +106,20 @@ public class PageProductController {
             }
         } else listSize.add(0L);
 
-        products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, sortPrice, idCategory, minPrice, maxPrice, listSize);
+        List<Long> listBrandId = brandService.getAllIdBrand();
+        model.addAttribute("brandsId", listBrandId);
+        List<Long> listBrand = new ArrayList<>();
+
+        if (byBrand != null && !byBrand.isEmpty()) {
+            String[] brandsArray = byBrand.split(",");
+            for (String brand : brandsArray) {
+                listBrand.add(Long.parseLong(brand.trim()));
+            }
+        } else listBrand.add(0L);
+
+
+
+        products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, sortPrice, idCategory, minPrice, maxPrice, listSize, listBrand);
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("sort", sortPrice);
@@ -110,6 +128,8 @@ public class PageProductController {
         model.addAttribute("maxPrice", maxPrice);
         model.addAttribute("sizeChoose", listSize);
         model.addAttribute("sizeChooseString", bySize);
+        model.addAttribute("brandChoose", listBrand);
+        model.addAttribute("brandChooseString", byBrand);
 
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
