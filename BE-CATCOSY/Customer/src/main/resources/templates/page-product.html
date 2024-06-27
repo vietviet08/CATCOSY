@@ -32,7 +32,11 @@
                            ${sizeChoose != null && sizeChooseString != null ? '&bySize=' + sizeChooseString : ''} +
                            ${brandChoose != null && brandChooseString != null ? '&byBrand=' + brandChooseString : ''}
                            }"
-                           th:text="${category.name}"></a></li>
+                           th:text="${category.name}"
+                            th:style="${category.id == idCategory ? 'color: #e91e63' : ''}"
+                        >
+                        </a>
+                    </li>
                 </ul>
 
                 <form class="form-search-product " th:action="'products?' +

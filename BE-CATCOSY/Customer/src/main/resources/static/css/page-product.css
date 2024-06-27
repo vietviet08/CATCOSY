@@ -55,6 +55,11 @@
     text-decoration: none;
     color: black;
     font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.detail-category ul li a:hover{
+    color: var(--primary-1);
 }
 
 #fil {
@@ -222,7 +227,7 @@
 
     .left-page-product {
         position: absolute;
-        top: calc(25% - 18px);
+        top: calc(30%);
         left: 0;
         z-index: 99999;
         background-color: #f7f7f7;
@@ -231,6 +236,7 @@
         transition: all 0.3s ease-in-out;
         height: 0;
         overflow: hidden;
+        overflow-y: auto;
     }
 
 }
