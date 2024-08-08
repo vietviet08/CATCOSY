@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a4af668b-52ad-4335-8194-70c6a4d451f2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/page-product.css" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/resources/static/css/page-product.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/page-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/resources/templates/page-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/PageProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/PageProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/Customer/src/main/resources/templates/fragments.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +115,8 @@
       <workItem from="1719239378709" duration="3923000" />
       <workItem from="1719375989949" duration="8719000" />
       <workItem from="1719449580365" duration="12000" />
-      <workItem from="1719457765071" duration="1055000" />
+      <workItem from="1719457765071" duration="4318000" />
+      <workItem from="1719544707834" duration="2993000" />
     </task>
     <servers />
   </component>
