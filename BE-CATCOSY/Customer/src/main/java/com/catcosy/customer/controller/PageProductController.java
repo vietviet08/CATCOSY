@@ -43,21 +43,8 @@ public class PageProductController {
     @Autowired
     private RateProductService rateProductService;
 
-//    @GetMapping({"/all-product", "/products"})
-//    public String getAllProduct(@RequestParam(required = false, defaultValue = "0") int page, Model model) {
-//
-//        model.addAttribute("title", " All Product");
-//        Page<ProductDto> products = productService.pageProductIsActivated(page, 3);
-//
-//        model.addAttribute("products", products);
-//        model.addAttribute("currentPage", page);
-//        model.addAttribute("size", products.getSize());
-//        model.addAttribute("totalPage", products.getTotalPages());
-//        return "page-product";
-//    }
-
-    @GetMapping("/products")
-    public String getAllProductTest(Model model,
+    @GetMapping("/products-s")
+    public String getAllProduct(Model model,
                                     @RequestParam(required = false, defaultValue = "0") int page,
                                     @RequestParam(required = false) String keyword,
                                     @RequestParam(required = false) String sortPrice,
@@ -65,7 +52,7 @@ public class PageProductController {
                                     @RequestParam(required = false) String priceCdt,
                                     @RequestParam(required = false) String bySize,
                                     @RequestParam(required = false) String byBrand
-                                    ) {
+    ) {
 
         List<Category> categoryList = categoryService.findAllCategoryIsActivate();
         model.addAttribute("categories", categoryList);
@@ -116,7 +103,6 @@ public class PageProductController {
                 listBrand.add(Long.parseLong(brand.trim()));
             }
         } else listBrand.add(0L);
-
 
 
         products = productService.pageProductIsActivatedFilter(page, pageSize, keyword, sortPrice, idCategory, minPrice, maxPrice, listSize, listBrand);
