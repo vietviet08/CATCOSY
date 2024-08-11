@@ -2,5 +2,6 @@
 /report
 /Resource
 README.md
-/BE-CATCOSY/Admin/src/main/resources/static/
-/BE-CATCOSY/Customer/src/main/resources/static/
+/BE-CATCOSY/Admin/src/main/resources/static/outside/
+/BE-CATCOSY/Customer/src/main/resources/static/outside/
+/BE-CATCOSY/Library/src/main/resources/static/outside/
