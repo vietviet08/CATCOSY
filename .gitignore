@@ -1,3 +1,4 @@
 /FE-DACS1
 /report
 /Resource
+!**/src/main/**/static/
