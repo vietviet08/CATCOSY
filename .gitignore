@@ -5,3 +5,6 @@ README.md
 /BE-CATCOSY/Admin/src/main/resources/static/outside/
 /BE-CATCOSY/Customer/src/main/resources/static/outside/
 /BE-CATCOSY/Library/src/main/resources/static/outside/
+/BE-CATCOSY/Admin/src/main/resources/static/templates/mail*
+/BE-CATCOSY/Customer/src/main/resources/static/templates/mail*
+/BE-CATCOSY/Library/src/main/resources/static/templates/mail*
