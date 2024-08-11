@@ -1,4 +1,5 @@
 /FE-DACS1
 /report
 /Resource
-!**/src/main/**/static/
+!**/BE-CATCOSY/Admin/src/main/**/static/
+!**/BE-CATCOSY/Customer/src/main/**/static/
