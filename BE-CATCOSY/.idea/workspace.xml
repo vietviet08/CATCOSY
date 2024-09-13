@@ -4,32 +4,444 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a4af668b-52ad-4335-8194-70c6a4d451f2" name="Changes" comment="" />
+    <list default="true" id="d528fcc9-f538-4370-a8a9-1a527d2005eb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/admin/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/admin/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/admin/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/admin/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/admin/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/AdminApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/AdminApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/config/AdminConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/config/AdminConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/config/AdminDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/config/AdminDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/config/AdminDetailsServiceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/config/AdminDetailsServiceConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/config/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/config/DataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/config/ErrorConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/config/ErrorConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/BrandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/BrandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/CustomErrorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/CustomErrorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/EmployeesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/EmployeesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/GoodsReceiptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/GoodsReceiptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/InfoAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/InfoAccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/OrdersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/OrdersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/controller/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/controller/VoucherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/exeption/CustomAccessDeniedHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/exeption/CustomAccessDeniedHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/exeption/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/exeption/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/helper/SetNameAndRoleToPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/helper/SetNameAndRoleToPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/interceptor/CommonInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/interceptor/CommonInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/interceptor/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/interceptor/WebMvcConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/jwt/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/jwt/JwtRequestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/jwt/JwtUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/jwt/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/jwt/controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/jwt/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/jwt/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/jwt/service/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/jwt/service/impl/AuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/utils/CellConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/utils/CellConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/utils/ExcelExporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/utils/ExcelExporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/utils/ExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/utils/ExcelUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/utils/ExportConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/utils/ExportConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/java/com/catcosy/admin/utils/FileFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/catcosy/admin/utils/FileFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/fonts/iu.eot" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/fonts/iu.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/fonts/iu.svg" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/fonts/iu.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/fonts/iu.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/fonts/iu.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/fonts/iu.woff" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/fonts/iu.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/css/image-uploader.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/css/image-uploader.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/css/info.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/css/info.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/css/login-admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/css/login-admin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/css/richtext.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/css/richtext.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/Warning-icon.-The-attention-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/Warning-icon.-The-attention-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/bg-login-admin.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/bg-login-admin.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/logo1.png" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/logo1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/me-8-256.png" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/me-8-256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/pngwing.com.png" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/pngwing.com.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/testimonial-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/testimonial-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/testimonial-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/testimonial-2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/img/user.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/img/user.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/js/categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/js/categories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/js/image-uploader.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/js/image-uploader.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/js/jquery.richtext.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/js/jquery.richtext.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/js/vouchers.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/js/vouchers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/chart/chart.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/chart/chart.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/easing/easing.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/easing/easing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/easing/easing.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/easing/easing.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/ajax-loader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/ajax-loader.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/owl.carousel.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/owl.carousel.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/owl.carousel.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/owl.carousel.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.default.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.default.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.default.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.default.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.green.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.green.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.green.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/owl.theme.green.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/assets/owl.video.play.png" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/assets/owl.video.play.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/owl.carousel.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/owl.carousel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/owlcarousel/owl.carousel.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/owlcarousel/owl.carousel.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/tempusdominus/css/tempusdominus-bootstrap-4.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/tempusdominus/css/tempusdominus-bootstrap-4.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/tempusdominus/js/moment-timezone.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/tempusdominus/js/moment-timezone.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/tempusdominus/js/moment.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/tempusdominus/js/moment.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/tempusdominus/js/tempusdominus-bootstrap-4.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/tempusdominus/js/tempusdominus-bootstrap-4.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/waypoints/links.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/waypoints/links.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/lib/waypoints/waypoints.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/lib/waypoints/waypoints.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_accordion.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_accordion.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_alert.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_alert.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_badge.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_badge.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_breadcrumb.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_breadcrumb.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_button-group.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_button-group.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_buttons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_card.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_card.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_carousel.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_carousel.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_close.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_close.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_containers.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_containers.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_dropdown.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_dropdown.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_forms.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_forms.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_functions.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_functions.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_grid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_helpers.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_helpers.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_images.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_images.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_list-group.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_list-group.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_modal.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_nav.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_nav.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_navbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_offcanvas.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_offcanvas.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_pagination.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_pagination.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_popover.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_popover.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_progress.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_progress.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_reboot.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_reboot.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_root.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_root.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_spinners.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_spinners.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_tables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_tables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_toasts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_toasts.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_tooltip.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_tooltip.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_transitions.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_transitions.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_type.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_type.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_utilities.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_utilities.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/bootstrap-grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/bootstrap-grid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/bootstrap-reboot.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/bootstrap-reboot.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/bootstrap-utilities.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/bootstrap-utilities.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/bootstrap.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/bootstrap.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_floating-labels.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_floating-labels.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-check.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-check.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-control.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-control.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-range.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-range.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-select.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-select.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-text.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_form-text.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_input-group.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_input-group.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_labels.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_labels.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/forms/_validation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/forms/_validation.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/helpers/_clearfix.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/helpers/_clearfix.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/helpers/_colored-links.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/helpers/_colored-links.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/helpers/_position.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/helpers/_position.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/helpers/_ratio.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/helpers/_ratio.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/helpers/_stretched-link.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/helpers/_stretched-link.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/helpers/_text-truncation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/helpers/_text-truncation.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/helpers/_visually-hidden.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/helpers/_visually-hidden.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_alert.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_alert.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_border-radius.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_border-radius.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_box-shadow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_box-shadow.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_breakpoints.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_breakpoints.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_buttons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_caret.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_caret.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_clearfix.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_clearfix.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_color-scheme.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_color-scheme.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_container.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_container.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_deprecate.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_deprecate.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_forms.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_forms.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_gradients.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_gradients.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_grid.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_image.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_image.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_list-group.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_list-group.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_lists.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_lists.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_pagination.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_pagination.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_reset-text.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_reset-text.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_resize.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_resize.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_table-variants.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_table-variants.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_text-truncate.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_text-truncate.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_transition.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_transition.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_utilities.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_utilities.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/mixins/_visually-hidden.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/mixins/_visually-hidden.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/utilities/_api.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/utilities/_api.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/static/scss/bootstrap/scss/vendor/_rfs.scss" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/scss/bootstrap/scss/vendor/_rfs.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/403.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/403.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/add-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/add-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/brands.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/brands.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/categories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/comments-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/comments-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/employees.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/employees.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/fragments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/info-change-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/info-change-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/info.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/mail-voucher-customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/mail-voucher-customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/products.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/update-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/update-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/main/resources/templates/voucher.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/voucher.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin/src/test/java/com/catcosy/admin/AdminApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/test/java/com/catcosy/admin/AdminApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/customer/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/customer/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/customer/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/customer/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/customer/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/CustomerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/CustomerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/CustomerConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/CustomerConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/CustomerDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/CustomerDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/CustomerServiceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/CustomerServiceConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/ThymeleafConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/ThymeleafConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/handler/CustomAuthenticationFailureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/handler/CustomAuthenticationFailureHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/oauth2/CustomOauth2Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/oauth2/CustomOauth2Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/oauth2/CustomOauth2User.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/oauth2/CustomOauth2User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/config/oauth2/OAuth2LoginSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/config/oauth2/OAuth2LoginSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/AddressRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/AddressRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/CheckoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/CheckoutController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/CustomErrorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/CustomErrorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/EditCartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/EditCartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/ForgotPasswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/ForgotPasswordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/HelloWorldController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/HelloWorldController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/PageProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/PageProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/RateProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/RateProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/controller/RateProductRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/controller/RateProductRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/interceptor/CommonInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/interceptor/CommonInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/interceptor/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/interceptor/WebMvcConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/java/com/catcosy/customer/utils/CurrencyFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/catcosy/customer/utils/CurrencyFormatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/account-orders.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/account-orders.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/account.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/account.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/all.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/all.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/aos.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/aos.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/cart.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/cart.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/checkout.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/checkout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/detail-product.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/detail-product.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/easyzoom.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/easyzoom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/image-uploader.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/image-uploader.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/login-register.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/login-register.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/page-product.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/page-product.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/page404.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/page404.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/slick-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/slick-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/slick.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/slick.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/css/view-orders.css" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/css/view-orders.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/fonts/iu.eot" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/fonts/iu.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/fonts/iu.svg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/fonts/iu.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/fonts/iu.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/fonts/iu.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/fonts/iu.woff" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/fonts/iu.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/5058062.png" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/5058062.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/alireza-dolati-OVS3rqXq9gg-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/alireza-dolati-OVS3rqXq9gg-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/bank/z5402816281164_8971b2fd67f0bebcc73bc5f15d9784b0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/bank/z5402816281164_8971b2fd67f0bebcc73bc5f15d9784b0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/bo-cong-thuong.png" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/bo-cong-thuong.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/clark-street-mercantile-P3pI6xzovu0-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/clark-street-mercantile-P3pI6xzovu0-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/force-majeure-00tlC0Clfrs-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/force-majeure-00tlC0Clfrs-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/force-majeure-SmIlY2uAHo8-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/force-majeure-SmIlY2uAHo8-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/full-shot-cool-people-wearing-chain-necklace.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/full-shot-cool-people-wearing-chain-necklace.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/logo.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/logo.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/logo1.png" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/logo1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/logoINF.png" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/logoINF.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/logoINF1.png" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/logoINF1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/mike-von-rj8ohjW9RBA-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/mike-von-rj8ohjW9RBA-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pascal-brauer-ttdio_nOPjQ-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pascal-brauer-ttdio_nOPjQ-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-ahmed-ツ-20447512.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-ahmed-ツ-20447512.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-charles-isaac-20455894.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-charles-isaac-20455894.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-goebbels-erasme-20445958.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-goebbels-erasme-20445958.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-harsh-kushwaha-804217-1721558.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-harsh-kushwaha-804217-1721558.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-philboakye-1813947.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-philboakye-1813947.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-sadi-gökpınar-20466271.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-sadi-gökpınar-20466271.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-shalom-osezua-20466808.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-shalom-osezua-20466808.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-tan-danh-773124.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-tan-danh-773124.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-tembela-bohle-1884584.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-tembela-bohle-1884584.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-valeria-november-16365099.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-valeria-november-16365099.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/pexels-yaritza-16215951.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/pexels-yaritza-16215951.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/prince-akachi-iuqcmC4NVNo-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/prince-akachi-iuqcmC4NVNo-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/production.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/production.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/rayul-_M6gy9oHgII-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/rayul-_M6gy9oHgII-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/sirio-7_ZNLVlJchs-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/sirio-7_ZNLVlJchs-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/sirio-kGAAunX8YjQ-unsplash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/sirio-kGAAunX8YjQ-unsplash.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/images/young-japanese-woman-portrait-sitting-chair.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/images/young-japanese-woman-portrait-sitting-chair.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/all.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/all.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/aos.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/aos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/cart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/checkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/checkout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/detail-product.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/detail-product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/easyzoom.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/easyzoom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/extm.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/extm.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/image-uploader.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/image-uploader.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/login-register.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/login-register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/page-product.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/page-product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/js/slick.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/js/slick.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/static/mp4/production.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/static/mp4/production.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/account-address.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/account-address.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/account-orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/account-orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/account-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/account-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/account.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/checkout.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/checkout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/detail-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/detail-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/forgot-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/forgot-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/fragments.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/fragments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/hello-world.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/hello-world.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/login_register.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/login_register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/mail-ordered-customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/mail-ordered-customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/mail-ordered-customer1.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/mail-ordered-customer1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/mail-registered-customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/mail-registered-customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/mail-reset-password-customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/mail-reset-password-customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/page-product.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/page-product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/reset-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/reset-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/main/resources/templates/view-orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/templates/view-orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Customer/src/test/java/com/catcosy/customer/CustomerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/test/java/com/catcosy/customer/CustomerApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/library/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/library/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/library/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/library/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/library/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/library/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/LibraryApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/LibraryApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/audit/AuditAwareImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/audit/AuditAwareImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/AddressDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/dto/AddressDetailDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/AdminDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/dto/AdminDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/CustomerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/dto/CustomerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/OrderDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/dto/OrderDetailDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/OrderDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/dto/OrderDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/ProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/dto/ProductDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/dto/VoucherDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/dto/VoucherDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/enums/ObjectManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/enums/ObjectManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/enums/Provider.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/enums/Provider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/enums/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/enums/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/enums/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/enums/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/AuthenticationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/AuthenticationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/AuthenticationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/AuthenticationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Brand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Cart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/CustomerLikedComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/CustomerLikedComment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/OrderDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/OrderDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/ProductImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/ProductImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/ProductSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/ProductSize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/RateProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/RateProduct.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/RateProductImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/RateProductImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/RefreshToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/RefreshToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Size.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Size.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Statistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/model/Voucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/model/Voucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/AdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/AdminRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/BrandRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/CartItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/CartItemRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/CartRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/CategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/CustomerLikedCommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/CustomerLikedCommentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/OrderDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/OrderDetailRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/ProductImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/ProductImageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/ProductSizeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/ProductSizeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/RateProductImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/RateProductImageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/RateProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/RateProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/SizeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/SizeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/StatisticsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/StatisticsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/repository/VoucherRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/repository/VoucherRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/BrandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/CartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/OrderDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/OrderDetailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/ProductImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/ProductImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/ProductSizeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/ProductSizeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/RateProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/RateProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/SizeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/SizeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/StatisticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/ThymeleafService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/ThymeleafService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/VoucherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/VoucherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/config/MailSenderConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/config/MailSenderConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/AdminServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/BrandServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/BrandServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/CartServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/CartServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/CategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/CustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/MailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/MailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/OrderDetailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/OrderDetailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ProductImageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/ProductImageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ProductSizeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/ProductSizeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/RateProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/RateProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/RoleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/SizeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/SizeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/StatisticsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/StatisticsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/ThymeleafServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/ThymeleafServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/impl/VoucherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/impl/VoucherServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/OAuth2FacebookUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/OAuth2FacebookUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/OAuth2GoogleUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/OAuth2GoogleUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/OAuth2UserDetailFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/OAuth2UserDetailFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/OAuth2UserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/OAuth2UserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/security/OAuth2CustomerDetailCustom.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/security/OAuth2CustomerDetailCustom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/security/OAuth2DetailCustomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/security/OAuth2DetailCustomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/security/handler/OAuth2FailureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/security/handler/OAuth2FailureHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/service/oauth2/security/handler/OAuth2SuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/service/oauth2/security/handler/OAuth2SuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/java/com/catcosy/library/utils/MultipartFileFromUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/java/com/catcosy/library/utils/MultipartFileFromUrl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/resources/static/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/static/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/resources/static/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/static/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/resources/static/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/static/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/resources/static/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/main/resources/static/js/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/main/resources/static/js/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/src/test/java/com/catcosy/library/LibraryApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/library/src/test/java/com/catcosy/library/LibraryApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
-}</component>
-  <component name="ProjectId" id="2iHRQ9hlPbAYZmbI8ezYGmaAcOj" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2m036LqEaSrqjr1fqemP2q5EPB2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -45,27 +457,17 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "old",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/DA/DACS1/BE-CATCOSY/Admin/src/main/resources/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\DA\DACS1\BE-CATCOSY\Admin\src\main\resources\templates" />
-      <recent name="D:\DA\DACS1\BE-CATCOSY\Customer\src\main\resources\templates" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.catcosy.admin.controller" />
-      <recent name="com.catcosy.library.repository" />
-      <recent name="com.catcosy.library.service.impl" />
-      <recent name="com.catcosy.library.service" />
-      <recent name="com.catcosy.customer.controller" />
-    </key>
-  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -76,7 +478,7 @@
   <component name="RunManager" selected="Spring Boot.CustomerApplication">
     <configuration name="AdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="Admin" />
+      <module name="admin" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.catcosy.admin.AdminApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -84,7 +486,7 @@
     </configuration>
     <configuration name="CustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="Customer" />
+      <module name="customer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.catcosy.customer.CustomerApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -92,7 +494,7 @@
     </configuration>
     <configuration name="LibraryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="Library" />
+      <module name="library" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.catcosy.library.LibraryApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -102,16 +504,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a4af668b-52ad-4335-8194-70c6a4d451f2" name="Changes" comment="" />
-      <created>1719145497135</created>
+      <changelist id="d528fcc9-f538-4370-a8a9-1a527d2005eb" name="Changes" comment="" />
+      <created>1726199491916</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1719145497135</updated>
-      <workItem from="1719145498259" duration="891000" />
-      <workItem from="1719239378709" duration="3923000" />
-      <workItem from="1719375989949" duration="8719000" />
-      <workItem from="1719449580365" duration="12000" />
-      <workItem from="1719457765071" duration="1055000" />
+      <updated>1726199491916</updated>
+      <workItem from="1726199494733" duration="1438000" />
     </task>
     <servers />
   </component>

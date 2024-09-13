@@ -22,7 +22,6 @@ import java.security.Principal;
 @Controller
 public class LoginController {
 
-
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -45,7 +44,6 @@ public class LoginController {
         return "forgot-password";
     }
 
-
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("title", "Register");
@@ -55,8 +53,8 @@ public class LoginController {
 
     @PostMapping("/register-new")
     public String addNewAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
-                              BindingResult result,
-                              Model model) {
+            BindingResult result,
+            Model model) {
         try {
             if (result.hasErrors()) {
                 model.addAttribute("adminDto", adminDto);
@@ -88,18 +86,16 @@ public class LoginController {
         return "register";
     }
 
-
-
-
     @RequestMapping("/index")
     public String home(Model model, HttpSession session, Principal principal) {
-        if(principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
 
-        Admin admin =  adminService.findByUsername(principal.getName());
-//        session.setAttribute("nameAdmin",admin.getFirstName() + " " + admin.getLastName());
-//        session.setAttribute("role", "ADMIN");
+        // Admin admin = adminService.findByUsername(principal.getName());
+        // session.setAttribute("nameAdmin",admin.getFirstName() + " " +
+        // admin.getLastName());
+        // session.setAttribute("role", "ADMIN");
         model.addAttribute("title", "Home Page");
-
 
         model.addAttribute("totalCustomer", statisticsService.getTotalCustomer());
         model.addAttribute("totalOrder", statisticsService.getTotalOrdersDelivered());
@@ -115,10 +111,7 @@ public class LoginController {
         model.addAttribute("totalShort", statisticsService.getTotalProductByCategory("Short"));
         model.addAttribute("totalShirt", statisticsService.getTotalProductByCategory("Shirt"));
 
-
-
         return "index";
     }
-
 
 }

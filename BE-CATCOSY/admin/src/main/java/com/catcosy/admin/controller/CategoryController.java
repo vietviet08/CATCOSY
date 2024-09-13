@@ -51,9 +51,7 @@ public class CategoryController {
         String headerValue = "attachment; filename=categories_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-
-        ExcelExporter excelExporter = new ExcelExporter(categoryService.findAllCategory());
-
+        ExcelExporter<Category> excelExporter = new ExcelExporter<>(categoryService.findAllCategory());
 
         List<String> fieldsToExport = List.of("id",
                 "name",
@@ -61,7 +59,6 @@ public class CategoryController {
                 "isActivated");
         excelExporter.export(response, ObjectManage.Categories.name(), fieldsToExport);
     }
-
 
     @PostMapping("/add-category")
     public String addCategory(@ModelAttribute("newCategory") Category category, RedirectAttributes attributes) {
@@ -76,7 +73,7 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/delete-category", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/delete-category", method = { RequestMethod.GET, RequestMethod.PUT })
     public String deleteCategory(Category category, RedirectAttributes attributes) {
         try {
             categoryService.deleteById(category.getId());
@@ -87,7 +84,7 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/activate-category", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/activate-category", method = { RequestMethod.GET, RequestMethod.PUT })
     public String activateCategory(Category category, RedirectAttributes attributes) {
         try {
             categoryService.activatedById(category.getId());
@@ -98,13 +95,11 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-
-    @RequestMapping(value = "findById", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "findById", method = { RequestMethod.PUT, RequestMethod.GET })
     @ResponseBody
     public Optional<Category> findCategoryById(Long id) {
         return categoryService.findById(id);
     }
-
 
     @GetMapping("/update-category")
     public String updateCategory(Category category, RedirectAttributes attributes) {
