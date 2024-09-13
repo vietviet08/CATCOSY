@@ -20,13 +20,14 @@ public class HelloWorldController {
     private CustomerService customerService;
 
     @GetMapping("/hello-world")
-    public String helloWorld(Model model, @AuthenticationPrincipal OAuth2User oAuth2User, Authentication authentication) {
+    public String helloWorld(Model model, @AuthenticationPrincipal OAuth2User oAuth2User,
+            Authentication authentication) {
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Authentication authentication =
+        // SecurityContextHolder.getContext().getAuthentication();
         OAuth2User oAuth2User1 = (OAuth2User) authentication.getPrincipal();
 
         model.addAttribute("authentication", authentication);
-
 
         Map<String, Object> attribute = oAuth2User.getAttributes();
 
@@ -38,7 +39,7 @@ public class HelloWorldController {
 
         Customer customer = customerService.findByUsername(principal.getName());
 
-        model.addAttribute("fullName", customer.getFirstName() +" " + customer.getLastName());
+        model.addAttribute("fullName", customer.getFirstName() + " " + customer.getLastName());
         model.addAttribute("email", customer.getEmail());
         model.addAttribute("phone", customer.getPhone());
         model.addAttribute("username", customer.getUsername());

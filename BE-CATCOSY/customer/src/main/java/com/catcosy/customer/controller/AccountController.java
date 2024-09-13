@@ -8,10 +8,8 @@ import com.catcosy.library.service.OrderDetailService;
 import com.catcosy.library.service.OrderService;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -34,8 +32,6 @@ import java.util.List;
 
 @Controller
 public class AccountController {
-    @Autowired
-    private ServletContext servletContext;
 
     @Autowired
     private SpringTemplateEngine templateEngine;
@@ -55,7 +51,8 @@ public class AccountController {
     @GetMapping("/account")
     public String myAccount(Principal principal, Model model) {
 
-        if (principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
         model.addAttribute("title", "Account");
 
         Customer customer = customerService.findByUsername(principal.getName());
@@ -70,18 +67,16 @@ public class AccountController {
         return "account";
     }
 
-
     @PostMapping("/account")
     public String changeInfo(@RequestParam("firstName") String firstName,
-                             @RequestParam("lastName") String lastName,
-                             @RequestParam("phone") String phone,
-                             @RequestParam("avatarImage") MultipartFile image,
-                             Model model,
-                             Principal principal) {
+            @RequestParam("lastName") String lastName,
+            @RequestParam("phone") String phone,
+            @RequestParam("avatarImage") MultipartFile image,
+            Model model,
+            Principal principal) {
 
         try {
             Customer customer = customerService.findByUsername(principal.getName());
-
 
             if (firstName.trim().equals("") || lastName.trim().equals("")) {
                 model.addAttribute("notAccept", "First name or last name not empty");
@@ -106,11 +101,11 @@ public class AccountController {
         return "redirect:/account";
     }
 
-
     @GetMapping("/address")
     public String myAddress(Principal principal, Model model) {
 
-        if (principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
         model.addAttribute("title", "Address");
 
         Customer customer = customerService.findByUsername(principal.getName());
@@ -139,25 +134,29 @@ public class AccountController {
 
     @PostMapping("/address")
     public String saveMyAddress(Principal principal, Model model,
-                                @RequestParam("phone") String phone,
-                                @RequestParam("addressDetail") String addressDetail,
-                                @RequestParam("city") String city,
-                                @RequestParam("district") String district,
-                                @RequestParam("commune") String commune) {
+            @RequestParam("phone") String phone,
+            @RequestParam("addressDetail") String addressDetail,
+            @RequestParam("city") String city,
+            @RequestParam("district") String district,
+            @RequestParam("commune") String commune) {
 
-        if (principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
         Customer customer = customerService.findByUsername(principal.getName());
         try {
             String finishAddress = "";
 
-            if (city.isEmpty()) finishAddress = addressDetail;
-            else if (district.isEmpty()) finishAddress = addressDetail + " - " + city;
-            else if (commune.isEmpty()) finishAddress = addressDetail + " - " + city + ", " + district;
-            else finishAddress = addressDetail + " - " + city + ", " + district + ", " + commune;
+            if (city.isEmpty())
+                finishAddress = addressDetail;
+            else if (district.isEmpty())
+                finishAddress = addressDetail + " - " + city;
+            else if (commune.isEmpty())
+                finishAddress = addressDetail + " - " + city + ", " + district;
+            else
+                finishAddress = addressDetail + " - " + city + ", " + district + ", " + commune;
 
             customer.setPhone(phone);
             customer.setAddressDetail(finishAddress);
-
 
             customerService.updateCustomer(customer);
 
@@ -165,16 +164,15 @@ public class AccountController {
             e.printStackTrace();
         }
 
-
         return "redirect:/address";
     }
 
-
-    /*Orders*/
+    /* Orders */
     @GetMapping("/orders")
     public String myOrders(Model model, Principal principal) {
 
-        if (principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
         model.addAttribute("title", "Orders");
 
         List<Order> orders = orderService.finAllOrderByCustomerId(customerService.findByUsername(principal.getName()));
@@ -184,22 +182,23 @@ public class AccountController {
         return "account-orders";
     }
 
-//    @GetMapping("/orders/view/{code}")
-//    public String viewOrder(@PathVariable("code") String codeViewOrder, Model model) {
-//
-//        try {
-//            Order order = orderService.findOrderByCodeViewOrder(codeViewOrder);
-//
-//            model.addAttribute("order", order);
-//
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//            return "404";
-//        }
-//
-//        return "view-orders";
-//    }
+    // @GetMapping("/orders/view/{code}")
+    // public String viewOrder(@PathVariable("code") String codeViewOrder, Model
+    // model) {
+    //
+    // try {
+    // Order order = orderService.findOrderByCodeViewOrder(codeViewOrder);
+    //
+    // model.addAttribute("order", order);
+    //
+    // }
+    // catch (Exception e) {
+    // e.printStackTrace();
+    // return "404";
+    // }
+    //
+    // return "view-orders";
+    // }
 
     @GetMapping("/orders/test")
     public String viewOrder(Model model) {
@@ -209,7 +208,7 @@ public class AccountController {
     }
 
     @GetMapping("/order/{id}")
-    public String viewOrderByToken(@PathVariable("id")String id, Model model){
+    public String viewOrderByToken(@PathVariable("id") String id, Model model) {
         model.addAttribute("dateNow", new Date());
         Order order = orderService.findOrderByCodeViewOrder(id);
         model.addAttribute("order", order);
@@ -218,9 +217,9 @@ public class AccountController {
 
     @GetMapping("orders/view/pdf/{code}")
     public ResponseEntity<ByteArrayResource> getPDF(@PathVariable("code") String codeViewOrder,
-                                                    HttpServletRequest request,
-                                                    HttpServletResponse response,
-                                                    Model model) throws IOException {
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Model model) throws IOException {
 
         // Do Business Logic
         Order order = orderService.findOrderByCodeViewOrder(codeViewOrder);
@@ -252,11 +251,13 @@ public class AccountController {
                 .body(byteArrayResource);
     }
 
-    @RequestMapping(value = "/cancel-order", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/cancel-order", method = { RequestMethod.GET, RequestMethod.PUT })
     public String cancelOrder(Order order, Principal principal, Model model) {
-        if (principal == null) return "redirect:/404";
+        if (principal == null)
+            return "redirect:/404";
 
-        if (order.isAccept()) return "redirect:/orders";
+        if (order.isAccept())
+            return "redirect:/orders";
 
         orderService.cancelOrderForCustomer(order.getId());
         model.addAttribute("success", "Accept order successfully!");
@@ -264,17 +265,17 @@ public class AccountController {
         return "redirect:/orders";
     }
 
-    @RequestMapping(value = "/detail-order", method = {RequestMethod.GET})
+    @RequestMapping(value = "/detail-order", method = { RequestMethod.GET })
     @ResponseBody
     public List<OrderDetailDto> viewOrderDetail(Long id, Model model) {
 
         return orderDetailService.finAllByOrderIdDto(id);
     }
 
-
     @GetMapping("/change-password")
     public String changePassword(Principal principal, Model model) {
-        if (principal == null) return "redirect:/login";
+        if (principal == null)
+            return "redirect:/login";
 
         model.addAttribute("title", "Orders");
 
@@ -283,15 +284,16 @@ public class AccountController {
 
     @PostMapping(value = "/do-change-password")
     public String doChangePassword(@RequestParam("oldPassword") String oldPassword,
-                                   @RequestParam("password") String password,
-                                   @RequestParam("repeatPassword") String repeatPassword,
-                                   Model model,
-                                   Principal principal) {
+            @RequestParam("password") String password,
+            @RequestParam("repeatPassword") String repeatPassword,
+            Model model,
+            Principal principal) {
         try {
 
             Customer customer = customerService.findByUsername(principal.getName());
             if (passwordEncoder.matches(oldPassword, customer.getPassword())) {
-                if (password.length() <= 3) model.addAttribute("notLength", "Password has at least 4 characters!");
+                if (password.length() <= 3)
+                    model.addAttribute("notLength", "Password has at least 4 characters!");
                 else if (password.equals(repeatPassword)) {
                     customer.setPassword(passwordEncoder.encode(password));
                     customerService.updateCustomer(customer);

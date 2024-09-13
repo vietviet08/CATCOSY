@@ -25,7 +25,6 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-
     @GetMapping("/brands")
     public String brandsPage(Model model) {
         List<Brand> brands = brandService.findAllBrand();
@@ -46,9 +45,7 @@ public class BrandController {
         String headerValue = "attachment; filename=brands_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-
-        ExcelExporter excelExporter = new ExcelExporter(brandService.findAllBrand());
-
+        ExcelExporter<Brand> excelExporter = new ExcelExporter<>(brandService.findAllBrand());
 
         List<String> fieldsToExport = List.of("id",
                 "name",
@@ -56,7 +53,6 @@ public class BrandController {
                 "isActivated");
         excelExporter.export(response, ObjectManage.Brands.name(), fieldsToExport);
     }
-
 
     @PostMapping("/add-brand")
     public String addBrand(@ModelAttribute("newBrand") Brand brand, RedirectAttributes attributes) {
@@ -71,7 +67,7 @@ public class BrandController {
         return "redirect:/brands";
     }
 
-    @RequestMapping(value = "/delete-brand", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/delete-brand", method = { RequestMethod.GET, RequestMethod.PUT })
     public String deleteBrand(Brand brand, RedirectAttributes attributes) {
         try {
             brandService.deleteById(brand.getId());
@@ -82,7 +78,7 @@ public class BrandController {
         return "redirect:/brands";
     }
 
-    @RequestMapping(value = "/activate-brand", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/activate-brand", method = { RequestMethod.GET, RequestMethod.PUT })
     public String activateBrands(Brand brand, RedirectAttributes attributes) {
         try {
             brandService.activatedById(brand.getId());
@@ -93,13 +89,11 @@ public class BrandController {
         return "redirect:/brands";
     }
 
-
-    @RequestMapping(value = "/findByIdBrand", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/findByIdBrand", method = { RequestMethod.PUT, RequestMethod.GET })
     @ResponseBody
     public Optional<Brand> findBrandById(Long id) {
         return brandService.findById(id);
     }
-
 
     @PostMapping("/update-brand")
     public String updateBrand(Brand brand, RedirectAttributes attributes) {
