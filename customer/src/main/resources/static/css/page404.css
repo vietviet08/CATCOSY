@@ -1,0 +1,35 @@
+
+.back-home {
+    /*border: 1px solid #333333;*/
+    width: 100%;
+    height: 20px;
+    border: 1px solid #333333;
+    text-decoration: none;
+    color: #333333;
+    position: relative;
+}
+
+.back-home span{
+    position: relative;
+    z-index: 9;
+}
+
+.back-home:before{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #333333;
+    transition: all 0.3s ease;
+}
+
+.back-home:hover:before{
+    width: 100%;
+}
+
+.back-home:hover{
+    color: #ffffff;
+}
+
