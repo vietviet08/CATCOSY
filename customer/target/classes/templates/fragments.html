@@ -302,7 +302,7 @@
 </option>
 
 
-<!--   th:with="newMin = ${minPrice lt min ? min : minPrice}, newMax = ${maxPrice gt max ? maxPrice : max}"-->
+<!--   th:with="newMin = ${minPrice lt min ? min : minPrice}, newMax = ${maxPrice gt max ? max : maxPrice}"-->
 <!--'&priceCdt=' + ${minPrice != null && maxPrice != null ? minPrice : min} + ':' + ${minPrice != null && maxPrice != null ? maxPrice : max}}-->
 <!--${minPrice != null && maxPrice != null && maxPrice > max && minPrice < min ? '&priceCdt=' + minPrice + ':' + maxPrice  : '&priceCdt=' + min + ':' + max}-->
 
@@ -432,6 +432,86 @@
     <!--    </script>-->
 
     <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+</div>
+
+<!-- Chatbot Fragment -->
+<div th:fragment="chatbot" class="chatbot-container">
+    <div class="chatbot-button" id="chatbotButton">
+        <i class="fa-solid fa-comments"></i>
+    </div>
+    <div class="chatbot-box" id="chatbotBox">
+        <div class="chatbot-header">
+            <h3>CATCOSY Assistant</h3>
+            <div class="close-btn" id="chatbotClose">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        <div class="chatbot-typing" id="chatbotTyping">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+        <div class="suggestions" id="suggestionChips">
+            <!-- Suggestion chips will be added here dynamically -->
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Ask me anything...">
+            <button id="chatbotSend">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Include chatbot CSS directly in the fragment -->
+    <link rel="stylesheet" th:href="@{/css/chatbot.css}">
+    
+    <!-- Include chatbot JavaScript directly in the fragment -->
+    <script th:src="@{/js/chatbot.js}"></script>
+    
+    <!-- Inline script as a fallback to ensure the button works -->
+    <script>
+        // Direct initialization to ensure chatbot button works
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Inline chatbot script loaded");
+            const chatbotButton = document.getElementById('chatbotButton');
+            const chatbotBox = document.getElementById('chatbotBox');
+            
+            if (chatbotButton && chatbotBox) {
+                console.log("Found chatbot elements in DOM");
+                
+                // Direct click handler without external dependencies
+                chatbotButton.onclick = function(e) {
+                    console.log("Direct chatbot button click");
+                    
+                    // Toggle visibility
+                    if (chatbotBox.classList.contains('active')) {
+                        chatbotBox.classList.remove('active');
+                    } else {
+                        chatbotBox.classList.add('active');
+                    }
+                    
+                    return false;
+                };
+            } else {
+                console.error("Chatbot elements not found in inline script");
+            }
+        });
+        
+        // Also try immediate binding outside DOMContentLoaded
+        window.setTimeout(function() {
+            const btn = document.getElementById('chatbotButton');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    console.log("Delayed button handler");
+                    const box = document.getElementById('chatbotBox');
+                    if (box) box.classList.toggle('active');
+                });
+            }
+        }, 1000);
+    </script>
 </div>
 
 </body>
