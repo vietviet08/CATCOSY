@@ -112,7 +112,6 @@ public class ProductServiceImpl implements ProductService {
     public Product save(List<MultipartFile> images, List<Long> sizes, ProductDto productDto) throws IOException {
         Product product = new Product();
 
-
         try {
             product.setId(productDto.getId());
             product.setName(productDto.getName());
@@ -125,124 +124,64 @@ public class ProductServiceImpl implements ProductService {
             product.setIsActivated(true);
             product.setIsDeleted(false);
 
-            List<ProductImage> imageList = new ArrayList<>();
-            for (MultipartFile image : images) {
-                ProductImage productImage = new ProductImage();
-                String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
-                productImage.setProduct(product);
-                productImage.setImage(fileImg);
-                imageList.add(productImage);
+            // Save the product first to get an ID
+            product = productRepository.save(product);
+            
+            // Process images if they exist
+            if (images != null) {
+                List<ProductImage> imageList = new ArrayList<>();
+                for (MultipartFile image : images) {
+                    if (image != null && !image.isEmpty()) {
+                        ProductImage productImage = new ProductImage();
+                        String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
+                        productImage.setProduct(product);
+                        productImage.setImage(fileImg);
+                        imageList.add(productImage);
+                        productImageRepository.save(productImage);
+                    }
+                }
+                
+                if (!imageList.isEmpty()) {
+                    product.setImages(imageList);
+                } else {
+                    product.setImages(new ArrayList<>());
+                }
+            } else {
+                product.setImages(new ArrayList<>());
             }
 
+            // Process sizes if they exist
             List<ProductSize> productSizes = new ArrayList<>();
-            for (Long id : sizes) {
-                ProductSize productSize = new ProductSize();
-                Size size = sizeRepository.getReferenceById(id);
-                productSize.setSize(size);
-                productSize.setQuantity(0);
-                productSize.setProduct(product);
-                productSizes.add(productSize);
+            if (sizes != null && !sizes.isEmpty()) {
+                for (Long id : sizes) {
+                    ProductSize productSize = new ProductSize();
+                    Size size = sizeRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Size not found with id: " + id));
+                    productSize.setSize(size);
+                    productSize.setQuantity(0);
+                    productSize.setProduct(product);
+                    productSizes.add(productSize);
+                    productSizeRepository.save(productSize);
+                }
+                product.setSizes(productSizes);
+            } else {
+                product.setSizes(new ArrayList<>());
             }
-
-            product.setImages(imageList);
-            product.setSizes(productSizes);
-
-
+            
+            // Save the product again with all relationships
+            return productRepository.save(product);
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
-        return productRepository.save(product);
     }
 
     @Override
     @Transactional
     public Product update(List<MultipartFile> images, List<Long> newSizesId, ProductDto productDto) throws IOException {
-
         Product product = productRepository.getReferenceById(productDto.getId());
 
-        List<ProductImage> productImagesOlds = product.getImages();
-
-        List<ProductImage> productImagesNews = new ArrayList<>();
-        if (!images.isEmpty()) {
-            productImagesOlds.clear();
-
-            for (MultipartFile newImage : images) {
-                if (newImage != null && !newImage.isEmpty()) {
-                    ProductImage productImage = new ProductImage();
-                    productImage.setImage(Base64.getEncoder().encodeToString(newImage.getBytes()));
-                    productImage.setProduct(product);
-
-                    productImagesNews.add(productImage);
-                }
-            }
-        }
-
-
-//        List<Long> oldSizes = product.getSizes().stream().map(size -> size.getSize().getId()).toList();
-//        for (Long sizeId : oldSizes) {
-//            if (!newSizes.contains(sizeId)) {
-//
-//
-//                removeSize(sizeId, product);
-//            }
-//        }
-//
-//        List<ProductSize> productSizes = new ArrayList<>();
-//        for (Long id : newSizes) {
-//
-//
-//            ProductSize productSize = new ProductSize();
-//            Size size = sizeRepository.getReferenceById(id);
-//            productSize.setSize(size);
-//            productSize.setQuantity(0);
-//            productSize.setProduct(product);
-//            productSizes.add(productSize);
-//        }
-
-//        List<ProductSize> oldSizes = product.getSizes();
-//
-//        Set<Long> oldSizesId = new HashSet<>();
-//        product.getSizes().forEach(size -> oldSizesId.add(size.getSize().getId()));
-//        System.out.println(oldSizesId);
-//
-////        for (Long oldSizeId : oldSizesId) {
-////            if (!newSizesId.contains(oldSizeId)) {
-////                for (ProductSize productSize : oldSizes) {
-////                    if (productSize.getSize().getId().equals(oldSizeId)) {
-////                        System.out.println("ok");
-////                        oldSizes.remove(productSize);
-////                        break;
-////                    }
-////                }
-////            }
-////        }
-//
-//        Iterator<ProductSize> iterator = oldSizes.iterator();
-//        while (iterator.hasNext()) {
-//            ProductSize productSize = iterator.next();
-//            if (!newSizesId.contains(productSize.getSize().getId())) {
-//                System.out.println("ok");
-//                iterator.remove(); // Loại bỏ phần tử hiện tại từ iterator và từ collection cơ bản
-//            }
-//        }
-//
-//        for (Long newSizeId : newSizesId) {
-//            if (!oldSizesId.contains(newSizeId)) {
-//                ProductSize productSize = new ProductSize();
-//                Size size = sizeRepository.getReferenceById(newSizeId);
-//                productSize.setSize(size);
-//                productSize.setQuantity(0);
-//                productSize.setProduct(product);
-//                oldSizes.add(productSize);
-//            }
-//        }
-//
-//        System.out.println("size after: " + oldSizes.size());
-//
-//        if (!oldSizes.isEmpty()) product.setSizes(oldSizes);
-//        else product.setIsDeleted(true);
-
-        product.setId(productDto.getId());
+        // Update basic product information
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setCostPrice(productDto.getCostPrice());
@@ -250,20 +189,60 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(productDto.getCategory());
         product.setBrand(productDto.getBrand());
 
-        if (!productImagesNews.isEmpty()) {
-            productImageRepository.deleteAllByProductId(product.getId());
-            product.setImages(productImagesNews);
+        // Process images if they exist
+        if (images != null) {
+            // Check if there are any valid images
+            boolean hasValidImages = false;
+            for (MultipartFile image : images) {
+                if (image != null && !image.isEmpty()) {
+                    hasValidImages = true;
+                    break;
+                }
+            }
+            
+            // Only update images if we have valid ones
+            if (hasValidImages) {
+                // Delete old images
+                productImageRepository.deleteAllByProductId(product.getId());
+                
+                // Add new images
+                List<ProductImage> newImages = new ArrayList<>();
+                for (MultipartFile image : images) {
+                    if (image != null && !image.isEmpty()) {
+                        ProductImage productImage = new ProductImage();
+                        String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
+                        productImage.setProduct(product);
+                        productImage.setImage(fileImg);
+                        productImageRepository.save(productImage);
+                        newImages.add(productImage);
+                    }
+                }
+                product.setImages(newImages);
+            }
         }
+
+        // Update product sizes
         updateProductSize(product, newSizesId);
 
+        // Save and return updated product
         return productRepository.save(product);
     }
 
     @Override
     public void updateProductSize(Product product, List<Long> newSizesId) {
         List<ProductSize> productSizes = product.getSizes();
-//        productSizes.removeIf(productSize -> !newSizesId.contains(productSize.getSize().getId()));
+        
+        // Clear all sizes if the new size list is empty
+        if (newSizesId.isEmpty()) {
+            // Adjust the total quantity
+            for (ProductSize productSize : productSizes) {
+                product.setQuantity(product.getQuantity() - productSize.getQuantity());
+            }
+            productSizes.clear();
+            return;
+        }
 
+        // Remove sizes that are not in the new list
         Iterator<ProductSize> iterator = productSizes.iterator();
         while (iterator.hasNext()) {
             ProductSize productSize = iterator.next();
@@ -273,18 +252,17 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
+        // Add new sizes
         for (Long newSizeId : newSizesId) {
             if (!productSizes.stream().anyMatch(ps -> ps.getSize().getId().equals(newSizeId))) {
                 ProductSize productSize = new ProductSize();
-                Size size = sizeRepository.findById(newSizeId).orElseThrow(() -> new RuntimeException("_"));
+                Size size = sizeRepository.findById(newSizeId).orElseThrow(() -> new RuntimeException("Size not found with id: " + newSizeId));
                 productSize.setSize(size);
                 productSize.setQuantity(0);
                 productSize.setProduct(product);
                 productSizes.add(productSize);
             }
         }
-
-
     }
 
 

@@ -121,23 +121,34 @@ public class ProductController {
 
     @PostMapping("/save-product")
     public String addProduct(@ModelAttribute("newProduct") ProductDto productDto,
-                             @RequestParam("photos[]") List<MultipartFile> ListFiles,
-                             @RequestParam("sizesChoose") String[] sizesSelected,
+                             @RequestParam(value = "photos[]", required = false) List<MultipartFile> listFiles,
+                             @RequestParam(value = "sizesChoose", required = false, defaultValue = "") String[] sizesSelected,
                              RedirectAttributes attributes) {
         List<Long> selectedSizeIds = new ArrayList<>();
 
-        for (String n : sizesSelected) {
-            selectedSizeIds.add(Long.parseLong(n));
+        if (sizesSelected != null && sizesSelected.length > 0 && !sizesSelected[0].isEmpty()) {
+            for (String n : sizesSelected) {
+                selectedSizeIds.add(Long.parseLong(n));
+            }
         }
 
         try {
-            productService.save(ListFiles, selectedSizeIds, productDto);
+            // Debug statement
+            System.out.println("Number of images received: " + (listFiles != null ? listFiles.size() : 0));
+            if (listFiles != null) {
+                for (int i = 0; i < listFiles.size(); i++) {
+                    MultipartFile file = listFiles.get(i);
+                    System.out.println("Image " + i + " is empty: " + (file.isEmpty() ? "Yes" : "No") + ", size: " + file.getSize());
+                }
+            }
+            
+            productService.save(listFiles, selectedSizeIds, productDto);
             attributes.addFlashAttribute("success", "Add product successfully!");
         } catch (DataIntegrityViolationException e) {
             attributes.addFlashAttribute("warning", "Name product already exist!");
             e.printStackTrace();
         } catch (Exception e) {
-            attributes.addFlashAttribute("error", "Add product failed, may be error from server!");
+            attributes.addFlashAttribute("error", "Add product failed: " + e.getMessage());
             e.printStackTrace();
         }
         return "redirect:/products";
@@ -170,23 +181,32 @@ public class ProductController {
 
     @PostMapping("/update-product/{id}")
     public String updateProduct(@ModelAttribute("productDto") ProductDto productDto,
-                                @RequestParam("photos[]") List<MultipartFile> images,
-                                @RequestParam("sizesChoose") String[] sizesSelected,
+                                @RequestParam(value = "photos[]", required = false) List<MultipartFile> images,
+                                @RequestParam(value = "sizesChoose", required = false, defaultValue = "") String[] sizesSelected,
                                 RedirectAttributes attributes) {
         try {
-
             List<Long> selectedSizeIds = new ArrayList<>();
 
-            for (String n : sizesSelected) {
-                selectedSizeIds.add(Long.parseLong(n));
+            if (sizesSelected != null && sizesSelected.length > 0 && !sizesSelected[0].isEmpty()) {
+                for (String n : sizesSelected) {
+                    selectedSizeIds.add(Long.parseLong(n));
+                }
+            }
+
+            // Debug statement
+            System.out.println("Update - Number of images received: " + (images != null ? images.size() : 0));
+            if (images != null) {
+                for (int i = 0; i < images.size(); i++) {
+                    MultipartFile file = images.get(i);
+                    System.out.println("Update - Image " + i + " is empty: " + (file.isEmpty() ? "Yes" : "No") + ", size: " + file.getSize());
+                }
             }
 
             productService.update(images, selectedSizeIds, productDto);
-//            productService.updateProductSize(productDto, selectedSizeIds);
             attributes.addFlashAttribute("success", "Update product successfully!");
 
         } catch (Exception e) {
-            attributes.addFlashAttribute("error", "Update product failed!");
+            attributes.addFlashAttribute("error", "Update product failed: " + e.getMessage());
             e.printStackTrace();
         }
         return "redirect:/products";
