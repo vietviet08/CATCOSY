@@ -26,8 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
         "Payment methods"
     ];
     
-    // Store conversation history
-    let conversationHistory = [];
+    // Use the history manager instead of local history array
+    const historyManager = window.chatbotHistory || {
+        getHistory: () => [], 
+        addMessage: () => {},
+        clearHistory: () => {}
+    };
     
     // Function to toggle chatbot visibility
     function toggleChatbot() {
@@ -37,8 +41,36 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // If opening for the first time, show welcome message
         if (chatbotBox.classList.contains('active') && chatbotMessages.children.length === 0) {
-            showBotMessage("👋 Welcome to CATCOSY! How can I assist you today?");
+            // Load past messages from history
+            const history = historyManager.getHistory();
+            
+            if (history.length > 0) {
+                // Restore previous conversation
+                history.forEach(msg => {
+                    if (msg.role === 'user') {
+                        const messageElement = document.createElement('div');
+                        messageElement.classList.add('message', 'user-message');
+                        messageElement.textContent = msg.content;
+                        chatbotMessages.appendChild(messageElement);
+                    } else if (msg.role === 'assistant') {
+                        const messageElement = document.createElement('div');
+                        messageElement.classList.add('message', 'bot-message');
+                        messageElement.textContent = msg.content;
+                        chatbotMessages.appendChild(messageElement);
+                    }
+                });
+                
+                // Add a continuation message
+                showBotMessage("Welcome back! How can I help you today?");
+            } else {
+                // Show new welcome message
+                showBotMessage("👋 Welcome to CATCOSY! How can I assist you today?");
+            }
+            
             showSuggestions(initialSuggestions);
+            
+            // Scroll to bottom of conversation
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
         }
     }
     
@@ -94,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chatbotMessages.appendChild(messageElement);
             
             // Save to conversation history
-            conversationHistory.push({ role: 'assistant', content: text });
+            historyManager.addMessage('assistant', text);
             
             // Scroll to bottom
             chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
@@ -112,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chatbotMessages.appendChild(messageElement);
         
         // Save to conversation history
-        conversationHistory.push({ role: 'user', content: text });
+        historyManager.addMessage('user', text);
         
         // Scroll to bottom
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
@@ -171,10 +203,15 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({
                 message: text,
-                history: conversationHistory
+                history: historyManager.getHistory()  // Get conversation history from the manager
             }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             // Display bot response
             showBotMessage(data.response);
@@ -220,6 +257,53 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return suggestions;
     }
+    
+    // Add a clear history button
+    const addClearHistoryButton = () => {
+        // Check if button already exists
+        if (document.getElementById('chatbot-clear-history')) {
+            return;
+        }
+        
+        // Create the button
+        const clearButton = document.createElement('button');
+        clearButton.id = 'chatbot-clear-history';
+        clearButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+        clearButton.title = 'Clear conversation history';
+        clearButton.className = 'chatbot-clear-button';
+        
+        // Style the button
+        clearButton.style.position = 'absolute';
+        clearButton.style.top = '12px';
+        clearButton.style.right = '40px';
+        clearButton.style.background = 'none';
+        clearButton.style.border = 'none';
+        clearButton.style.color = '#fff';
+        clearButton.style.cursor = 'pointer';
+        clearButton.style.fontSize = '14px';
+        
+        // Add click event
+        clearButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Clear the chat display
+            chatbotMessages.innerHTML = '';
+            
+            // Clear the history
+            historyManager.clearHistory();
+            
+            // Show welcome message
+            showBotMessage("I've cleared our conversation. How can I help you today?");
+            showSuggestions(initialSuggestions);
+        });
+        
+        // Add to the header
+        const header = document.querySelector('.chatbot-header');
+        if (header) {
+            header.appendChild(clearButton);
+        }
+    };
     
     // Event listeners
     if (chatbotButton) {
@@ -276,6 +360,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Add the clear history button
+    addClearHistoryButton();
+    
     // Add direct global access for debugging
     window.toggleChatbot = toggleChatbot;
     window.debugChatbot = {
@@ -284,7 +371,12 @@ document.addEventListener('DOMContentLoaded', function() {
         isVisible: function() {
             return chatbotBox ? chatbotBox.classList.contains('active') : false;
         },
-        toggle: toggleChatbot
+        toggle: toggleChatbot,
+        clearHistory: function() {
+            historyManager.clearHistory();
+            chatbotMessages.innerHTML = '';
+            showBotMessage("History cleared.");
+        }
     };
     
     console.log("Chatbot initialization complete");
