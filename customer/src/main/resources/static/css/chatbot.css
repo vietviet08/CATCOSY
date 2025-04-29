@@ -2,15 +2,15 @@
 
 .chatbot-container {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 65px;
+    right: 25px;
     z-index: 9999; /* Increased z-index to ensure visibility */
     font-family: "Poppins", sans-serif;
 }
 
 .chatbot-button {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background-color: #e91e63;
     color: white;

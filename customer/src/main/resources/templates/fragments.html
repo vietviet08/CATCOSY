@@ -468,7 +468,10 @@
     <!-- Include chatbot CSS directly in the fragment -->
     <link rel="stylesheet" th:href="@{/css/chatbot.css}">
     
-    <!-- Include chatbot JavaScript directly in the fragment -->
+    <!-- Include chatbot history manager first -->
+    <script th:src="@{/js/chatbot-history.js}"></script>
+    
+    <!-- Include main chatbot JavaScript -->
     <script th:src="@{/js/chatbot.js}"></script>
     
     <!-- Inline script as a fallback to ensure the button works -->
