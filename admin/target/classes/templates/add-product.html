@@ -151,7 +151,7 @@
 <script>
     $(document).ready(function() {
         $('.input-images').imageUploader({
-            imagesInputName: 'photos[]', // Changed from 'photos' to 'photos[]' to match the controller's parameter name
+            imagesInputName: 'photos',
             preloadedInputName: 'old',
             maxSize: 4 * 1024 * 1024,
             maxFiles: 5,
@@ -167,7 +167,7 @@
             console.log('Number of uploaded images:', uploadedImages);
             
             // Debug input fields
-            const photosInput = $('input[name="photos[]"]');
+            const photosInput = $('input[name="photos"]');
             console.log('Photos input exists:', photosInput.length > 0);
             if (photosInput.length > 0) {
                 console.log('Photos input files:', photosInput[0].files ? photosInput[0].files.length : 0);

@@ -63,6 +63,5 @@ public interface ProductService {
 
     List<ProductDto> productRandomSameCategoryLimit(Long idCategory, Long idProduct, int limit);
 
-
-
+    Product updateWithMixedImages(ProductDto productDto, List<MultipartFile> newImages, List<String> oldImagesBase64, List<Integer> deletedImageIds, List<Long> sizes) throws IOException;
 }

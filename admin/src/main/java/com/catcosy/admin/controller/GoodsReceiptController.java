@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class GoodsReceiptController {
 
-
     @GetMapping("/goods-receipt")
-    public String  goodsReceiptPage(){
-
-
+    public String goodsReceiptPage() {
 
         return "goods-receipt";
     }
