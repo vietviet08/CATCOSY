@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+<body>
+
+
+<div th:replace="~{fragments ::  spinner}"></div>
+
+
+<div th:replace="~{fragments ::  sidebar}"></div>
+
+<div class="content">
+    <!-- Navbar Start -->
+    <div th:replace="~{fragments :: navbar}"></div>
+    <!-- Navbar End-->
+
+    <div class="container">
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary my-2 mx-1" data-bs-toggle="modal" data-bs-target="#modalAdd"
+                    data-bs-whatever="@mdo">Add brand
+            </button>
+
+            <div class="my-2 mx-1">
+
+                <a th:href="@{/export-brands}" style="color: white">
+                    <div class="btn btn-primary">Export data
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div th:if="${size == 0}" class="alert alert-danger text-center w-25 my-2" role="alert">
+                Don't have brands in repository
+            </div>
+        </div>
+    </div>
+
+
+    <table th:if="${size > 0}" class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Update</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="brand, obj : ${brands}">
+            <td th:text="${obj.index}"></td>
+            <td th:text="${brand.id}"></td>
+            <td th:text="${brand.name}"></td>
+            <td>
+                <a id="btnUpdate" th:href="@{/findByIdBrand(id = ${brand.id})}" class="btn btn-success"
+                   style="width: 100px">
+                    Update
+                </a>
+            </td>
+            <td>
+                <a th:if="${brand.isActivated()}" th:href="@{/delete-brand(id = ${brand.id})}"
+                   class="btn btn-danger" style="width: 100px">Delete</a>
+                <a th:if="${brand.isDeleted()}" th:href="@{/activate-brand(id = ${brand.id})}"
+                   class="btn btn-primary" style="width: 100px">Activate</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <!-- Modal Add-->
+    <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/add-brand}" method="post" th:object="${newBrand}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add brand</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Name brand</label>
+                            <input th:field="*{name}" type="text" class="form-control" id="recipient-name" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Update -->
+    <div class="modal fade" id="updateCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/update-brand}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateCategoryLabel">Update brand</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Id brand</label>
+                            <input name="id" type="text" class="form-control" id="updateId" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Name brand</label>
+                            <input name="name" type="text" class="form-control" id="updateName" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Toast Start-->
+<div th:replace="~{fragments :: toast}"></div>
+<!--Toast End-->
+
+<!--<div th:replace="~{fragments ::  footer}"></div>-->
+
+
+<div th:replace="~{fragments :: script}">
+</div>
+
+
+<script>
+    $('document').ready(function () {
+
+            $('table #btnUpdate').on('click', function (e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $.get(href, function (brand, status) {
+                    $('#updateId').val(brand.id);
+                    $('#updateName').val(brand.name);
+                });
+
+                var updateCategoryModal = new bootstrap.Modal(document.getElementById('updateCategory'));
+                updateCategoryModal.show();
+            });
+
+        }
+    )
+
+
+</script>
+
+<script th:replace="~{fragments :: toastScript}"></script>
+
+</body>
+</html>
