@@ -36,8 +36,8 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-   @Autowired
-   private BrandService brandService;
+    @Autowired
+    private BrandService brandService;
 
     @Autowired
     private SizeService sizeService;
@@ -45,11 +45,10 @@ public class ProductController {
     @Autowired
     private ProductImageService productImageService;
 
-
     @GetMapping("/products")
     public String productPage(@RequestParam(required = false, defaultValue = "0") Integer page,
-                              @RequestParam(required = false) String search,
-                              Model model) {
+            @RequestParam(required = false) String search,
+            Model model) {
         Page<ProductDto> products = null;
 
         int pageSize = 11;
@@ -93,9 +92,7 @@ public class ProductController {
         String headerValue = "attachment; filename=products_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-
         ExcelExporter excelExporter = new ExcelExporter(productService.getAllProduct());
-
 
         List<String> fieldsToExport = List.of("id",
                 "name",
@@ -114,16 +111,16 @@ public class ProductController {
         model.addAttribute("categories", categoryService.findAllCategory());
         model.addAttribute("brands", brandService.findAllBrand());
         model.addAttribute("newProduct", new ProductDto());
-//        SetNameAndRoleToPage.setNameAndRoleToPage(model, "add-product", adminService);
+        // SetNameAndRoleToPage.setNameAndRoleToPage(model, "add-product",
+        // adminService);
         return "add-product";
     }
 
-
     @PostMapping("/save-product")
     public String addProduct(@ModelAttribute("newProduct") ProductDto productDto,
-                             @RequestParam(value = "photos[]", required = false) List<MultipartFile> listFiles,
-                             @RequestParam(value = "sizesChoose", required = false, defaultValue = "") String[] sizesSelected,
-                             RedirectAttributes attributes) {
+            @RequestParam(value = "photos[]", required = false) List<MultipartFile> listFiles,
+            @RequestParam(value = "sizesChoose", required = false, defaultValue = "") String[] sizesSelected,
+            RedirectAttributes attributes) {
         List<Long> selectedSizeIds = new ArrayList<>();
 
         if (sizesSelected != null && sizesSelected.length > 0 && !sizesSelected[0].isEmpty()) {
@@ -138,10 +135,11 @@ public class ProductController {
             if (listFiles != null) {
                 for (int i = 0; i < listFiles.size(); i++) {
                     MultipartFile file = listFiles.get(i);
-                    System.out.println("Image " + i + " is empty: " + (file.isEmpty() ? "Yes" : "No") + ", size: " + file.getSize());
+                    System.out.println("Image " + i + " is empty: " + (file.isEmpty() ? "Yes" : "No") + ", size: "
+                            + file.getSize());
                 }
             }
-            
+
             productService.save(listFiles, selectedSizeIds, productDto);
             attributes.addFlashAttribute("success", "Add product successfully!");
         } catch (DataIntegrityViolationException e) {
@@ -154,7 +152,7 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @RequestMapping(value = "/findByIdProduct", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/findByIdProduct", method = { RequestMethod.GET, RequestMethod.PUT })
     @ResponseBody
     public ProductDto getById(Long id) {
         return productService.getById(id);
@@ -181,9 +179,11 @@ public class ProductController {
 
     @PostMapping("/update-product/{id}")
     public String updateProduct(@ModelAttribute("productDto") ProductDto productDto,
-                                @RequestParam(value = "photos[]", required = false) List<MultipartFile> images,
-                                @RequestParam(value = "sizesChoose", required = false, defaultValue = "") String[] sizesSelected,
-                                RedirectAttributes attributes) {
+            @RequestParam(value = "newPhotos[]", required = false) List<MultipartFile> newImages,
+            @RequestParam(value = "oldPhotos[]", required = false) List<String> oldImagesBase64,
+            @RequestParam(value = "deletedImageIds[]", required = false) List<Integer> deletedImageIds,
+            @RequestParam(value = "sizesChoose", required = false, defaultValue = "") String[] sizesSelected,
+            RedirectAttributes attributes) {
         try {
             List<Long> selectedSizeIds = new ArrayList<>();
 
@@ -193,16 +193,38 @@ public class ProductController {
                 }
             }
 
-            // Debug statement
-            System.out.println("Update - Number of images received: " + (images != null ? images.size() : 0));
-            if (images != null) {
-                for (int i = 0; i < images.size(); i++) {
-                    MultipartFile file = images.get(i);
-                    System.out.println("Update - Image " + i + " is empty: " + (file.isEmpty() ? "Yes" : "No") + ", size: " + file.getSize());
+            // Debug statements
+            System.out.println("Update - Product ID: " + productDto.getId());
+            System.out.println("Update - Number of new images: " + (newImages != null ? newImages.size() : 0));
+            System.out.println("Update - Number of old images retained: " + (oldImagesBase64 != null ? oldImagesBase64.size() : 0));
+            System.out.println("Update - Number of deleted image IDs: " + (deletedImageIds != null ? deletedImageIds.size() : 0));
+            
+            // Kiểm tra chi tiết các ảnh cũ để debug
+            if (oldImagesBase64 != null && !oldImagesBase64.isEmpty()) {
+                for (int i = 0; i < oldImagesBase64.size(); i++) {
+                    String base64 = oldImagesBase64.get(i);
+                    System.out.println("Old image " + i + " data length: " + (base64 != null ? base64.length() : 0));
                 }
             }
+            
+            // Kiểm tra các hình ảnh mới
+            if (newImages != null) {
+                int validImageCount = 0;
+                for (int i = 0; i < newImages.size(); i++) {
+                    MultipartFile file = newImages.get(i);
+                    boolean isEmpty = file.isEmpty();
+                    System.out.println("Update - New image " + i + " is empty: " + (isEmpty ? "Yes" : "No")
+                            + ", size: " + file.getSize());
+                    
+                    if (!isEmpty) {
+                        validImageCount++;
+                    }
+                }
+                System.out.println("Update - Total valid new images: " + validImageCount);
+            }
 
-            productService.update(images, selectedSizeIds, productDto);
+            // Gọi service để cập nhật sản phẩm với khả năng giữ ảnh cũ và thêm ảnh mới
+            productService.updateWithMixedImages(productDto, newImages, oldImagesBase64, deletedImageIds, selectedSizeIds);
             attributes.addFlashAttribute("success", "Update product successfully!");
 
         } catch (Exception e) {
@@ -212,19 +234,17 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @RequestMapping(value = "/delete-product", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/delete-product", method = { RequestMethod.GET, RequestMethod.PUT })
     public String deleteProduct(ProductDto product) {
         productService.deleteById(product.getId());
         return "redirect:/products";
     }
 
-
-    @RequestMapping(value = "/activate-product", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/activate-product", method = { RequestMethod.GET, RequestMethod.PUT })
     public String activateProduct(ProductDto product) {
         productService.activateById(product.getId());
         return "redirect:/products";
     }
-
 
     @GetMapping("/products/{pageNo}")
     public String pageProduct(@PathVariable("pageNo") int pageNo, Model model) {
@@ -250,7 +270,8 @@ public class ProductController {
     }
 
     @GetMapping("/search-products/{pageNo}")
-    public String pageProductSearch(@PathVariable("pageNo") int pageNo, @RequestParam("keyword") String key, Model model) {
+    public String pageProductSearch(@PathVariable("pageNo") int pageNo, @RequestParam("keyword") String key,
+            Model model) {
 
         Page<ProductDto> products = productService.pageProductSearch(key, pageNo, 10);
         List<ProductImage> productImages = productImageService.findByIdProductUnique();
@@ -272,16 +293,15 @@ public class ProductController {
         return "products";
     }
 
-
     @GetMapping("/sort-prices")
     public String sortPrice(@RequestParam("nameOption") int nameOption, Model model) {
-//        switch (nameOption) {
-//            case 1: {
-//                model.addAttribute("productSortedDesc", productService.sortDesc());
-//            }
-//            case 2:
-//                model.addAttribute("productSortedAsc", productService.sortAsc());
-//        }
+        // switch (nameOption) {
+        // case 1: {
+        // model.addAttribute("productSortedDesc", productService.sortDesc());
+        // }
+        // case 2:
+        // model.addAttribute("productSortedAsc", productService.sortAsc());
+        // }
         return "products";
     }
 
@@ -289,6 +309,5 @@ public class ProductController {
     public List<ProductDto> sortCategory(@RequestParam("nameOption") String nameOption) {
         return productService.byCategory(nameOption);
     }
-
 
 }

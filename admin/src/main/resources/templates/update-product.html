@@ -153,33 +153,89 @@
 
 <div th:replace="~{fragments :: richtext}"></div>
 <script th:src="@{/js/image-uploader.min.js}"></script>
-<script>
+<script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function () {
-        const preloaded = /*[[${images}]]*/ [];
+        // Lấy dữ liệu hình ảnh hiện có từ Thymeleaf
+        const preloaded = [[${images}]];
+        
+        // Đảm bảo preloaded là một mảng
+        const imageArray = Array.isArray(preloaded) ? preloaded : [];
+        console.log("Raw preloaded data:", preloaded);
 
-        const preloadedImages = preloaded.map((img, index) => ({
+        // Chuyển đổi dữ liệu hình ảnh vào định dạng mà imageUploader có thể hiểu
+        const preloadedImages = imageArray.map((img, index) => ({
             id: index + 1,
             src: 'data:image/jpeg;base64,' + img
         }));
         console.log("Preloaded images:", preloadedImages);
 
+        // Lưu trữ các ID của ảnh đã bị xóa để gửi đến server
+        let deletedImageIds = [];
+
+        // Khởi tạo imageUploader với cấu hình được cải thiện
         $('.input-images').imageUploader({
             preloaded: preloadedImages,
-            imagesInputName: 'photos[]', // Make sure this matches the controller parameter name
-            preloadedInputName: 'old',
+            imagesInputName: 'newPhotos',  // Đảm bảo tên tham số đúng với controller
+            preloadedInputName: 'oldPhotos', // Tham số cho ảnh cũ
             maxSize: 2 * 1024 * 1024,
             maxFiles: 5,
-            label: 'Drag & Drop files here or click to browse (Maximum 5 images)',
+            label: 'Kéo & Thả hoặc nhấp để tải ảnh (Tối đa 5 ảnh)',
             extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp'],
             mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp']
         });
         
-        // Form validation
+        // Theo dõi khi người dùng xóa ảnh
+        $(document).on('click', '.image-uploader .delete-image', function() {
+            const preloadedIndex = $(this).parent().data('preloaded');
+            
+            // Nếu đây là ảnh đã tải lên trước đó, thêm ID vào danh sách xóa
+            if (preloadedIndex !== undefined) {
+                console.log("User deleted preloaded image with id:", preloadedIndex);
+                deletedImageIds.push(preloadedIndex);
+                
+                // Thêm input ẩn để gửi ID của ảnh đã xóa
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'deletedImageIds',
+                    value: preloadedIndex
+                }).appendTo('form');
+            }
+        });
+        
+        // Debug form submission và kiểm tra dữ liệu trước khi gửi
         $('form').on('submit', function(e) {
+            // Kiểm tra size đã được chọn chưa
             const checkedSizes = $('input[name="sizesChoose"]:checked').length;
+            console.log('Number of selected sizes:', checkedSizes);
+            
+            // Debug ảnh được tải lên và ảnh cũ
+            const uploadedImages = $('.uploaded-image').length;
+            const preloadedImagesLeft = $('.preloaded-image').length;
+            console.log('Number of displayed new images:', uploadedImages);
+            console.log('Number of preloaded images left:', preloadedImagesLeft);
+            console.log('Deleted image IDs:', deletedImageIds);
+            
+            // Debug input fields
+            const newPhotosInput = $('input[name="newPhotos"]');
+            console.log('New photos input exists:', newPhotosInput.length > 0);
+            if (newPhotosInput.length > 0) {
+                console.log('New photos count:', newPhotosInput[0].files ? newPhotosInput[0].files.length : 0);
+            }
+            
+            const oldPhotosInput = $('input[name="oldPhotos"]');
+            console.log('Old photos inputs count:', oldPhotosInput.length);
+            // Log ra chi tiết về các ảnh cũ để debug
+            if (oldPhotosInput.length > 0) {
+                oldPhotosInput.each(function(index) {
+                    console.log(`Old photo ${index} value length:`, $(this).val().length);
+                });
+            }
+            
+            // Kiểm tra form hợp lệ trước khi submit
             if (checkedSizes === 0) {
-                console.log('No sizes selected');
-                // Continue with submission
+                e.preventDefault();
+                alert('Vui lòng chọn ít nhất một kích thước cho sản phẩm!');
+                return false;
             }
         });
     });

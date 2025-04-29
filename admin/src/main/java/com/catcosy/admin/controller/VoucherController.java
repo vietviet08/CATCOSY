@@ -40,9 +40,7 @@ public class VoucherController {
         String headerValue = "attachment; filename=vouchers_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-
         ExcelExporter excelExporter = new ExcelExporter(voucherService.getAllVoucher());
-
 
         List<String> fieldsToExport = List.of(
                 "id",
@@ -72,7 +70,7 @@ public class VoucherController {
         return "voucher";
     }
 
-    @RequestMapping(value = "/findByIdVoucher", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/findByIdVoucher", method = { RequestMethod.GET, RequestMethod.PUT })
     @ResponseBody
     public VoucherDto getVoucher(Long id) {
         VoucherDto voucher = voucherService.getVoucherDtoById(id);
@@ -81,7 +79,8 @@ public class VoucherController {
     }
 
     @PostMapping("/add-voucher")
-    public String saveVoucher(@ModelAttribute("newVoucher") Voucher newVoucher, @RequestParam("expiryDate") String expiryDate, RedirectAttributes attributes) {
+    public String saveVoucher(@ModelAttribute("newVoucher") Voucher newVoucher,
+            @RequestParam("expiryDate") String expiryDate, RedirectAttributes attributes) {
 
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -110,7 +109,8 @@ public class VoucherController {
                 String mess = mailService.sendMailVoucherToCustomer(voucher.getForEmailCustomer(), voucher);
                 System.out.println(mess);
                 voucherService.updateVoucher(voucher);
-            } else voucherService.updateVoucher(voucher);
+            } else
+                voucherService.updateVoucher(voucher);
             attributes.addFlashAttribute("success", "Update voucher successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,7 +130,6 @@ public class VoucherController {
             attributes.addFlashAttribute("error", "Delete voucher failure! Maybe error from server!");
         }
 
-
         return "redirect:/vouchers";
     }
 
@@ -147,16 +146,16 @@ public class VoucherController {
         return "redirect:/vouchers";
     }
 
-
     @PostMapping("/send-mail-voucher")
-    public String sendMailVoucher(Model model, @RequestParam("id") Long id, @RequestParam("sendDetailEmailCustomer") String email, RedirectAttributes attributes) {
+    public String sendMailVoucher(Model model, @RequestParam("id") Long id,
+            @RequestParam("sendDetailEmailCustomer") String email, RedirectAttributes attributes) {
         try {
             String mess = mailService.sendMailVoucherToCustomer(email, voucherService.getVoucherById(id).get());
             model.addAttribute("message", mess);
             model.addAttribute("success", "Send mail successfully!");
 
             attributes.addFlashAttribute("success", mess);
-//          attributes.addFlashAttribute("success", "Send mail successfully!");
+            // attributes.addFlashAttribute("success", "Send mail successfully!");
         } catch (Exception e) {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Send mail failure! Maybe error from server!");

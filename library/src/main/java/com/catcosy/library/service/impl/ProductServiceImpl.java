@@ -178,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product update(List<MultipartFile> images, List<Long> newSizesId, ProductDto productDto) throws IOException {
+    public Product update(List<MultipartFile> newImages, List<Long> newSizesId, ProductDto productDto) throws IOException {
         Product product = productRepository.getReferenceById(productDto.getId());
 
         // Update basic product information
@@ -189,36 +189,52 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(productDto.getCategory());
         product.setBrand(productDto.getBrand());
 
-        // Process images if they exist
-        if (images != null) {
-            // Check if there are any valid images
-            boolean hasValidImages = false;
-            for (MultipartFile image : images) {
+        System.out.println("Updating product with ID: " + productDto.getId());
+        
+        // Lưu ảnh hiện có của sản phẩm
+        List<ProductImage> existingImages = new ArrayList<>(product.getImages());
+        
+        // Xử lý trường hợp có ảnh mới được tải lên
+        boolean hasNewImages = newImages != null && !newImages.isEmpty();
+        boolean hasValidNewImages = false;
+        
+        // Kiểm tra xem có ảnh mới hợp lệ không
+        if (hasNewImages) {
+            for (MultipartFile image : newImages) {
                 if (image != null && !image.isEmpty()) {
-                    hasValidImages = true;
+                    hasValidNewImages = true;
                     break;
                 }
             }
+        }
+        
+        // Nếu có ảnh mới hợp lệ, thì xóa ảnh cũ và thêm ảnh mới
+        if (hasValidNewImages) {
+            System.out.println("Found new images, updating product images");
             
-            // Only update images if we have valid ones
-            if (hasValidImages) {
-                // Delete old images
-                productImageRepository.deleteAllByProductId(product.getId());
-                
-                // Add new images
-                List<ProductImage> newImages = new ArrayList<>();
-                for (MultipartFile image : images) {
-                    if (image != null && !image.isEmpty()) {
-                        ProductImage productImage = new ProductImage();
-                        String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
-                        productImage.setProduct(product);
-                        productImage.setImage(fileImg);
-                        productImageRepository.save(productImage);
-                        newImages.add(productImage);
-                    }
+            // Xóa tất cả ảnh cũ của sản phẩm
+            productImageRepository.deleteAllByProductId(product.getId());
+            
+            // Thêm ảnh mới
+            List<ProductImage> updatedImages = new ArrayList<>();
+            for (MultipartFile image : newImages) {
+                if (image != null && !image.isEmpty()) {
+                    ProductImage productImage = new ProductImage();
+                    String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
+                    productImage.setProduct(product);
+                    productImage.setImage(fileImg);
+                    productImageRepository.save(productImage);
+                    updatedImages.add(productImage);
+                    System.out.println("Added new image to product");
                 }
-                product.setImages(newImages);
             }
+            
+            // Cập nhật danh sách ảnh cho sản phẩm
+            product.setImages(updatedImages);
+            System.out.println("Updated product with " + updatedImages.size() + " new images");
+        } else {
+            // Nếu không có ảnh mới, giữ nguyên ảnh cũ
+            System.out.println("No new valid images, keeping existing images: " + existingImages.size());
         }
 
         // Update product sizes
@@ -226,6 +242,93 @@ public class ProductServiceImpl implements ProductService {
 
         // Save and return updated product
         return productRepository.save(product);
+    }
+
+    @Override
+    @Transactional
+    public Product updateWithMixedImages(ProductDto productDto, List<MultipartFile> newImages, List<String> oldImagesBase64, 
+                                        List<Integer> deletedImageIds, List<Long> newSizesId) throws IOException {
+        Product product = productRepository.getReferenceById(productDto.getId());
+
+        // Cập nhật thông tin cơ bản của sản phẩm
+        product.setName(productDto.getName());
+        product.setDescription(productDto.getDescription());
+        product.setCostPrice(productDto.getCostPrice());
+        product.setSalePrice(productDto.getSalePrice());
+        product.setCategory(productDto.getCategory());
+        product.setBrand(productDto.getBrand());
+
+        System.out.println("Updating product with ID: " + productDto.getId() + " using mixed images strategy");
+        
+        try {
+            // Xóa tất cả ảnh cũ để thêm lại ảnh đã chọn 
+            productImageRepository.deleteAllByProductId(product.getId());
+            System.out.println("Deleted all old images for product ID: " + product.getId());
+            
+            // Danh sách ảnh mới sẽ được lưu
+            List<ProductImage> updatedImages = new ArrayList<>();
+            
+            // 1. Xử lý ảnh cũ được giữ lại (nếu có)
+            if (oldImagesBase64 != null && !oldImagesBase64.isEmpty()) {
+                System.out.println("Processing " + oldImagesBase64.size() + " retained old images");
+                
+                // Duyệt qua và lưu từng ảnh cũ vào database
+                for (int i = 0; i < oldImagesBase64.size(); i++) {
+                    String base64Image = oldImagesBase64.get(i);
+                    if (base64Image != null && !base64Image.isEmpty()) {
+                        ProductImage productImage = new ProductImage();
+                        productImage.setProduct(product);
+                        productImage.setImage(base64Image);
+                        ProductImage savedImage = productImageRepository.save(productImage);
+                        updatedImages.add(savedImage);
+                        System.out.println("Retained old image " + i + ", new DB ID: " + savedImage.getId());
+                    }
+                }
+            }
+            
+            // 2. Xử lý ảnh mới được tải lên (nếu có)
+            if (newImages != null && !newImages.isEmpty()) {
+                System.out.println("Processing " + newImages.size() + " new images");
+                
+                // Duyệt qua và lưu từng ảnh mới vào database
+                for (int i = 0; i < newImages.size(); i++) {
+                    MultipartFile image = newImages.get(i);
+                    if (image != null && !image.isEmpty()) {
+                        ProductImage productImage = new ProductImage();
+                        String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
+                        productImage.setProduct(product);
+                        productImage.setImage(fileImg);
+                        ProductImage savedImage = productImageRepository.save(productImage);
+                        updatedImages.add(savedImage);
+                        System.out.println("Added new uploaded image " + i + ", new DB ID: " + savedImage.getId());
+                    }
+                }
+            }
+            
+            // Log chi tiết về ảnh sau khi cập nhật
+            if (updatedImages.isEmpty()) {
+                System.out.println("Warning: No images for product after update");
+            } else {
+                System.out.println("Total images after update: " + updatedImages.size());
+                for (int i = 0; i < updatedImages.size(); i++) {
+                    ProductImage img = updatedImages.get(i);
+                    System.out.println("Image " + i + " - ID: " + img.getId());
+                }
+            }
+            
+            // Cập nhật danh sách ảnh cho sản phẩm
+            product.setImages(updatedImages);
+            
+            // Cập nhật kích thước sản phẩm
+            updateProductSize(product, newSizesId);
+            
+            // Lưu và trả về sản phẩm đã cập nhật
+            return productRepository.save(product);
+        } catch (Exception e) {
+            System.err.println("Error in updateWithMixedImages: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override
