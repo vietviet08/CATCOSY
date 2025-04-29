@@ -165,7 +165,7 @@
 
         $('.input-images').imageUploader({
             preloaded: preloadedImages,
-            imagesInputName: 'photos',
+            imagesInputName: 'photos[]', // Make sure this matches the controller parameter name
             preloadedInputName: 'old',
             maxSize: 2 * 1024 * 1024,
             maxFiles: 5,
@@ -173,7 +173,16 @@
             extensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp'],
             mimes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp']
         });
-    })
+        
+        // Form validation
+        $('form').on('submit', function(e) {
+            const checkedSizes = $('input[name="sizesChoose"]:checked').length;
+            if (checkedSizes === 0) {
+                console.log('No sizes selected');
+                // Continue with submission
+            }
+        });
+    });
 </script>
 </body>
 </html>

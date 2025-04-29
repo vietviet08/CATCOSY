@@ -52,31 +52,23 @@ public class AdminConfiguration {
 
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
-        http.csrf(AbstractHttpConfigurer::disable)
+        // Enable CSRF protection for form submissions
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/do-login"))
                 .authorizeHttpRequests(author ->
                         author .requestMatchers("/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/forgot-password", "register", "register-new", "do-login", "login" , "logout" ,"/", "/index" ).permitAll()
+                                .requestMatchers("/forgot-password", "/register", "/register-new", "/do-login", "/login" , "/logout" ,"/", "/index" ).permitAll()
                                 .requestMatchers("/categories/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/brands/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/products/**").hasAnyAuthority("ADMIN","SELLER")
+                                .requestMatchers("/save-product").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/orders/**").hasAnyAuthority("ADMIN","KEEPER")
                                 .requestMatchers("/vouchers/**").hasAnyAuthority("ADMIN","SELLER")
                                 .requestMatchers("/customers/**").hasAnyAuthority("ADMIN","KEEPER")
                                 .requestMatchers("/employees/**", "/product/**").hasAuthority("ADMIN")
-//                                .requestMatchers("/").hasAuthority("ADMIN")
-//                                .requestMatchers(HttpMethod.POST,"/orders/save-change-status").hasAuthority("ADMIN")
-//                                .requestMatchers(HttpMethod.POST,"/admin/do-login").hasAnyAuthority("ADMIN", "SELLER")
-
                                 .anyRequest().authenticated()
                 )
 
-//                .formLogin(login ->
-//                        login.loginPage("/login")
-//                                .loginProcessingUrl("/do-login")
-//                                .defaultSuccessUrl("/index", true)
-//                                .permitAll()
-//                )
                 .logout(logout ->
                         logout.invalidateHttpSession(true)
                                 .clearAuthentication(true)
@@ -87,7 +79,8 @@ public class AdminConfiguration {
                 )
 
                 .authenticationManager(authenticationManager)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Change to ALWAYS to support form submissions
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(ex ->
@@ -95,19 +88,6 @@ public class AdminConfiguration {
                 );
         return http.build();
     }
-
-//    @Bean
-//    public CorsFilter corsFilter() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowedOrigins(Arrays.asList("https://www.getpostman.com"));
-//        config.setAllowCredentials(true);
-//        config.addAllowedOrigin("*");
-//        config.addAllowedHeader("*");
-//        config.addAllowedMethod("*");
-//        source.registerCorsConfiguration("/**", config);
-//        return new CorsFilter(source);
-//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {

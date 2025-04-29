@@ -16,7 +16,7 @@ public interface StatisticsRepository extends JpaRepository<Statistics, Long> {
     int totalOrdersDelivered();
 
     @Query(value = "select sum(total_price) from orders where status = 'Goods received'", nativeQuery = true)
-    double totalPrice();
+    Double totalPrice();
 
     @Query(value = "select  count(*) from products", nativeQuery = true)
     int totalProduct();
