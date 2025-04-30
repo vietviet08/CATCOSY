@@ -1,0 +1,5 @@
+# OpenAI API Configuration - Replace these with your actual values before running
+openai.api.key=your-api-key-goes-here
+openai.model=gpt-3.5-turbo
+openai.max-tokens=300
+openai.timeout=30
