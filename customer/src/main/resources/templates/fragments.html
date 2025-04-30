@@ -79,7 +79,7 @@
 <!--Header start-->
 <header th:fragment="header" class="header d-flex flex-column">
     <div class="nav">
-        <div class="nav-line container d-flex justify-content-around  align-items-center    ">
+        <div class="nav-line container d-flex justify-content-around  align-items-center    ">.
 
 
             <div class="logo d-flex align-items-center w-25 " style="width: 100px">
@@ -364,10 +364,8 @@
     </span>
 </a>
 
-
-
 <!--for="filter-by-price-2"-->
-<!--name="filter-by-price-1" id="filter-by-price-2"-->
+<!--name="filter-by-price-1" id="filter-by-price-2"-->.
 
 
 <!--Script-->
@@ -436,84 +434,87 @@
 
 <!-- Chatbot Fragment -->
 <div th:fragment="chatbot" class="chatbot-container">
+    <!-- Chatbot Button -->
     <div class="chatbot-button" id="chatbotButton">
         <i class="fa-solid fa-comments"></i>
     </div>
+    
+    <!-- Chatbot Box -->
     <div class="chatbot-box" id="chatbotBox">
         <div class="chatbot-header">
             <h3>CATCOSY Assistant</h3>
+            <button class="chatbot-clear-button" id="clearChat">
+                <i class="fa-solid fa-trash-alt"></i>
+            </button>
             <div class="close-btn" id="chatbotClose">
                 <i class="fa-solid fa-xmark"></i>
             </div>
         </div>
-        <div class="chatbot-messages" id="chatbotMessages">
-            <!-- Messages will be added here dynamically -->
+        
+        <div class="chatbot-messages" id="chatMessages">
+            <!-- Initial welcome message -->
+            <div class="message bot-message">
+                Xin chào! Tôi là trợ lý ảo của CATCOSY. Tôi có thể giúp gì cho bạn về các sản phẩm thời trang, xu hướng, hoặc giải đáp thắc mắc của bạn?
+                <div class="message-time"></div>
+            </div>
         </div>
-        <div class="chatbot-typing" id="chatbotTyping">
+        
+        <!-- Typing indicator -->
+        <div class="chatbot-typing" id="typingIndicator">
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
         </div>
+        
+        <!-- Suggestion chips for quick responses -->
         <div class="suggestions" id="suggestionChips">
-            <!-- Suggestion chips will be added here dynamically -->
+            <div class="suggestion-chip">Sản phẩm mới nhất</div>
+            <div class="suggestion-chip">Chính sách đổi trả</div>
+            <div class="suggestion-chip">Xu hướng thời trang</div>
         </div>
+        
+        <!-- Input area -->
         <div class="chatbot-input">
-            <input type="text" id="chatbotInput" placeholder="Ask me anything...">
-            <button id="chatbotSend">
+            <input type="text" id="messageInput" placeholder="Nhập tin nhắn của bạn...">
+            <button id="sendButton">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
         </div>
     </div>
     
-    <!-- Include chatbot CSS directly in the fragment -->
+    <!-- Link to chatbot CSS -->
     <link rel="stylesheet" th:href="@{/css/chatbot.css}">
     
-    <!-- Include chatbot history manager first -->
-    <script th:src="@{/js/chatbot-history.js}"></script>
-    
-    <!-- Include main chatbot JavaScript -->
+    <!-- Link to chatbot JavaScript -->
     <script th:src="@{/js/chatbot.js}"></script>
     
-    <!-- Inline script as a fallback to ensure the button works -->
+    <!-- Small inline script for button toggle -->
     <script>
-        // Direct initialization to ensure chatbot button works
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("Inline chatbot script loaded");
             const chatbotButton = document.getElementById('chatbotButton');
             const chatbotBox = document.getElementById('chatbotBox');
+            const chatbotClose = document.getElementById('chatbotClose');
             
-            if (chatbotButton && chatbotBox) {
-                console.log("Found chatbot elements in DOM");
-                
-                // Direct click handler without external dependencies
-                chatbotButton.onclick = function(e) {
-                    console.log("Direct chatbot button click");
-                    
-                    // Toggle visibility
-                    if (chatbotBox.classList.contains('active')) {
-                        chatbotBox.classList.remove('active');
-                    } else {
-                        chatbotBox.classList.add('active');
-                    }
-                    
-                    return false;
-                };
-            } else {
-                console.error("Chatbot elements not found in inline script");
-            }
-        });
-        
-        // Also try immediate binding outside DOMContentLoaded
-        window.setTimeout(function() {
-            const btn = document.getElementById('chatbotButton');
-            if (btn) {
-                btn.addEventListener('click', function() {
-                    console.log("Delayed button handler");
-                    const box = document.getElementById('chatbotBox');
-                    if (box) box.classList.toggle('active');
+            // Toggle chatbox visibility
+            chatbotButton.addEventListener('click', function() {
+                chatbotBox.classList.toggle('active');
+            });
+            
+            // Close chatbox
+            chatbotClose.addEventListener('click', function() {
+                chatbotBox.classList.remove('active');
+            });
+            
+            // Add suggestion chip functionality
+            const suggestionChips = document.querySelectorAll('.suggestion-chip');
+            suggestionChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    const messageInput = document.getElementById('messageInput');
+                    messageInput.value = chip.textContent;
+                    messageInput.focus();
                 });
-            }
-        }, 1000);
+            });
+        });
     </script>
 </div>
 
