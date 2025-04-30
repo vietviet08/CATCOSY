@@ -26,12 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
         "Payment methods"
     ];
     
-    // Use the history manager instead of local history array
-    const historyManager = window.chatbotHistory || {
-        getHistory: () => [], 
-        addMessage: () => {},
-        clearHistory: () => {}
-    };
+    // Generate a unique user ID for this session
+    const userId = 'user-' + Math.random().toString(36).substring(2, 10);
+    console.log("Generated User ID:", userId);
+    
+    // Conversation history
+    let conversationHistory = [];
     
     // Function to toggle chatbot visibility
     function toggleChatbot() {
@@ -41,29 +41,40 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // If opening for the first time, show welcome message
         if (chatbotBox.classList.contains('active') && chatbotMessages.children.length === 0) {
-            // Load past messages from history
-            const history = historyManager.getHistory();
-            
-            if (history.length > 0) {
-                // Restore previous conversation
-                history.forEach(msg => {
-                    if (msg.role === 'user') {
-                        const messageElement = document.createElement('div');
-                        messageElement.classList.add('message', 'user-message');
-                        messageElement.textContent = msg.content;
-                        chatbotMessages.appendChild(messageElement);
-                    } else if (msg.role === 'assistant') {
-                        const messageElement = document.createElement('div');
-                        messageElement.classList.add('message', 'bot-message');
-                        messageElement.textContent = msg.content;
-                        chatbotMessages.appendChild(messageElement);
+            // Try to load past messages from local storage
+            try {
+                const savedHistory = localStorage.getItem('chatbotHistory');
+                if (savedHistory) {
+                    conversationHistory = JSON.parse(savedHistory);
+                    
+                    // Restore previous conversation if it exists
+                    if (conversationHistory.length > 0) {
+                        conversationHistory.forEach(msg => {
+                            if (msg.role === 'user') {
+                                const messageElement = document.createElement('div');
+                                messageElement.classList.add('message', 'user-message');
+                                messageElement.textContent = msg.content;
+                                chatbotMessages.appendChild(messageElement);
+                            } else if (msg.role === 'assistant') {
+                                const messageElement = document.createElement('div');
+                                messageElement.classList.add('message', 'bot-message');
+                                messageElement.textContent = msg.content;
+                                chatbotMessages.appendChild(messageElement);
+                            }
+                        });
+                        
+                        // Add a continuation message
+                        showBotMessage("Welcome back! How can I help you today?");
+                    } else {
+                        // Show new welcome message
+                        showBotMessage("👋 Welcome to CATCOSY! How can I assist you today?");
                     }
-                });
-                
-                // Add a continuation message
-                showBotMessage("Welcome back! How can I help you today?");
-            } else {
-                // Show new welcome message
+                } else {
+                    // Show new welcome message if no history
+                    showBotMessage("👋 Welcome to CATCOSY! How can I assist you today?");
+                }
+            } catch (e) {
+                console.error("Error loading chat history:", e);
                 showBotMessage("👋 Welcome to CATCOSY! How can I assist you today?");
             }
             
@@ -126,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chatbotMessages.appendChild(messageElement);
             
             // Save to conversation history
-            historyManager.addMessage('assistant', text);
+            addToHistory('assistant', text);
             
             // Scroll to bottom
             chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
@@ -144,10 +155,32 @@ document.addEventListener('DOMContentLoaded', function() {
         chatbotMessages.appendChild(messageElement);
         
         // Save to conversation history
-        historyManager.addMessage('user', text);
+        addToHistory('user', text);
         
         // Scroll to bottom
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+    
+    // Function to add message to history
+    function addToHistory(role, content) {
+        conversationHistory.push({ role, content });
+        
+        // Save to local storage
+        try {
+            localStorage.setItem('chatbotHistory', JSON.stringify(conversationHistory));
+        } catch (e) {
+            console.error("Error saving chat history:", e);
+        }
+    }
+    
+    // Function to clear history
+    function clearHistory() {
+        conversationHistory = [];
+        try {
+            localStorage.removeItem('chatbotHistory');
+        } catch (e) {
+            console.error("Error clearing chat history:", e);
+        }
     }
     
     // Function to show suggestion chips
@@ -195,40 +228,79 @@ document.addEventListener('DOMContentLoaded', function() {
             showUserMessage(text);
         }
         
+        // Show typing indicator
+        chatbotTyping.style.display = 'flex';
+        
+        // Prepare the payload
+        const payload = {
+            message: text,
+            userId: userId,
+            conversationHistory: conversationHistory
+        };
+        
         // Send to backend for processing
-        fetch('/api/chatbot', {
+        fetch('/api/chatbot/send', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({
-                message: text,
-                history: historyManager.getHistory()  // Get conversation history from the manager
-            }),
+            body: JSON.stringify(payload),
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok: ' + response.status);
             }
             return response.json();
         })
         .then(data => {
-            // Display bot response
-            showBotMessage(data.response);
+            // Hide typing indicator
+            chatbotTyping.style.display = 'none';
             
-            // Show suggestions if provided by the backend
-            if (data.suggestions && data.suggestions.length > 0) {
-                showSuggestions(data.suggestions);
-            } else {
-                // Show default suggestions if none from backend
-                showSuggestions(getContextualSuggestions(text));
+            // Display bot response
+            if (data.message) {
+                showBotMessage(data.message);
             }
+            
+            // Show suggestions based on the context
+            showSuggestions(getContextualSuggestions(text));
         })
         .catch(error => {
             console.error('Error:', error);
-            showBotMessage("I'm sorry, I'm having trouble connecting. Please try again later.");
+            
+            // Hide typing indicator
+            chatbotTyping.style.display = 'none';
+            
+            // Try to use local fallback responses
+            const fallbackResponse = getLocalFallbackResponse(text);
+            showBotMessage(fallbackResponse);
+            
             showSuggestions(initialSuggestions);
         });
+    }
+    
+    // Function to generate a local fallback response when API is unavailable
+    function getLocalFallbackResponse(text) {
+        text = text.toLowerCase();
+        
+        if (text.includes('hi') || text.includes('hello') || text.includes('chào')) {
+            return "Xin chào! Tôi là trợ lý ảo của CATCOSY. Rất vui được hỗ trợ bạn hôm nay. Tôi có thể giúp gì cho bạn?";
+        } 
+        else if (text.includes('product') || text.includes('clothing') || text.includes('sản phẩm') || text.includes('quần áo')) {
+            return "CATCOSY cung cấp nhiều sản phẩm thời trang chất lượng cao. Bạn có thể tìm thấy áo thun, quần jeans, váy, và nhiều loại phụ kiện khác trên website của chúng tôi.";
+        }
+        else if (text.includes('shipping') || text.includes('delivery') || text.includes('giao hàng')) {
+            return "CATCOSY cung cấp dịch vụ giao hàng nhanh trong 2-3 ngày làm việc cho đơn hàng nội thành và 3-5 ngày cho đơn hàng toàn quốc.";
+        }
+        else if (text.includes('return') || text.includes('refund') || text.includes('đổi trả') || text.includes('hoàn tiền')) {
+            return "Bạn có thể đổi trả sản phẩm trong vòng 14 ngày kể từ ngày nhận hàng. Sản phẩm cần còn nguyên tem mác và chưa qua sử dụng.";
+        }
+        else if (text.includes('contact') || text.includes('liên hệ')) {
+            return "Bạn có thể liên hệ với CATCOSY qua số điện thoại 1900-1234 hoặc email support@catcosy.com.";
+        }
+        else {
+            return "Cảm ơn bạn đã liên hệ với CATCOSY! Hiện tại máy chủ đang bận, tôi không thể xử lý yêu cầu của bạn. Vui lòng thử lại sau hoặc liên hệ với chúng tôi qua số điện thoại 1900-1234.";
+        }
     }
     
     // Function to generate contextual suggestions based on the current conversation
@@ -239,20 +311,25 @@ document.addEventListener('DOMContentLoaded', function() {
         let suggestions = [...initialSuggestions];
         
         // Contextual suggestions based on keywords
-        if (text.includes('product') || text.includes('clothing') || text.includes('clothes') || text.includes('shop')) {
-            suggestions = ["View new arrivals", "Product categories", "Bestsellers", "Sales & promotions", "Size guide"];
+        if (text.includes('product') || text.includes('clothing') || text.includes('clothes') || text.includes('shop') || 
+            text.includes('sản phẩm') || text.includes('quần áo')) {
+            suggestions = ["Xem sản phẩm mới", "Danh mục sản phẩm", "Sản phẩm bán chạy", "Khuyến mãi", "Hướng dẫn kích cỡ"];
         } 
-        else if (text.includes('shipping') || text.includes('delivery') || text.includes('track')) {
-            suggestions = ["Shipping costs", "Delivery times", "Track my order", "International shipping", "Shipping policy"];
+        else if (text.includes('shipping') || text.includes('delivery') || text.includes('track') || 
+                text.includes('giao hàng') || text.includes('vận chuyển')) {
+            suggestions = ["Phí giao hàng", "Thời gian giao hàng", "Theo dõi đơn hàng", "Giao hàng quốc tế", "Chính sách giao hàng"];
         } 
-        else if (text.includes('return') || text.includes('refund') || text.includes('exchange')) {
-            suggestions = ["Return policy", "How to return", "Refund process", "Exchange items", "Contact support"];
+        else if (text.includes('return') || text.includes('refund') || text.includes('exchange') || 
+                text.includes('đổi trả') || text.includes('hoàn tiền')) {
+            suggestions = ["Chính sách đổi trả", "Cách thức đổi trả", "Quy trình hoàn tiền", "Đổi sản phẩm", "Liên hệ hỗ trợ"];
         } 
-        else if (text.includes('account') || text.includes('login') || text.includes('register') || text.includes('profile')) {
-            suggestions = ["Create account", "Login issues", "Update profile", "View orders", "Reset password"];
+        else if (text.includes('account') || text.includes('login') || text.includes('register') || text.includes('profile') ||
+                text.includes('tài khoản') || text.includes('đăng nhập') || text.includes('đăng ký')) {
+            suggestions = ["Tạo tài khoản", "Vấn đề đăng nhập", "Cập nhật hồ sơ", "Xem đơn hàng", "Đặt lại mật khẩu"];
         } 
-        else if (text.includes('payment') || text.includes('pay') || text.includes('card') || text.includes('checkout')) {
-            suggestions = ["Payment methods", "Checkout issues", "Payment security", "Add payment method", "Vouchers"];
+        else if (text.includes('payment') || text.includes('pay') || text.includes('card') || text.includes('checkout') ||
+                text.includes('thanh toán') || text.includes('thẻ')) {
+            suggestions = ["Phương thức thanh toán", "Vấn đề thanh toán", "Bảo mật thanh toán", "Thêm phương thức thanh toán", "Mã giảm giá"];
         }
         
         return suggestions;
@@ -291,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chatbotMessages.innerHTML = '';
             
             // Clear the history
-            historyManager.clearHistory();
+            clearHistory();
             
             // Show welcome message
             showBotMessage("I've cleared our conversation. How can I help you today?");
@@ -373,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         toggle: toggleChatbot,
         clearHistory: function() {
-            historyManager.clearHistory();
+            clearHistory();
             chatbotMessages.innerHTML = '';
             showBotMessage("History cleared.");
         }
