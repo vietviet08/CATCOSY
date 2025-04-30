@@ -1,99 +1,80 @@
-/**
- * CATCOSY Chatbot History Manager
- * This script manages the persistence of conversation history for the chatbot
- */
+// CATCOSY Chatbot History Manager
 
-class ChatbotHistoryManager {
-    constructor(maxHistoryLength = 10) {
-        this.storageKey = 'catcosy_chatbot_history';
-        this.maxHistoryLength = maxHistoryLength;
-        this.history = this.loadHistory();
-    }
+/**
+ * Chatbot History Manager
+ * Handles storing and retrieving chat history from localStorage
+ */
+const ChatbotHistory = (function() {
+    const STORAGE_KEY = 'catcosy_chatbot_history';
+    const MAX_MESSAGES = 50; // Maximum number of messages to store
     
-    /**
-     * Load conversation history from local storage
-     */
-    loadHistory() {
+    // Get chat history from localStorage
+    function getHistory() {
         try {
-            const savedHistory = localStorage.getItem(this.storageKey);
-            return savedHistory ? JSON.parse(savedHistory) : [];
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
         } catch (error) {
-            console.error('Error loading chatbot history:', error);
+            console.error('Error loading chat history:', error);
             return [];
         }
     }
     
-    /**
-     * Save conversation history to local storage
-     */
-    saveHistory() {
+    // Save chat history to localStorage
+    function saveHistory(history) {
         try {
-            localStorage.setItem(this.storageKey, JSON.stringify(this.history));
+            // Limit the number of messages stored
+            const limitedHistory = history.slice(-MAX_MESSAGES);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(limitedHistory));
+            return true;
         } catch (error) {
-            console.error('Error saving chatbot history:', error);
+            console.error('Error saving chat history:', error);
+            return false;
         }
     }
     
-    /**
-     * Add a message to the conversation history
-     * @param {string} role - 'user' or 'assistant'
-     * @param {string} content - The message content
-     */
-    addMessage(role, content) {
-        // Add message to history
-        this.history.push({ role, content });
+    // Add a message to history
+    function addMessage(role, content) {
+        const history = getHistory();
+        const timestamp = new Date().toISOString();
         
-        // Trim history if it exceeds the maximum length
-        if (this.history.length > this.maxHistoryLength) {
-            this.history = this.history.slice(this.history.length - this.maxHistoryLength);
-        }
+        history.push({
+            role,
+            content,
+            timestamp
+        });
         
-        // Save updated history
-        this.saveHistory();
+        return saveHistory(history);
     }
     
-    /**
-     * Get the current conversation history
-     * @returns {Array} The conversation history
-     */
-    getHistory() {
-        return [...this.history];
-    }
-    
-    /**
-     * Clear the conversation history
-     */
-    clearHistory() {
-        this.history = [];
-        this.saveHistory();
-    }
-    
-    /**
-     * Get the most recent user query
-     * @returns {string|null} The most recent user query or null if none exists
-     */
-    getLastUserQuery() {
-        for (let i = this.history.length - 1; i >= 0; i--) {
-            if (this.history[i].role === 'user') {
-                return this.history[i].content;
-            }
+    // Clear chat history
+    function clearHistory() {
+        try {
+            localStorage.removeItem(STORAGE_KEY);
+            return true;
+        } catch (error) {
+            console.error('Error clearing chat history:', error);
+            return false;
         }
-        return null;
     }
     
-    /**
-     * Get the most recent assistant response
-     * @returns {string|null} The most recent assistant response or null if none exists
-     */
-    getLastAssistantResponse() {
-        for (let i = this.history.length - 1; i >= 0; i--) {
-            if (this.history[i].role === 'assistant') {
-                return this.history[i].content;
-            }
-        }
-        return null;
+    // Get chat history formatted for API
+    function getFormattedHistory() {
+        const history = getHistory();
+        return history.map(msg => ({
+            role: msg.role,
+            content: msg.content
+        }));
     }
-}
+    
+    // Return public API
+    return {
+        getHistory,
+        saveHistory,
+        addMessage,
+        clearHistory,
+        getFormattedHistory
+    };
+})();
 
-// Make accessible globally
-window.chatbotHistory = new ChatbotHistoryManager();
+// Make available globally
+window.ChatbotHistory = ChatbotHistory;
