@@ -1,0 +1,35 @@
+/FE-DACS1
+/report
+/Resource
+README.md
+/BE-CATCOSY/Admin/src/main/resources/static/outside/
+/BE-CATCOSY/Customer/src/main/resources/static/outside/
+/BE-CATCOSY/Library/src/main/resources/static/outside/
+/BE-CATCOSY/Admin/src/main/resources/templates/mail*
+/BE-CATCOSY/Customer/src/main/resources/templates/mail*
+/BE-CATCOSY/Library/src/main/resources/templates/mail*
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+
+# Compiled files
+*.class
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Logs
+logs/
+*.log
