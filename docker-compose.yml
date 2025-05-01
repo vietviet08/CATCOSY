@@ -9,15 +9,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: catcosy
-      MYSQL_USER: catcosy
-      MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,10 +24,10 @@ services:
 
   # Library Service
   library:
-    # build:
-    #   context: .
-    #   dockerfile: library/Dockerfile
-    image: vietquoc2408/catcosy-library:1.0.0
+    build:
+      context: .
+      dockerfile: library/Dockerfile
+    # image: vietquoc2408/catcosy-library:1.0.0
     container_name: catcosy-library
     restart: always
     ports:
