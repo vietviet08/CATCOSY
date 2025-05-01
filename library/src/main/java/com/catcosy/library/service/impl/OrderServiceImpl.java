@@ -173,5 +173,84 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
+    @Override
+    public void saveTemporaryOrder(Order order, Cart cart) {
+        try {
+            Set<CartItem> items = cart.getItems();
+            
+            Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH, 3);
 
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+            
+            Date formattedDateFrom = formatter.parse(formatter.format(date));
+            order.setOrderDate(formattedDateFrom);
+            
+            Date formattedDateTo = formatter.parse(formatter.format(calendar.getTime()));
+            order.setDeliveryDate(formattedDateTo);
+            
+            order.setCustomer(cart.getCustomer());
+            order.setTotalPrice(cart.getTotalPrice());
+            order.setDiscountPrice(0.0);
+            order.setShippingFee(0.0);
+            
+            UUID uuid = UUID.randomUUID();
+            order.setCodeViewOrder(uuid.toString());
+            
+            order.setAccept(false);
+            order.setStatus(status[0]);
+            order.setTemporary(true); 
+            
+            List<OrderDetail> orderDetails = new ArrayList<>();
+            
+            for (CartItem item : items) {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setOrder(order);
+                orderDetail.setProduct(item.getProduct());
+                orderDetail.setQuantity(item.getQuantity());
+                orderDetail.setTotalPrice(item.getTotalPrice());
+                orderDetail.setUnitPrice(item.getUnitPrice());
+                orderDetail.setSize(item.getSize());
+                orderDetail.setAllowComment(false);
+                orderDetailRepository.save(orderDetail);
+                orderDetails.add(orderDetail);
+            }
+            
+            order.setOrderDetails(orderDetails);
+            
+            orderRepository.save(order);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    @Transactional
+    public Order finalizeOrder(String orderAddress) {
+        try {
+            Order order = orderRepository.findByOrderAddress(orderAddress).orElse(null);
+            if (order == null || !order.isTemporary()) {
+                return null;
+            }
+            
+            order.setTemporary(false);
+            
+            cartService.deleteAllCartItem(order.getCustomer());
+            
+            return orderRepository.save(order);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public String getVoucherCode(Order order) {
+        if (order == null) {
+            return null;
+        }
+        return order.getVoucherCode();
+    }
 }
