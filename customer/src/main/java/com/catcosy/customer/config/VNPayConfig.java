@@ -1,6 +1,8 @@
 package com.catcosy.customer.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Component
+@Slf4j
 public class VNPayConfig {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_Returnurl = "/vnp/vnpay-payment";
@@ -22,6 +25,7 @@ public class VNPayConfig {
     @Autowired
     public VNPayConfig(EnvConfig envConfig) {
         vnp_HashSecret = envConfig.getProperty("VNP_HASH_SECRET", "");
+        log.info("VNP_HASH_SECRET: " + vnp_HashSecret);
     }
 
     public static String md5(String message) {

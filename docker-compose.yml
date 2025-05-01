@@ -16,8 +16,9 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./my.cnf:/etc/my.cnf
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -33,9 +34,9 @@ services:
     container_name: catcosy-library
     restart: always
     ports:
-     - "8080:8084"
+     - "8084:8084"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -48,16 +49,16 @@ services:
 
   # Admin Service
   admin:
-    build:
-      context: .
-      dockerfile: admin/Dockerfile
-    # image: vietquoc2408/catcosy-admin:1.0.0
+    # build:
+    #   context: .
+    #   dockerfile: admin/Dockerfile
+    image: vietquoc2408/catcosy-admin:1.0.0
     container_name: catcosy-admin
     restart: always
     ports:
-      - "8081:8085"
+      - "8085:8085"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -73,16 +74,18 @@ services:
 
   # Customer Service
   customer:
-    build:
-      context: .
-      dockerfile: customer/Dockerfile
-    # image: vietquoc2408/catcosy-customer:1.0.0
+    # build:
+    #   context: .
+    #   dockerfile: customer/Dockerfile
+    image: vietquoc2408/catcosy-customer:1.0.0
     container_name: catcosy-customer
     restart: always
     ports:
-      - "8082:8086"
+      - "8086:8086"
+    env_file:
+      - ./customer/.env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update

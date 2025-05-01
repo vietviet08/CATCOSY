@@ -11,6 +11,7 @@ import com.catcosy.library.service.OrderService;
 import com.catcosy.library.service.VoucherService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.security.Principal;
 import java.util.Set;
 
 @Controller
+@Slf4j
 public class CheckoutController {
 
     @Autowired
@@ -112,8 +114,10 @@ public class CheckoutController {
             
             if (order.getPaymentMethod().equals("VN Pay")) {
                 String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+                log.info("Base URL: " + baseUrl);
                 String vnpayUrl = vnPayService.createOrder(cart.getTotalPrice().intValue(), order.getDeliveryAddress(),
                         baseUrl);
+                log.info("VNPay URL: " + vnpayUrl);
                 if (codeVoucherCompletePayment != null && !codeVoucherCompletePayment.isEmpty()) {
                     order.setVoucherCode(codeVoucherCompletePayment);
                 }
