@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  mysql:
+    image: mysql:8.0
+    container_name: catcosy-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: catcosy
+      MYSQL_USER: catcosy
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - catcosy-network
+
+  # Library Service
+  library:
+    build:
+      context: .
+      dockerfile: library/Dockerfile
+    container_name: catcosy-library
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: default
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - catcosy-network
+
+  # Admin Service
+  admin:
+    image: vietquoc2408/catcosy-admin:1.0.0
+    container_name: catcosy-admin
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: default
+      SERVER_PORT: 8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+      library:
+        condition: service_started
+    networks:
+      - catcosy-network
+
+  # Customer Service
+  customer:
+    image: vietquoc2408/catcosy-customer:1.0.0
+    container_name: catcosy-customer
+    restart: always
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: default
+      SERVER_PORT: 8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+      library:
+        condition: service_started
+    networks:
+      - catcosy-network
+
+networks:
+  catcosy-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
