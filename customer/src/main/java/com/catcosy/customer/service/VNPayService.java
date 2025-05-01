@@ -2,8 +2,8 @@ package com.catcosy.customer.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Env;
 import org.springframework.stereotype.Service;
 
 import com.catcosy.customer.config.EnvConfig;
@@ -17,12 +17,14 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class VNPayService {
 
     private final EnvConfig envConfig;
     
     private String getVnpTmnCode(){
         String vnpTmnCode = envConfig.getProperty("VNP_TMN_CODE", "");
+        log.info("VNP_TMN_CODE: " + vnpTmnCode);
         return vnpTmnCode;
     }
 
@@ -52,14 +54,18 @@ public class VNPayService {
         vnp_Params.put("vnp_ReturnUrl", urlReturn);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
-        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+        
+        log.info("CreateDate: " + vnp_CreateDate); 
 
         cld.add(Calendar.MINUTE, 15);
         String vnp_ExpireDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+        
+        log.info("ExpireDate: " + vnp_ExpireDate); 
 
         List fieldNames = new ArrayList(vnp_Params.keySet());
         Collections.sort(fieldNames);

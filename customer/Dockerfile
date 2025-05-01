@@ -23,6 +23,12 @@ RUN mkdir -p /app/target-jar && \
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
+
+ENV TZ=Asia/Ho_Chi_Minh
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
 COPY --from=build /app/target-jar/application.jar app.jar
 COPY --from=build /app/customer/.env ./.env
 
