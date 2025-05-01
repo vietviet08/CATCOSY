@@ -23,9 +23,10 @@ services:
     command: --default-authentication-plugin=mysql_native_password
 
   library:
-    build:
-      context: .
-      dockerfile: library/Dockerfile
+#    build:
+#      context: .
+#      dockerfile: library/Dockerfile
+    image: vietquoc2408/catcosy-library:1.0.0
     container_name: catcosy-library
     restart: always
     ports:
@@ -44,9 +45,10 @@ services:
       - catcosy-network
 
   admin:
-    build:
-      context: .
-      dockerfile: admin/Dockerfile
+#    build:
+#      context: .
+#      dockerfile: admin/Dockerfile
+    image: vietquoc2408/catcosy-admin:1.0.0
     container_name: catcosy-admin
     restart: always
     ports:
@@ -67,9 +69,10 @@ services:
       - catcosy-network
 
   customer:
-    build:
-      context: .
-      dockerfile: customer/Dockerfile
+#    build:
+#      context: .
+#      dockerfile: customer/Dockerfile
+    image: vietquoc2408/catcosy-customer:1.0.0
     container_name: catcosy-customer
     restart: always
     ports:
