@@ -9,6 +9,7 @@ COPY library/src /app/library/src
 # Copy customer module
 COPY customer/pom.xml /app/customer/pom.xml
 COPY customer/src /app/customer/src
+COPY customer/.env /app/customer/.env
 
 # Build library first (install to local Maven repo)
 RUN cd /app/library && mvn clean install -DskipTests
@@ -23,6 +24,7 @@ RUN mkdir -p /app/target-jar && \
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target-jar/application.jar app.jar
+COPY --from=build /app/customer/.env ./.env
 
 # Add explicit healthcheck
 HEALTHCHECK --interval=30s --timeout=3s CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
