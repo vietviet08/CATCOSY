@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface OrderService {
 
-
     Order addOrder(Cart cart, Order order) throws ParseException;
 
     List<Order> findAllOrder();
@@ -34,5 +33,11 @@ public interface OrderService {
     Order cancelOrderForCustomer(Long id);
 
     Order changeStatusAndNote(Long id, int statusValue, String notes);
+    
+    void saveTemporaryOrder(Order order, Cart cart);
+    
+    Order finalizeOrder(String orderAddress);
+    
+    String getVoucherCode(Order order);
 
 }

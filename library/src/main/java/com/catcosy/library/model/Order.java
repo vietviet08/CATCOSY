@@ -31,6 +31,8 @@ public class Order {
     private String codeViewOrder;
     private boolean isAccept;
     private boolean isCancel;
+    private String voucherCode; // Thêm trường lưu mã voucher
+    private boolean isTemporary; // Đánh dấu đơn hàng là tạm thời (cho VNPay)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")

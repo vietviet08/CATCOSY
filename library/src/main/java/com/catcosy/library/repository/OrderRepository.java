@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
@@ -26,5 +27,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Modifying
     void deleteAllByIDCustomer(@Param("id") Long id);
 
-
+    @Query(value = "select * from orders o where o.delivery_address = :orderAddress", nativeQuery = true)
+    Optional<Order> findByOrderAddress(String orderAddress);
 }
