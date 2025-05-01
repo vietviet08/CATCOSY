@@ -9,16 +9,23 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: catcosy
+      MYSQL_USER: catcosy
+      MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./my.cnf:/etc/my.cnf
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
+    # command: 
+    #   - --max_allowed_packet=256M
+    #   - --innodb_log_file_size=512M
+    #   - --innodb_buffer_pool_size=1G
     networks:
       - catcosy-network
 
@@ -33,7 +40,7 @@ services:
     ports:
      - "8080:8084"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=256M
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -55,7 +62,7 @@ services:
     ports:
       - "8081:8085"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=256M
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -80,7 +87,7 @@ services:
     ports:
       - "8082:8086"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=256M
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
