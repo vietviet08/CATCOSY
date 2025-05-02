@@ -4,12 +4,14 @@ import com.catcosy.library.repository.ProductImageRepository;
 import com.catcosy.library.repository.ProductRepository;
 import com.catcosy.library.repository.ProductSizeRepository;
 import com.catcosy.library.repository.SizeRepository;
+import com.catcosy.library.dto.FileMetadata;
 import com.catcosy.library.dto.ProductDto;
 import com.catcosy.library.model.Product;
 import com.catcosy.library.model.ProductImage;
 import com.catcosy.library.model.ProductSize;
 import com.catcosy.library.model.Size;
 import com.catcosy.library.service.ProductService;
+import com.catcosy.library.service.S3StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -36,6 +38,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private SizeRepository sizeRepository;
+    
+    @Autowired
+    private S3StorageService s3StorageService;
 
     private List<ProductDto> convertToDtoList(List<Product> products) {
         List<ProductDto> dtoList = new ArrayList<>();
@@ -48,11 +53,17 @@ public class ProductServiceImpl implements ProductService {
             productDto.setCostPrice(product.getCostPrice());
             productDto.setSalePrice(product.getSalePrice());
             productDto.setQuantity(product.getQuantity());
-            List<String> strings = new ArrayList<>();
+            
+            List<String> imageUrls = new ArrayList<>();
+            
             for (ProductImage productImage : product.getImages()) {
-                strings.add(productImage.getImage());
+                String publicUrl = s3StorageService.getPublicUrl(productImage.getS3Url());
+                imageUrls.add(publicUrl);
             }
-            productDto.setImages(strings);
+            
+            // Không sử dụng images (Base64) nữa, chỉ dùng imageUrls
+            productDto.setImageUrls(imageUrls);
+            productDto.setUsingS3(true);
             productDto.setCategory(product.getCategory());
             productDto.setBrand(product.getBrand());
             productDto.setActivated(product.getIsActivated());
@@ -86,11 +97,17 @@ public class ProductServiceImpl implements ProductService {
         productDto.setCostPrice(product.getCostPrice());
         productDto.setSalePrice(product.getSalePrice());
         productDto.setQuantity(product.getQuantity());
-        List<String> strings = new ArrayList<>();
+        
+        List<String> imageUrls = new ArrayList<>();
+        
         for (ProductImage productImage : product.getImages()) {
-            strings.add(productImage.getImage());
+            String publicUrl = s3StorageService.getPublicUrl(productImage.getS3Url());
+            imageUrls.add(publicUrl);
         }
-        productDto.setImages(strings);
+        
+        // Không sử dụng images (Base64) nữa, chỉ dùng imageUrls
+        productDto.setImageUrls(imageUrls);
+        productDto.setUsingS3(true);
         productDto.setCategory(product.getCategory());
         productDto.setBrand(product.getBrand());
         productDto.setActivated(product.getIsActivated());
@@ -130,14 +147,28 @@ public class ProductServiceImpl implements ProductService {
             // Process images if they exist
             if (images != null) {
                 List<ProductImage> imageList = new ArrayList<>();
-                for (MultipartFile image : images) {
-                    if (image != null && !image.isEmpty()) {
+                
+                // Tải hình ảnh lên S3
+                List<FileMetadata> s3Files = s3StorageService.uploadFiles(images);
+                
+                for (int i = 0; i < images.size(); i++) {
+                    MultipartFile image = images.get(i);
+                    if (image != null && !image.isEmpty() && i < s3Files.size() && s3Files.get(i) != null) {
                         ProductImage productImage = new ProductImage();
-                        String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
                         productImage.setProduct(product);
-                        productImage.setImage(fileImg);
+                        
+                        // Chỉ lưu URL S3, không lưu dữ liệu Base64
+                        FileMetadata fileMetadata = s3Files.get(i);
+                        productImage.setS3Url(fileMetadata.getUrl());
+                        productImage.setUsingS3(true);
+                        
+                        // Không còn lưu trữ dữ liệu Base64 nữa
+                        productImage.setImage(null);
+                        
                         imageList.add(productImage);
                         productImageRepository.save(productImage);
+                        
+                        System.out.println("Added image to product, S3 URL: " + fileMetadata.getUrl());
                     }
                 }
                 
@@ -191,8 +222,13 @@ public class ProductServiceImpl implements ProductService {
 
         System.out.println("Updating product with ID: " + productDto.getId());
         
-        // Lưu ảnh hiện có của sản phẩm
-        List<ProductImage> existingImages = new ArrayList<>(product.getImages());
+        // Lưu danh sách URL S3 của các ảnh cũ để xóa nếu cần
+        List<String> s3UrlsToDelete = new ArrayList<>();
+        for (ProductImage oldImage : product.getImages()) {
+            if (oldImage.getS3Url() != null) {
+                s3UrlsToDelete.add(oldImage.getS3Url());
+            }
+        }
         
         // Xử lý trường hợp có ảnh mới được tải lên
         boolean hasNewImages = newImages != null && !newImages.isEmpty();
@@ -212,29 +248,48 @@ public class ProductServiceImpl implements ProductService {
         if (hasValidNewImages) {
             System.out.println("Found new images, updating product images");
             
-            // Xóa tất cả ảnh cũ của sản phẩm
+            // Xóa tất cả ảnh cũ của sản phẩm khỏi DB
             productImageRepository.deleteAllByProductId(product.getId());
+            
+            // Tải các ảnh mới lên S3
+            List<FileMetadata> s3Files = s3StorageService.uploadFiles(newImages);
             
             // Thêm ảnh mới
             List<ProductImage> updatedImages = new ArrayList<>();
-            for (MultipartFile image : newImages) {
-                if (image != null && !image.isEmpty()) {
+            for (int i = 0; i < newImages.size(); i++) {
+                MultipartFile image = newImages.get(i);
+                if (image != null && !image.isEmpty() && i < s3Files.size() && s3Files.get(i) != null) {
                     ProductImage productImage = new ProductImage();
-                    String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
                     productImage.setProduct(product);
-                    productImage.setImage(fileImg);
-                    productImageRepository.save(productImage);
-                    updatedImages.add(productImage);
-                    System.out.println("Added new image to product");
+                    
+                    // Chỉ lưu URL S3, không lưu Base64
+                    FileMetadata fileMetadata = s3Files.get(i);
+                    productImage.setS3Url(fileMetadata.getUrl());
+                    productImage.setUsingS3(true);
+                    productImage.setImage(null);
+                    
+                    ProductImage savedImage = productImageRepository.save(productImage);
+                    updatedImages.add(savedImage);
+                    System.out.println("Added new image to product with S3 URL: " + fileMetadata.getUrl());
                 }
             }
             
             // Cập nhật danh sách ảnh cho sản phẩm
             product.setImages(updatedImages);
             System.out.println("Updated product with " + updatedImages.size() + " new images");
+            
+            // Xóa các ảnh cũ trên S3
+            for (String urlToDelete : s3UrlsToDelete) {
+                try {
+                    s3StorageService.deleteFile(urlToDelete);
+                    System.out.println("Deleted old S3 image: " + urlToDelete);
+                } catch (Exception e) {
+                    System.err.println("Failed to delete S3 image: " + urlToDelete + " - " + e.getMessage());
+                }
+            }
         } else {
             // Nếu không có ảnh mới, giữ nguyên ảnh cũ
-            System.out.println("No new valid images, keeping existing images: " + existingImages.size());
+            System.out.println("No new valid images, keeping existing images: " + product.getImages().size());
         }
 
         // Update product sizes
@@ -258,10 +313,18 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(productDto.getCategory());
         product.setBrand(productDto.getBrand());
 
-        System.out.println("Updating product with ID: " + productDto.getId() + " using mixed images strategy");
+        System.out.println("Updating product with ID: " + productDto.getId() + " using mixed images strategy with S3 only");
         
         try {
-            // Xóa tất cả ảnh cũ để thêm lại ảnh đã chọn 
+            // Trước khi xóa ảnh từ database, lưu lại danh sách URL S3 của các ảnh cũ để xóa khỏi S3 nếu cần
+            List<String> s3UrlsToDelete = new ArrayList<>();
+            for (ProductImage oldImage : product.getImages()) {
+                if (oldImage.getS3Url() != null) {
+                    s3UrlsToDelete.add(oldImage.getS3Url());
+                }
+            }
+            
+            // Xóa tất cả ảnh cũ trong database
             productImageRepository.deleteAllByProductId(product.getId());
             System.out.println("Deleted all old images for product ID: " + product.getId());
             
@@ -272,16 +335,31 @@ public class ProductServiceImpl implements ProductService {
             if (oldImagesBase64 != null && !oldImagesBase64.isEmpty()) {
                 System.out.println("Processing " + oldImagesBase64.size() + " retained old images");
                 
-                // Duyệt qua và lưu từng ảnh cũ vào database
+                // Ảnh cũ được giữ lại là ảnh dạng Base64, ta cần upload chúng lên S3
                 for (int i = 0; i < oldImagesBase64.size(); i++) {
                     String base64Image = oldImagesBase64.get(i);
                     if (base64Image != null && !base64Image.isEmpty()) {
                         ProductImage productImage = new ProductImage();
                         productImage.setProduct(product);
-                        productImage.setImage(base64Image);
-                        ProductImage savedImage = productImageRepository.save(productImage);
-                        updatedImages.add(savedImage);
-                        System.out.println("Retained old image " + i + ", new DB ID: " + savedImage.getId());
+                        
+                        try {
+                            // Tải ảnh Base64 lên S3
+                            String s3Url = s3StorageService.uploadBase64Image(base64Image, "products");
+                            
+                            if (s3Url != null) {
+                                // Chỉ lưu URL S3, không lưu Base64
+                                productImage.setS3Url(s3Url);
+                                productImage.setUsingS3(true);
+                                productImage.setImage(null); // Không lưu Base64
+                                System.out.println("Retained old image " + i + " uploaded to S3: " + s3Url);
+                                
+                                ProductImage savedImage = productImageRepository.save(productImage);
+                                updatedImages.add(savedImage);
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Error uploading old image " + i + " to S3: " + e.getMessage());
+                            // Không lưu ảnh nếu không upload được lên S3
+                        }
                     }
                 }
             }
@@ -290,17 +368,46 @@ public class ProductServiceImpl implements ProductService {
             if (newImages != null && !newImages.isEmpty()) {
                 System.out.println("Processing " + newImages.size() + " new images");
                 
+                // Tải các ảnh mới lên S3
+                List<FileMetadata> s3Files = s3StorageService.uploadFiles(newImages);
+                
                 // Duyệt qua và lưu từng ảnh mới vào database
                 for (int i = 0; i < newImages.size(); i++) {
                     MultipartFile image = newImages.get(i);
-                    if (image != null && !image.isEmpty()) {
+                    if (image != null && !image.isEmpty() && i < s3Files.size() && s3Files.get(i) != null) {
                         ProductImage productImage = new ProductImage();
-                        String fileImg = Base64.getEncoder().encodeToString(image.getBytes());
                         productImage.setProduct(product);
-                        productImage.setImage(fileImg);
+                        
+                        // Chỉ lưu URL S3, không lưu Base64
+                        FileMetadata fileMetadata = s3Files.get(i);
+                        productImage.setS3Url(fileMetadata.getUrl());
+                        productImage.setUsingS3(true);
+                        productImage.setImage(null);
+                        
                         ProductImage savedImage = productImageRepository.save(productImage);
                         updatedImages.add(savedImage);
-                        System.out.println("Added new uploaded image " + i + ", new DB ID: " + savedImage.getId());
+                        System.out.println("New image " + i + " uploaded to S3: " + fileMetadata.getUrl());
+                    }
+                }
+            }
+            
+            // 3. Xóa các ảnh cũ trên S3 không còn được sử dụng
+            // Lưu ý: Chỉ xóa những ảnh mà URL không còn xuất hiện trong danh sách ảnh mới
+            List<String> keptS3Urls = new ArrayList<>();
+            for (ProductImage img : updatedImages) {
+                if (img.getS3Url() != null) {
+                    keptS3Urls.add(img.getS3Url());
+                }
+            }
+            
+            // Tìm và xóa các ảnh trên S3 không còn được sử dụng
+            for (String urlToDelete : s3UrlsToDelete) {
+                if (!keptS3Urls.contains(urlToDelete)) {
+                    try {
+                        s3StorageService.deleteFile(urlToDelete);
+                        System.out.println("Deleted unused S3 image: " + urlToDelete);
+                    } catch (Exception e) {
+                        System.err.println("Failed to delete S3 image: " + urlToDelete + " - " + e.getMessage());
                     }
                 }
             }
@@ -312,7 +419,7 @@ public class ProductServiceImpl implements ProductService {
                 System.out.println("Total images after update: " + updatedImages.size());
                 for (int i = 0; i < updatedImages.size(); i++) {
                     ProductImage img = updatedImages.get(i);
-                    System.out.println("Image " + i + " - ID: " + img.getId());
+                    System.out.println("Image " + i + " - ID: " + img.getId() + " - S3 URL: " + img.getS3Url());
                 }
             }
             
@@ -325,7 +432,7 @@ public class ProductServiceImpl implements ProductService {
             // Lưu và trả về sản phẩm đã cập nhật
             return productRepository.save(product);
         } catch (Exception e) {
-            System.err.println("Error in updateWithMixedImages: " + e.getMessage());
+            System.err.println("Error in updateWithMixedImages with S3: " + e.getMessage());
             e.printStackTrace();
             throw e;
         }

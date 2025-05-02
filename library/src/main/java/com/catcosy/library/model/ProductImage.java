@@ -22,7 +22,17 @@ public class ProductImage extends BaseEntity {
     private Product product;
 
     @Lob
-    @Column(columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB", name = "image")
     private String image;
-
+    
+    @Column(name = "s3_url", nullable = false)
+    private String s3Url;
+    
+    @Column(name = "using_s3")
+    private Boolean usingS3 = false;
+    
+    @Transient
+    public String getImagePath() {
+        return s3Url;
+    }
 }

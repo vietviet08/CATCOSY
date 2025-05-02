@@ -121,7 +121,10 @@
             <td class="price-col" th:text="${product.salePrice}"></td>
             <td th:text="${product.quantity}"></td>
             <td class="text-center">
-                <img th:src="'data:image/jpeg;base64,'+ ${imagesMap.get(product.id)}" class="border rounded"
+                <img th:src="${imagesMap.get(product.id) != null ? 
+                             (product.usingS3 == true ? imagesMap.get(product.id) : 'data:image/jpeg;base64,' + imagesMap.get(product.id)) : 
+                             '/img/no-image.png'}" 
+                     class="border rounded"
                      style="width: 40px; height: 40px" alt=""/>
             </td>
             <td >

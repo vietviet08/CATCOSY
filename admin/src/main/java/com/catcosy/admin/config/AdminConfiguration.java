@@ -55,7 +55,7 @@ public class AdminConfiguration {
         // Enable CSRF protection for form submissions
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/do-login"))
                 .authorizeHttpRequests(author ->
-                        author .requestMatchers("/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
+                        author .requestMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/admin/s3/**").permitAll()
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/forgot-password", "/register", "/register-new", "/do-login", "/login" , "/logout" ,"/", "/index" ).permitAll()
                                 .requestMatchers("/categories/**").hasAnyAuthority("ADMIN","SELLER")
