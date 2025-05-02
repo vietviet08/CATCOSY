@@ -9,6 +9,7 @@ COPY library/src /app/library/src
 # Copy admin module
 COPY admin/pom.xml /app/admin/pom.xml
 COPY admin/src /app/admin/src
+COPY .env /app/.env
 
 # Build library first (install to local Maven repo)
 RUN cd /app/library && mvn clean install -DskipTests
@@ -22,7 +23,14 @@ RUN mkdir -p /app/target-jar && \
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
+
+ENV TZ=Asia/Ho_Chi_Minh
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
 COPY --from=build /app/target-jar/application.jar app.jar
+COPY --from=build /app/.env ./.env
 
 # Add explicit healthcheck
 HEALTHCHECK --interval=30s --timeout=3s CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1

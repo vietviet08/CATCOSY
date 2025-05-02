@@ -180,11 +180,11 @@
                         <form th:action="@{/add-to-cart}" method="post">
                             <div class="card__main" style="">
                                 <div class="img__product">
-                                    <img class="front-img "
-                                         th:src="'data:image/jpeg;base64,' + ${product.images.get(0)}"
+                                    <img class="front-img"
+                                         th:src="${product.usingS3 && product.imageUrls[0] != null ? product.imageUrls[0] : 'data:image/jpeg;base64,' + product.images[0]}"
                                          alt="">
                                     <img class="back-img"
-                                         th:src="'data:image/jpeg;base64,' + ${product.images.get(1)}"
+                                         th:src="${product.usingS3 && product.imageUrls.size() > 1 && product.imageUrls[1] != null ? product.imageUrls[1] : (product.images.size() > 1 ? 'data:image/jpeg;base64,' + product.images[1] : (product.usingS3 && product.imageUrls[0] != null ? product.imageUrls[0] : 'data:image/jpeg;base64,' + product.images[0]))}"
                                          alt="">
 
                                     <div class="card__main--choose-options">

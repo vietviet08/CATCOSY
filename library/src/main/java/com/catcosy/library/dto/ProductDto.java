@@ -21,8 +21,10 @@ public class ProductDto {
     private Double costPrice;
     private Double salePrice;
     private List<String> images;
+    private List<String> imageUrls;
     private String description;
     private Integer quantity;
     private Boolean deleted;
     private Boolean activated;
+    private Boolean usingS3;
 }

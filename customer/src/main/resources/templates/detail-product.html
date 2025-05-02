@@ -18,25 +18,18 @@
             <div class="detail-product-left-main row">
 
                 <div class="container-img-product order-2 order-sm-2 order-lg-1 order slick-slider-nav-img col-12 col-lg-2 d-inline-block text-center py-2 slick-initialized slick-slider slick-vertical">
-                    <img style="cursor: pointer" th:each="image : ${product.images}"
-                         th:src="@{'data:image/jpeg;base64,' + ${image}}"
+                    <!-- Hiển thị thumbnails dạng carousel -->
+                    <img style="cursor: pointer" th:each="index : ${#numbers.sequence(0, product.imageUrls.size() - 1)}"
+                         th:src="${product.usingS3 && product.imageUrls[index] != null ? product.imageUrls[index] : 'data:image/jpeg;base64,' + product.images[index]}"
                          alt="">
                 </div>
 
-                <!--                <div class="img-main-detail slick-slider-for-img col-12 col-lg-10 order-first order-sm-1 d-inline-block  py-4 ">-->
-                <!--                    <img id="productImage" class="cloudzoom"-->
-                <!--                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0).image}}" alt="" data-cloudzoom="-->
-                <!--                         zoomImage: '',-->
-                <!--                         easeTime: 0,-->
-                <!--                         zoomPosition: 'inside',-->
-                <!--                         autoInside: true,-->
-                <!--                         easing: 0,-->
-                <!--                         disableOnScreenWidth:1024">-->
-                <!--                </div>-->
                 <div id="img-product-detail"
                      class="img-main-detail slick-slider-for-img col-12 col-lg-10  order-1 order-sm-1 order-lg-2 d-inline-block  py-4 ">
+                    <!-- Hiển thị ảnh chính -->
                     <img class="img-product"
-                         th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0)}}" alt="">
+                         th:src="${product.usingS3 && product.imageUrls[0] != null ? product.imageUrls[0] : 'data:image/jpeg;base64,' + product.images[0]}" 
+                         alt="">
                 </div>
             </div>
 
@@ -304,12 +297,11 @@
                 <div class="card__main" style="">
                     <div class="img__product">
                         <img class="front-img "
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(0)}}"
+                             th:src="${product.usingS3 && product.imageUrls[0] != null ? product.imageUrls[0] : 'data:image/jpeg;base64,' + product.images[0]}"
                              alt="">
                         <img class="back-img"
-                             th:src="@{'data:image/jpeg;base64,' + ${product.images.get(1)}}"
+                             th:src="${product.usingS3 && product.imageUrls.size() > 1 && product.imageUrls[1] != null ? product.imageUrls[1] : (product.images.size() > 1 ? 'data:image/jpeg;base64,' + product.images[1] : (product.usingS3 && product.imageUrls[0] != null ? product.imageUrls[0] : 'data:image/jpeg;base64,' + product.images[0]))}"
                              alt="">
-
                         <div class="card__main--choose-options">
                             <div class="buy-now"><a href="#" style="text-decoration: none; color: white;">PAY
                                 NOW</a>

@@ -20,12 +20,12 @@ public class EnvConfig {
     
     @Bean
     public Dotenv dotenv() {
-        File envFile = new File("customer/.env");
-        String directory = "customer";
+        File envFile = new File(".env");
+        String directory = ".";
         
         if (!envFile.exists()) {
-            envFile = new File(".env");
-            directory = ".";
+            envFile = new File("customer/.env");
+            directory = "customer";
         }
         
         if (envFile.exists()) {

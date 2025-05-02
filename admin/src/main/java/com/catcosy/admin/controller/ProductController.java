@@ -10,6 +10,7 @@ import com.catcosy.library.model.ProductImage;
 import com.catcosy.library.model.Size;
 import com.catcosy.library.service.*;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Slf4j
 @Controller
 public class ProductController {
 
@@ -44,6 +46,9 @@ public class ProductController {
 
     @Autowired
     private ProductImageService productImageService;
+    
+    @Autowired
+    private S3StorageService s3StorageService;
 
     @GetMapping("/products")
     public String productPage(@RequestParam(required = false, defaultValue = "0") Integer page,
@@ -67,7 +72,12 @@ public class ProductController {
         Map<Long, String> images = new HashMap<>();
         if (!productImages.isEmpty()) {
             for (ProductImage productImage : productImages) {
-                images.put(productImage.getProduct().getId(), productImage.getImage());
+                if (productImage.getUsingS3() != null && productImage.getUsingS3() && productImage.getS3Url() != null) {
+                    String publicUrl = s3StorageService.getPublicUrl(productImage.getS3Url());
+                    images.put(productImage.getProduct().getId(), publicUrl);
+                } else {
+                    images.put(productImage.getProduct().getId(), productImage.getImage());
+                }
             }
         }
 
@@ -255,7 +265,14 @@ public class ProductController {
         Map<Long, String> images = new HashMap<>();
         if (!productImages.isEmpty()) {
             for (ProductImage productImage : productImages) {
-                images.put(productImage.getProduct().getId(), productImage.getImage());
+                // Nếu sử dụng S3, lấy URL public
+                if (productImage.getUsingS3() != null && productImage.getUsingS3() && productImage.getS3Url() != null) {
+                    String publicUrl = s3StorageService.getPublicUrl(productImage.getS3Url());
+                    images.put(productImage.getProduct().getId(), publicUrl);
+                } else {
+                    // Nếu không sử dụng S3, lấy Base64 data
+                    images.put(productImage.getProduct().getId(), productImage.getImage());
+                }
             }
         }
 
@@ -279,7 +296,14 @@ public class ProductController {
         Map<Long, String> images = new HashMap<>();
         if (!productImages.isEmpty()) {
             for (ProductImage productImage : productImages) {
-                images.put(productImage.getProduct().getId(), productImage.getImage());
+                // Nếu sử dụng S3, lấy URL public
+                if (productImage.getUsingS3() != null && productImage.getUsingS3() && productImage.getS3Url() != null) {
+                    String publicUrl = s3StorageService.getPublicUrl(productImage.getS3Url());
+                    images.put(productImage.getProduct().getId(), publicUrl);
+                } else {
+                    // Nếu không sử dụng S3, lấy Base64 data
+                    images.put(productImage.getProduct().getId(), productImage.getImage());
+                }
             }
         }
 
