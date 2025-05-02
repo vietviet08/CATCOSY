@@ -219,7 +219,8 @@
                 <input type="hidden" th:value="${rateProduct.id}" class="idComment">
                 <div class="left-main-comment-rate col-2 col-sm-3 col-lg-1">
                     <div class="avatar-customer">
-                        <img th:src="'data:image/jpeg;base64,' + ${rateProduct.customer.image}" alt="">
+<!--                        'data:image/jpeg;base64,' + -->
+                        <img th:src="${rateProduct.customer.s3Url}" alt="">
                     </div>
                 </div>
                 <div class="right-main-comment-rate col-10 col-sm-8 col-lg-11">
@@ -248,23 +249,24 @@
                         <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
                             <div th:if="${imageRated.isVideo()}" class="position-relative video-rate">
                                 <video class="child-container-rate">
-                                    <source th:src="'data:video/mp4;base64,' + ${imageRated.image}" type="video/mp4">
+                                    'data:video/mp4;base64,' +?
+                                    <source th:src="${imageRated.s3Url}" type="video/mp4">
                                 </video>
                                 <i class="fa-solid fa-video"></i>
                                 <div class="blur-bottom"></div>
                             </div>
                             <img class="child-container-rate"
-                                 th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
+                                 th:src="${imageRated.s3Url}" alt="">
                         </div>
                     </div>
 
                     <div class="container-image-rate-product slick-preview-comment">
                         <div th:each="imageRated : ${rateProduct.images}" class="image-comment">
                             <video class="child-container-rate" th:if="${imageRated.isVideo()}" controls>
-                                <source th:src="'data:video/mp4;base64,' + ${imageRated.image}" type="video/mp4">
+                                <source th:src=" ${imageRated.s3Url}" type="video/mp4">
                             </video>
                             <img class="child-container-rate"
-                                 th:src="'data:image/jpeg;base64,' + ${imageRated.image}" alt="">
+                                 th:src="${imageRated.s3Url}" alt="">
                         </div>
                     </div>
 

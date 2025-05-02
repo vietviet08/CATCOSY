@@ -66,7 +66,7 @@ public class AccountController {
         model.addAttribute("lastName", customer.getLastName());
         model.addAttribute("emailUser", customer.getEmail());
         model.addAttribute("phone", customer.getPhone());
-        model.addAttribute("imageAvatar", customer.getImage());
+        model.addAttribute("imageAvatar", customer.getS3Url());
 
         return "account";
     }
