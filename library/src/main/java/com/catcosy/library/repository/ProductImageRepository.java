@@ -20,4 +20,5 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Long
     @Modifying
     @Query(value = "delete from products_images where product_id = :id", nativeQuery = true)
     void deleteAllByProductId(@Param("id") Long id);
+
 }

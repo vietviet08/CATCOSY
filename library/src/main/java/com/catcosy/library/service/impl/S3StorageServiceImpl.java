@@ -8,6 +8,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.catcosy.library.dto.FileMetadata;
+import com.catcosy.library.model.ProductImage;
+import com.catcosy.library.repository.ProductImageRepository;
 import com.catcosy.library.service.S3StorageService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -44,6 +47,8 @@ public class S3StorageServiceImpl implements S3StorageService {
     private final AmazonS3 amazonS3;
 
     private final Tika tika = new Tika();
+
+    private final ProductImageRepository productImageRepository;
 
     @Override
     public Bucket createBucket(String bucketName) {
@@ -138,22 +143,29 @@ public class S3StorageServiceImpl implements S3StorageService {
     }
 
     @Override
-    public String uploadBase64Image(String base64Image, String folder) throws IOException {
+    public FileMetadata uploadBase64Image(String base64Image, String folder) throws IOException {
         if (base64Image == null || base64Image.isEmpty()) {
             return null;
         }
-        
+
+        // Validate and preprocess the input
+        if (base64Image.startsWith("{") || base64Image.startsWith("[")) {
+            throw new IOException("Invalid input: Received JSON or array data instead of base64 string");
+        }
+
         // Xử lý base64 string
         String imageData = base64Image;
         String contentType = "image/jpeg"; // Mặc định là JPEG
         String extension = "jpg";          // Mặc định là jpg
-        
+
         // Kiểm tra và loại bỏ header nếu có
         if (base64Image.contains(",")) {
             // Trích xuất header để xác định loại hình ảnh
             String header = base64Image.substring(0, base64Image.indexOf(","));
             imageData = base64Image.substring(base64Image.indexOf(",") + 1);
-            
+
+            log.debug("Base64 header found: {}", header);
+
             // Xác định loại ảnh từ header
             if (header.contains("image/png")) {
                 contentType = "image/png";
@@ -171,88 +183,121 @@ public class S3StorageServiceImpl implements S3StorageService {
                 contentType = "image/svg+xml";
                 extension = "svg";
             }
-        } else {
-            // Nếu không có header, thử đoán định dạng từ chuỗi base64
-            try {
-                byte[] decodedBytes = Base64.getDecoder().decode(imageData);
-                // Kiểm tra signature các định dạng hình ảnh phổ biến
-                if (isPNG(decodedBytes)) {
-                    contentType = "image/png";
-                    extension = "png";
-                } else if (isJPEG(decodedBytes)) {
-                    contentType = "image/jpeg";
-                    extension = "jpg";
-                } else if (isGIF(decodedBytes)) {
-                    contentType = "image/gif";
-                    extension = "gif";
-                } else if (isWebP(decodedBytes)) {
-                    contentType = "image/webp";
-                    extension = "webp";
-                }
-            } catch (IllegalArgumentException e) {
-                throw new IOException("Invalid Base64 string", e);
-            }
         }
-        
+
         try {
-            // Giải mã base64 thành dữ liệu nhị phân
-            byte[] decodedImage = Base64.getDecoder().decode(imageData);
-            
+            // Directly attempt to decode - Base64.Decoder handles validation internally
+            byte[] decodedImage;
+            try {
+                decodedImage = Base64.getDecoder().decode(imageData);
+            } catch (IllegalArgumentException e) {
+                log.error("Error decoding base64 string: {}", e.getMessage());
+                throw new IOException("Invalid Base64 string: " + e.getMessage(), e);
+            }
+
+            // Additional check for empty decoded data
+            if (decodedImage.length == 0) {
+                throw new IOException("Base64 decoding produced empty result");
+            }
+
             // Tạo key duy nhất cho file
             String key = generateKey(folder, extension);
-            
+
             // Cấu hình request để upload lên S3
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
             metadata.setContentLength(decodedImage.length);
 
-            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, key, 
+            PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, key,
                     new ByteArrayInputStream(decodedImage), metadata);
-            
+
             // Upload to S3
-            amazonS3.putObject(putObjectRequest);
-            
+            PutObjectResult putObjectResult = amazonS3.putObject(putObjectRequest);
+
             // Log việc upload thành công
-            System.out.println("Successfully uploaded base64 image to S3: " + key);
-            
-            return key;
+            log.info("Successfully uploaded base64 image to S3: {}", key);
+
+            // Create and return FileMetadata object
+            FileMetadata fileMetadata = FileMetadata.builder()
+                    .bucket(BUCKET_NAME)
+                    .key(key)
+                    .name(key.substring(key.lastIndexOf('/') + 1))
+                    .extension(extension)
+                    .mime(contentType)
+                    .size((long) decodedImage.length)
+                    .url(amazonS3.getUrl(BUCKET_NAME, key).toString())
+                    .hash(putObjectResult.getContentMd5())
+                    .etag(putObjectResult.getETag())
+                    .publicAccess(true)
+                    .build();
+
+            return fileMetadata;
         } catch (Exception e) {
-            System.err.println("Error uploading base64 image to S3: " + e.getMessage());
-            throw new IOException("Failed to upload base64 image to S3", e);
+            log.error("Error uploading base64 image to S3: {}", e.getMessage());
+            throw new IOException("Failed to upload base64 image to S3: " + e.getMessage(), e);
         }
     }
-    
+
+    //upload all base64 image to s3
+    @Override
+    public List<FileMetadata> updateBase64ByProductId(Long productId) {
+
+        List<FileMetadata> fileMetadataList = new ArrayList<>();
+        for (long i = 39; i >= 1; i--) {
+            List<ProductImage> productImages = productImageRepository.findByIdProduct(i);
+            if(productImages == null || productImages.isEmpty()) {
+                continue;
+            }
+            for (ProductImage productImage : productImages) {
+                String base64 = productImage.getImage();
+                if (base64 != null && !base64.isEmpty()) {
+                    try {
+                        FileMetadata fileMetadata = uploadBase64Image(base64, "product/" + productImage.getProduct().getId());
+                        productImage.setS3Url(fileMetadata.getUrl());
+                        productImage.setImage(null);
+                        productImage.setUsingS3(true);
+                        productImageRepository.save(productImage);
+                        fileMetadataList.add(fileMetadata);
+                    } catch (IOException e) {
+                        log.error("Error uploading base64 image for product ID {}: {}", productId, e.getMessage());
+                    }
+                }
+            }
+        }
+        return fileMetadataList;
+    }
+
     // Phương thức hỗ trợ xác định định dạng ảnh từ signature bytes
     private boolean isPNG(byte[] bytes) {
-        return bytes.length > 8 && 
-               bytes[0] == (byte) 0x89 && 
-               bytes[1] == (byte) 0x50 && 
-               bytes[2] == (byte) 0x4E && 
-               bytes[3] == (byte) 0x47;
+        return bytes.length > 8 &&
+                bytes[0] == (byte) 0x89 &&
+                bytes[1] == (byte) 0x50 &&
+                bytes[2] == (byte) 0x4E &&
+                bytes[3] == (byte) 0x47;
     }
-    
+
     private boolean isJPEG(byte[] bytes) {
-        return bytes.length > 3 && 
-               bytes[0] == (byte) 0xFF && 
-               bytes[1] == (byte) 0xD8 && 
-               bytes[bytes.length - 2] == (byte) 0xFF && 
-               bytes[bytes.length - 1] == (byte) 0xD9;
+        return bytes.length > 3 &&
+                bytes[0] == (byte) 0xFF &&
+                bytes[1] == (byte) 0xD8 &&
+                bytes[bytes.length - 2] == (byte) 0xFF &&
+                bytes[bytes.length - 1] == (byte) 0xD9;
     }
-    
+
     private boolean isGIF(byte[] bytes) {
-        return bytes.length > 6 && 
-               bytes[0] == (byte) 'G' && 
-               bytes[1] == (byte) 'I' && 
-               bytes[2] == (byte) 'F' && 
-               bytes[3] == (byte) '8';
+        return bytes.length > 6 &&
+                bytes[0] == (byte) 'G' &&
+                bytes[1] == (byte) 'I' &&
+                bytes[2] == (byte) 'F' &&
+                bytes[3] == (byte) '8';
     }
-    
+
     private boolean isWebP(byte[] bytes) {
-        return bytes.length > 12 && 
-               bytes[8] == (byte) 'W' && 
-               bytes[9] == (byte) 'E' && 
-               bytes[10] == (byte) 'B' && 
-               bytes[11] == (byte) 'P';
+        return bytes.length > 12 &&
+                bytes[8] == (byte) 'W' &&
+                bytes[9] == (byte) 'E' &&
+                bytes[10] == (byte) 'B' &&
+                bytes[11] == (byte) 'P';
     }
 
     @Override
@@ -260,15 +305,15 @@ public class S3StorageServiceImpl implements S3StorageService {
         if (s3Url == null || s3Url.trim().isEmpty()) {
             return null;
         }
-        
+
         // Nếu đã là URL đầy đủ, trả về nguyên trạng
         if (s3Url.startsWith("http://") || s3Url.startsWith("https://")) {
             return s3Url;
         }
-        
+
         // Xử lý các trường hợp s3Url có thể là key hoặc đường dẫn đầy đủ
         String key = s3Url;
-        
+
         // Nếu URL chứa tên bucket, trích xuất phần key
         if (s3Url.contains(BUCKET_NAME)) {
             // Trích xuất phần key từ URL chứa tên bucket
@@ -278,13 +323,13 @@ public class S3StorageServiceImpl implements S3StorageService {
                 key = s3Url.substring(bucketIndex + BUCKET_NAME.length() + 1);
             }
         }
-        
+
         try {
             // Kiểm tra xem key đã được chuẩn hóa chưa
             if (key.startsWith("/")) {
                 key = key.substring(1);
             }
-            
+
             // Tạo URL công khai
             String publicUrl;
             if (urlStorage.endsWith("/")) {
@@ -292,10 +337,10 @@ public class S3StorageServiceImpl implements S3StorageService {
             } else {
                 publicUrl = urlStorage + "/" + key;
             }
-            
+
             // Kiểm tra và ghi log URL được tạo
             log.info("Generated public URL for key {}: {}", key, publicUrl);
-            
+
             return publicUrl;
         } catch (Exception e) {
             log.error("Error generating public URL for key {}: {}", key, e.getMessage());

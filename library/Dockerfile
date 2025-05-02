@@ -23,7 +23,7 @@ RUN apk add --no-cache tzdata && \
     echo $TZ > /etc/timezone
 
 COPY --from=build /root/.m2/repository/ /app/repository/
-.env ./.env
+COPY .env ./.env
 
 # Just keep container alive for dependency purposes
 CMD ["sh", "-c", "echo 'Library module installed' && tail -f /dev/null"]

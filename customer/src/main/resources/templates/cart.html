@@ -45,7 +45,8 @@
                                 <div class="container-image col-3 col-sm-3">
                                     <p class="image">
                                         <a th:href="@{/product-detail/{id} (id = ${product.product.id})}">
-                                            <img th:src="@{'data:image/jpeg;base64,' + ${product.product.images.get(0).image}}"
+                                            <img
+                                                 th:src="${product.product.images[0].s3Url}"
                                                  alt="">
                                         </a>
                                     </p>

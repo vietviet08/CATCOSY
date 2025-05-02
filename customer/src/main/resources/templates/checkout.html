@@ -164,7 +164,9 @@
 
                         <div class="img">
                             <a>
-                                <img th:src="@{'data:image/jpeg;base64,' + ${product.product.images.get(0).image}}">
+                                <img th:src="${product.product.images[0].s3Url}"
+                                    alt=""
+                                >
                             </a>
                         </div>
                         <div class="inf-product">

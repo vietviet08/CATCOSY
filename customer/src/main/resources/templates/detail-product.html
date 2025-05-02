@@ -19,7 +19,7 @@
 
                 <div class="container-img-product order-2 order-sm-2 order-lg-1 order slick-slider-nav-img col-12 col-lg-2 d-inline-block text-center py-2 slick-initialized slick-slider slick-vertical">
                     <!-- Hiển thị thumbnails dạng carousel -->
-                    <img style="cursor: pointer" th:each="index : ${#numbers.sequence(0, product.images.size() - 1)}"
+                    <img style="cursor: pointer" th:each="index : ${#numbers.sequence(0, product.imageUrls.size() - 1)}"
                          th:src="${product.usingS3 && product.imageUrls[index] != null ? product.imageUrls[index] : 'data:image/jpeg;base64,' + product.images[index]}"
                          alt="">
                 </div>

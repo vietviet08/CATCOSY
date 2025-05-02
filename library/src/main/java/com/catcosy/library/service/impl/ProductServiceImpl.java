@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -344,14 +345,14 @@ public class ProductServiceImpl implements ProductService {
                         
                         try {
                             // Tải ảnh Base64 lên S3
-                            String s3Url = s3StorageService.uploadBase64Image(base64Image, "products");
+                            FileMetadata fileMetadata = s3StorageService.uploadBase64Image(base64Image, "products");
                             
-                            if (s3Url != null) {
+                            if (fileMetadata.getUrl() != null) {
                                 // Chỉ lưu URL S3, không lưu Base64
-                                productImage.setS3Url(s3Url);
+                                productImage.setS3Url(fileMetadata.getUrl());
                                 productImage.setUsingS3(true);
                                 productImage.setImage(null); // Không lưu Base64
-                                System.out.println("Retained old image " + i + " uploaded to S3: " + s3Url);
+                                System.out.println("Retained old image " + i + " uploaded to S3: " + fileMetadata.getUrl());
                                 
                                 ProductImage savedImage = productImageRepository.save(productImage);
                                 updatedImages.add(savedImage);
