@@ -25,5 +25,9 @@ public class RateProductImage {
     @Column(columnDefinition = "LONGBLOB")
     private String image;
 
+    private String s3Url;
+
+    private boolean isUsingS3;
+
     private boolean isVideo;
 }

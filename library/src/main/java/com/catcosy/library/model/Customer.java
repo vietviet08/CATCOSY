@@ -31,6 +31,10 @@ public class Customer extends BaseEntity {
     @Column(columnDefinition = "LONGBLOB")
     private String image;
 
+    private String s3Url;
+
+    private boolean isUsingS3;
+
     private String username;
     private String password;
 

@@ -6,6 +6,7 @@ import com.catcosy.library.model.Order;
 import com.catcosy.library.service.CustomerService;
 import com.catcosy.library.service.OrderDetailService;
 import com.catcosy.library.service.OrderService;
+import com.catcosy.library.service.S3StorageService;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,6 +49,9 @@ public class AccountController {
     @Autowired
     private OrderDetailService orderDetailService;
 
+    @Autowired
+    private S3StorageService s3StorageService;
+
     @GetMapping("/account")
     public String myAccount(Principal principal, Model model) {
 
@@ -87,7 +91,9 @@ public class AccountController {
                 customer.setLastName(lastName);
                 customer.setPhone(phone);
                 if (!image.isEmpty())
-                    customer.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+//                    customer.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+                    customer.setS3Url(s3StorageService.uploadFile(image).getUrl());
+                customer.setUsingS3(true);
                 customerService.updateCustomer(customer);
                 model.addAttribute("success", "Change info successfully!");
                 return "redirect:/account";

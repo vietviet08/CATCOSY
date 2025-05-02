@@ -2,6 +2,7 @@ package com.catcosy.library.service.oauth2.security;
 
 import com.catcosy.library.repository.CustomerRepository;
 import com.catcosy.library.repository.RoleRepository;
+import com.catcosy.library.service.S3StorageService;
 import com.catcosy.library.service.oauth2.OAuth2UserDetailFactory;
 import com.catcosy.library.service.oauth2.OAuth2UserDetails;
 import com.catcosy.library.model.Customer;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
@@ -39,16 +41,22 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
 
     @Autowired
     private MailService mailService;
+    @Autowired
+    private S3StorageService s3StorageService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        return checkingUser(userRequest, oAuth2User);
+        try {
+            return checkingUser(userRequest, oAuth2User);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
-    private OAuth2User checkingUser(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+    private OAuth2User checkingUser(OAuth2UserRequest userRequest, OAuth2User oAuth2User) throws IOException {
         OAuth2UserDetails oAuth2UserDetails = OAuth2UserDetailFactory.getOAuth2Detail(
                 userRequest.getClientRegistration().getRegistrationId(),
                 oAuth2User.getAttributes());
@@ -98,7 +106,7 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
                 customerDetail.isActive());
     }
 
-    private Customer createNewOAuth2Customer(OAuth2UserRequest userRequest, OAuth2UserDetails oAuth2UserDetails) {
+    private Customer createNewOAuth2Customer(OAuth2UserRequest userRequest, OAuth2UserDetails oAuth2UserDetails) throws IOException {
         Customer customer = new Customer();
         customer.setUsername(oAuth2UserDetails.getId());
         customer.setFirstName(oAuth2UserDetails.getFirstName());
@@ -108,7 +116,8 @@ public class OAuth2DetailCustomService extends DefaultOAuth2UserService {
         customer.setProvider(userRequest.getClientRegistration().getRegistrationId());
         customer.setIdOAuth2(oAuth2UserDetails.getId());
         if(oAuth2UserDetails.getAvatar() != null)
-            customer.setImage(encodeImageToBase64(oAuth2UserDetails.getAvatar()));
+//            customer.setImage(encodeImageToBase64(oAuth2UserDetails.getAvatar()));
+            customer.setS3Url(s3StorageService.uploadByUrl(oAuth2UserDetails.getAvatar(), "customer").getUrl());
         return customerRepository.save(customer);
     }
 

@@ -35,7 +35,6 @@ public interface CustomerService {
 
     void updatePassword(Customer customer, String password);
 
-
     Customer lockCustomer(String username);
 
     Customer unlockCustomer(String username);
