@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-4 d-flex flex-column align-items-center    ">
                         <div class="avatar-frame">
-                            <img id="avatar-preview" th:src=" ${imageAvatar} != null ? 'data:image/jpeg;base64,' + ${imageAvatar} : '#' " alt="avt">
+                            <img id="avatar-preview" th:src=" ${imageAvatar} != null ? ${imageAvatar} : '#' " alt="avt">
                         </div>
 
                         <input id="img" name="avatarImage" class="input-file" type="file">
