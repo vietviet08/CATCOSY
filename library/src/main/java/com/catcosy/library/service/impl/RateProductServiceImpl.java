@@ -1,12 +1,14 @@
 package com.catcosy.library.service.impl;
 
 
+import com.catcosy.library.dto.FileMetadata;
 import com.catcosy.library.model.CustomerLikedComment;
 import com.catcosy.library.model.OrderDetail;
 import com.catcosy.library.model.RateProduct;
 import com.catcosy.library.model.RateProductImage;
 import com.catcosy.library.repository.*;
 import com.catcosy.library.service.RateProductService;
+import com.catcosy.library.service.S3StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,11 +37,10 @@ public class RateProductServiceImpl implements RateProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    RateProductImageRepository rateProductImageRepository;
+    private OrderDetailRepository orderDetailRepository;
 
     @Autowired
-    OrderDetailRepository orderDetailRepository;
-
+    private S3StorageService s3StorageService;
 
     @Override
     public RateProduct addComment(Long idProduct, Long idOrderDetail, String username, int star, String content, List<MultipartFile> images) {
@@ -62,7 +63,9 @@ public class RateProductServiceImpl implements RateProductService {
             try {
                 rateProductImage.setRateProduct(rateProduct);
                 String stringBase64 = Base64.getEncoder().encodeToString(file.getBytes());
-                rateProductImage.setImage(stringBase64);
+                FileMetadata fileMetadata = s3StorageService.uploadFile(file);
+                rateProductImage.setS3Url(fileMetadata.getUrl());
+                rateProductImage.setUsingS3(true);
                 rateProductImage.setVideo(isVideo(stringBase64));
             } catch (IOException e) {
                 throw new RuntimeException(e);

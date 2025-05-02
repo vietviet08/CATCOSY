@@ -9,7 +9,9 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.catcosy.library.dto.FileMetadata;
 import com.catcosy.library.model.ProductImage;
+import com.catcosy.library.model.RateProductImage;
 import com.catcosy.library.repository.ProductImageRepository;
+import com.catcosy.library.repository.RateProductImageRepository;
 import com.catcosy.library.service.S3StorageService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,10 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class S3StorageServiceImpl implements S3StorageService {
     private final Tika tika = new Tika();
 
     private final ProductImageRepository productImageRepository;
+
+    private final RateProductImageRepository rateProductImageRepository;
 
     @Override
     public Bucket createBucket(String bucketName) {
@@ -153,20 +156,20 @@ public class S3StorageServiceImpl implements S3StorageService {
             throw new IOException("Invalid input: Received JSON or array data instead of base64 string");
         }
 
-        // Xử lý base64 string
-        String imageData = base64Image;
-        String contentType = "image/jpeg"; // Mặc định là JPEG
-        String extension = "jpg";          // Mặc định là jpg
+        // Process base64 string
+        String mediaData = base64Image;
+        String contentType = "image/jpeg"; // Default is JPEG
+        String extension = "jpg";          // Default is jpg
 
-        // Kiểm tra và loại bỏ header nếu có
+        // Check and remove header if present
         if (base64Image.contains(",")) {
-            // Trích xuất header để xác định loại hình ảnh
+            // Extract header to identify media type
             String header = base64Image.substring(0, base64Image.indexOf(","));
-            imageData = base64Image.substring(base64Image.indexOf(",") + 1);
+            mediaData = base64Image.substring(base64Image.indexOf(",") + 1);
 
             log.debug("Base64 header found: {}", header);
 
-            // Xác định loại ảnh từ header
+            // Identify media type from header
             if (header.contains("image/png")) {
                 contentType = "image/png";
                 extension = "png";
@@ -182,40 +185,80 @@ public class S3StorageServiceImpl implements S3StorageService {
             } else if (header.contains("image/svg+xml")) {
                 contentType = "image/svg+xml";
                 extension = "svg";
+            } else if (header.contains("video/mp4")) {
+                contentType = "video/mp4";
+                extension = "mp4";
+            } else if (header.contains("video/webm")) {
+                contentType = "video/webm";
+                extension = "webm";
+            } else if (header.contains("video/ogg")) {
+                contentType = "video/ogg";
+                extension = "ogg";
+            } else if (header.contains("video/")) {
+                // Handle other video types
+                String subtype = header.substring(header.indexOf("video/") + 6);
+                if (subtype.contains(";")) {
+                    subtype = subtype.substring(0, subtype.indexOf(";"));
+                }
+                if (!subtype.isEmpty()) {
+                    contentType = "video/" + subtype;
+                    extension = subtype;
+                }
             }
         }
 
         try {
-            // Directly attempt to decode - Base64.Decoder handles validation internally
-            byte[] decodedImage;
+            // Decode base64 string to binary data
+            byte[] decodedData;
             try {
-                decodedImage = Base64.getDecoder().decode(imageData);
+                decodedData = Base64.getDecoder().decode(mediaData);
             } catch (IllegalArgumentException e) {
                 log.error("Error decoding base64 string: {}", e.getMessage());
                 throw new IOException("Invalid Base64 string: " + e.getMessage(), e);
             }
 
-            // Additional check for empty decoded data
-            if (decodedImage.length == 0) {
+            // Check for empty decoded data
+            if (decodedData.length == 0) {
                 throw new IOException("Base64 decoding produced empty result");
             }
 
-            // Tạo key duy nhất cho file
+            // Try to determine media type from content if not set by header
+            if (extension.equals("jpg") && contentType.equals("image/jpeg")) {
+                // Check for common file signatures
+                if (isPNG(decodedData)) {
+                    contentType = "image/png";
+                    extension = "png";
+                } else if (isJPEG(decodedData)) {
+                    contentType = "image/jpeg";
+                    extension = "jpg";
+                } else if (isGIF(decodedData)) {
+                    contentType = "image/gif";
+                    extension = "gif";
+                } else if (isWebP(decodedData)) {
+                    contentType = "image/webp";
+                    extension = "webp";
+                } else if (isMp4(decodedData)) {
+                    contentType = "video/mp4";
+                    extension = "mp4";
+                }
+            }
+
+            // Generate unique key for file
             String key = generateKey(folder, extension);
 
-            // Cấu hình request để upload lên S3
+            // Configure request for S3 upload
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
-            metadata.setContentLength(decodedImage.length);
+            metadata.setContentLength(decodedData.length);
 
             PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, key,
-                    new ByteArrayInputStream(decodedImage), metadata);
+                    new ByteArrayInputStream(decodedData), metadata);
 
             // Upload to S3
             PutObjectResult putObjectResult = amazonS3.putObject(putObjectRequest);
 
-            // Log việc upload thành công
-            log.info("Successfully uploaded base64 image to S3: {}", key);
+            // Log successful upload
+            log.info("Successfully uploaded base64 media to S3: {}", key);
 
             // Create and return FileMetadata object
             FileMetadata fileMetadata = FileMetadata.builder()
@@ -224,7 +267,7 @@ public class S3StorageServiceImpl implements S3StorageService {
                     .name(key.substring(key.lastIndexOf('/') + 1))
                     .extension(extension)
                     .mime(contentType)
-                    .size((long) decodedImage.length)
+                    .size((long) decodedData.length)
                     .url(amazonS3.getUrl(BUCKET_NAME, key).toString())
                     .hash(putObjectResult.getContentMd5())
                     .etag(putObjectResult.getETag())
@@ -233,9 +276,20 @@ public class S3StorageServiceImpl implements S3StorageService {
 
             return fileMetadata;
         } catch (Exception e) {
-            log.error("Error uploading base64 image to S3: {}", e.getMessage());
-            throw new IOException("Failed to upload base64 image to S3: " + e.getMessage(), e);
+            log.error("Error uploading base64 media to S3: {}", e.getMessage());
+            throw new IOException("Failed to upload base64 media to S3: " + e.getMessage(), e);
         }
+    }
+
+    private boolean isMp4(byte[] bytes) {
+        return bytes.length > 11 &&
+                bytes[4] == (byte) 'f' &&
+                bytes[5] == (byte) 't' &&
+                bytes[6] == (byte) 'y' &&
+                bytes[7] == (byte) 'p' &&
+                (bytes[8] == (byte) 'm' && bytes[9] == (byte) 'p' && bytes[10] == (byte) '4' || // mp4
+                        bytes[8] == (byte) 'i' && bytes[9] == (byte) 's' && bytes[10] == (byte) 'o' || // iso
+                        bytes[8] == (byte) 'M' && bytes[9] == (byte) '4' && bytes[10] == (byte) 'V');  // M4V
     }
 
     //upload all base64 image to s3
@@ -245,7 +299,7 @@ public class S3StorageServiceImpl implements S3StorageService {
         List<FileMetadata> fileMetadataList = new ArrayList<>();
         for (long i = 39; i >= 1; i--) {
             List<ProductImage> productImages = productImageRepository.findByIdProduct(i);
-            if(productImages == null || productImages.isEmpty()) {
+            if (productImages == null || productImages.isEmpty()) {
                 continue;
             }
             for (ProductImage productImage : productImages) {
@@ -265,6 +319,124 @@ public class S3StorageServiceImpl implements S3StorageService {
             }
         }
         return fileMetadataList;
+    }
+
+    @Override
+    public List<FileMetadata> updateBase64ByCommentId() {
+        List<FileMetadata> fileMetadataList = new ArrayList<>();
+        for (long i = 8; i >= 1; i--) {
+            List<RateProductImage> rateImages = rateProductImageRepository.findAllByRateId(i);
+            if (rateImages == null || rateImages.isEmpty()) {
+                continue;
+            }
+            for (RateProductImage rateImage : rateImages) {
+                String base64 = rateImage.getImage();
+                if (base64 != null && !base64.isEmpty()) {
+                    try {
+                        FileMetadata fileMetadata = uploadBase64Image(base64, "rate/" + rateImage.getRateProduct().getId());
+                        rateImage.setS3Url(fileMetadata.getUrl());
+                        rateImage.setImage(null);
+                        rateImage.setUsingS3(true);
+                        rateProductImageRepository.save(rateImage);
+                        fileMetadataList.add(fileMetadata);
+                    } catch (IOException e) {
+                        log.error("Error uploading base64 image for rate ID {}: {}", rateImage.getRateProduct().getId(), e.getMessage());
+                    }
+                }
+            }
+        }
+        return fileMetadataList;
+    }
+
+    @Override
+    public FileMetadata uploadByUrl(String url, String folder) throws IOException {
+        if (url == null || url.isEmpty()) {
+            return null;
+        }
+
+        log.info("Uploading image from URL to S3: {}", url);
+
+        try {
+            // Open connection to the URL
+            URL imageUrl = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection();
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+            // Get content type and determine file extension
+            String contentType = connection.getContentType();
+            String extension = "jpg"; // Default extension
+
+            if (contentType != null) {
+                if (contentType.contains("image/png")) {
+                    extension = "png";
+                } else if (contentType.contains("image/jpeg") || contentType.contains("image/jpg")) {
+                    extension = "jpg";
+                } else if (contentType.contains("image/gif")) {
+                    extension = "gif";
+                } else if (contentType.contains("image/webp")) {
+                    extension = "webp";
+                } else if (contentType.contains("image/svg+xml")) {
+                    extension = "svg";
+                }
+            }
+
+            // Download image data
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            try (InputStream inputStream = connection.getInputStream()) {
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }
+
+            byte[] imageBytes = outputStream.toByteArray();
+
+            // Check if image data is valid
+            if (imageBytes.length == 0) {
+                throw new IOException("Downloaded image is empty");
+            }
+
+            // Generate unique key for S3
+            String key = generateKey(folder, extension);
+
+            // Configure the request to upload to S3
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(contentType != null ? contentType : "image/jpeg");
+            metadata.setContentLength(imageBytes.length);
+
+            // Create put request
+            PutObjectRequest putObjectRequest = new PutObjectRequest(
+                    BUCKET_NAME,
+                    key,
+                    new ByteArrayInputStream(imageBytes),
+                    metadata
+            );
+
+            // Upload to S3
+            PutObjectResult putObjectResult = amazonS3.putObject(putObjectRequest);
+
+            // Log successful upload
+            log.info("Successfully uploaded URL image to S3: {}", key);
+
+            // Create and return FileMetadata
+            return FileMetadata.builder()
+                    .bucket(BUCKET_NAME)
+                    .key(key)
+                    .name(key.substring(key.lastIndexOf('/') + 1))
+                    .extension(extension)
+                    .mime(contentType != null ? contentType : "image/jpeg")
+                    .size((long) imageBytes.length)
+                    .url(amazonS3.getUrl(BUCKET_NAME, key).toString())
+                    .hash(putObjectResult.getContentMd5())
+                    .etag(putObjectResult.getETag())
+                    .publicAccess(true)
+                    .build();
+
+        } catch (Exception e) {
+            log.error("Error uploading URL image to S3: {}", e.getMessage());
+            throw new IOException("Failed to upload URL image to S3: " + e.getMessage(), e);
+        }
     }
 
     // Phương thức hỗ trợ xác định định dạng ảnh từ signature bytes

@@ -5,7 +5,6 @@ WORKDIR /app
 # Copy only the library module
 COPY library/pom.xml ./pom.xml
 COPY library/src ./src
-COPY .env ./.env
 
 # Install library to local Maven repo (don't try to run it)
 RUN mvn clean install -DskipTests
@@ -23,7 +22,6 @@ RUN apk add --no-cache tzdata && \
     echo $TZ > /etc/timezone
 
 COPY --from=build /root/.m2/repository/ /app/repository/
-COPY .env ./.env
 
 # Just keep container alive for dependency purposes
 CMD ["sh", "-c", "echo 'Library module installed' && tail -f /dev/null"]

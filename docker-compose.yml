@@ -15,7 +15,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql-init/latest:/docker-entrypoint-initdb.d
       - ./my.cnf:/etc/my.cnf
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
@@ -30,7 +30,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: library/Dockerfile
-    image: vietquoc2408/catcosy-library:1.0.0
+    image: vietquoc2408/catcosy-library:1.0.1
     container_name: catcosy-library
     restart: always
     ports:
@@ -54,7 +54,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: admin/Dockerfile
-    image: vietquoc2408/catcosy-admin:1.0.0
+    image: vietquoc2408/catcosy-admin:1.0.1
     container_name: catcosy-admin
     restart: always
     ports:
@@ -81,7 +81,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: customer/Dockerfile
-    image: vietquoc2408/catcosy-customer:1.0.0
+    image: vietquoc2408/catcosy-customer:1.0.1
     container_name: catcosy-customer
     restart: always
     ports:

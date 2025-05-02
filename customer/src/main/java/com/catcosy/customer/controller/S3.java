@@ -51,13 +51,13 @@ public class S3 {
         }
     }
 
-    @PostMapping("/s3/base64/{productId}")
-    public List<FileMetadata> uploadBase64(@PathVariable Long productId) {
-        try {
-            return s3StorageService.updateBase64ByProductId(productId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    @PostMapping("/s3/base64")
+//    public List<FileMetadata> uploadBase64() {
+//        try {
+//            return s3StorageService.updateBase64ByCommentId();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 }

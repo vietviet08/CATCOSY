@@ -20,7 +20,12 @@ public interface S3StorageService {
 
     FileMetadata uploadBase64Image(String base64Image, String folder) throws IOException;
 
-    List<FileMetadata> updateBase64ByProductId(Long productId);
+    FileMetadata uploadByUrl(String url, String folder) throws IOException;
 
     String getPublicUrl(String s3Url);
+
+    List<FileMetadata> updateBase64ByProductId(Long productId);
+
+    List<FileMetadata> updateBase64ByCommentId();
+
 }
