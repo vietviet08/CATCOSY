@@ -5,6 +5,7 @@ WORKDIR /app
 # Copy only the library module
 COPY library/pom.xml ./pom.xml
 COPY library/src ./src
+COPY .env ./.env
 
 # Install library to local Maven repo (don't try to run it)
 RUN mvn clean install -DskipTests
@@ -15,7 +16,14 @@ RUN echo "Library JAR has been built and installed to Maven repository"
 # Use a minimal container for the "runtime" - not actually running anything
 FROM alpine:3.19
 WORKDIR /app
+
+ENV TZ=Asia/Ho_Chi_Minh
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
 COPY --from=build /root/.m2/repository/ /app/repository/
+.env ./.env
 
 # Just keep container alive for dependency purposes
 CMD ["sh", "-c", "echo 'Library module installed' && tail -f /dev/null"]

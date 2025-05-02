@@ -35,6 +35,8 @@ services:
     restart: always
     ports:
      - "8084:8084"
+    env_file:
+      - ./.env
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
       SPRING_DATASOURCE_USERNAME: root
@@ -57,6 +59,8 @@ services:
     restart: always
     ports:
       - "8085:8085"
+    env_file:
+      - ./.env
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
       SPRING_DATASOURCE_USERNAME: root
@@ -83,7 +87,7 @@ services:
     ports:
       - "8086:8086"
     env_file:
-      - ./customer/.env
+      - ./.env
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
       SPRING_DATASOURCE_USERNAME: root
