@@ -16,7 +16,6 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./mysql-init/latest:/docker-entrypoint-initdb.d
-      - ./my.cnf:/etc/my.cnf
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
       interval: 10s
@@ -38,7 +37,7 @@ services:
     env_file:
       - ./.env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -62,7 +61,7 @@ services:
     env_file:
       - ./.env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -89,7 +88,7 @@ services:
     env_file:
       - ./.env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterEncoding=UTF-8&connectionCollation=utf8_general_ci&maxAllowedPacket=268435456
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/catcosy?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
