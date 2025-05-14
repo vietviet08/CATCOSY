@@ -7,18 +7,41 @@
     .nav{
         background-color: #f7f7f7;
     }
+    
+    /* Enhanced styling for product images to ensure PDF rendering */
+    .img-product {
+        width: 65px;
+        height: auto;
+        display: block;
+        object-fit: contain;
+        background-color: #fff;
+        margin: 0 auto;
+        border: 1px solid #eee;
+    }
+    
+    /* PDF printing optimizations */
+    @media print {
+        .img-product {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    }
 </style>
 <body>
 <header th:replace="~{fragments :: header}"></header>
 
-<div class="container my-5 w-50 pt-5">
+<div id="invoice-container" class="container my-5 w-50 pt-5">
     <div class="row">
         <div class="time-copyright d-flex justify-content-between">
             <div><p th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy - HH:mm:ss')}"></p></div>
             <div><p>© Copyright 2024 - NGUYỄN QUỐC VIỆT - 23CE.B029</p></div>
         </div>
 
-        <div class="text-center title">INVOICE</div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="text-center title">INVOICE</div>            <button id="exportPdfBtn" class="btn btn-primary">
+                <i class="fas fa-file-pdf mr-1"></i> Xuất PDF
+            </button>
+        </div>
         <div class="text-center" th:text="'Order: #' + ${order.id}"></div>
 
         <div class="info-customer my-4">
@@ -75,14 +98,182 @@
 
 <footer th:replace="~{fragments :: footer}"></footer>
 
+<!-- PDF Export libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
+    // Format prices as VND
     const VND = new Intl.NumberFormat('vi-VN', {
         style: 'currency', currency: 'VND',
     });
+    
     const nodePriceProduct = document.querySelectorAll(".price-product");
-    nodePriceProduct.forEach((nodePrice, index) => {
+    nodePriceProduct.forEach((nodePrice) => {
         nodePrice.textContent = VND.format(nodePrice.textContent);
-    })
+    });
+      // Preload all images before generating PDF
+    function preloadImages() {
+        return new Promise((resolve) => {
+            // Find all product images
+            const images = document.querySelectorAll('.img-product');
+            let loadedImages = 0;
+            const totalImages = images.length;
+            
+            if (totalImages === 0) {
+                resolve(); // No images to preload
+                return;
+            }
+            
+            // Preload each image
+            images.forEach(img => {
+                // Create a new image to preload
+                const newImg = new Image();
+                newImg.crossOrigin = "anonymous"; // Handle CORS
+                
+                // When this image loads, check if all images are loaded
+                newImg.onload = function() {
+                    loadedImages++;
+                    if (loadedImages === totalImages) {
+                        resolve(); // All images loaded
+                    }
+                };
+                
+                // If there's an error loading the image, still continue
+                newImg.onerror = function() {
+                    console.error('Error loading image:', img.src);
+                    loadedImages++;
+                    if (loadedImages === totalImages) {
+                        resolve(); // All images processed
+                    }
+                };
+                
+                // Start loading the image
+                newImg.src = img.src;
+            });
+            
+            // Failsafe: if images don't load in 3 seconds, continue anyway
+            setTimeout(resolve, 3000);
+        });
+    }
+    
+    // Simple PDF Export function
+    function generatePDF() {
+        const btn = document.getElementById('exportPdfBtn');
+        const originalText = btn.innerHTML;
+        
+        // Show loading state
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+        btn.disabled = true;
+        
+        // Temporarily hide button for clean PDF
+        btn.style.display = 'none';
+        
+        // Get invoice content and order ID
+        const content = document.getElementById('invoice-container');
+        const orderIdElement = document.querySelector('[th\\:text^="Order: #"]');
+        const orderId = orderIdElement ? orderIdElement.textContent.replace('Order: #', '').trim() : 'order';
+          // First ensure all images are loaded
+        preloadImages().then(() => {
+            // Use html2canvas to capture content with optimized image settings
+            return html2canvas(content, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                logging: true,
+                imageTimeout: 5000,
+                onclone: function(clonedDoc) {
+                    // Make any adjustments to the cloned document if necessary
+                    // This is executed right before the cloned document is rendered
+                    const clonedImages = clonedDoc.querySelectorAll('.img-product');
+                    clonedImages.forEach(img => {
+                        // Make sure images are visible and loaded
+                        if (img.complete && img.naturalHeight !== 0) {
+                            img.style.display = 'block';
+                            img.style.visibility = 'visible';
+                        }
+                    });
+                }
+            });
+        }).then(function(canvas) {
+            // Get jsPDF instance
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+              // Calculate image dimensions for A4 page
+            const imgWidth = 210;  // A4 width in mm
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            
+            // Convert canvas to high-quality image
+            const imgData = canvas.toDataURL('image/png', 1.0);
+            
+            // Add image to PDF with high quality
+            pdf.addImage(
+                imgData, 
+                'PNG', 
+                0, 0, 
+                imgWidth, imgHeight
+            );
+            
+            // Save PDF with appropriate filename
+            pdf.save(`hoa_don_${orderId}.pdf`);
+            
+            // Show success message and restore button
+            btn.style.display = 'block';
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> Xuất PDF thành công!';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2000);        }).catch(function(error) {
+            console.error('PDF generation error:', error);
+            
+            // Show error message
+            btn.style.display = 'block';
+            btn.innerHTML = '<i class="fas fa-times-circle"></i> Lỗi xuất PDF';
+            btn.disabled = false;
+            
+            alert('Có lỗi khi tạo PDF. Hình ảnh có thể không được tải đầy đủ. Vui lòng thử lại sau.');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 3000);
+        });
+    }
+    
+    // Additional helper function to ensure images are properly loaded
+    function fixImageRendering() {
+        // Get all product images
+        const productImages = document.querySelectorAll('.img-product');
+        
+        // Apply CORS settings to all images
+        productImages.forEach(img => {
+            img.crossOrigin = "anonymous";
+            
+            // Add load event listener to verify image loading
+            img.addEventListener('load', function() {
+                console.log('Image loaded successfully:', img.src);
+            });
+            
+            img.addEventListener('error', function() {
+                console.error('Failed to load image:', img.src);
+                // Try to reload the image or provide fallback
+                if (!img.dataset.retried) {
+                    img.dataset.retried = 'true';
+                    setTimeout(() => {
+                        const currentSrc = img.src;
+                        img.src = '';
+                        img.src = currentSrc + '?retry=' + new Date().getTime();
+                    }, 1000);
+                }
+            });
+        });
+    }
+    
+    // Run image fix when document is ready
+    document.addEventListener('DOMContentLoaded', fixImageRendering);
+    
+    // Attach click handler to PDF button
+    document.getElementById('exportPdfBtn').addEventListener('click', generatePDF);
 </script>
 <div th:replace="~{fragments :: script}"></div>
 </body>

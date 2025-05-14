@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}">
+</head>
+<link rel="stylesheet" th:href="@{/css/view-orders.css}">
+<style>
+    .nav{
+        background-color: #f7f7f7;
+    }
+</style>
+<body>
+<header th:replace="~{fragments :: header}"></header>
+
+<div class="container my-5 w-50 pt-5">
+    <div class="row">
+        <div class="time-copyright d-flex justify-content-between">
+            <div><p th:text="${#dates.format(order.orderDate, 'dd-MM-yyyy - HH:mm:ss')}"></p></div>
+            <div><p>© Copyright 2024 - NGUYỄN QUỐC VIỆT - 23CE.B029</p></div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="text-center title">INVOICE</div>            
+            <button id="exportPdfBtn" class="btn btn-primary">
+                <i class="fas fa-file-pdf mr-1"></i> Xuất PDF
+            </button>
+        </div>
+        <div class="text-center" th:text="'Order: #' + ${order.id}"></div>
+
+        <div class="info-customer my-4">
+            <div th:text="${'Full Name: ' + order.customer.firstName + ' ' + order.customer.lastName}"></div>
+            <div th:text="${'Delivery Address: ' + order.deliveryAddress }"></div>
+            <div th:text="${'Phone: ' + order.customer.phone}"></div>
+            <div th:text="${'Email: ' + order.customer.email}"></div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr class="table-active">
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="orderDetail : ${order.orderDetails}">
+                    <td><img class="img-product"
+                             th:src="${orderDetail.product.images.get(0).s3Url}"
+                             alt=""></td>
+                    <td th:text="${orderDetail.product.name}"></td>
+                    <td th:text="${orderDetail.unitPrice}" class="price-product"></td>
+                    <td th:text="${orderDetail.quantity + ' x' + orderDetail.size.size}"></td>
+                    <td th:text="${orderDetail.totalPrice}" class="price-product"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-center " style="font-weight: 600">Total</td>
+                    <td class="price-product" th:text="${order.totalPrice}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sig">
+            <div class="row">
+                <div class="application-creator text-center col-6 col-sm-6">
+                    <p style="margin-top: 40px">Application Creator</p>
+                </div>
+
+                <div class="customer-bought text-center col-6 col-sm-6">
+                    <p th:text="${'Da Nang, ' +  #dates.format(order.orderDate, 'dd, MMMM, yyyy')}"></p>
+                    <p>Customer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="~{fragments :: footer}"></footer>
+
+<!-- PDF Export libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+    // Format price as VND
+    const VND = new Intl.NumberFormat('vi-VN', {
+        style: 'currency', currency: 'VND',
+    });
+    
+    const nodePriceProduct = document.querySelectorAll(".price-product");
+    nodePriceProduct.forEach((nodePrice, index) => {
+        nodePrice.textContent = VND.format(nodePrice.textContent);
+    });
+    
+    // PDF Export functionality
+    document.getElementById('exportPdfBtn').addEventListener('click', function() {
+        // Get button reference
+        const btn = this;
+        // Store original button content
+        const originalText = btn.innerHTML;
+        
+        // Update button to show processing state
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+        btn.disabled = true;
+        
+        try {
+            // Get PDF library
+            const { jsPDF } = window.jspdf;
+            
+            // Hide button for clean PDF generation
+            btn.style.display = 'none';
+            
+            // Get invoice container
+            const invoiceElement = document.querySelector('.container.my-5.w-50');
+            
+            // Get order ID for filename
+            const orderElement = document.querySelector('[th\\:text^="Order: #"]');
+            const orderId = orderElement ? orderElement.textContent.replace('Order: #', '').trim() : 'order';
+            
+            // Wait a moment for UI to update before capturing
+            setTimeout(function() {
+                // Convert HTML to canvas image
+                html2canvas(invoiceElement, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff'
+                }).then(function(canvas) {
+                    // Create a new PDF document
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    
+                    // Calculate dimensions to fit A4
+                    const imgWidth = 210; // A4 width (mm)
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    
+                    // Add the image to the PDF
+                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+                    
+                    // Save PDF and trigger browser download
+                    pdf.save(`hoa_don_${orderId}.pdf`);
+                    
+                    // Show success message
+                    btn.style.display = 'block';
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Đã xuất PDF thành công';
+                    
+                    // Reset button after delay
+                    setTimeout(function() {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }, 3000);
+                }).catch(function(error) {
+                    console.error('Error converting to canvas:', error);
+                    btn.style.display = 'block';
+                    btn.innerHTML = '<i class="fas fa-times-circle"></i> Lỗi xuất PDF';
+                    btn.disabled = false;
+                    
+                    alert('Có lỗi khi tạo PDF. Vui lòng thử lại sau.');
+                    
+                    setTimeout(function() {
+                        btn.innerHTML = originalText;
+                    }, 3000);
+                });
+            }, 500);
+            
+        } catch (error) {
+            console.error('PDF setup error:', error);
+            btn.style.display = 'block';
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            
+            alert('Có lỗi khi tạo PDF. Vui lòng thử lại sau.');
+        }
+    });
+</script>
+<div th:replace="~{fragments :: script}"></div>
+</body>
+</html>
