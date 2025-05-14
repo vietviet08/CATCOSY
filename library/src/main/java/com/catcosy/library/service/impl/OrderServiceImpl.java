@@ -50,9 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setTotalPrice(cart.getTotalPrice());
         order.setDiscountPrice(0.0);
-        order.setShippingFee(0.0);
-
-        UUID uuid = UUID.randomUUID();
+        order.setShippingFee(0.0);        UUID uuid = UUID.randomUUID();
         order.setCodeViewOrder(uuid.toString());
 
         order.setAccept(false);
@@ -64,12 +62,14 @@ public class OrderServiceImpl implements OrderService {
         for (CartItem item : items) {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(order);
+            // Make sure we're using a fully initialized Product object that won't be lazy-loaded
             orderDetail.setProduct(item.getProduct());
             orderDetail.setQuantity(item.getQuantity());
             orderDetail.setTotalPrice(item.getTotalPrice());
             orderDetail.setUnitPrice(item.getUnitPrice());
             orderDetail.setSize(item.getSize());
             orderDetail.setAllowComment(false);
+            // Save the order detail first
             orderDetailRepository.save(orderDetail);
             orderDetails.add(orderDetail);
         }
@@ -199,8 +199,7 @@ public class OrderServiceImpl implements OrderService {
             UUID uuid = UUID.randomUUID();
             order.setCodeViewOrder(uuid.toString());
             
-            order.setAccept(false);
-            order.setStatus(status[0]);
+            order.setAccept(false);            order.setStatus(status[0]);
             order.setTemporary(true); 
             
             List<OrderDetail> orderDetails = new ArrayList<>();
@@ -208,12 +207,14 @@ public class OrderServiceImpl implements OrderService {
             for (CartItem item : items) {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrder(order);
+                // Make sure we're using a fully initialized Product object that won't be lazy-loaded
                 orderDetail.setProduct(item.getProduct());
                 orderDetail.setQuantity(item.getQuantity());
                 orderDetail.setTotalPrice(item.getTotalPrice());
                 orderDetail.setUnitPrice(item.getUnitPrice());
                 orderDetail.setSize(item.getSize());
                 orderDetail.setAllowComment(false);
+                // Save the order detail first
                 orderDetailRepository.save(orderDetail);
                 orderDetails.add(orderDetail);
             }

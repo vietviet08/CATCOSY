@@ -42,7 +42,7 @@
                 <tbody>
                 <tr th:each="orderDetail : ${order.orderDetails}">
                     <td><img class="img-product"
-                             th:src="@{ 'data:image/jpeg;base64,' + ${orderDetail.product.images.get(0).image} }"
+                             th:src="${orderDetail.product.images.get(0).s3Url}"
                              alt=""></td>
                     <td th:text="${orderDetail.product.name}"></td>
                     <td th:text="${orderDetail.unitPrice}" class="price-product"></td>

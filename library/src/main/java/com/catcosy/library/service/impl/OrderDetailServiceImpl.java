@@ -3,6 +3,7 @@ package com.catcosy.library.service.impl;
 import com.catcosy.library.repository.OrderDetailRepository;
 import com.catcosy.library.dto.OrderDetailDto;
 import com.catcosy.library.model.OrderDetail;
+import com.catcosy.library.model.ProductImage;
 import com.catcosy.library.service.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     public List<OrderDetailDto> finAllByOrderIdDto(Long id) {
         return toListDto(orderDetailRepository.findAllByOrderId(id));
-
     }
 
     @Override
@@ -40,26 +40,44 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         });
 
         return allow.get();
-    }
-
+    }    
     private List<OrderDetailDto> toListDto(List<OrderDetail> orderDetails) {
         List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
 
         for (OrderDetail orderDetail : orderDetails) {
             OrderDetailDto orderDetailDto = new OrderDetailDto();
             orderDetailDto.setId(orderDetail.getId());
-            orderDetailDto.setImage(orderDetail.getProduct().getImages().get(0).getImage());
-            orderDetailDto.setIdProduct(orderDetail.getProduct().getId());
-            orderDetailDto.setNameProduct(orderDetail.getProduct().getName());
+            
+            // Safely handle product images - check if product or images are null
+            if (orderDetail.getProduct() != null && 
+                orderDetail.getProduct().getImages() != null && 
+                !orderDetail.getProduct().getImages().isEmpty()) {
+                ProductImage firstImage = orderDetail.getProduct().getImages().get(0);
+                orderDetailDto.setImage(firstImage.getS3Url());
+            } else {
+                orderDetailDto.setImage(null); // Set default or placeholder image URL if needed
+            }
+            
+            // Set product info safely
+            if (orderDetail.getProduct() != null) {
+                orderDetailDto.setIdProduct(orderDetail.getProduct().getId());
+                orderDetailDto.setNameProduct(orderDetail.getProduct().getName());
+            }
+            
             orderDetailDto.setUnitPrice(orderDetail.getUnitPrice());
-            orderDetailDto.setQuantityAndSize(orderDetail.getSize().getSize() + " x" + orderDetail.getQuantity());
+            
+            // Set size safely
+            if (orderDetail.getSize() != null) {
+                orderDetailDto.setQuantityAndSize(orderDetail.getSize().getSize() + " x" + orderDetail.getQuantity());
+            } else {
+                orderDetailDto.setQuantityAndSize("x" + orderDetail.getQuantity());
+            }
+            
             orderDetailDto.setTotalPrice(orderDetail.getTotalPrice());
             orderDetailDto.setAllowComment(orderDetail.isAllowComment());
             orderDetailDtos.add(orderDetailDto);
         }
 
         return orderDetailDtos;
-
-
     }
 }

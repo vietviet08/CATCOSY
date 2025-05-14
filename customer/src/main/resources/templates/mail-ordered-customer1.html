@@ -139,7 +139,7 @@
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                     <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
                                         <h1 style="margin: 0; font-size: 24px; line-height: normal; font-weight: bold;"
-                                            >
+                                        >
                                             <span th:text="${fullName}"></span>, <br/> thanks for your order </h1>
                                     </div>
                                 </td>
@@ -250,6 +250,15 @@
                                            style="color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;table-layout:auto;width:100%;border:none;">
                                         <tbody>
                                         <tr th:each="product : ${products}" valign="top">
+                                            <td align="left"
+                                                style="font-size: 16px; line-height: 20px; word-break: normal;">
+                                                <img
+                                                        th:src="${product.image}"
+                                                        alt="image description"
+                                                        height="auto"
+                                                        style="border-radius:4px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;"
+                                                        width="40"/>
+                                            </td>
                                             <td width="60%"
                                                 style="font-size: 16px; line-height: 20px; word-break: normal;">
                                                 <p style="margin: 0;" th:text="${product.nameProduct}"></p>

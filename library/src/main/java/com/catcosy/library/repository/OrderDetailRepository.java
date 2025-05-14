@@ -15,10 +15,9 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
     @Modifying
     @Query(value = "delete from orders_detail where order_id = :id", nativeQuery = true)
     void deleteAllByOrderId(@Param("id") Long id);
-
-    @Query(value = "select * from orders_detail od where od.order_id = :id ", nativeQuery = true)
+    
+    @Query("SELECT od FROM OrderDetail od JOIN FETCH od.product p JOIN FETCH p.images JOIN FETCH od.size WHERE od.order.id = :id")
     List<OrderDetail> findAllByOrderId(@Param("id") Long id);
-
 
     @Query(value =
             "select od.order_detail_id, od.quantity, od.size_id, od.total_price, od.unit_price, od.order_id, od.product_id, od.is_allow_comment from orders_detail od " +
