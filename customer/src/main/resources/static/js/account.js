@@ -22,7 +22,7 @@ $('document').ready(function () {
                         '<tr>' +
                         '<th scope="row">' +
                         '<a href="/product-detail/' + orderDetail.idProduct + '" >' +
-                        '<img src="data:image/jpeg;base64,' + orderDetail.image + '" style="width: 60px; height: 60px;">' +
+                        '<img src="' + orderDetail.image + '" style="width: 60px; height: 60px;">' +
                         '</a>' +
                         '</th>' +
                         '<td>' +
