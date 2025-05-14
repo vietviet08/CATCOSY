@@ -1,6 +1,7 @@
 package com.catcosy.library.service.impl;
 
 import com.catcosy.library.dto.CustomerDto;
+import org.springframework.beans.factory.annotation.Value;
 import com.catcosy.library.dto.OrderDetailDto;
 import com.catcosy.library.model.Customer;
 import com.catcosy.library.model.Order;
@@ -31,6 +32,9 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private ThymeleafService thymeleafService;
+    
+    @Value("${app.base-url:http://localhost:8086}")
+    private String baseUrl;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -176,6 +180,9 @@ public class MailServiceImpl implements MailService {
             variable.put("paymentMethod", order.getPaymentMethod());
             variable.put("deliveryAddress", order.getDeliveryAddress());
             variable.put("codeViewOrder", order.getCodeViewOrder());
+            
+            // Add base URL for the email template links
+            variable.put("baseUrl", baseUrl);
 
             helper.setText(thymeleafService.createContent("mail-ordered-customer1", variable), true);
             helper.setSubject("Your order in CATCOSY");
