@@ -50,7 +50,7 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private VoucherService voucherService;
-
+    
     @Value("${spring.mail.username}")
     private String email;
 
