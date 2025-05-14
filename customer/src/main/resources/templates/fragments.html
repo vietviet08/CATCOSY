@@ -466,6 +466,9 @@
             <div class="typing-dot"></div>
         </div>
         
+        <!-- Product recommendation section -->
+        <div class="chatbot-recommendations" id="productRecommendations"></div>
+        
         <!-- Suggestion chips for quick responses -->
         <div class="suggestions" id="suggestionChips">
             <div class="suggestion-chip">Sản phẩm mới nhất</div>
@@ -484,11 +487,14 @@
     
     <!-- Link to chatbot CSS -->
     <link rel="stylesheet" th:href="@{/css/chatbot.css}">
+    <link rel="stylesheet" th:href="@{/css/chatbot-recommendation.css}">
     
     <!-- Link to chatbot JavaScript -->
     <script th:src="@{/js/chatbot.js}"></script>
+    <script th:src="@{/js/chatbot-recommendation.js}"></script>
+    <script th:src="@{/js/chatbot-init.js}"></script>
     
-    <!-- Small inline script for button toggle -->
+    <!-- Script for chatbot interactions -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const chatbotButton = document.getElementById('chatbotButton');
@@ -511,8 +517,20 @@
                 chip.addEventListener('click', function() {
                     const messageInput = document.getElementById('messageInput');
                     messageInput.value = chip.textContent;
-                    messageInput.focus();
+                    // Send message automatically when chip is clicked
+                    document.getElementById('sendButton').click();
                 });
+            });
+            
+            // Clear chat history
+            document.getElementById('clearChat').addEventListener('click', function() {
+                const chatMessages = document.getElementById('chatMessages');
+                // Keep only the welcome message
+                while (chatMessages.childNodes.length > 2) {
+                    chatMessages.removeChild(chatMessages.lastChild);
+                }
+                // Clear recommendations
+                document.getElementById('productRecommendations').innerHTML = '';
             });
         });
     </script>

@@ -7,6 +7,11 @@
 // Khởi tạo chatbot khi tài liệu đã tải xong
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Chatbot script loaded");
+    
+    // Ensure recommendations are initialized
+    if (window.chatbotInit && typeof window.chatbotInit.initRecommendations === 'function') {
+        window.chatbotInit.initRecommendations();
+    }
 
     // Lấy các phần tử DOM cần thiết
     const chatbotButton = document.querySelector('.chatbot-button');
@@ -70,22 +75,30 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = now.getMinutes().toString().padStart(2, '0');
         return `Hôm nay, lúc ${hours}:${minutes}`;
     }
-    
-    // Thêm tin nhắn vào giao diện
+      // Thêm tin nhắn vào giao diện
     function addMessage(content, isUser, source = null) {
         if (!chatMessages) return;
         
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
         
+        // Add main content
         messageDiv.innerHTML = `
             ${content}
             <div class="message-time">${formatTime()}</div>
             ${source ? `<div class="source-indicator">Nguồn: ${source}</div>` : ''}
         `;
         
+        // Add to chat container
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        // If it's a bot message, try to parse product recommendations
+        if (!isUser && window.chatbotRecommendation && typeof window.chatbotRecommendation.renderProductRecommendations === 'function') {
+            window.chatbotRecommendation.renderProductRecommendations({content: content}, messageDiv);
+        }
+        
+        return messageDiv;
     }
     
     // Hiển thị chỉ báo đang nhập
@@ -140,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Ẩn chỉ báo đang nhập
                 hideTypingIndicator();
                 
-                // Xử lý và hiển thị nội dung phản hồi
+            // Xử lý và hiển thị nội dung phản hồi
                 if (botMessage && botMessage.content) {
                     try {
                         // Kiểm tra xem nội dung có phải là chuỗi JSON không
@@ -149,11 +162,33 @@ document.addEventListener('DOMContentLoaded', function() {
                             // Hiển thị dữ liệu JSON theo định dạng đẹp
                             addMessage(formatJsonResponse(jsonData), false);
                         } else {
-                            // Hiển thị phản hồi thông thường
-                            addMessage(botMessage.content, false);
+                            // Tạo phần tử tin nhắn
+                            const messageDiv = document.createElement('div');
+                            messageDiv.className = 'message bot-message';
+                            
+                            // Thêm nội dung tin nhắn
+                            messageDiv.innerHTML = botMessage.content;
+                            
+                            // Thêm thông tin thời gian
+                            const timeDiv = document.createElement('div');
+                            timeDiv.className = 'message-time';
+                            timeDiv.textContent = formatTime();
+                            messageDiv.appendChild(timeDiv);
+                            
+                            // Thêm tin nhắn vào khung trò chuyện
+                            chatMessages.appendChild(messageDiv);
+                            
+                            // Kiểm tra và hiển thị sản phẩm nếu có
+                            if (window.chatbotRecommendation && typeof window.chatbotRecommendation.renderProductRecommendations === 'function') {
+                                window.chatbotRecommendation.renderProductRecommendations(botMessage, messageDiv);
+                            }
+                            
+                            // Cuộn xuống dưới để hiển thị tin nhắn mới
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
                         }
                     } catch (e) {
-                        // Nếu không phải JSON, hiển thị nội dung gốc
+                        console.error('Error processing bot response:', e);
+                        // Nếu có lỗi, hiển thị nội dung gốc
                         addMessage(botMessage.content, false);
                     }
                 }
