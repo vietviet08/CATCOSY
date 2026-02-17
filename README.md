@@ -9,6 +9,28 @@
 
 > A modern, full-stack e-commerce platform specializing in fashion apparel with separate admin and customer interfaces.
 
+## 🚀 Quick Start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/vietviet08/CATCOSY.git
+cd CATCOSY
+
+# 2. Start with Docker (Recommended)
+docker-compose up -d
+
+# 3. Wait for services to start (30-60 seconds)
+docker-compose ps
+
+# 4. Access the applications
+# Customer Portal: http://localhost:8086
+# Admin Dashboard: http://localhost:8085/admin
+```
+
+That's it! The application is now running with sample data. 🎉
+
+---
+
 ## 📖 Table of Contents
 
 -   [Description](#-description)
@@ -29,7 +51,9 @@
 
 ## 🎯 Description
 
-CATCOSY is a comprehensive e-commerce platform designed for fashion retail. The platform features a microservices architecture with separate modules for admin management, customer interface, and shared library components. Built with Spring Boot and modern web technologies, it provides a scalable solution for online fashion retail.
+CATCOSY is a comprehensive e-commerce platform designed for fashion retail. The platform features a microservices-based architecture with separate modules for admin management, customer interface, and shared library components. Built with Spring Boot 3.2.4 and Java 21, it provides a scalable and modern solution for online fashion retail businesses.
+
+The project follows best practices with a modular design, containerized deployment using Docker, and RESTful API architecture. It's designed to handle high traffic loads and provides a seamless shopping experience for customers while offering powerful management tools for administrators.
 
 ### Key Objectives:
 
@@ -99,27 +123,52 @@ CATCOSY is a comprehensive e-commerce platform designed for fashion retail. The 
 CATCOSY/
 ├── admin/                      # Admin module
 │   ├── src/main/java/         # Admin backend code
+│   │   └── com/catcosy/admin/ # Admin package
 │   ├── src/main/resources/    # Admin resources
+│   │   ├── static/            # CSS, JS, images
+│   │   ├── templates/         # Thymeleaf templates
+│   │   └── application.properties
+│   ├── pom.xml                # Admin dependencies
 │   └── Dockerfile             # Admin container config
 ├── customer/                   # Customer module
 │   ├── src/main/java/         # Customer backend code
+│   │   └── com/catcosy/customer/
 │   ├── src/main/resources/    # Customer resources
+│   │   ├── static/            # CSS, JS, images
+│   │   ├── templates/         # Thymeleaf templates
+│   │   └── application.properties
+│   ├── pom.xml                # Customer dependencies
 │   └── Dockerfile             # Customer container config
 ├── library/                    # Shared library
 │   ├── src/main/java/         # Common entities, services, repositories
+│   │   └── com/catcosy/library/
+│   ├── src/main/resources/    # Shared resources
+│   ├── pom.xml                # Library dependencies
 │   └── Dockerfile             # Library container config
 ├── mysql-init/                 # Database initialization
-│   └── latest/init2.sql       # Database schema and seed data
+│   └── latest/                # SQL initialization scripts
+│       └── init2.sql          # Database schema and seed data
 ├── docker-compose.yml          # Multi-container orchestration
 ├── pom.xml                    # Root Maven configuration
+├── .gitignore                 # Git ignore rules
 └── README.md                  # Project documentation
 ```
 
 ### Module Responsibilities
 
--   **Library Module**: Shared entities, repositories, services, and DTOs
--   **Admin Module**: Administrative interface and business logic
--   **Customer Module**: Customer-facing interface and shopping functionality
+-   **Library Module**: Shared entities, repositories, services, DTOs, and common utilities used by both admin and customer modules
+-   **Admin Module**: Administrative interface with authentication, product management, order processing, and analytics
+-   **Customer Module**: Customer-facing interface with product browsing, shopping cart, checkout, and user account management
+
+### Database Schema
+
+The database is automatically initialized with the schema defined in `mysql-init/latest/init2.sql`. The schema includes tables for:
+
+-   **Users & Authentication**: User accounts, roles, permissions
+-   **Products**: Product catalog, categories, brands, inventory
+-   **Orders**: Order management, order items, shipping information
+-   **Shopping Cart**: Cart items, user sessions
+-   **Media**: Product images, file uploads
 
 ## 📋 Prerequisites
 
@@ -151,7 +200,7 @@ cd CATCOSY
 
 ### 2. Environment Configuration
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory (required for Docker setup):
 
 ```bash
 # Database Configuration
@@ -162,34 +211,64 @@ MYSQL_PASSWORD=root
 
 # Application Configuration
 SPRING_PROFILES_ACTIVE=default
-SERVER_PORT_ADMIN=8082
-SERVER_PORT_CUSTOMER=8083
+SERVER_PORT_ADMIN=8085
+SERVER_PORT_CUSTOMER=8086
 SERVER_PORT_LIBRARY=8084
 
-# AWS S3 Configuration (Optional)
+# AWS S3 Configuration (Optional - for file uploads)
 AWS_ACCESS_KEY_ID=your_access_key
 AWS_SECRET_ACCESS_KEY=your_secret_key
 AWS_S3_BUCKET_NAME=your_bucket_name
 AWS_S3_REGION=your_region
 
-# Email Configuration
+# Email Configuration (Optional - for notifications)
 SPRING_MAIL_HOST=smtp.gmail.com
 SPRING_MAIL_PORT=587
 SPRING_MAIL_USERNAME=your_email@gmail.com
 SPRING_MAIL_PASSWORD=your_app_password
 ```
 
+**Note**: The `.env` file is optional for Docker setup as default values are configured in `docker-compose.yml`. However, it's recommended for production deployments to override default credentials.
+
 ### 3. Build and Run with Docker
+
+#### Quick Start (Recommended)
 
 ```bash
 # Build and start all services
 docker-compose up -d
 
+# Wait for services to be healthy (30-60 seconds)
+docker-compose ps
+
 # View logs
 docker-compose logs -f
 
+# View logs for specific service
+docker-compose logs -f admin
+docker-compose logs -f customer
+docker-compose logs -f library
+
 # Stop services
 docker-compose down
+
+# Stop and remove all data
+docker-compose down -v
+```
+
+#### Verify Services are Running
+
+```bash
+# Check all containers are up
+docker-compose ps
+
+# Test each service endpoint
+curl http://localhost:8085/admin/
+curl http://localhost:8086/
+curl http://localhost:8084/
+
+# Check database connection
+docker exec -it catcosy-mysql mysql -uroot -proot -e "SHOW DATABASES;"
 ```
 
 ### 4. Manual Build (Alternative)
@@ -206,12 +285,20 @@ cd customer && mvn spring-boot:run &
 
 ## 🎮 Usage
 
+### Screenshots
+
+<div align="center">
+
+> 📸 **Coming Soon**: Screenshots of the application will be added here to showcase the customer interface, admin dashboard, and key features.
+
+</div>
+
 ### Access the Application
 
 | Service         | URL                   | Description              |
 | --------------- | --------------------- | ------------------------ |
-| Customer Portal | http://localhost:8083 | Main shopping interface  |
-| Admin Dashboard | http://localhost:8082 | Administrative interface |
+| Customer Portal | http://localhost:8086 | Main shopping interface  |
+| Admin Dashboard | http://localhost:8085 | Administrative interface |
 | Library Service | http://localhost:8084 | Shared services API      |
 | MySQL Database  | localhost:3306        | Database access          |
 
@@ -234,14 +321,72 @@ Password: customer123
 ### Sample API Endpoints
 
 ```bash
+# Customer homepage
+GET http://localhost:8086/
+
 # Get all products (Customer)
-GET http://localhost:8083/products
+GET http://localhost:8086/products
 
 # Admin dashboard stats
-GET http://localhost:8082/index
+GET http://localhost:8085/admin/index
 
 # Product management (Admin)
-POST http://localhost:8082/save-product
+POST http://localhost:8085/admin/save-product
+```
+
+## ⚙️ Configuration
+
+### Troubleshooting
+
+#### Common Issues and Solutions
+
+**Issue: Port already in use**
+```bash
+# Check what's using the port
+lsof -i :8085  # or :8086, :8084, :3306
+
+# Solution 1: Stop the process using the port
+# Solution 2: Change ports in docker-compose.yml
+```
+
+**Issue: Database connection failed**
+```bash
+# Check MySQL is running
+docker-compose ps mysql
+
+# Check MySQL logs
+docker-compose logs mysql
+
+# Restart MySQL service
+docker-compose restart mysql
+
+# Wait for MySQL to be healthy
+docker-compose up -d mysql
+```
+
+**Issue: Services not starting**
+```bash
+# Remove old containers and volumes
+docker-compose down -v
+
+# Rebuild images
+docker-compose build --no-cache
+
+# Start fresh
+docker-compose up -d
+```
+
+**Issue: Application throws errors on startup**
+```bash
+# Check application logs
+docker-compose logs -f admin
+docker-compose logs -f customer
+
+# Verify environment variables
+docker-compose config
+
+# Check if .env file exists and is properly configured
+cat .env
 ```
 
 ## ⚙️ Configuration
@@ -251,7 +396,8 @@ POST http://localhost:8082/save-product
 **Admin Module** (`admin/src/main/resources/application.properties`):
 
 ```properties
-server.port=8082
+server.port=8085
+server.servlet.context-path=/admin
 spring.datasource.url=jdbc:mysql://localhost:3306/catcosy
 spring.jpa.hibernate.ddl-auto=update
 spring.profiles.active=default
@@ -260,9 +406,10 @@ spring.profiles.active=default
 **Customer Module** (`customer/src/main/resources/application.properties`):
 
 ```properties
-server.port=8083
+server.port=8086
 spring.datasource.url=jdbc:mysql://localhost:3306/catcosy
 spring.jpa.hibernate.ddl-auto=update
+spring.profiles.active=default
 ```
 
 ### Important Environment Variables
@@ -282,17 +429,23 @@ spring.jpa.hibernate.ddl-auto=update
 
 -   `GET /` - Homepage
 -   `GET /products` - Product listing with filters
+-   `GET /product-detail/{id}` - Product details
 -   `POST /add-to-cart` - Add product to cart
+-   `GET /cart` - View shopping cart
 -   `GET /account` - User account management
 -   `POST /checkout` - Process order
+-   `GET /order-history` - View order history
 
 #### Admin API
 
--   `GET /index` - Dashboard statistics
--   `GET /products` - Product management
--   `POST /save-product` - Create/update product
--   `GET /orders` - Order management
--   `GET /customers` - Customer management
+-   `GET /admin/index` - Dashboard statistics
+-   `GET /admin/products` - Product management
+-   `POST /admin/save-product` - Create/update product
+-   `DELETE /admin/delete-product/{id}` - Delete product
+-   `GET /admin/orders` - Order management
+-   `PUT /admin/update-order-status` - Update order status
+-   `GET /admin/customers` - Customer management
+-   `GET /admin/employees` - Employee management
 
 #### Authentication
 
@@ -410,6 +563,17 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 -   Write **comprehensive tests**
 -   Document **public APIs**
 -   Follow **RESTful principles**
+-   Implement **proper error handling**
+-   Use **meaningful commit messages**
+
+### Security Best Practices
+
+-   Never commit sensitive data (passwords, API keys) to the repository
+-   Use environment variables for configuration
+-   Always validate user input
+-   Implement proper authentication and authorization
+-   Keep dependencies up to date
+-   Follow OWASP security guidelines
 
 ### Code Review Process
 
@@ -456,6 +620,7 @@ We appreciate all contributors who have helped improve this project. See the ful
 
 -   [Spring Boot](https://spring.io/projects/spring-boot) - Application framework
 -   [Spring Security](https://spring.io/projects/spring-security) - Security framework
+-   [Spring Data JPA](https://spring.io/projects/spring-data-jpa) - Data access layer
 -   [Thymeleaf](https://www.thymeleaf.org/) - Templating engine
 -   [Bootstrap](https://getbootstrap.com/) - UI framework
 -   [MySQL](https://www.mysql.com/) - Database management
@@ -473,6 +638,29 @@ We appreciate all contributors who have helped improve this project. See the ful
 -   [Spring Petclinic](https://github.com/spring-projects/spring-petclinic) - Project structure inspiration
 -   [E-commerce Design Patterns](https://microservices.io/patterns/) - Architecture patterns
 -   [Spring Boot Best Practices](https://spring.io/guides) - Implementation guidelines
+
+## ❓ FAQ
+
+**Q: Can I use this project for commercial purposes?**  
+A: Yes, this project is licensed under the MIT License, which allows commercial use.
+
+**Q: How do I change the default ports?**  
+A: Edit the port mappings in `docker-compose.yml` or modify the `server.port` in each module's `application.properties`.
+
+**Q: How do I add custom products?**  
+A: Log in to the admin dashboard at http://localhost:8085/admin and navigate to the Products section.
+
+**Q: Can I use a different database?**  
+A: Yes, you can configure Spring Boot to use PostgreSQL, H2, or other databases by updating the dependencies and datasource configuration.
+
+**Q: How do I enable AWS S3 for file uploads?**  
+A: Add your AWS credentials to the `.env` file and ensure the S3 configuration is properly set in the application properties.
+
+**Q: Is there a production deployment guide?**  
+A: See the [Deployment](#-deployment) section for Docker deployment and CI/CD pipeline configuration.
+
+**Q: How do I contribute to this project?**  
+A: Please read the [Contributing](#-contributing) section for guidelines on submitting pull requests.
 
 ---
 
