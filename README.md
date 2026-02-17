@@ -228,7 +228,13 @@ SPRING_MAIL_USERNAME=your_email@gmail.com
 SPRING_MAIL_PASSWORD=your_app_password
 ```
 
-**Note**: The `.env` file is optional for Docker setup as default values are configured in `docker-compose.yml`. However, it's recommended for production deployments to override default credentials.
+**Note**: The `.env` file is optional for Docker setup as default values are configured in `docker-compose.yml`. However, it's **strongly recommended** for production deployments to:
+- Override default credentials (current defaults are **NOT secure for production**)
+- Configure custom database passwords
+- Add your own AWS S3 credentials for file uploads
+- Set up email service credentials
+
+⚠️ **Security Warning**: Never use default credentials in production or public deployments. Always change all passwords and secrets before deploying to any environment accessible from the internet.
 
 ### 3. Build and Run with Docker
 
@@ -304,19 +310,25 @@ cd customer && mvn spring-boot:run &
 
 ### Default Login Credentials
 
+⚠️ **Security Note**: These are default credentials for development only. Change them immediately for any production or publicly accessible deployment.
+
 **Admin Access:**
 
 ```
+URL: http://localhost:8085/admin/login
 Username: admin
-Password: admin123
+Password: Admin@admin_909!
 ```
 
 **Test Customer:**
 
 ```
+URL: http://localhost:8086/login
 Username: customer
 Password: customer123
 ```
+
+> 💡 **Tip**: You can register new customer accounts at http://localhost:8086/register
 
 ### Sample API Endpoints
 
@@ -397,11 +409,13 @@ cat .env
 
 ```properties
 server.port=8085
-server.servlet.context-path=/admin
+server.servlet.context-path=/admin    # All admin URLs will be prefixed with /admin
 spring.datasource.url=jdbc:mysql://localhost:3306/catcosy
 spring.jpa.hibernate.ddl-auto=update
 spring.profiles.active=default
 ```
+
+> **Note**: The `/admin` context path is already configured in the actual application. This means all admin endpoints must be accessed with the `/admin` prefix (e.g., `http://localhost:8085/admin/`).
 
 **Customer Module** (`customer/src/main/resources/application.properties`):
 
@@ -648,7 +662,7 @@ A: Yes, this project is licensed under the MIT License, which allows commercial 
 A: Edit the port mappings in `docker-compose.yml` or modify the `server.port` in each module's `application.properties`.
 
 **Q: How do I add custom products?**  
-A: Log in to the admin dashboard at http://localhost:8085/admin and navigate to the Products section.
+A: Log in to the admin dashboard at http://localhost:8085/admin/login using the credentials `admin / Admin@admin_909!` (default development credentials) and navigate to the Products section.
 
 **Q: Can I use a different database?**  
 A: Yes, you can configure Spring Boot to use PostgreSQL, H2, or other databases by updating the dependencies and datasource configuration.
